@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb",
+  "globals": {
+    "describe": false,
+    "it": false,
+    "beforeEach": false,
+    "afterEach": false
+  },
+  "rules": {
+    "space-before-function-paren": 2
+  }
+}
