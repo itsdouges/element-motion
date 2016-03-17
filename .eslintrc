@@ -6,7 +6,12 @@
     "beforeEach": false,
     "afterEach": false
   },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
   "rules": {
-    "space-before-function-paren": 2
+    "space-before-function-paren": [2, "always"]
   }
 }
