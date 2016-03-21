@@ -1,3 +1,3 @@
-# material-transitions
+# material-transitions-core
 
 Work in progress.

@@ -1,10 +1,10 @@
 {
   "name": "material-transitions-core",
-  "version": "0.0.1",
-  "description": "tbd",
+  "version": "0.0.0-alpha.1",
+  "description": "Material Transitions Core",
   "main": "dist/index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline --open",
+    "start": "webpack-dev-server --hot --inline --open --port 8081",
     "build": "webpack",
     "test": "karma start"
   },

@@ -1,10 +1,10 @@
-import { calculateHypotenuse } from 'core/helpers/math';
+import { calculateHypotenuse } from 'helpers/math';
 import {
   calculateElementSize,
   calculateElementLocation,
   calculateWindowCentre,
   calculateElementCenterInViewport,
-} from 'core/helpers/dom';
+} from 'helpers/dom';
 
 export function expand (element) {
   const location = calculateElementLocation(element);

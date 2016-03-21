@@ -1,4 +1,4 @@
-import { calculateHypotenuse } from 'core/helpers/math';
+import { calculateHypotenuse } from 'helpers/math';
 
 export function calculateElementSize (element) {
   return {
