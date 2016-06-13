@@ -11,8 +11,8 @@ export function calculateElementLocation (element) {
   const rect = element.getBoundingClientRect();
 
   return {
-    x: rect.left + document.body.clientLeft,
-    y: rect.top + document.body.clientTop,
+    left: rect.left + document.body.clientLeft,
+    top: rect.top + document.body.clientTop,
   };
 }
 
@@ -29,8 +29,8 @@ export function calculateElementCircumcircle (element) {
 
 export function calculateWindowCentre () {
   return {
-    x: Math.ceil(window.innerWidth / 2),
-    y: Math.ceil(window.innerHeight / 2),
+    left: Math.ceil(window.innerWidth / 2),
+    top: Math.ceil(window.innerHeight / 2),
   };
 }
 
@@ -39,7 +39,13 @@ export function calculateElementCenterInViewport (element) {
   const size = calculateElementSize(element);
 
   return {
-    x: location.top + Math.ceil(size.width / 2),
-    y: location.left - Math.ceil(size.height / 2),
+    top: location.top + Math.ceil(size.width / 2),
+    left: location.left - Math.ceil(size.height / 2),
   };
+}
+
+export function clone (element) {
+  const newElement = element.cloneNode(true);
+  document.body.appendChild(newElement);
+  return newElement;
 }

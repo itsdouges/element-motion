@@ -26,17 +26,18 @@ export default function expand (element) {
 
   const hypotenuseDifference = calculateHypotenuse(difference);
 
+  const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
+
   return {
+    newElement: true,
     from: {
       ...location,
       width: minSize,
       height: minSize,
     },
     to: {
-      scale: Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize),
-    },
-    finally: {
-      opacity: 0,
+      scaleX: scale,
+      scaleY: scale,
     },
   };
 }

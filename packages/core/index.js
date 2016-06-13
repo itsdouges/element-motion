@@ -1,10 +1,6 @@
 import apply from 'transition-apply';
 const context = require.context('transition-definitions', true, /^((?!spec).)*\.js$/);
 
-function performTransition (element, from, to, params) {
-  apply(element, from, to, params);
-}
-
 /**
  * transition
  *
@@ -17,17 +13,17 @@ function performTransition (element, from, to, params) {
 function transition (type, element, params) {
   const calc = require(`transition-definitions/${type}/index.js`).default;
 
-  const { from, to } = calc(element, params);
+  const calculations = calc(element, params);
 
-  if (typeof to === 'function') {
+  if (typeof calculations.to === 'function') {
     return (toElement) => {
-      const resolvedTo = to(toElement);
+      calculations.to = calculations.to(toElement);
 
-      performTransition(element, from, resolvedTo, params);
+      apply(element, calculations, params);
     };
   }
 
-  performTransition(element, from, to, params);
+  apply(element, calculations, params);
 
   return undefined;
 }

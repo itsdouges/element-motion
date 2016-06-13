@@ -5,13 +5,57 @@ body {
   margin: 0;
   padding: 0;
 }
+
+#start {
+  background: blue;
+}
+
+#end {
+  margin-left: 100px;
+  width: 300px;
+  height: 300px;
+  background: red;
+}
+
+.end-container {
+  z-index: -1;
+  position: absolute;
+  top: 200px;
+  left: 0;
+  right: 0;
+}
+
+.items {
+  max-width: 600px;
+  margin: 400px auto;
+  text-align: center;
+}
+
+.item {
+  margin: 10px;
+  width: 150px;
+  height: 150px;
+  background: green;
+  z-index: 999;
+  display: inline-block;
+}
 </style>
   </head>
   <body>
-    <div id="start" style="z-index: 999; width: 150px; height: 150px; background: blue;">
+    <div class="items">
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item" id="start"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
     </div>
 
-    <div id="end" style="z-index: -1; position: absolute; bottom: 0; right: 0; margin-left: 100px; width: 300px; height: 300px; background: red;">
+    <div class="end-container">
+      <div id="end"></div>
     </div>
 
     <script src="/dist/mt-core.js"></script>

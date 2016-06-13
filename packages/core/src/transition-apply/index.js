@@ -1,4 +1,5 @@
 /* eslint no-param-reassign:0, no-unused-expressions:0 */
+import { clone } from 'dom';
 
 function translate (styles, { x, y }) {
   styles.transform = `translate3d(${x}px, ${y}px, 0)`;
@@ -17,30 +18,40 @@ function scale (styles, { scaleX, scaleY, transformOrigin }) {
   }
 }
 
-export default function apply (element, from, to, {
+export default function apply (element, calculations, {
   onStart,
   onFinish,
   duration = 1,
 }) {
+  const priorityElement = calculations.newElement ? clone(element) : element;
+
+  const { to, from } = calculations;
   if (onStart) {
     onStart();
+    onStart = undefined;
   }
 
   const finish = () => {
-    element.removeEventListener('transitionend', finish, false);
+    priorityElement.removeEventListener('transitionend', finish, false);
     if (onFinish) {
       onFinish();
+      onFinish = undefined;
     }
   };
 
-  element.style.transition = `transform ${duration}s`;
-  element.addEventListener('transitionend', finish, false);
+  priorityElement.style.transition = `transform ${duration}s`;
+  priorityElement.addEventListener('transitionend', finish, false);
 
-  if (to.x || to.y) {
-    translate(element.style, to);
-  }
+  window.requestAnimationFrame(() => {
+    if ((to.left && from.left) || (to.top && from.top)) {
+      translate(priorityElement.style, {
+        x: to.left - from.left,
+        y: to.top - from.top,
+      });
+    }
 
-  if (to.scaleX && to.scaleY) {
-    scale(element.style, to);
-  }
+    if (to.scaleX && to.scaleY) {
+      scale(priorityElement.style, to);
+    }
+  });
 }
