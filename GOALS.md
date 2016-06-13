@@ -11,7 +11,3 @@
 - Angular 1/2.
 - Ability to extend base module for any view library.
 - Responsive.
-
-## assumptions
-
--

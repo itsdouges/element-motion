@@ -1,5 +1,11 @@
 {
+  "scripts": {
+    "react": "lerna run start --scope *react",
+    "core": "lerna run start --scope *core",
+    "unit:auto": "lerna run unit:auto --scope"
+  },
   "devDependencies": {
-    "lerna": "2.0.0-beta.18"
+    "lerna": "2.0.0-beta.18",
+    "webpack": "^1.13.1"
   }
 }

@@ -13,6 +13,9 @@
   "dependencies": {
     "material-transitions-core": "^0.0.0"
   },
+  "peerDependencies": {
+    "react": "^0.14.7"
+  },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.7.2",
@@ -23,6 +26,9 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.6.1",
+    "lerna": "2.0.0-beta.18",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1",
     "chai": "^3.5.0",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
@@ -39,11 +45,6 @@
     "lolex": "^1.4.0",
     "react-dom": "^0.14.7",
     "sinon": "^1.17.3",
-    "sinon-chai": "^2.8.0",
-    "webpack": "^1.12.14",
-    "webpack-dev-server": "^1.14.1"
-  },
-  "peerDependencies": {
-    "react": "^0.14.7"
+    "sinon-chai": "^2.8.0"
   }
 }
