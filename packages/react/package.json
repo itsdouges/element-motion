@@ -2,7 +2,7 @@
   "name": "material-transitions-react",
   "version": "0.0.0",
   "description": "Material Transitions React",
-  "main": "dist/index.js",
+  "main": "dist/mt-react.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --open",
     "build": "webpack",
@@ -14,7 +14,7 @@
     "material-transitions-core": "^0.0.0"
   },
   "peerDependencies": {
-    "react": "^0.14.7"
+    "react": "^15.1.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",

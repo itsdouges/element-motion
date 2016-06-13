@@ -1,6 +1,6 @@
 # goals
 
-- Be modular. Have a base library that does the required calculations and a wrapper library for specific uis.
+- Be modular. Have a base library that does the calculations and dom manipulations and light-weight wrapper libraries.
 - Support delayed transitions i.e. there are three states. START -> WAIT -> FINISH.
 - Contain various "out-of-the-box" transitions (material).
 - Support "limitless" custom transitions/overrides.
@@ -11,3 +11,4 @@
 - Angular 1/2.
 - Ability to extend base module for any view library.
 - Responsive.
+- Have callback hooks for all parts of the animation pipeline.

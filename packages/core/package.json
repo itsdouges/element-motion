@@ -2,7 +2,7 @@
   "name": "material-transitions-core",
   "version": "0.0.0",
   "description": "Material Transitions Core",
-  "main": "dist/index.js",
+  "main": "dist/mt-core.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --open",
     "build": "webpack",

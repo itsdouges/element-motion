@@ -1,4 +1,4 @@
-import { calculateHypotenuse } from 'helpers/math';
+import { calculateHypotenuse } from 'math';
 
 export function calculateElementSize (element) {
   return {
@@ -11,8 +11,8 @@ export function calculateElementLocation (element) {
   const rect = element.getBoundingClientRect();
 
   return {
-    left: rect.left + document.body.clientLeft,
-    top: rect.top + document.body.clientTop,
+    x: rect.left + document.body.clientLeft,
+    y: rect.top + document.body.clientTop,
   };
 }
 
@@ -29,8 +29,8 @@ export function calculateElementCircumcircle (element) {
 
 export function calculateWindowCentre () {
   return {
-    left: Math.ceil(window.innerWidth / 2),
-    top: Math.ceil(window.innerHeight / 2),
+    x: Math.ceil(window.innerWidth / 2),
+    y: Math.ceil(window.innerHeight / 2),
   };
 }
 
@@ -39,7 +39,7 @@ export function calculateElementCenterInViewport (element) {
   const size = calculateElementSize(element);
 
   return {
-    top: location.top + Math.ceil(size.width / 2),
-    left: location.left - Math.ceil(size.height / 2),
+    x: location.top + Math.ceil(size.width / 2),
+    y: location.left - Math.ceil(size.height / 2),
   };
 }

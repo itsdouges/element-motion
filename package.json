@@ -1,8 +1,8 @@
 {
   "scripts": {
+    "start": "lerna run start",
     "react": "lerna run start --scope *react",
-    "core": "lerna run start --scope *core",
-    "unit:auto": "lerna run unit:auto --scope"
+    "core": "lerna run start --scope *core"
   },
   "devDependencies": {
     "lerna": "2.0.0-beta.18",

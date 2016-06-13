@@ -5,3 +5,7 @@ export function calculateHypotenuse ({ width, height }) {
   const hypotenuse = Math.sqrt(x2 + y2);
   return Math.ceil(hypotenuse);
 }
+
+export function percentageDifference (from, to) {
+  return from / to;
+}
