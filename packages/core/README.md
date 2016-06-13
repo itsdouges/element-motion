@@ -1,4 +1,4 @@
-# material-transitions
+# material-transitions-core
 
 > :-).
 

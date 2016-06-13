@@ -6,7 +6,7 @@ import {
   calculateElementCenterInViewport,
 } from 'helpers/dom';
 
-export function expand (element) {
+export default function expand (element) {
   const location = calculateElementLocation(element);
   const size = calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
