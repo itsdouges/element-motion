@@ -1,8 +1,8 @@
 import apply from 'transition-apply';
 const context = require.context('transition-definitions', true, /^((?!spec).)*\.js$/);
 
-function performTransition (element, from, to) {
-  apply(element, from, to);
+function performTransition (element, from, to, params) {
+  apply(element, from, to, params);
 }
 
 /**

@@ -14,6 +14,7 @@ export default function move (fromElement, { resize } = {}) {
       ...toSize,
       scaleX: percentageDifference(toSize.width, fromSize.width),
       scaleY: percentageDifference(toSize.height, fromSize.height),
+      transformOrigin: '0 0',
     };
   };
 
