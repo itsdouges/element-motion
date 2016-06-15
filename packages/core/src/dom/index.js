@@ -34,6 +34,13 @@ export function calculateWindowCentre () {
   };
 }
 
+/* eslint no-param-reassign:0 */
+export function applyStyles (element, styles) {
+  Object.keys(styles).forEach((key) => {
+    element.style[key] = styles[key];
+  });
+}
+
 export function calculateElementCenterInViewport (element) {
   const location = calculateElementLocation(element);
   const size = calculateElementSize(element);
@@ -44,8 +51,14 @@ export function calculateElementCenterInViewport (element) {
   };
 }
 
-export function clone (element) {
-  const newElement = element.cloneNode(true);
-  document.body.appendChild(newElement);
+export function createElement (styles, { parentElement = document.body }) {
+  const newElement = document.createElement('div');
+
+  applyStyles(newElement, {
+    ...styles,
+    position: 'fixed',
+  });
+
+  parentElement.appendChild(newElement);
   return newElement;
 }

@@ -34,10 +34,11 @@ export default function expand (element) {
       ...location,
       width: minSize,
       height: minSize,
+      borderRadius: '50%',
+      backgroundColor: 'orange',
     },
     to: {
-      scaleX: scale,
-      scaleY: scale,
+      scale,
     },
   };
 }

@@ -1,21 +1,23 @@
 /* eslint no-param-reassign:0, no-unused-expressions:0 */
-import { clone } from 'dom';
+import { createElement, applyStyles } from 'dom';
 
-function translate (styles, { x, y }) {
-  styles.transform = `translate3d(${x}px, ${y}px, 0)`;
+function transformTranslate (element, { x, y }) {
+  applyStyles(element, {
+    transform: `translate3d(${x}px, ${y}px, 0)`,
+  });
 }
 
-function scale (styles, { scaleX, scaleY, transformOrigin }) {
-  styles.transformOrigin = transformOrigin;
-  styles.backfaceVisibility = 'hidden';
+function transformScale (element, { scale, transformOrigin }) {
+  const transform = `${element.style.transform} scale(${scale})`;
 
-  const transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
-
-  if (styles.transform) {
-    styles.transform = `${styles.transform} ${transform}`;
-  } else {
-    styles.transform = transform;
-  }
+  applyStyles(element, {
+    transformOrigin,
+    backfaceVisibility: 'hidden',
+    outline: '1px solid transparent',
+    padding: '1px',
+    webkitBackgroundClip: 'content-box',
+    transform,
+  });
 }
 
 export default function apply (element, calculations, {
@@ -23,7 +25,10 @@ export default function apply (element, calculations, {
   onFinish,
   duration = 1,
 }) {
-  const priorityElement = calculations.newElement ? clone(element) : element;
+  const priorityElement = calculations.newElement ? createElement(calculations.from, {
+    parentElement: element.parentElement
+    ,
+  }) : element;
 
   const { to, from } = calculations;
   if (onStart) {
@@ -42,16 +47,17 @@ export default function apply (element, calculations, {
   priorityElement.style.transition = `transform ${duration}s`;
   priorityElement.addEventListener('transitionend', finish, false);
 
-  window.requestAnimationFrame(() => {
+  // Can we avoid this somehow?
+  setTimeout(() => {
     if ((to.left && from.left) || (to.top && from.top)) {
-      translate(priorityElement.style, {
+      transformTranslate(priorityElement, {
         x: to.left - from.left,
         y: to.top - from.top,
       });
     }
 
-    if (to.scaleX && to.scaleY) {
-      scale(priorityElement.style, to);
+    if (to.scale) {
+      transformScale(priorityElement, to);
     }
-  });
+  }, 10);
 }
