@@ -14,7 +14,6 @@ function transformScale (element, { scale, transformOrigin }) {
     transformOrigin,
     backfaceVisibility: 'hidden',
     outline: '1px solid transparent',
-    padding: '1px',
     webkitBackgroundClip: 'content-box',
     transform,
   });
@@ -23,12 +22,23 @@ function transformScale (element, { scale, transformOrigin }) {
 export default function apply (element, calculations, {
   onStart,
   onFinish,
-  duration = 1,
+  duration = 0.5,
+  cleanup,
 }) {
-  const priorityElement = calculations.newElement ? createElement(calculations.from, {
-    parentElement: element.parentElement
-    ,
-  }) : element;
+  let target;
+
+  if (calculations.newElement) {
+    target = createElement(calculations.from, {
+      parentElement: element.parentElement,
+    });
+  } else if (calculations.cloneElement) {
+    target = createElement(calculations.from, {
+      cloneFrom: element,
+      parentElement: element.parentElement,
+    });
+  } else {
+    target = element;
+  }
 
   const { to, from } = calculations;
   if (onStart) {
@@ -36,28 +46,32 @@ export default function apply (element, calculations, {
     onStart = undefined;
   }
 
-  const finish = () => {
-    priorityElement.removeEventListener('transitionend', finish, false);
+  const transitionEndEvent = () => {
+    target.removeEventListener('transitionend', transitionEndEvent, false);
     if (onFinish) {
       onFinish();
       onFinish = undefined;
     }
+
+    if (cleanup && (calculations.newElement || calculations.cloneElement)) {
+      target.parentElement.removeChild(target);
+    }
   };
 
-  priorityElement.style.transition = `transform ${duration}s`;
-  priorityElement.addEventListener('transitionend', finish, false);
+  target.style.transition = `transform ${duration}s`;
+  target.addEventListener('transitionend', transitionEndEvent, false);
 
-  // Can we avoid this somehow?
+  // TODO: Can we avoid this somehow?
   setTimeout(() => {
     if ((to.left && from.left) || (to.top && from.top)) {
-      transformTranslate(priorityElement, {
+      transformTranslate(target, {
         x: to.left - from.left,
         y: to.top - from.top,
       });
     }
 
     if (to.scale) {
-      transformScale(priorityElement, to);
+      transformScale(target, to);
     }
-  }, 10);
+  }, 5);
 }

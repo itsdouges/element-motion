@@ -6,15 +6,19 @@ body {
   padding: 0;
 }
 
-#start {
-  background: blue;
+.item.start {
+  background: url(./assets/stormy.jpg);
+  background-size: cover;
+  background-position: center center;
 }
 
-#end {
+.end {
   margin-left: 100px;
   width: 300px;
   height: 300px;
-  background: red;
+  background: url(./assets/stormy.jpg);
+  background-size: cover;
+  background-position: center center;
 }
 
 .end-container {
@@ -39,6 +43,19 @@ body {
   z-index: 999;
   display: inline-block;
 }
+
+.fixed-buttons {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 0.25rem;
+}
+
+button {
+  margin: 0.25rem;
+  padding: 0.25em;
+  font-size: 2em;
+}
 </style>
   </head>
   <body>
@@ -47,7 +64,7 @@ body {
       <div class="item"></div>
       <div class="item"></div>
       <div class="item"></div>
-      <div class="item" id="start"></div>
+      <div class="start item" id="start"></div>
       <div class="item"></div>
       <div class="item"></div>
       <div class="item"></div>
@@ -55,9 +72,60 @@ body {
     </div>
 
     <div class="end-container">
-      <div id="end"></div>
+      <div class="end" id="end"></div>
     </div>
 
     <script src="/dist/mt-core.js"></script>
+
+  <div class="fixed-buttons">
+    <button id="move">move</button>
+    <button id="expand">expand</button>
+    <button id="expandMove">expand and move</button>
+  </div>
+<script>
+function doMove (onFinish) {
+  mtCore.move(start, {
+    duration: 1,
+    resize: true,
+    cleanup: true,
+    onStart: () => {
+      console.log('move:start');
+    },
+    onFinish: () => {
+      console.log('move:finish');
+      onFinish && onFinish();
+    },
+  })(end);
+}
+
+function doExpand (onStart) {
+  mtCore.expand(start, {
+    duration: 0.5,
+    onStart: () => {
+      console.log('expand:start');
+      onStart && onStart();
+    },
+    onFinish: () => {
+      console.log('expand:finish');
+    },
+  });
+}
+
+move.addEventListener('click', function () {
+  doMove();
+});
+
+expand.addEventListener('click', function () {
+  doExpand();
+});
+
+expandMove.addEventListener('click', function () {
+  doExpand(() => {
+    doMove(() => {
+      document.getElementsByClassName('end-container')[0].style.zIndex = 0;
+    });
+  });
+});
+</script>
   </body>
 </html>

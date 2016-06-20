@@ -51,12 +51,20 @@ export function calculateElementCenterInViewport (element) {
   };
 }
 
-export function createElement (styles, { parentElement = document.body }) {
+export function createElement (styles, { parentElement = document.body, cloneFrom }) {
   const newElement = document.createElement('div');
+  const innerElement = (cloneFrom && cloneFrom.cloneNode(true));
+  if (innerElement) {
+    applyStyles(innerElement, {
+      margin: 0,
+    });
+
+    innerElement.id = '';
+    newElement.appendChild(innerElement);
+  }
 
   applyStyles(newElement, {
     ...styles,
-    position: 'fixed',
   });
 
   parentElement.appendChild(newElement);

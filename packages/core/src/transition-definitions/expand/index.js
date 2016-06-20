@@ -11,6 +11,8 @@ export default function expand (element) {
   const size = calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
 
+  const elementHypotenuse = calculateHypotenuse(size);
+
   const windowHypotenuse = calculateHypotenuse({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -31,11 +33,13 @@ export default function expand (element) {
   return {
     newElement: true,
     from: {
-      ...location,
-      width: minSize,
-      height: minSize,
+      left: location.left - ((elementHypotenuse - size.width) / 2),
+      top: location.top - ((elementHypotenuse - size.height) / 2),
+      width: elementHypotenuse,
+      height: elementHypotenuse,
       borderRadius: '50%',
       backgroundColor: 'orange',
+      position: 'fixed',
     },
     to: {
       scale,

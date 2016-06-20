@@ -12,16 +12,18 @@ export default function move (fromElement, { resize } = {}) {
     return {
       ...toLocation,
       ...toSize,
-      scaleX: resize && percentageDifference(toSize.width, fromSize.width),
-      scaleY: resize && percentageDifference(toSize.height, fromSize.height),
+      scale: resize && percentageDifference(toSize.width, fromSize.width),
       transformOrigin: '0 0',
     };
   };
 
   return {
+    cloneElement: true,
     from: {
       ...fromLocation,
       ...fromSize,
+      margin: 0,
+      position: 'fixed',
     },
     to,
   };
