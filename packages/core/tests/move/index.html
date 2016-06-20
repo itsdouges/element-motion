@@ -45,7 +45,7 @@
 <script>
 function doMove (onFinish) {
   mtCore.move(start, {
-    duration: 1,
+    duration: 0.75,
     resize: true,
     cleanup: true,
     onStart: () => {
@@ -73,7 +73,7 @@ function doExpand (onStart) {
 
 function prepareReveal (onFinish) {
   return mtCore.reveal(document.querySelector('.reveal-container'), {
-    duration: 1,
+    duration: 0.5,
     showFromElement: document.getElementById('end'),
     onStart: () => {
       console.log('reveal:start');

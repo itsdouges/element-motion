@@ -56,6 +56,13 @@ export default function apply (element, calculations, {
     if (cleanup && (calculations.newElement || calculations.cloneElement)) {
       target.parentElement.removeChild(target);
     }
+
+    if (calculations.resetHeightOnFinish) {
+      applyStyles(target, {
+        height: 'auto',
+        width: 'auto',
+      });
+    }
   };
 
   target.style.transition = `transform ${duration}s, width ${duration}s, height ${duration}s`;
