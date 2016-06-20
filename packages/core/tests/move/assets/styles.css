@@ -1,0 +1,83 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.item.start {
+  background: url(./stormy.jpg);
+  background-size: cover;
+  background-position: center center;
+}
+
+.end {
+  width: 300px;
+  height: 300px;
+  background: url(./stormy.jpg);
+  background-size: cover;
+  background-position: center center;
+  flex-shrink: 0;
+}
+
+.end-container {
+  z-index: -1;
+  position: absolute;
+  top: 200px;
+  left: 0;
+  right: 0;
+  max-width: 900px;
+  margin: 0 auto;
+  opacity: 0;
+}
+
+.items {
+  max-width: 600px;
+  margin: 400px auto;
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+  background: grey;
+}
+
+.article-body {
+  margin: 0;
+  padding: 1em;
+  background: rgba(0, 0, 0, 0.5);
+  min-height: 400px;
+  color: white;
+}
+
+.text-container {
+  padding: 1em;
+}
+
+h1 {
+  padding: 0;
+  margin: 0;
+  font-weight: bolder;
+  font-size: 3em;
+}
+
+.item {
+  margin: 10px;
+  width: 150px;
+  height: 150px;
+  background: green;
+  z-index: 999;
+  display: inline-block;
+}
+
+.fixed-buttons {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 0.25rem;
+}
+
+button {
+  margin: 0.25rem;
+  padding: 0.25em;
+  font-size: 2em;
+}

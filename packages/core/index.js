@@ -23,9 +23,7 @@ function transition (type, element, params) {
     };
   }
 
-  apply(element, calculations, params);
-
-  return undefined;
+  return apply(element, calculations, params);
 }
 
 const transitions = {};

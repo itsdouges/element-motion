@@ -1,62 +1,7 @@
 <html>
   <head>
-<style>
-body {
-  margin: 0;
-  padding: 0;
-}
-
-.item.start {
-  background: url(./assets/stormy.jpg);
-  background-size: cover;
-  background-position: center center;
-}
-
-.end {
-  margin-left: 100px;
-  width: 300px;
-  height: 300px;
-  background: url(./assets/stormy.jpg);
-  background-size: cover;
-  background-position: center center;
-}
-
-.end-container {
-  z-index: -1;
-  position: absolute;
-  top: 200px;
-  left: 0;
-  right: 0;
-}
-
-.items {
-  max-width: 600px;
-  margin: 400px auto;
-  text-align: center;
-}
-
-.item {
-  margin: 10px;
-  width: 150px;
-  height: 150px;
-  background: green;
-  z-index: 999;
-  display: inline-block;
-}
-
-.fixed-buttons {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  margin: 0.25rem;
-}
-
-button {
-  margin: 0.25rem;
-  padding: 0.25em;
-  font-size: 2em;
-}
-</style>
+    <title>material-transitions</title> 
+    <link href="./assets/styles.css" rel="stylesheet" />
   </head>
   <body>
     <div class="items">
@@ -72,7 +17,21 @@ button {
     </div>
 
     <div class="end-container">
-      <div class="end" id="end"></div>
+      <div class="reveal-container">
+        <div class="flex-container">
+          <div class="end" id="end"></div>
+          <div class="text-container">
+            <h1>Storm Trooper</h1>
+            <p>
+              This guy tanks man. Seriously. He can pull 10 pokemon all the way from Aldeeraan through to Captial City.
+            </p>
+          </div>
+        </div>
+
+        <p class="article-body">
+          In other news, this is some more text.
+        </p>
+      </div>
     </div>
 
     <script src="/dist/mt-core.js"></script>
@@ -80,7 +39,8 @@ button {
   <div class="fixed-buttons">
     <button id="move">move</button>
     <button id="expand">expand</button>
-    <button id="expandMove">expand and move</button>
+    <button id="reveal">reveal</button>
+    <button id="combination">combination</button>
   </div>
 <script>
 function doMove (onFinish) {
@@ -111,18 +71,35 @@ function doExpand (onStart) {
   });
 }
 
-move.addEventListener('click', function () {
-  doMove();
+function prepareReveal (onFinish) {
+  return mtCore.reveal(document.querySelector('.reveal-container'), {
+    duration: 1,
+    showFromElement: document.getElementById('end'),
+    onStart: () => {
+      console.log('reveal:start');
+    },
+    onFinish: () => {
+      console.log('reveal:finish');
+      onFinish && onFinish();
+    },
+  });
+}
+
+move.addEventListener('click', () => doMove());
+expand.addEventListener('click', () => doExpand());
+
+const doReveal = prepareReveal();
+reveal.addEventListener('click', () => {
+  document.getElementsByClassName('end-container')[0].style.opacity = 1;
+  doReveal();
 });
 
-expand.addEventListener('click', function () {
-  doExpand();
-});
-
-expandMove.addEventListener('click', function () {
+combination.addEventListener('click', () => {
   doExpand(() => {
     doMove(() => {
       document.getElementsByClassName('end-container')[0].style.zIndex = 0;
+      document.getElementsByClassName('end-container')[0].style.opacity = 1;
+      doReveal();
     });
   });
 });

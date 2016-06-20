@@ -58,8 +58,13 @@ export default function apply (element, calculations, {
     }
   };
 
-  target.style.transition = `transform ${duration}s`;
+  target.style.transition = `transform ${duration}s, width ${duration}s, height ${duration}s`;
   target.addEventListener('transitionend', transitionEndEvent, false);
+
+  if (calculations.immediatelyApplyFrom) {
+    console.log(calculations.from);
+    applyStyles(target, calculations.from);
+  }
 
   // TODO: Can we avoid this somehow?
   setTimeout(() => {
@@ -74,4 +79,12 @@ export default function apply (element, calculations, {
       transformScale(target, to);
     }
   }, 5);
+
+  if (calculations.callbackToApplyTo) {
+    return () => {
+      applyStyles(target, calculations.to);
+    };
+  }
+
+  return undefined;
 }
