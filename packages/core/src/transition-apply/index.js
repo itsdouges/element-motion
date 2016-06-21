@@ -22,6 +22,7 @@ function transformScale (element, { scale, transformOrigin }) {
 export default function apply (element, calculations, {
   onStart,
   onFinish,
+  delay = 1,
   duration = 0.5,
   cleanup,
 }) {
@@ -69,7 +70,6 @@ export default function apply (element, calculations, {
   target.addEventListener('transitionend', transitionEndEvent, false);
 
   if (calculations.immediatelyApplyFrom) {
-    console.log(calculations.from);
     applyStyles(target, calculations.from);
   }
 
@@ -85,7 +85,7 @@ export default function apply (element, calculations, {
     if (to.scale) {
       transformScale(target, to);
     }
-  }, 5);
+  }, delay);
 
   if (calculations.callbackToApplyTo) {
     return () => {

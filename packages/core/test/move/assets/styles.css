@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background: #676767;
 }
 
 .item.start {
@@ -20,7 +21,6 @@ body {
 }
 
 .end-container {
-  z-index: -1;
   position: absolute;
   top: 200px;
   left: 0;
@@ -32,18 +32,18 @@ body {
 
 .items {
   max-width: 600px;
-  margin: 400px auto;
+  margin: 300px auto 600px;
   text-align: center;
 }
 
 .flex-container {
   display: flex;
-  background: grey;
+  background: #ccc;;
 }
 
 .article-body {
   margin: 0;
-  padding: 1em;
+  padding: 1px 3em;
   background: white;
   min-height: 600px;
   color: black;
@@ -54,7 +54,7 @@ body {
 }
 
 .text-container {
-  padding: 1em;
+  padding: 2em;
 }
 
 h1 {
@@ -64,20 +64,28 @@ h1 {
   font-size: 3em;
 }
 
+h2 {
+  margin: 2em 0.5em 0.5em 0;
+}
+
 .item {
-  margin: 10px;
+  margin: 0;
   width: 150px;
   height: 150px;
-  background: green;
+  background: #ccc;
   z-index: 999;
   display: inline-block;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
 }
 
 .fixed-buttons {
+  background: white;
   position: fixed;
+  text-align: right;
   bottom: 0;
   right: 0;
-  margin: 0.25rem;
+  left: 0;
+  padding: 0.25rem;
 }
 
 button {

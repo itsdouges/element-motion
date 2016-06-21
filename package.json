@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "lerna run start",
+    "build": "lerna run build",
     "react": "lerna run start --scope *react",
     "core": "lerna run start --scope *core"
   },
