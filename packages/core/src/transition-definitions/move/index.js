@@ -22,6 +22,8 @@ export default function move (fromElement, { matchSize } = {}) {
       callbackToApplyTo: true,
       ignoreApplyStyles: true,
       cloneElement: true,
+      applyScaleTransform: true,
+      applyTranslateTransform: true,
     },
     from: {
       ...fromLocation,

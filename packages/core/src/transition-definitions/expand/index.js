@@ -33,6 +33,7 @@ export default function expand (element) {
   return {
     options: {
       newElement: true,
+      applyScaleTransform: true,
     },
     from: {
       left: location.left - ((elementHypotenuse - size.width) / 2),

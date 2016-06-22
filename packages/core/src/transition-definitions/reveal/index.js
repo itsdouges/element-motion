@@ -4,6 +4,7 @@ export default function reveal (element, { showFromElement }) {
       callbackToApplyTo: true,
       immediatelyApplyFrom: true,
       resetHeightOnFinish: true,
+      applyStyles: true,
     },
     from: {
       height: showFromElement.clientHeight,

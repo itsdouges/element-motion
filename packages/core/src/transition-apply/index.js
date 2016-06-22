@@ -22,7 +22,7 @@ function transformScale (element, { scale, transformOrigin }) {
 export default function apply (element, { options, from, to }, {
   onStart,
   onFinish,
-  delay = 0,
+  delay = 1,
   duration = 0.5,
   cleanup,
 }) {
@@ -75,18 +75,18 @@ export default function apply (element, { options, from, to }, {
   const transition = () => {
     setTimeout(() => {
       requestAnimationFrame(() => {
-        if ((to.left && from.left) || (to.top && from.top)) {
+        if (options.applyTranslateTransform) {
           transformTranslate(target, {
             x: to.left - from.left,
             y: to.top - from.top,
           });
         }
 
-        if (to.scale) {
+        if (options.applyScaleTransform) {
           transformScale(target, to);
         }
 
-        if (!options.ignoreApplyStyles) {
+        if (options.applyStyles) {
           applyStyles(target, to);
         }
       });
