@@ -18,9 +18,11 @@ export default function move (fromElement, { matchSize } = {}) {
   };
 
   return {
-    callbackToApplyTo: true,
-    ignoreApplyStyles: true,
-    cloneElement: true,
+    options: {
+      callbackToApplyTo: true,
+      ignoreApplyStyles: true,
+      cloneElement: true,
+    },
     from: {
       ...fromLocation,
       ...fromSize,

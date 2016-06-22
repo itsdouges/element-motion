@@ -31,7 +31,9 @@ export default function expand (element) {
   const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
 
   return {
-    newElement: true,
+    options: {
+      newElement: true,
+    },
     from: {
       left: location.left - ((elementHypotenuse - size.width) / 2),
       top: location.top - ((elementHypotenuse - size.height) / 2),

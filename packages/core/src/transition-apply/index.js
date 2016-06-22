@@ -19,7 +19,7 @@ function transformScale (element, { scale, transformOrigin }) {
   });
 }
 
-export default function apply (element, calculations, {
+export default function apply (element, { options, from, to }, {
   onStart,
   onFinish,
   delay = 0,
@@ -28,12 +28,12 @@ export default function apply (element, calculations, {
 }) {
   let target;
 
-  if (calculations.newElement) {
-    target = createElement(calculations.from, {
+  if (options.newElement) {
+    target = createElement(from, {
       parentElement: element.parentElement,
     });
-  } else if (calculations.cloneElement) {
-    target = createElement(calculations.from, {
+  } else if (options.cloneElement) {
+    target = createElement(from, {
       cloneFrom: element,
       parentElement: element.parentElement,
     });
@@ -41,7 +41,6 @@ export default function apply (element, calculations, {
     target = element;
   }
 
-  const { to, from } = calculations;
   if (onStart) {
     onStart();
     onStart = undefined;
@@ -54,11 +53,11 @@ export default function apply (element, calculations, {
       onFinish = undefined;
     }
 
-    if (cleanup && (calculations.newElement || calculations.cloneElement)) {
+    if (cleanup && (options.newElement || options.cloneElement)) {
       target.parentElement.removeChild(target);
     }
 
-    if (calculations.resetHeightOnFinish) {
+    if (options.resetHeightOnFinish) {
       applyStyles(target, {
         height: 'auto',
         width: 'auto',
@@ -69,11 +68,11 @@ export default function apply (element, calculations, {
   target.style.transition = `transform ${duration}s, width ${duration}s, height ${duration}s`;
   target.addEventListener('transitionend', transitionEndEvent, false);
 
-  if (calculations.immediatelyApplyFrom) {
-    applyStyles(target, calculations.from);
+  if (options.immediatelyApplyFrom) {
+    applyStyles(target, from);
   }
 
-  const doStuff = () => {
+  const transition = () => {
     setTimeout(() => {
       requestAnimationFrame(() => {
         if ((to.left && from.left) || (to.top && from.top)) {
@@ -87,16 +86,16 @@ export default function apply (element, calculations, {
           transformScale(target, to);
         }
 
-        if (!calculations.ignoreApplyStyles) {
-          applyStyles(target, calculations.to);
+        if (!options.ignoreApplyStyles) {
+          applyStyles(target, to);
         }
       });
     }, delay);
   };
 
-  if (calculations.callbackToApplyTo) {
-    return doStuff;
+  if (options.callbackToApplyTo) {
+    return transition;
   }
 
-  return doStuff();
+  return transition();
 }
