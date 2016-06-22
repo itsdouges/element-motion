@@ -52,8 +52,26 @@ const getSpeed = () => {
   return document.getElementById('speed').value;
 };
 
+function fade (element, onFinish) {
+  mtCore.fadeout(element, {
+    duration: 0.75 / getSpeed(),
+    onStart: () => {
+      console.log('fadeout:start');
+    },
+    onFinish: () => {
+      console.log('fadeout:finish');
+      onFinish && onFinish();
+    },
+  });
+}
+
+window.fadeout = (onFinish) => {
+  fade(document.getElementById('start'), onFinish);
+};
+
 window.move = (onFinish) => {
-  const doMove = mtCore.move(document.getElementById('start'), {
+  // Prepare starting element.
+  const setEndElement = mtCore.move(document.getElementById('start'), {
     duration: 0.75 / getSpeed(),
     matchSize: true,
     cleanup: true,
@@ -64,12 +82,18 @@ window.move = (onFinish) => {
       console.log('move:finish');
       onFinish && onFinish();
     },
-  })(document.getElementById('end'));
+  });
 
+  // Prepare end element, can set it async (wait for page load).
+  const doMove = setEndElement(document.getElementById('end'));
+
+  // Fire when you want.
   setTimeout(() => {
     doMove();
   }, 500);
 }
+
+let fadeOutElement;
 
 window.expand = (onStart) => {
   mtCore.expand(document.getElementById('start'), {
@@ -78,7 +102,8 @@ window.expand = (onStart) => {
       console.log('expand:start');
       onStart && onStart();
     },
-    onFinish: () => {
+    onFinish: (e) => {
+      fadeOutElement = e;
       console.log('expand:finish');
     },
   });
@@ -98,8 +123,8 @@ function prepareReveal (onFinish) {
   });
 }
 
-const doReveal = prepareReveal();
-window.reveal = () => {
+window.reveal = (onFinish) => {
+  const doReveal = prepareReveal(onFinish);
   document.getElementsByClassName('end-container')[0].style.opacity = 1;
   doReveal();
 }
@@ -114,9 +139,15 @@ Object.keys(mtCore).forEach((key) => {
 });
 
 const combination = document.createElement('button');
-combination.innerHTML = 'combination';
+combination.innerHTML = 'material (combination)';
 combination.addEventListener('click', () => {
-  expand(() => move(reveal));
+  expand(() => {
+    move(() => {
+      reveal(() => {
+        fade(fadeOutElement);
+      });
+    });
+  });
 });
 
 buttonsContainer.appendChild(combination);

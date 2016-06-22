@@ -86,10 +86,13 @@ h2 {
   right: 0;
   left: 0;
   padding: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button {
   margin: 0.25rem;
   padding: 0.25em;
-  font-size: 2em;
+  font-size: 1.25em;
 }

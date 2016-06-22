@@ -42,14 +42,14 @@ export default function apply (element, { options, from, to }, {
   }
 
   if (onStart) {
-    onStart();
+    onStart(target);
     onStart = undefined;
   }
 
   const transitionEndEvent = () => {
     target.removeEventListener('transitionend', transitionEndEvent, false);
     if (onFinish) {
-      onFinish();
+      onFinish(target);
       onFinish = undefined;
     }
 
@@ -65,7 +65,9 @@ export default function apply (element, { options, from, to }, {
     }
   };
 
-  target.style.transition = `transform ${duration}s, width ${duration}s, height ${duration}s`;
+  // Need to set this per transition definition.
+  /* eslint max-len:0 */
+  target.style.transition = `transform ${duration}s, width ${duration}s, height ${duration}s, opacity ${duration}s`;
   target.addEventListener('transitionend', transitionEndEvent, false);
 
   if (options.immediatelyApplyFrom) {

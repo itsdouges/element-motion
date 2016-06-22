@@ -26,11 +26,15 @@ function transition (type, element, params) {
   return apply(element, calculations, params);
 }
 
+function cleanKey (key) {
+  return key.replace('-', '').replace('./', '').replace('/index.js', '');
+}
+
 const transitions = {};
 
 context.keys().forEach((key) => {
-  const cleanKey = key.replace('./', '').replace('/index.js', '');
-  transitions[cleanKey] = (element, params) => transition(cleanKey, element, params);
+  const cleanedKey = cleanKey(key);
+  transitions[cleanedKey] = (element, params) => transition(cleanedKey, element, params);
 });
 
 module.exports = transitions;
