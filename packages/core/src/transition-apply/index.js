@@ -65,9 +65,10 @@ export default function apply (element, { options, from, to }, {
     }
   };
 
-  // Need to set this per transition definition.
-  /* eslint max-len:0 */
-  target.style.transition = `transform ${duration}s, width ${duration}s, height ${duration}s, opacity ${duration}s`;
+  target.style.transition = options.transitions
+    .map((transition) => `${transition} ${duration}s`)
+    .join(',');
+
   target.addEventListener('transitionend', transitionEndEvent, false);
 
   if (options.immediatelyApplyFrom) {

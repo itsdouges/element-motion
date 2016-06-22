@@ -34,6 +34,7 @@ export default function expand (element, { background }) {
     options: {
       newElement: true,
       applyScaleTransform: true,
+      transitions: ['transform'],
     },
     from: {
       left: location.left - ((elementHypotenuse - size.width) / 2),

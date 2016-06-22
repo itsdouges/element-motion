@@ -52,37 +52,37 @@
     <input id="speed" type="range" min="0.1" max="1" step="0.1" value="1" />
   </div>
 <script>
-const getSpeed = () => {
+const getSpeed = function () {
   return document.getElementById('speed').value;
 };
 
 function fade (element, onFinish) {
   mtCore.fadeout(element, {
     duration: 0.75 / getSpeed(),
-    onStart: () => {
+    onStart: function () {
       console.log('fadeout:start');
     },
-    onFinish: () => {
+    onFinish: function () {
       console.log('fadeout:finish');
       onFinish && onFinish();
     },
   });
 }
 
-window.fadeout = (onFinish) => {
+window.fadeout = function (onFinish) {
   fade(document.getElementById('start'), onFinish);
 };
 
-window.move = (onFinish) => {
+window.move = function (onFinish) {
   // Prepare starting element.
   const setEndElement = mtCore.move(document.getElementById('start'), {
     duration: 0.75 / getSpeed(),
     matchSize: true,
     cleanup: true,
-    onStart: () => {
+    onStart: function () {
       console.log('move:start');
     },
-    onFinish: () => {
+    onFinish: function () {
       console.log('move:finish');
       onFinish && onFinish();
     },
@@ -97,15 +97,15 @@ window.move = (onFinish) => {
 
 let fadeOutElement;
 
-window.expand = (onStart) => {
+window.expand = function (onStart) {
   mtCore.expand(document.getElementById('start'), {
     duration: 0.5 / getSpeed(),
     background: '#3d7596',
-    onStart: () => {
+    onStart: function () {
       console.log('expand:start');
       onStart && onStart();
     },
-    onFinish: (e) => {
+    onFinish: function (e) {
       fadeOutElement = e;
       console.log('expand:finish');
     },
@@ -116,37 +116,37 @@ function prepareReveal (onFinish) {
   return mtCore.reveal(document.querySelector('.reveal-container'), {
     duration: 0.5 / getSpeed(),
     showFromElement: document.getElementById('end'),
-    onStart: () => {
+    onStart: function () {
       console.log('reveal:start');
     },
-    onFinish: () => {
+    onFinish: function () {
       console.log('reveal:finish');
       onFinish && onFinish();
     },
   });
 }
 
-window.reveal = (onFinish) => {
+window.reveal = function (onFinish) {
   const doReveal = prepareReveal(onFinish);
   document.getElementsByClassName('end-container')[0].style.opacity = 1;
   doReveal();
 }
 
 const buttonsContainer = document.querySelector('.fixed-buttons');
-Object.keys(mtCore).forEach((key) => {
+Object.keys(mtCore).forEach(function (key) {
   const button = document.createElement('button');
   button.innerHTML = key;
-  button.addEventListener('click', () => window[key]());
+  button.addEventListener('click', function () { window[key](); });
 
   buttonsContainer.appendChild(button);
 });
 
 const combination = document.createElement('button');
 combination.innerHTML = 'material (combination)';
-combination.addEventListener('click', () => {
-  expand(() => {
-    move(() => {
-      reveal(() => {
+combination.addEventListener('click', function () {
+  expand(function () {
+    move(function () {
+      reveal(function () {
         fade(fadeOutElement);
       });
     });

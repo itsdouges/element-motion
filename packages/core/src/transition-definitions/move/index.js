@@ -24,6 +24,7 @@ export default function move (fromElement, { matchSize } = {}) {
       cloneElement: true,
       applyScaleTransform: true,
       applyTranslateTransform: true,
+      transitions: ['transform'],
     },
     from: {
       ...fromLocation,
