@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -9,6 +13,27 @@ body {
   background: url(./stormy.jpg);
   background-size: cover;
   background-position: center center;
+  cursor: pointer;
+}
+
+.hero-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: black;
+  z-index: -1;
+  opacity: 0.2;
+}
+
+.hero {
+  height: 200px;
+  background: url(./starwars.png);
+  background-color: black;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .end {
@@ -25,9 +50,24 @@ body {
   top: 200px;
   left: 0;
   right: 0;
-  max-width: 900px;
   margin: 0 auto;
   opacity: 0;
+}
+
+@media only screen and (min-width: 600px) {
+  .flex-container,
+  .article-body,
+  .end-container {
+    width: 500px;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .flex-container,
+  .article-body,
+  .end-container {
+    width: 900px;
+  }
 }
 
 .items {
@@ -55,6 +95,8 @@ body {
 
 .text-container {
   padding: 2em;
+  height: 300px;
+  overflow: hidden;
 }
 
 h1 {

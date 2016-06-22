@@ -6,7 +6,7 @@ import {
   calculateElementCenterInViewport,
 } from 'dom';
 
-export default function expand (element) {
+export default function expand (element, { background }) {
   const location = calculateElementLocation(element);
   const size = calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
@@ -41,7 +41,7 @@ export default function expand (element) {
       width: elementHypotenuse,
       height: elementHypotenuse,
       borderRadius: '50%',
-      backgroundColor: 'orange',
+      background: background || 'orange',
       position: 'fixed',
     },
     to: {

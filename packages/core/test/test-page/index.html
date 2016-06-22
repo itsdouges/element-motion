@@ -4,6 +4,10 @@
     <link href="./assets/styles.css" rel="stylesheet" />
   </head>
   <body>
+    <div class="hero-sticky">
+      <div class="hero"></div>
+    </div>
+
     <div class="items">
       <div class="item"></div>
       <div class="item"></div>
@@ -88,9 +92,7 @@ window.move = (onFinish) => {
   const doMove = setEndElement(document.getElementById('end'));
 
   // Fire when you want.
-  setTimeout(() => {
-    doMove();
-  }, 500);
+  setTimeout(doMove, 500 / getSpeed());
 }
 
 let fadeOutElement;
@@ -98,6 +100,7 @@ let fadeOutElement;
 window.expand = (onStart) => {
   mtCore.expand(document.getElementById('start'), {
     duration: 0.5 / getSpeed(),
+    background: '#3d7596',
     onStart: () => {
       console.log('expand:start');
       onStart && onStart();
