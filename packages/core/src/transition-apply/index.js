@@ -22,7 +22,7 @@ function transformScale (element, { scale, transformOrigin }) {
 export default function apply (element, calculations, {
   onStart,
   onFinish,
-  delay = 1,
+  delay = 0,
   duration = 0.5,
   cleanup,
 }) {
@@ -73,25 +73,30 @@ export default function apply (element, calculations, {
     applyStyles(target, calculations.from);
   }
 
-  // TODO: Can we avoid this somehow?
-  setTimeout(() => {
-    if ((to.left && from.left) || (to.top && from.top)) {
-      transformTranslate(target, {
-        x: to.left - from.left,
-        y: to.top - from.top,
-      });
-    }
+  const doStuff = () => {
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        if ((to.left && from.left) || (to.top && from.top)) {
+          transformTranslate(target, {
+            x: to.left - from.left,
+            y: to.top - from.top,
+          });
+        }
 
-    if (to.scale) {
-      transformScale(target, to);
-    }
-  }, delay);
+        if (to.scale) {
+          transformScale(target, to);
+        }
+
+        if (!calculations.ignoreApplyStyles) {
+          applyStyles(target, calculations.to);
+        }
+      });
+    }, delay);
+  };
 
   if (calculations.callbackToApplyTo) {
-    return () => {
-      applyStyles(target, calculations.to);
-    };
+    return doStuff;
   }
 
-  return undefined;
+  return doStuff();
 }

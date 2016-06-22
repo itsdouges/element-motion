@@ -19,7 +19,7 @@ function transition (type, element, params) {
     return (toElement) => {
       calculations.to = calculations.to(toElement);
 
-      apply(element, calculations, params);
+      return apply(element, calculations, params);
     };
   }
 

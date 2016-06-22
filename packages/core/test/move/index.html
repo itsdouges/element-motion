@@ -53,11 +53,10 @@ const getSpeed = () => {
 };
 
 window.move = (onFinish) => {
-  mtCore.move(document.getElementById('start'), {
+  const doMove = mtCore.move(document.getElementById('start'), {
     duration: 0.75 / getSpeed(),
-    resize: true,
+    matchSize: true,
     cleanup: true,
-    delay: 100 / getSpeed(),
     onStart: () => {
       console.log('move:start');
     },
@@ -66,6 +65,10 @@ window.move = (onFinish) => {
       onFinish && onFinish();
     },
   })(document.getElementById('end'));
+
+  setTimeout(() => {
+    doMove();
+  }, 500);
 }
 
 window.expand = (onStart) => {
