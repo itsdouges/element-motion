@@ -1,23 +1,10 @@
 /* eslint no-param-reassign:0, no-unused-expressions:0 */
-import { createElement, applyStyles } from 'dom';
-
-function transformTranslate (element, { x, y }) {
-  applyStyles(element, {
-    transform: `translate3d(${x}px, ${y}px, 0)`,
-  });
-}
-
-function transformScale (element, { scale, transformOrigin }) {
-  const transform = `${element.style.transform} scale(${scale})`;
-
-  applyStyles(element, {
-    transformOrigin,
-    backfaceVisibility: 'hidden',
-    outline: '1px solid transparent',
-    webkitBackgroundClip: 'content-box',
-    transform,
-  });
-}
+import {
+  createElement,
+  applyStyles,
+  transformTranslate,
+  transformScale,
+} from 'dom';
 
 export default function apply (element, { options, from, to }, {
   onStart,
@@ -30,12 +17,12 @@ export default function apply (element, { options, from, to }, {
 
   if (options.newElement) {
     target = createElement(from, {
-      parentElement: element.parentElement,
+      parentElement: options.createInBody ? document.body : element.parentElement,
     });
   } else if (options.cloneElement) {
     target = createElement(from, {
       cloneFrom: element,
-      parentElement: element.parentElement,
+      parentElement: options.createInBody ? document.body : element.parentElement,
     });
   } else {
     target = element;
@@ -72,7 +59,11 @@ export default function apply (element, { options, from, to }, {
   target.addEventListener('transitionend', transitionEndEvent, false);
 
   if (options.immediatelyApplyFrom) {
-    applyStyles(target, from);
+    requestAnimationFrame(() => {
+      if (options.applyStyles) {
+        applyStyles(target, from);
+      }
+    });
   }
 
   const transition = () => {

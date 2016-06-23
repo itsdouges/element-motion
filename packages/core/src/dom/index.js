@@ -51,7 +51,40 @@ export function calculateElementCenterInViewport (element) {
   };
 }
 
-export function createElement (styles, { parentElement = document.body, cloneFrom }) {
+export function transformTranslate (element, { x, y }) {
+  if (!x || !y) {
+    return;
+  }
+
+  applyStyles(element, {
+    transform: `translate3d(${x}px, ${y}px, 0)`,
+  });
+}
+
+export function transformScale (element, { scale, transformOrigin }) {
+  if (!scale) {
+    return;
+  }
+
+  const scaleModifier = `scale(${scale})`;
+  let transform = element.style.transform;
+  if (transform.indexOf('scale') > -1) {
+    transform = transform.replace(/scale\(.*\)/, scaleModifier);
+  } else if (transform.length > 0) {
+    transform = `${element.style.transform} scale(${scale})`;
+  } else {
+    transform = scaleModifier;
+  }
+
+  applyStyles(element, {
+    transformOrigin,
+    backfaceVisibility: 'hidden',
+    webkitBackgroundClip: 'content-box',
+    transform,
+  });
+}
+
+export function createElement (styles, { parentElement = document.body, cloneFrom } = {}) {
   const newElement = document.createElement('div');
   const innerElement = (cloneFrom && cloneFrom.cloneNode(true));
   if (innerElement) {
@@ -66,6 +99,8 @@ export function createElement (styles, { parentElement = document.body, cloneFro
   applyStyles(newElement, {
     ...styles,
   });
+
+  transformScale(newElement, styles);
 
   parentElement.appendChild(newElement);
   return newElement;

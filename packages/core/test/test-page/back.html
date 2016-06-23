@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>material-transitions | to</title> 
+    <title>material-transitions | from</title> 
     <link href="./assets/styles.css" rel="stylesheet" />
   </head>
   <body>
@@ -8,7 +8,7 @@
       <div class="hero"></div>
     </div>
 
-    <div class="items">
+    <div class="items" style="opacity: 1;">
       <div class="item"></div>
       <div class="item"></div>
       <div class="item"></div>
@@ -20,7 +20,7 @@
       <div class="item"></div>
     </div>
 
-    <div class="end-container">
+    <div class="end-container" style="opacity: 1;">
       <div class="reveal-container">
         <div class="flex-container">
           <div class="end" id="end"></div>
@@ -73,14 +73,15 @@ window.fadeout = function (onFinish) {
   fade(document.getElementById('start'), onFinish);
 };
 
-window.move = function (onFinish) {
+window.move = function (onFinish, onStart) {
   // Prepare starting element.
-  const setEndElement = mtCore.move(document.getElementById('start'), {
-    duration: 0.75 / getSpeed(),
+  const setEndElement = mtCore.move(document.getElementById('end'), {
+    duration: 0.5 / getSpeed(),
     matchSize: true,
     cleanup: true,
     onStart: function () {
       console.log('move:start');
+      onStart && onStart();
     },
     onFinish: function () {
       console.log('move:finish');
@@ -89,10 +90,10 @@ window.move = function (onFinish) {
   });
 
   // Prepare end element, can set it async (wait for page load).
-  const doMove = setEndElement(document.getElementById('end'));
+  const doMove = setEndElement(document.getElementById('start'));
 
   // Fire when you want.
-  setTimeout(doMove, 500 / getSpeed());
+  setTimeout(doMove, 0 / getSpeed());
 }
 
 let fadeOutElement;
@@ -101,6 +102,9 @@ window.expand = function (onStart) {
   mtCore.expand(document.getElementById('start'), {
     duration: 0.5 / getSpeed(),
     background: '#3d7596',
+    reverse: true,
+    cleanup: true,
+    coverage: 'contain',
     onStart: function () {
       console.log('expand:start');
       onStart && onStart();
@@ -116,6 +120,7 @@ function prepareReveal (onFinish) {
   return mtCore.reveal(document.querySelector('.reveal-container'), {
     duration: 0.5 / getSpeed(),
     showFromElement: document.getElementById('end'),
+    reverse: true,
     onStart: function () {
       console.log('reveal:start');
     },
@@ -128,7 +133,7 @@ function prepareReveal (onFinish) {
 
 window.reveal = function (onFinish) {
   const doReveal = prepareReveal(onFinish);
-  document.getElementsByClassName('end-container')[0].style.opacity = 1;
+  document.querySelector('.end-container').style.opacity = 1;
   doReveal();
 }
 
@@ -143,12 +148,11 @@ Object.keys(mtCore).forEach(function (key) {
 
 const combination = document.createElement('button');
 combination.innerHTML = 'material (combination)';
-combination.addEventListener('click', function () {
-  expand(function () {
-    move(function () {
-      reveal(function () {
-        fade(fadeOutElement);
-      });
+combination.addEventListener('click', function () {  
+  reveal(function () {
+    move(null, function () {
+      expand();
+      document.querySelector('.end-container').style.opacity = 0;
     });
   });
 });

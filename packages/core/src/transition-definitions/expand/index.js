@@ -6,12 +6,12 @@ import {
   calculateElementCenterInViewport,
 } from 'dom';
 
-export default function expand (element, { background }) {
+export default function expand (element, { background, reverse, coverage }) {
   const location = calculateElementLocation(element);
   const size = calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
 
-  const elementHypotenuse = calculateHypotenuse(size);
+  const elementHypotenuse = coverage === 'contain' ? minSize : calculateHypotenuse(size);
 
   const windowHypotenuse = calculateHypotenuse({
     width: window.innerWidth,
@@ -44,9 +44,10 @@ export default function expand (element, { background }) {
       borderRadius: '50%',
       background: background || 'orange',
       position: 'fixed',
+      scale: reverse ? scale : undefined,
     },
     to: {
-      scale,
+      scale: reverse ? 1 : scale,
     },
   };
 }

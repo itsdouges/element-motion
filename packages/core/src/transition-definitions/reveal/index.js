@@ -1,20 +1,24 @@
-export default function reveal (element, { showFromElement }) {
+export default function reveal (element, { showFromElement, reverse }) {
+  const from = {
+    height: showFromElement.clientHeight,
+    width: showFromElement.clientWidth,
+    overflow: 'hidden',
+  };
+
+  const to = {
+    height: element.clientHeight,
+    width: element.clientWidth,
+  };
+
   return {
     options: {
       callbackToApplyTo: true,
       immediatelyApplyFrom: true,
-      resetHeightOnFinish: true,
+      resetHeightOnFinish: !reverse,
       applyStyles: true,
       transitions: ['width', 'height'],
     },
-    from: {
-      height: showFromElement.clientHeight,
-      width: showFromElement.clientWidth,
-      overflow: 'hidden',
-    },
-    to: {
-      height: element.clientHeight,
-      width: element.clientWidth,
-    },
+    from: reverse ? to : from,
+    to: reverse ? from : to,
   };
 }

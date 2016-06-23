@@ -25,6 +25,7 @@ export default function move (fromElement, { matchSize } = {}) {
       applyScaleTransform: true,
       applyTranslateTransform: true,
       transitions: ['transform'],
+      createInBody: true,
     },
     from: {
       ...fromLocation,
