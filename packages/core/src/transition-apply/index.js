@@ -59,11 +59,9 @@ export default function apply (element, { options, from, to }, {
   target.addEventListener('transitionend', transitionEndEvent, false);
 
   if (options.immediatelyApplyFrom) {
-    requestAnimationFrame(() => {
-      if (options.applyStyles) {
-        applyStyles(target, from);
-      }
-    });
+    if (options.applyStyles) {
+      applyStyles(target, from);
+    }
   }
 
   const transition = () => {
