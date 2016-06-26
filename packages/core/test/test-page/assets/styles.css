@@ -27,6 +27,15 @@ body {
   opacity: 0.2;
 }
 
+.sticky {
+  position: absolute;
+}
+
+.sticky-right {
+  top: 0;
+  right: 0;
+}
+
 .hero {
   height: 200px;
   background: url(./starwars.png);
@@ -96,7 +105,14 @@ body {
 .text-container {
   padding: 2em;
   height: 300px;
+  position: relative;
   overflow: hidden;
+}
+
+.close-button {
+  padding: 0 0.25em;
+  cursor: pointer;
+  font-size: 2em;
 }
 
 h1 {

@@ -40,7 +40,7 @@ export default function apply (element, { options, from, to }, {
       onFinish = undefined;
     }
 
-    if (cleanup && (options.newElement || options.cloneElement)) {
+    if (cleanup) {
       target.parentElement.removeChild(target);
     }
 
