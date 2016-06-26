@@ -4,7 +4,7 @@
   "description": "Material Transitions React",
   "main": "dist/mt-react.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline --open",
+    "start": "webpack-dev-server --hot --inline --open --port 8081",
     "build": "webpack",
     "test": "karma start"
   },
@@ -26,9 +26,6 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.6.1",
-    "lerna": "2.0.0-beta.18",
-    "webpack": "^1.12.14",
-    "webpack-dev-server": "^1.14.1",
     "chai": "^3.5.0",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
@@ -42,9 +39,13 @@
     "karma-sinon-chai": "^1.2.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.7.0",
+    "lerna": "2.0.0-beta.18",
     "lolex": "^1.4.0",
     "react-dom": "^0.14.7",
+    "react-router": "^2.5.1",
     "sinon": "^1.17.3",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
   }
 }

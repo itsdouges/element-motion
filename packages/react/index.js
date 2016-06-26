@@ -1,2 +1,2 @@
-const context = require.context("./", true, /.js/);
-context.keys().forEach(context);
+// const context = require.context("./", true, /.js/);
+// context.keys().forEach(context);

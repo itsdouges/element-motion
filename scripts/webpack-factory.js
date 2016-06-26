@@ -42,6 +42,7 @@ module.exports = (params) => {
     devServer: {
       publicPath: '/dist/',
     },
+    plugins: params.plugins,
   };
 
   if (params.loaders) {
