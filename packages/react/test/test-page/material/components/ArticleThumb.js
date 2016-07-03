@@ -1,12 +1,17 @@
 import { Link } from 'react-router';
+import { Component } from 'react';
 
-const ArticleThumb = (props) => (
-  <div title={props.item.name}
-    className="item"
-    style={{ backgroundImage: `url(./assets/${props.item.image})` }}
-  >
-    <Link to={`article/${props.item.slug}`}>{props.item.name}</Link>
-  </div>
-);
-
-export default ArticleThumb;
+export default class ArticleThumb extends Component {
+  render () {
+    return (
+      <div
+        onClick={this.props.doTransition}
+        title={this.props.item.name}
+        className="item"
+        style={{ backgroundImage: `url(./assets/${this.props.item.image})` }}
+      >
+        <Link to={`article/${this.props.item.slug}`}>{this.props.item.name}</Link>
+      </div>
+    );
+  }
+}

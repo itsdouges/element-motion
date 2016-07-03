@@ -1,5 +1,8 @@
 import ArticleThumb from '../components/ArticleThumb';
 import { Component } from 'react';
+import withTransition from '../../../../src/components/WithTransition';
+
+const ArticleThumbWithTransition = withTransition(ArticleThumb);
 
 const items = [
   {
@@ -12,7 +15,7 @@ const items = [
 export default class HomeView extends Component {
   componentWillLeave (cb) {
     console.log('home leaving');
-    cb();
+    // cb();
   }
 
   componentWillAppear (cb) {
@@ -30,7 +33,7 @@ export default class HomeView extends Component {
       <ul className="items">
         {items.map((item, index) => (
           <li key={index}>
-            <ArticleThumb item={item} />
+            <ArticleThumbWithTransition item={item} />
           </li>
         ))}
       </ul>

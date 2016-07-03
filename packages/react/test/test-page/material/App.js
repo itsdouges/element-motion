@@ -1,5 +1,5 @@
-import { Component, cloneElement } from 'react';
-import TransitionGroup from 'react-addons-transition-group';
+import { Component } from 'react';
+import MaterialTransitions from '../../../src/components/MaterialTransitions';
 
 class App extends Component {
   constructor () {
@@ -14,11 +14,9 @@ class App extends Component {
           <div className="hero"></div>
         </div>
 
-        <TransitionGroup>
-          {cloneElement(this.props.children, {
-            key: this.props.location.pathname,
-          })}
-        </TransitionGroup>
+        <MaterialTransitions {...this.props}>
+          {this.props.children}
+        </MaterialTransitions>
       </div>
     );
   }

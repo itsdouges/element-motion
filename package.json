@@ -8,5 +8,8 @@
   "devDependencies": {
     "lerna": "2.0.0-beta.18",
     "webpack": "^1.13.1"
+  },
+  "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.10.2"
   }
 }
