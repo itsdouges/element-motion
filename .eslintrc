@@ -14,6 +14,8 @@
   "rules": {
     "space-before-function-paren": [2, "always"],
     "react/react-in-jsx-scope": 0,
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "react/no-multi-comp": 0,
+    "react/prefer-stateless-function": 0
   }
 }

@@ -13,6 +13,11 @@ body {
   overflow-y: scroll;
 }
 
+li {
+  display: inline;
+  text-decoration: none;
+}
+
 .hero-sticky {
   position: fixed;
   top: 0;

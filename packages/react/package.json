@@ -11,7 +11,8 @@
   "author": "madou",
   "license": "ISC",
   "dependencies": {
-    "material-transitions-core": "^0.0.0"
+    "material-transitions-core": "^0.0.0",
+    "react-addons-transition-group": "^15.1.0"
   },
   "peerDependencies": {
     "react": "^15.1.0"

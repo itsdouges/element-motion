@@ -1,7 +1,8 @@
 import ReactDOM from 'react-dom';
 import App from './App';
 import Home from './views/Home';
-import Article from './components/Article';
+import Article from './views/Article';
+
 import {
   Router,
   Route,

@@ -1,4 +1,5 @@
-import { Link } from 'react-router';
+import ArticleThumb from '../components/ArticleThumb';
+import { Component } from 'react';
 
 const items = [
   {
@@ -8,18 +9,31 @@ const items = [
   },
 ];
 
-const HomeView = () => (
-  <ul className="items">
-    {items.map((item, index) => (
-      <li title={item.name}
-        className="item"
-        key={index}
-        style={{ backgroundImage: `url(./assets/${item.image})` }}
-      >
-        <Link to={`article/${item.slug}`}>{item.name}</Link>
-      </li>
-    ))}
-  </ul>
-);
+export default class HomeView extends Component {
+  componentWillLeave (cb) {
+    console.log('home leaving');
+    cb();
+  }
 
-export default HomeView;
+  componentWillAppear (cb) {
+    console.log('home appearing');
+    cb();
+  }
+
+  componentWillEnter (cb) {
+    console.log('home entering');
+    cb();
+  }
+
+  render () {
+    return (
+      <ul className="items">
+        {items.map((item, index) => (
+          <li key={index}>
+            <ArticleThumb item={item} />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+}
