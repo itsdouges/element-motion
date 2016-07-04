@@ -15,11 +15,14 @@ function transition (type, element, params) {
 
   const calculations = calc(element, params);
 
+  // Rethink this implementation.
   if (typeof calculations.to === 'function') {
-    return (toElement) => {
-      calculations.to = calculations.to(toElement);
+    const applyCallback = apply(element, calculations, params);
 
-      return apply(element, calculations, params);
+    return (toElement) => {
+      const to = calculations.to(toElement);
+
+      applyCallback(to);
     };
   }
 

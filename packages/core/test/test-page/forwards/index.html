@@ -88,11 +88,9 @@ window.move = function (onFinish) {
     },
   });
 
-  // Prepare end element, can set it async (wait for page load).
-  const doMove = setEndElement(document.getElementById('end'));
-
-  // Fire when you want.
-  setTimeout(doMove, 500 / getSpeed());
+  setTimeout(() => {
+    setEndElement(document.getElementById('end'));
+  }, 500 / getSpeed());
 }
 
 let fadeOutElement;

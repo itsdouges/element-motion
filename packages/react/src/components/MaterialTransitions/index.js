@@ -2,14 +2,26 @@ import { PropTypes, Component, cloneElement } from 'react';
 import TransitionGroup from 'react-addons-transition-group';
 
 class MaterialTransitions extends Component {
-  getChildContext () {
-    return {
-      trigger: this.trigger,
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      setEnd: undefined,
     };
   }
 
-  trigger (you) {
-    console.log('hey', you);
+  getChildContext () {
+    return {
+      __MaterialTransitions: {
+        waiting: this.waiting,
+      },
+    };
+  }
+
+  waiting = (callback) => {
+    this.setState({
+      setEnd: callback,
+    });
   }
 
   render () {
@@ -24,7 +36,7 @@ class MaterialTransitions extends Component {
 }
 
 MaterialTransitions.childContextTypes = {
-  trigger: PropTypes.func,
+  __MaterialTransitions: PropTypes.object,
 };
 
 export default MaterialTransitions;

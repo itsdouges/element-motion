@@ -4,23 +4,41 @@ import ReactDom from 'react-dom';
 import { PropTypes } from 'react';
 
 const Enhance = (ComposedComponent) => class WithTransition extends Component {
-  static contextTypes = { trigger: PropTypes.func };
+  static contextTypes = {
+    __MaterialTransitions: PropTypes.object,
+  };
 
   doTransition = () => {
     const element = ReactDom.findDOMNode(this.refs._component);
 
-    mtCore['expand'](element, {
-      duration: 0.5,
-      background: '#3d7596',
+    const setEnd = mtCore['move'](element, {
+      duration: 0.75,
+      matchSize: true,
+      cleanup: true,
       onStart () {
-        console.log('expand:start');
+        console.log('move:start');
       },
       onFinish () {
-        console.log('expand:finish');
+        console.log('move:finish');
       },
     });
 
-    // this.context.trigger(element);
+    // mtCore[this.props.type](element, {
+    //   duration: 0.5,
+    //   background: '#3d7596',
+    //   onStart () {
+    //     console.log('expand:start');
+    //   },
+    //   onFinish () {
+    //     console.log('expand:finish');
+    //   },
+    // });
+
+    console.log(this.context);
+
+    // setEnd(element);
+
+    this.context.__MaterialTransitions.waiting(setEnd);
   }
 
   render () {

@@ -64,22 +64,24 @@ export default function apply (element, { options, from, to }, {
     }
   }
 
-  const transition = () => {
+  const transition = (toOverride) => {
+    const toOptions = toOverride || to;
+
     setTimeout(() => {
       requestAnimationFrame(() => {
         if (options.applyTranslateTransform) {
           transformTranslate(target, {
-            x: to.left - from.left,
-            y: to.top - from.top,
+            x: toOptions.left - from.left,
+            y: toOptions.top - from.top,
           });
         }
 
         if (options.applyScaleTransform) {
-          transformScale(target, to);
+          transformScale(target, toOptions);
         }
 
         if (options.applyStyles) {
-          applyStyles(target, to);
+          applyStyles(target, toOptions);
         }
       });
     }, delay);

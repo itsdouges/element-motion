@@ -33,7 +33,10 @@ export default class HomeView extends Component {
       <ul className="items">
         {items.map((item, index) => (
           <li key={index}>
-            <ArticleThumbWithTransition item={item} />
+            <ArticleThumbWithTransition
+              type="expand"
+              item={item}
+            />
           </li>
         ))}
       </ul>
