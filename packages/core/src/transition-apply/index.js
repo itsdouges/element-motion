@@ -72,25 +72,30 @@ function setInitialStyles (element, {
 
   if (immediatelyApplyFrom) {
     if (styleApply) {
-      applyStyles(element, from);
+      requestAnimationFrame(() => {
+        applyStyles(element, from);
+      });
     }
   }
 }
 
-export default function apply (element, { options, from, to }, {
-  onStart,
-  onFinish,
-  delay = 1,
-  duration = 0.5,
-  autoCleanup,
-}, {
+export default function apply (element, {
+  transition: {
+    from,
+    options,
+  },
+  options: {
+    onStart,
+    delay = 1,
+    duration = 0.5,
+    autoCleanup,
+  },
   resolve,
 }) {
   const target = setTarget(element, options, from);
 
   setEvents(target, {
     onStart,
-    onFinish,
     autoCleanup,
     resetHeightOnFinish: options.resetHeightOnFinish,
     resolve,
@@ -104,24 +109,22 @@ export default function apply (element, { options, from, to }, {
     from,
   });
 
-  const transition = (toOverride) => {
-    const toOptions = toOverride || to;
-
+  const transition = (to) => {
     setTimeout(() => {
       requestAnimationFrame(() => {
         if (options.applyTranslateTransform) {
           transformTranslate(target, {
-            x: toOptions.left - from.left,
-            y: toOptions.top - from.top,
+            x: to.left - from.left,
+            y: to.top - from.top,
           });
         }
 
         if (options.applyScaleTransform) {
-          transformScale(target, toOptions);
+          transformScale(target, to);
         }
 
         if (options.applyStyles) {
-          applyStyles(target, toOptions);
+          applyStyles(target, to);
         }
       });
     }, delay);

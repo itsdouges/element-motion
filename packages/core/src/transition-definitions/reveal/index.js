@@ -12,7 +12,6 @@ export default function reveal (element, { showFromElement, reverse }) {
 
   return {
     options: {
-      callbackToApplyTo: true,
       immediatelyApplyFrom: true,
       resetHeightOnFinish: !reverse,
       applyStyles: true,

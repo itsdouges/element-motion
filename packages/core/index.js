@@ -2,30 +2,35 @@ import apply from 'transition-apply';
 const context = require.context('transition-definitions', true, /^((?!spec).)*\.js$/);
 import deferred from 'lib/deferred';
 
-function transition (type, element, params) {
+function transition (type, element, options) {
   const calc = require(`transition-definitions/${type}/index.js`).default;
 
-  const calculations = calc(element, params);
+  const transitionDefinition = calc(element, options);
   const defer = deferred();
-  const start = apply(element, calculations, params, defer);
 
-  const settings = {
+  const start = apply(element, {
+    options,
+    transition: transitionDefinition,
+    resolve: defer.resolve,
+  });
+
+  const params = {
     promise: defer.promise,
     start: (data) => {
-      const to = (typeof calculations.to === 'function') ?
-        calculations.to(data) :
-        undefined;
+      const to = (typeof transitionDefinition.to === 'function') ?
+        transitionDefinition.to(data) :
+        transitionDefinition.to;
 
       start(to);
     },
   };
 
-  if (params.autoStart) {
-    settings.start();
-    delete settings.start;
+  if (options.autoStart) {
+    params.start();
+    delete params.start;
   }
 
-  return settings;
+  return params;
 }
 
 function cleanKey (key) {
@@ -36,7 +41,7 @@ const transitions = {};
 
 context.keys().forEach((key) => {
   const cleanedKey = cleanKey(key);
-  transitions[cleanedKey] = (element, params) => transition(cleanedKey, element, params);
+  transitions[cleanedKey] = (element, options) => transition(cleanedKey, element, options);
 });
 
 module.exports = transitions;
