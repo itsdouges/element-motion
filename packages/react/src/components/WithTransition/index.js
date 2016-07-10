@@ -3,42 +3,32 @@ import mtCore from 'material-transitions-core';
 import ReactDom from 'react-dom';
 import { PropTypes } from 'react';
 
-const Enhance = (ComposedComponent) => class WithTransition extends Component {
+const DecorateWithTransition = (ComposedComponent, options) => class WithTransition extends Component {
   static contextTypes = {
     __MaterialTransitions: PropTypes.object,
   };
 
-  doTransition = () => {
+  _start = () => {
     const element = ReactDom.findDOMNode(this.refs._component);
+    const types = options.type.split(',');
 
-    const setEnd = mtCore['move'](element, {
+    types.forEach((type, index) => {
+      const callback = this._transition(element, {
+        type,
+        options,
+      });
+
+      callback && this.context.__MaterialTransitions.waiting(callback);
+    });
+  }
+
+  _transition (element, { type, options }) {
+    return mtCore[type](element, {
       duration: 0.75,
       matchSize: true,
       cleanup: true,
-      onStart () {
-        console.log('move:start');
-      },
-      onFinish () {
-        console.log('move:finish');
-      },
+      ...options,
     });
-
-    // mtCore[this.props.type](element, {
-    //   duration: 0.5,
-    //   background: '#3d7596',
-    //   onStart () {
-    //     console.log('expand:start');
-    //   },
-    //   onFinish () {
-    //     console.log('expand:finish');
-    //   },
-    // });
-
-    console.log(this.context);
-
-    // setEnd(element);
-
-    this.context.__MaterialTransitions.waiting(setEnd);
   }
 
   render () {
@@ -46,10 +36,10 @@ const Enhance = (ComposedComponent) => class WithTransition extends Component {
       <ComposedComponent
         ref="_component"
         {...this.props}
-        doTransition={this.doTransition}
+        doTransition={this._start}
       />
     );
   }
 };
 
-export default Enhance;
+export default DecorateWithTransition;

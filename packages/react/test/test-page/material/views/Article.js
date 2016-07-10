@@ -1,7 +1,8 @@
 import Article from '../components/Article';
 import { Component } from 'react';
+import withTransition from '../../../../src/components/WithTransition';
 
-export default class ArticleView extends Component {
+class ArticleView extends Component {
   componentWillLeave (cb) {
     console.log('article leaving');
     cb();
@@ -23,3 +24,7 @@ export default class ArticleView extends Component {
     );
   }
 }
+
+export default withTransition(ArticleView, {
+  immediate: true,
+});

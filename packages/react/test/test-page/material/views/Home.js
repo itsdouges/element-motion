@@ -2,7 +2,9 @@ import ArticleThumb from '../components/ArticleThumb';
 import { Component } from 'react';
 import withTransition from '../../../../src/components/WithTransition';
 
-const ArticleThumbWithTransition = withTransition(ArticleThumb);
+const ArticleThumbWithTransition = withTransition(ArticleThumb, {
+  type: 'expand,move',
+});
 
 const items = [
   {
@@ -34,7 +36,6 @@ export default class HomeView extends Component {
         {items.map((item, index) => (
           <li key={index}>
             <ArticleThumbWithTransition
-              type="expand"
               item={item}
             />
           </li>

@@ -14,6 +14,7 @@ class MaterialTransitions extends Component {
     return {
       __MaterialTransitions: {
         waiting: this.waiting,
+        setEnd: this.state.setEnd,
       },
     };
   }

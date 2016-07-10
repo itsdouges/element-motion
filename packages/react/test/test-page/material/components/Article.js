@@ -1,12 +1,16 @@
 /* eslint max-len: 0 */
 
 import { Link } from 'react-router';
+import ArticleHero from './ArticleHero';
+import targetForTransition from '../../../../src/components/TargetForTransition';
+
+const ArticleHeroForTransition = targetForTransition(ArticleHero);
 
 const Article = () => (
   <div className="end-container">
     <div className="reveal-container">
       <div className="flex-container">
-        <div className="end" id="end"></div>
+        <ArticleHeroForTransition />
         <div className="text-container">
           <div className="sticky sticky-right close-button" id="close"><Link to="/">✖</Link></div>
           <h1>Storm Trooper</h1>
