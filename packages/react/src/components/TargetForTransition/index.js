@@ -3,7 +3,7 @@ import mtCore from 'material-transitions-core';
 import ReactDom from 'react-dom';
 import { PropTypes } from 'react';
 
-const Enhance = (ComposedComponent) => class WithTransition extends Component {
+const DecorateWithTransition = (ComposedComponent) => class WithTransition extends Component {
   static contextTypes = {
     __MaterialTransitions: PropTypes.object,
   };
@@ -23,4 +23,4 @@ const Enhance = (ComposedComponent) => class WithTransition extends Component {
   }
 };
 
-export default Enhance;
+export default DecorateWithTransition;

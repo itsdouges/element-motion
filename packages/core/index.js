@@ -1,32 +1,31 @@
 import apply from 'transition-apply';
 const context = require.context('transition-definitions', true, /^((?!spec).)*\.js$/);
+import deferred from 'lib/deferred';
 
-/**
- * transition
- *
- * Will return a callback if the transition requires a "to element".
- *
- * @param  {string} type Transition type.
- * @param  {DOMElement} element [description]
- * @return {Function} ToElement callback if required, else undefined.
- */
 function transition (type, element, params) {
   const calc = require(`transition-definitions/${type}/index.js`).default;
 
   const calculations = calc(element, params);
+  const defer = deferred();
+  const start = apply(element, calculations, params, defer);
 
-  // Rethink this implementation.
-  if (typeof calculations.to === 'function') {
-    const applyCallback = apply(element, calculations, params);
+  const settings = {
+    promise: defer.promise,
+    start: (data) => {
+      const to = (typeof calculations.to === 'function') ?
+        calculations.to(data) :
+        undefined;
 
-    return (toElement) => {
-      const to = calculations.to(toElement);
+      start(to);
+    },
+  };
 
-      applyCallback(to);
-    };
+  if (params.autoStart) {
+    settings.start();
+    delete settings.start;
   }
 
-  return apply(element, calculations, params);
+  return settings;
 }
 
 function cleanKey (key) {

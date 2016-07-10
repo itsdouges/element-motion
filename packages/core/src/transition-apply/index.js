@@ -6,63 +6,103 @@ import {
   transformScale,
 } from 'dom';
 
-export default function apply (element, { options, from, to }, {
-  onStart,
-  onFinish,
-  delay = 1,
-  duration = 0.5,
-  cleanup,
-}) {
+function setTarget (element, { newElement, cloneElement, createInBody }, from) {
   let target;
 
-  if (options.newElement) {
+  if (newElement) {
     target = createElement(from, {
-      parentElement: options.createInBody ? document.body : element.parentElement,
+      parentElement: createInBody ? document.body : element.parentElement,
     });
-  } else if (options.cloneElement) {
+  } else if (cloneElement) {
     target = createElement(from, {
       cloneFrom: element,
-      parentElement: options.createInBody ? document.body : element.parentElement,
+      parentElement: createInBody ? document.body : element.parentElement,
     });
   } else {
     target = element;
   }
 
+  return target;
+}
+
+function setEvents (element, { onStart, resolve, autoCleanup, resetHeightOnFinish }) {
   if (onStart) {
-    onStart(target);
-    onStart = undefined;
+    onStart({
+      target: element,
+    });
   }
 
+  const cleanup = () => {
+    element.parentElement.removeChild(element);
+  };
+
   const transitionEndEvent = () => {
-    target.removeEventListener('transitionend', transitionEndEvent, false);
-    if (onFinish) {
-      onFinish(target);
-      onFinish = undefined;
-    }
+    element.removeEventListener('transitionend', transitionEndEvent, false);
 
-    if (cleanup) {
-      target.parentElement.removeChild(target);
-    }
-
-    if (options.resetHeightOnFinish) {
-      applyStyles(target, {
+    if (resetHeightOnFinish) {
+      applyStyles(element, {
         height: 'auto',
         width: 'auto',
       });
     }
+
+    if (autoCleanup) {
+      cleanup();
+    }
+
+    return resolve({
+      target: element,
+      cleanup,
+    });
   };
 
-  target.style.transition = options.transitions
+  element.addEventListener('transitionend', transitionEndEvent, false);
+}
+
+function setInitialStyles (element, {
+  from,
+  immediatelyApplyFrom,
+  styleApply,
+  duration,
+  transitions,
+}) {
+  element.style.transition = transitions
     .map((transition) => `${transition} ${duration}s`)
     .join(',');
 
-  target.addEventListener('transitionend', transitionEndEvent, false);
-
-  if (options.immediatelyApplyFrom) {
-    if (options.applyStyles) {
-      applyStyles(target, from);
+  if (immediatelyApplyFrom) {
+    if (styleApply) {
+      applyStyles(element, from);
     }
   }
+}
+
+export default function apply (element, { options, from, to }, {
+  onStart,
+  onFinish,
+  delay = 1,
+  duration = 0.5,
+  autoCleanup,
+}, {
+  resolve,
+}) {
+  const target = setTarget(element, options, from);
+
+  setEvents(target, {
+    onStart,
+    onFinish,
+    autoCleanup,
+    resetHeightOnFinish: options.resetHeightOnFinish,
+    resolve,
+  });
+
+  setInitialStyles(target, {
+    immediatelyApplyFrom: options.immediatelyApplyFrom,
+    styleApply: options.applyStyles,
+    transitions: options.transitions,
+    duration,
+    from,
+  });
 
   const transition = (toOverride) => {
     const toOptions = toOverride || to;
@@ -87,9 +127,5 @@ export default function apply (element, { options, from, to }, {
     }, delay);
   };
 
-  if (options.callbackToApplyTo) {
-    return transition;
-  }
-
-  return transition();
+  return transition;
 }
