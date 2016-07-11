@@ -1,11 +1,9 @@
 import apply from 'transition-apply';
-const context = require.context('transition-definitions', true, /^((?!spec).)*\.js$/);
 import deferred from 'lib/deferred';
+import definitionsFactory from 'transition-definitions';
 
 function transition (type, element, options) {
-  const calc = require(`transition-definitions/${type}/index.js`).default;
-
-  const transitionDefinition = calc(element, options);
+  const transitionDefinition = definitionsFactory[type](element, options);
   const defer = deferred();
 
   const start = apply(element, {
@@ -27,21 +25,15 @@ function transition (type, element, options) {
 
   if (options.autoStart) {
     params.start();
-    delete params.start;
   }
 
   return params;
 }
 
-function cleanKey (key) {
-  return key.replace('-', '').replace('./', '').replace('/index.js', '');
-}
-
 const transitions = {};
 
-context.keys().forEach((key) => {
-  const cleanedKey = cleanKey(key);
-  transitions[cleanedKey] = (element, options) => transition(cleanedKey, element, options);
+Object.keys(definitionsFactory).forEach((key) => {
+  transitions[key] = (element, options) => transition(key, element, options);
 });
 
 module.exports = transitions;
