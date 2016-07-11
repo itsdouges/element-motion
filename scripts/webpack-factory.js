@@ -10,9 +10,6 @@ module.exports = (params) => {
       libraryTarget: 'umd',
     },
     devtool: 'cheap-module-source-map',
-    eslint: {
-      configFile: '../../.eslintrc',
-    },
     module: {
       preLoaders: [
         {
