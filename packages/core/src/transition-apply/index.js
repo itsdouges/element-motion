@@ -79,6 +79,35 @@ function setInitialStyles (element, {
   }
 }
 
+function transitionFactory (element, {
+  applyTranslateTransform,
+  applyScaleTransform,
+  applyStyle,
+  delay,
+  from,
+}) {
+  return (to) => {
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        if (applyTranslateTransform) {
+          transformTranslate(element, {
+            x: to.left - from.left,
+            y: to.top - from.top,
+          });
+        }
+
+        if (applyScaleTransform) {
+          transformScale(element, to);
+        }
+
+        if (applyStyle) {
+          applyStyles(element, to);
+        }
+      });
+    }, delay);
+  };
+}
+
 export default function apply (element, {
   transition: {
     from,
@@ -109,26 +138,11 @@ export default function apply (element, {
     from,
   });
 
-  const transition = (to) => {
-    setTimeout(() => {
-      requestAnimationFrame(() => {
-        if (options.applyTranslateTransform) {
-          transformTranslate(target, {
-            x: to.left - from.left,
-            y: to.top - from.top,
-          });
-        }
-
-        if (options.applyScaleTransform) {
-          transformScale(target, to);
-        }
-
-        if (options.applyStyles) {
-          applyStyles(target, to);
-        }
-      });
-    }, delay);
-  };
-
-  return transition;
+  return transitionFactory(target, {
+    from,
+    applyTranslateTransform: options.applyTranslateTransform,
+    applyScaleTransform: options.applyScaleTransform,
+    applyStyle: options.applyStyles,
+    delay,
+  });
 }
