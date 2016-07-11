@@ -1,10 +1,16 @@
 import ArticleThumb from '../components/ArticleThumb';
 import { Component } from 'react';
 import withTransition from '../../../../src/components/WithTransition';
+import materialView from '../../../../src/components/MaterialView';
 
-const ArticleThumbWithTransition = withTransition(ArticleThumb, {
-  type: 'expand,move',
-});
+const ArticleThumbWithTransition = withTransition(ArticleThumb, [{
+  type: 'expand',
+  // autoStart: true,
+}, {
+  type: 'move',
+  matchSize: true,
+  autoCleanup: true,
+}]);
 
 const items = [
   {
@@ -14,22 +20,7 @@ const items = [
   },
 ];
 
-export default class HomeView extends Component {
-  componentWillLeave (cb) {
-    console.log('home leaving');
-    // cb();
-  }
-
-  componentWillAppear (cb) {
-    console.log('home appearing');
-    cb();
-  }
-
-  componentWillEnter (cb) {
-    console.log('home entering');
-    cb();
-  }
-
+class HomeView extends Component {
   render () {
     return (
       <ul className="items">
@@ -44,3 +35,5 @@ export default class HomeView extends Component {
     );
   }
 }
+
+export default materialView(HomeView);

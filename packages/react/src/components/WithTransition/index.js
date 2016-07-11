@@ -3,32 +3,41 @@ import mtCore from 'material-transitions-core';
 import ReactDom from 'react-dom';
 import { PropTypes } from 'react';
 
-const DecorateWithTransition = (ComposedComponent, options) => class WithTransition extends Component {
+const DecorateWithTransition = (ComposedComponent, definitions) => class WithTransition extends Component {
   static contextTypes = {
     __MaterialTransitions: PropTypes.object,
   };
 
-  _start = () => {
-    const element = ReactDom.findDOMNode(this.refs._component);
-    const types = options.type.split(',');
-
-    types.forEach((type, index) => {
-      const callback = this._transition(element, {
-        type,
-        options,
-      });
-
-      callback && this.context.__MaterialTransitions.waiting(callback);
-    });
+  componentDidMount () {
+    if (definitions.immediate) {
+      this._start();
+    }
   }
 
-  _transition (element, { type, options }) {
-    return mtCore[type](element, {
-      duration: 0.75,
-      matchSize: true,
-      cleanup: true,
-      ...options,
+  _start = () => {
+    const element = ReactDom.findDOMNode(this.refs._component);
+
+    const transitionDefinitions = Array.isArray(definitions) ?
+      definitions :
+      [definitions];
+
+    const promises = [];
+
+    transitionDefinitions.forEach((transition) => {
+      const { start, promise } = mtCore[transition.type](element, {
+        ...transition,
+        showFromElement: transition.from ? ReactDom.findDOMNode(this.refs._component.refs[transition.from]) : undefined,
+      });
+
+      if (start) {
+        this.context.__MaterialTransitions.waiting(start);
+        console.log(start);
+      }
+
+      promises.push(promise);
     });
+
+    this.context.__MaterialTransitions.starty(promises);
   }
 
   render () {

@@ -15,6 +15,20 @@ class MaterialTransitions extends Component {
       __MaterialTransitions: {
         waiting: this.waiting,
         setEnd: this.state.setEnd,
+        incoming: (cb) => {
+          this.incomingCb = cb;
+          console.log('incoming');
+        },
+        outgoing: (cb) => {
+          this.outgoingCb = cb;
+          console.log('outcmoing');
+        },
+        starty: (promises) => {
+          Promise.all(promises).then(() => {
+            // this.incomingCb();
+            // this.outgoingCb();
+          });
+        },
       },
     };
   }
