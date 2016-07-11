@@ -2,14 +2,11 @@
   "scripts": {
     "start": "lerna run start",
     "build": "lerna run build",
+    "test": "lerna run test",
     "react": "lerna run start --scope *react",
     "core": "lerna run start --scope *core"
   },
   "devDependencies": {
-    "lerna": "2.0.0-beta.18",
-    "webpack": "^1.13.1"
-  },
-  "dependencies": {
-    "babel-plugin-transform-class-properties": "^6.10.2"
+    "lerna": "2.0.0-beta.18"
   }
 }
