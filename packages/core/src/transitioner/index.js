@@ -4,7 +4,7 @@ import {
   applyStyles,
   transformTranslate,
   transformScale,
-} from 'dom';
+} from 'lib/dom';
 
 function setTarget (element, { newElement, cloneElement, createInBody }, from) {
   let target;
@@ -108,7 +108,7 @@ function transitionFactory (element, {
   };
 }
 
-export default function apply (element, {
+export default function transitioner (element, {
   transition: {
     from,
     options,

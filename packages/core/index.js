@@ -1,12 +1,12 @@
-import apply from 'transition-apply';
+import transitioner from 'transitioner';
 import deferred from 'lib/deferred';
-import definitionsFactory from 'transition-definitions';
+import definitionsFactory from 'definitions';
 
 function transition (type, element, options) {
   const transitionDefinition = definitionsFactory[type](element, options);
   const defer = deferred();
 
-  const start = apply(element, {
+  const start = transitioner(element, {
     options,
     transition: transitionDefinition,
     resolve: defer.resolve,

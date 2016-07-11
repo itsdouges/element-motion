@@ -1,4 +1,4 @@
-import { calculateHypotenuse } from 'math';
+import { calculateHypotenuse } from 'lib/math';
 
 export function calculateElementSize (element) {
   return {
