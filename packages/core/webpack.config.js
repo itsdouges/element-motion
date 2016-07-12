@@ -1,6 +1,6 @@
 module.exports = require('../../scripts/webpack-factory')({
   entry: [
-    './index',
+    './src/index',
   ],
   path: './dist',
   filename: 'mt-core.js',

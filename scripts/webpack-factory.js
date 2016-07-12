@@ -1,5 +1,3 @@
-const webpack = require('webpack');
-
 module.exports = (params) => {
   const config = {
     entry: params.entry,
@@ -13,8 +11,8 @@ module.exports = (params) => {
     module: {
       preLoaders: [
         {
-          test: /\.js$/, 
-          loader: 'eslint', 
+          test: /\.js$/,
+          loader: 'eslint',
           exclude: /node_modules/,
         },
       ],
@@ -33,7 +31,7 @@ module.exports = (params) => {
       ],
       extensions: [
         '',
-        '.js'
+        '.js',
       ],
     },
     devServer: {

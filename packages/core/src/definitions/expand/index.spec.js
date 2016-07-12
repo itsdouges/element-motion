@@ -1,5 +1,5 @@
-describe('expand', () => {
-  it('should pass', () => {
-    true.should.equal(true);
-  });
+import test from 'ava';
+
+test('expand', (t) => {
+  t.pass();
 });

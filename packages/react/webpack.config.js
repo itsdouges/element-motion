@@ -2,7 +2,7 @@ const webpack = require('webpack');
 
 module.exports = require('../../scripts/webpack-factory')({
   entry: {
-    'mt-react': './index',
+    'mt-react': './src/index',
     'material-bundle': './test/test-page/material',
   },
   path: './dist',
@@ -10,7 +10,7 @@ module.exports = require('../../scripts/webpack-factory')({
   library: 'mtReact',
   plugins: [
     new webpack.ProvidePlugin({
-      'React': 'react'
+      React: 'react',
     }),
   ],
 });

@@ -1,5 +1,5 @@
 import test from 'ava';
 
-test('reveal', (t) => {
+test('fadeout', (t) => {
   t.pass();
 });
