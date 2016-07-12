@@ -20,6 +20,7 @@ function transition (type, element, options) {
         transitionDefinition.to;
 
       start(to);
+      return defer.promise;
     },
   };
 
