@@ -7,13 +7,14 @@
   var itemsContainer = document.querySelector('.items');
 
   function transitionTo () {
-    var fadeoutElement;    
+    var fadeoutElement;
 
     mtCore
       .expand(document.getElementById('start'), {
         duration: 0.5,
         background: '#3d7596',
         autoStart: true,
+        cover: false,
       })
       .promise
       .then(function (data) {

@@ -6,12 +6,12 @@ import {
   calculateElementCenterInViewport,
 } from 'lib/dom';
 
-export default function expand (element, { background, reverse, coverage }) {
+export default function expand (element, { background, reverse, cover }) {
   const location = calculateElementLocation(element);
   const size = calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
 
-  const elementHypotenuse = coverage === 'contain' ? minSize : calculateHypotenuse(size);
+  const elementHypotenuse = !!cover ? calculateHypotenuse(size) : minSize;
 
   const windowHypotenuse = calculateHypotenuse({
     width: window.innerWidth,
