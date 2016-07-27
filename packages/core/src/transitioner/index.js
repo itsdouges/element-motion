@@ -115,7 +115,7 @@ export default function transitioner (element, {
   },
   options: {
     onStart,
-    delay = 1,
+    delay = 5,
     duration = 0.5,
     autoCleanup,
   },

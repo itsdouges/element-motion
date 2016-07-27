@@ -1,11 +1,11 @@
-# <% libraryName %>
+# material-transitions-core
 
 ## Installation
 
 ### With npm
 
 ```
-$ npm install <% libraryName %> --save
+$ npm install material-transitions-core
 ```
 
 ## Usage
@@ -13,14 +13,14 @@ $ npm install <% libraryName %> --save
 #### Method signature
 
 ```
-import { method } from '<% libraryName %>';
+import { method } from 'material-transitions-core';
 const transition = method(DOMElement, options);
 
-// transition.promise
-// transition.start
+transition.promise.then();
+transition.start();
 ```
 
-### Generic options
+### General options
 
 - autoStart (bool)
 - autoCleanup (bool)
@@ -32,5 +32,3 @@ const transition = method(DOMElement, options);
 
 - promise (Promise)
 - start (func, returns Promise)
-
-// TODO: Add definition READMEs here.
