@@ -1,4 +1,4 @@
-# material-transitions
+# material-transitions [![Build Status](https://travis-ci.org/madou/material-transitions.svg?branch=master)](https://travis-ci.org/madou/material-transitions)
 
 > :-).
 
