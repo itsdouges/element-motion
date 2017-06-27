@@ -1,0 +1,20 @@
+.square {
+  background-color: red;
+  width: 250px;
+  height: 250px;
+  cursor: pointer;
+}
+
+.square.small {
+  width: 50px;
+  height: 50px;
+  float: right;
+}
+
+.spacer {
+  height: 300px;
+}
+
+.hidden {
+  opacity: 0;
+}

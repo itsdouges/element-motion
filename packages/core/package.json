@@ -8,5 +8,8 @@
     "build": "webpack"
   },
   "author": "madou",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "normalize.css": "^7.0.0"
+  }
 }

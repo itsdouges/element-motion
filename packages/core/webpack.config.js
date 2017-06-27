@@ -1,8 +1,9 @@
 module.exports = require('../../scripts/webpack-factory')({
-  entry: [
-    './src/index',
-  ],
+  entry: {
+    'yubaba-core': './src/index',
+    'app.move': './test/examples/move/app',
+  },
   path: './dist',
-  filename: 'yubaba-core.js',
+  filename: '[name].js',
   library: 'yubaba',
 });
