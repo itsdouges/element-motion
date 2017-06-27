@@ -8,5 +8,5 @@
     "build": "webpack"
   },
   "author": "madou",
-  "license": "ISC"
+  "license": "MIT"
 }

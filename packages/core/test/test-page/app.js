@@ -9,8 +9,7 @@
   function transitionTo () {
     var fadeoutElement;
 
-    mtCore
-      .expand(document.getElementById('start'), {
+    yubaba.expand(document.getElementById('start'), {
         duration: 0.5,
         background: '#3d7596',
         autoStart: true,
@@ -21,7 +20,7 @@
         fadeoutElement = data.target;
       });
 
-    var moveAnimation = mtCore.move(start, {
+    var moveAnimation = yubaba.move(start, {
       duration: 0.75,
       matchSize: true,
       autoCleanup: true,
@@ -30,7 +29,7 @@
     moveAnimation
       .start(end)
       .then(function () {
-        return mtCore.reveal(revealContainer, {
+        return yubaba.reveal(revealContainer, {
           duration: 0.5,
           showFromElement: end,
         });
@@ -42,7 +41,7 @@
         return revealAnimation.start();
       })
       .then(function () {
-        return mtCore.fadeout(fadeoutElement, {
+        return yubaba.fadeout(fadeoutElement, {
           duration: 0.75,
           autoCleanup: true,
           autoStart: true,
@@ -55,7 +54,7 @@
   }
 
   function transitionFrom () {
-    var revealAnimation = mtCore.reveal(revealContainer, {
+    var revealAnimation = yubaba.reveal(revealContainer, {
       duration: 0.5,
       showFromElement: end,
       reverse: true,
@@ -64,7 +63,7 @@
     revealAnimation
       .start()
       .then(function () {
-        var moveAnimation = mtCore.move(end, {
+        var moveAnimation = yubaba.move(end, {
           duration: 0.5,
           matchSize: true,
           autoCleanup: true,
@@ -76,7 +75,7 @@
 
         moveAnimation.start(start);
 
-        return mtCore.expand(start, {
+        return yubaba.expand(start, {
           duration: 0.5,
           background: '#3d7596',
           reverse: true,

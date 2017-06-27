@@ -8,7 +8,7 @@
     "build": "webpack"
   },
   "author": "madou",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "yubaba-core": "^0.0.1"
   },

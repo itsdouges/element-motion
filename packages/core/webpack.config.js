@@ -3,6 +3,6 @@ module.exports = require('../../scripts/webpack-factory')({
     './src/index',
   ],
   path: './dist',
-  filename: 'mt-core.js',
-  library: 'mtCore',
+  filename: 'yubaba-core.js',
+  library: 'yubaba',
 });
