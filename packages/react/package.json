@@ -1,8 +1,8 @@
 {
-  "name": "material-transitions-react",
+  "name": "yababa-react",
   "version": "0.0.1",
-  "description": "Material Transitions React",
-  "main": "src/index.js",
+  "description": "Yababa React",
+  "main": "dist/yababa-react.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --open --port 8081",
     "build": "webpack"
@@ -10,7 +10,7 @@
   "author": "madou",
   "license": "ISC",
   "dependencies": {
-    "material-transitions-core": "^0.0.1"
+    "yababa-core": "^0.0.1"
   },
   "peerDependencies": {
     "react": "^15.1.0",

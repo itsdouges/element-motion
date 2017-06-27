@@ -1,8 +1,8 @@
 {
-  "name": "material-transitions-core",
+  "name": "yababa-core",
   "version": "0.0.1",
-  "description": "Material Transitions Core",
-  "main": "dist/mt-core.js",
+  "description": "Yababa Core",
+  "main": "dist/yababa-core.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --open",
     "build": "webpack"

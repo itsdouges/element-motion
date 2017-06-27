@@ -6,15 +6,15 @@ import {
   transformScale,
 } from '../lib/dom';
 
-function setTarget (element, { newElement, cloneElement, createInBody }, from) {
+function setTarget (element, { newElement, cloneElement, createInBody }, fromElement) {
   let target;
 
   if (newElement) {
-    target = createElement(from, {
+    target = createElement(fromElement, {
       parentElement: createInBody ? document.body : element.parentElement,
     });
   } else if (cloneElement) {
-    target = createElement(from, {
+    target = createElement(fromElement, {
       cloneFrom: element,
       parentElement: createInBody ? document.body : element.parentElement,
     });
