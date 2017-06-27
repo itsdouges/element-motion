@@ -1,17 +1,16 @@
 {
   "name": "material-transitions-react",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Material Transitions React",
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --open --port 8081",
-    "build": "webpack",
-    "test": "ava \"src/**/*.spec.js\""
+    "build": "webpack"
   },
   "author": "madou",
   "license": "ISC",
   "dependencies": {
-    "material-transitions-core": "^0.0.0"
+    "material-transitions-core": "^0.0.1"
   },
   "peerDependencies": {
     "react": "^15.1.0",

@@ -4,7 +4,7 @@ import {
   applyStyles,
   transformTranslate,
   transformScale,
-} from 'lib/dom';
+} from '../lib/dom';
 
 function setTarget (element, { newElement, cloneElement, createInBody }, from) {
   let target;

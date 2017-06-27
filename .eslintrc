@@ -1,6 +1,17 @@
 {
   "extends": "airbnb",
-  "globals": {},
+  "globals": {
+    "describe": true,
+    "before": true,
+    "after": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "it": true,
+    "context": true,
+    "expect": true,
+    "sinon": true,
+    "xit": true
+  },
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,

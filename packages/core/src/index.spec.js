@@ -1,5 +1,7 @@
-import test from 'ava';
+import * as module from './';
 
-test('entry point', (t) => {
-  t.pass();
+describe('core root', () => {
+  it('should pass', () => {
+    expect(module).to.have.keys('expand', 'fadeout', 'move', 'reveal');
+  });
 });

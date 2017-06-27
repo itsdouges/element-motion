@@ -1,10 +1,10 @@
-import { calculateHypotenuse } from 'lib/math';
+import { calculateHypotenuse } from '../../lib/math';
 import {
   calculateElementSize,
   calculateElementLocation,
   calculateWindowCentre,
   calculateElementCenterInViewport,
-} from 'lib/dom';
+} from '../../lib/dom';
 
 export default function expand (element, { background, reverse, cover }) {
   const location = calculateElementLocation(element);

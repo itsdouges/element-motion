@@ -5,8 +5,7 @@
   "main": "dist/mt-core.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --open",
-    "build": "webpack",
-    "test": "ava \"src/**/*.spec.js\""
+    "build": "webpack"
   },
   "author": "madou",
   "license": "ISC"

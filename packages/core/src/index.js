@@ -1,9 +1,12 @@
-import transitioner from 'transitioner';
-import deferred from 'lib/deferred';
-import definitionsFactory from 'definitions';
+import transitioner from './transitioner';
+import deferred from './lib/deferred';
+import doExpand from './definitions/expand';
+import doFadeout from './definitions/fadeout';
+import doMove from './definitions/move';
+import doReveal from './definitions/reveal';
 
-function transition (type, element, options) {
-  const transitionDefinition = definitionsFactory[type](element, options);
+function transition (transitionFunc, element, options) {
+  const transitionDefinition = transitionFunc(element, options);
   const defer = deferred();
 
   const start = transitioner(element, {
@@ -31,10 +34,18 @@ function transition (type, element, options) {
   return params;
 }
 
-const transitions = {};
+export function expand (element, options) {
+  return transition(doExpand, element, options);
+}
 
-Object.keys(definitionsFactory).forEach((key) => {
-  transitions[key] = (element, options) => transition(key, element, options);
-});
+export function fadeout (element, options) {
+  return transition(doFadeout, element, options);
+}
 
-module.exports = transitions;
+export function move (element, options) {
+  return transition(doMove, element, options);
+}
+
+export function reveal (element, options) {
+  return transition(doReveal, element, options);
+}
