@@ -1,13 +1,3 @@
-# material-transitions [![Build Status](https://travis-ci.org/madou/material-transitions.svg?branch=master)](https://travis-ci.org/madou/material-transitions)
+# yubaba [![Build Status](https://travis-ci.org/madou/yubaba.svg?branch=master)](https://travis-ci.org/madou/yubaba)
 
-> :-).
-
-Work in progress, check back later.
-
-```
-npm run bootstrap
-npm run core
-npm run react
-npm test
-npm run lint
-```
+Coming soon.

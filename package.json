@@ -1,5 +1,5 @@
 {
-  "name": "yababa-mono",
+  "name": "yubaba-mono",
   "version": "0.0.0",
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",

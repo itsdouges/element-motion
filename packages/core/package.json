@@ -1,8 +1,8 @@
 {
-  "name": "yababa-core",
+  "name": "yubaba-core",
   "version": "0.0.1",
-  "description": "Yababa Core",
-  "main": "dist/yababa-core.js",
+  "description": "yubaba Core",
+  "main": "dist/yubaba-core.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --open",
     "build": "webpack"

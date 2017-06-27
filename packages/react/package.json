@@ -1,8 +1,8 @@
 {
-  "name": "yababa-react",
+  "name": "yubaba-react",
   "version": "0.0.1",
-  "description": "Yababa React",
-  "main": "dist/yababa-react.js",
+  "description": "yubaba React",
+  "main": "dist/yubaba-react.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --open --port 8081",
     "build": "webpack"
@@ -10,7 +10,7 @@
   "author": "madou",
   "license": "ISC",
   "dependencies": {
-    "yababa-core": "^0.0.1"
+    "yubaba-core": "^0.0.1"
   },
   "peerDependencies": {
     "react": "^15.1.0",
