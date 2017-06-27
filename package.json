@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
+    "clean": "lerna clean",
     "build": "lerna run build",
     "lint": "eslint .",
     "test": "npm run lint && npm run unit",
