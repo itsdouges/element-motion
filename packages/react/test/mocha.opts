@@ -1,5 +1,4 @@
 --require ../../../test/setup
---require /test/setup
 --reporter spec
 --ui bdd
 --compilers js:babel-core/register

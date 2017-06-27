@@ -1,2 +1,2 @@
-// const context = require.context("./", true, /.js/);
-// context.keys().forEach(context);
+import React from 'react';
+export default () => <div />;
