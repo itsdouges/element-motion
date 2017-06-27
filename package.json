@@ -10,7 +10,8 @@
     "core:tdd": "npm run core:unit -- -w",
     "core:unit": "mocha \"./packages/core/src/**/*.spec.js\" --opts ./packages/core/test/mocha.opts",
     "react:tdd": "npm run react:unit -- -w",
-    "react:unit": "mocha \"./packages/react/src/**/*.spec.js\" --opts ./packages/react/test/mocha.opts"
+    "react:unit": "mocha \"./packages/react/src/**/*.spec.js\" --opts ./packages/react/test/mocha.opts",
+    "codecov": "echo \"not implemented\""
   },
   "devDependencies": {
     "babel": "^6.5.2",
