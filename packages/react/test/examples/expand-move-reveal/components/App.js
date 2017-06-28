@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Box from './Box';
+import BoxWithContent from './BoxWithContent';
 import withTransition from '../../../../src/withTransition';
 
 const Container = ({ children }: any) => (
@@ -15,18 +16,6 @@ const BoxWithTransition = withTransition([{
   duration: 0.4,
   background: '#3d7596',
   autoStart: true,
-  cover: true,
-}, {
-  transition: 'move',
-  duration: 0.75,
-  matchSize: true,
-}])(Box);
-
-const BoxWithReverseTransition = withTransition([{
-  transition: 'expand',
-  duration: 0.4,
-  background: '#3d7596',
-  reverse: true,
   cover: true,
 }, {
   transition: 'move',
@@ -48,7 +37,7 @@ export default class App extends React.Component {
   render () {
     return (
       <div className="root">
-        {this.state.big && <Container><BoxWithReverseTransition transitionPair="box-to-box" type="big" onClick={this.toggle} /></Container>}
+        {this.state.big && <Container><BoxWithContent onClick={this.toggle} /></Container>}
 
         {this.state.big || <Container><BoxWithTransition transitionPair="box-to-box" type="small" onClick={this.toggle} className="float-right" /></Container>}
       </div>
