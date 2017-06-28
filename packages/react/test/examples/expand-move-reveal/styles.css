@@ -13,7 +13,7 @@
 
 .box {
   display: inline-block;
-  background-color: purple;
+  background-color: #d8d8d8;
 }
 
 .box-small {
@@ -36,6 +36,6 @@
   min-height: 1000px;
   width: 100%;
   margin: 10em auto;
-  background: grey;
-  box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.3);
+  background: #d8d8d8;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
 }
