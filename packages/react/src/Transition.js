@@ -10,6 +10,7 @@ const listenerStore = {};
 
 export function addTransitionListener (pairName: string, cb: (boolean) => void) {
   if (typeof listenerStore[pairName] === 'boolean') {
+    // message was left, lets pick it up.
     cb(listenerStore[pairName]);
   }
 
@@ -19,16 +20,16 @@ export function addTransitionListener (pairName: string, cb: (boolean) => void) 
   };
 }
 
-function notifyTransitionListener (pairName, value: boolean) {
+function notifyTransitionListener (pairName, value: boolean /* , leaveAMessage?: boolean*/) {
   const cb = listenerStore[pairName];
-  console.log(pairName, cb);
   if (cb) {
     console.log(`notifying listener for ${pairName}`);
     cb(value);
-  } else {
+  } // else if (leaveAMessage) {
+    // console.log('Leaving a message for a listener to pick up later.');
     // notify doesnt exist yet, so lets leave a message.
-    listenerStore[pairName] = value;
-  }
+    // listenerStore[pairName] = value;
+  // }
 }
 
 function readFromStore (pairName) {
@@ -75,7 +76,7 @@ export default class Transition extends React.Component {
   initialise () {
     const nodeOrFunc = readFromStore(this.props.pair);
     if (!nodeOrFunc) {
-      process.env.NODE_ENV !== 'production' && console.log('Adding node to store.');
+      process.env.NODE_ENV !== 'production' && console.log('Nothing left in store, adding node to store.');
       // need to notify any pairing transition container.
       notifyTransitionListener(this.props.pair, true);
       this.setState({

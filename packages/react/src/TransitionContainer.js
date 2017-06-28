@@ -18,9 +18,16 @@ export default class TransitionContainer extends React.Component {
     visible: false,
   };
 
-  componentDidMount () {
-    console.log(this.props.pair)
+  componentWillMount () {
+    // We need to have this be attached before
+    // everything else is mounted, but we don't want to run this on the server.
+    // How?
     this._detatch = addTransitionListener(this.props.pair, this.setVisibility);
+  }
+
+  componentDidMount () {
+    // console.log('>>> TransitionContainer has mounted');
+    // this._detatch = addTransitionListener(this.props.pair, this.setVisibility);
   }
 
   componentWillUnmount () {
