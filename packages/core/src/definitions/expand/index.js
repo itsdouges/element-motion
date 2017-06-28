@@ -44,7 +44,7 @@ export default function expand (element, { background, reverse, cover }) {
       height: elementHypotenuse,
       borderRadius: '50%',
       background: background || 'orange',
-      position: 'fixed',
+      position: 'absolute',
       scale: reverse ? scale : undefined,
       'z-index': 9998,
     },

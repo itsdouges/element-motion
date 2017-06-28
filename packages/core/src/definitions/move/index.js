@@ -31,7 +31,7 @@ export default function move (fromElement, { matchSize } = {}) {
       ...fromLocation,
       ...fromSize,
       margin: 0,
-      position: 'fixed',
+      position: 'absolute',
       'z-index': 9999,
     },
     to,
