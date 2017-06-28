@@ -19,7 +19,7 @@ const BoxWithReverseTransition = withTransition([{
 
 const BoxWithContent = ({ onClick }: any) => (
   <TransitionContainer pair="box-to-box" className="content-margin">
-    <BoxWithReverseTransition transitionPair="box-to-box" type="big" onClick={onClick} />
+    <BoxWithReverseTransition className="box-highlighted" transitionPair="box-to-box" type="big" onClick={onClick} />
   </TransitionContainer>
 );
 

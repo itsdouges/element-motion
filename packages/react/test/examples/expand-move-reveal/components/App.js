@@ -5,8 +5,8 @@ import Box from './Box';
 import BoxWithContent from './BoxWithContent';
 import withTransition from '../../../../src/withTransition';
 
-const Container = ({ children }: any) => (
-  <div>
+const Container = ({ children, className }: any) => (
+  <div className={className}>
     {children}
   </div>
 );
@@ -44,13 +44,19 @@ export default class App extends React.Component {
         )}
 
         {this.state.big || (
-          <Container>
+          <Container className="container">
+            <Box type="small" />
+            <Box type="small" />
+            <Box type="small" />
             <BoxWithTransition
               transitionPair="box-to-box"
               type="small"
               onClick={this.toggle}
-              className="float-right"
+              className="box-highlighted"
             />
+            <Box type="small" />
+            <Box type="small" />
+            <Box type="small" />
           </Container>
         )}
       </div>
