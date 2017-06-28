@@ -15,9 +15,9 @@ function addToStore (pairName, nodeOrFunc) {
   nodeStore[pairName] = nodeOrFunc;
 }
 
-function removeFromStore (pairName) {
-  delete nodeStore[pairName];
-}
+// function removeFromStore (pairName) {
+//   delete nodeStore[pairName];
+// }
 
 export type TransitionOptions = {
   transition: 'move' | 'expand',

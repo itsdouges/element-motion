@@ -28,8 +28,7 @@ export default function expand (element, { background, reverse, cover }) {
 
   const hypotenuseDifference = calculateHypotenuse(difference);
 
-  // The + 5 is a hack to just get it to cover the viewport. Fix this.
-  const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize) + 5;
+  const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
 
   return {
     name: 'expand',
