@@ -1,5 +1,6 @@
 export default function fadeout () {
   return {
+    name: 'fadeout',
     options: {
       applyStyles: true,
       transitions: ['opacity'],

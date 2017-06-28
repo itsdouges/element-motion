@@ -6,7 +6,7 @@ import withTransition from '../../../../src/withTransition';
 
 const BoxWithTransition = withTransition([{
   transition: 'expand',
-  duration: 0.2,
+  duration: 0.4,
   background: '#3d7596',
   autoStart: true,
   cover: false,

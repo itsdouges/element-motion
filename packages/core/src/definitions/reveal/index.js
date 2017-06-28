@@ -11,6 +11,7 @@ export default function reveal (element, { showFromElement, reverse }) {
   };
 
   return {
+    name: 'reveal',
     options: {
       immediatelyApplyFrom: true,
       resetHeightOnFinish: !reverse,

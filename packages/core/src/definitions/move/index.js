@@ -18,6 +18,7 @@ export default function move (fromElement, { matchSize } = {}) {
   };
 
   return {
+    name: 'move',
     options: {
       cloneElement: true,
       applyScaleTransform: true,

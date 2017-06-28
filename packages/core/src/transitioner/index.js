@@ -27,7 +27,7 @@ function setTarget (element, { newElement, cloneElement, createInBody = true }, 
   return target;
 }
 
-function setEvents (element, { onStart, resolve, autoCleanup, resetHeightOnFinish }) {
+function setEvents (element, { onStart, resolve, autoCleanup, name, resetHeightOnFinish }) {
   if (onStart) {
     onStart({
       target: element,
@@ -53,6 +53,7 @@ function setEvents (element, { onStart, resolve, autoCleanup, resetHeightOnFinis
     }
 
     return resolve({
+      transition: name,
       target: element,
       cleanup,
     });
@@ -113,6 +114,7 @@ function transitionFactory (element, {
 
 export default function transitioner (element, {
   transition: {
+    name,
     from,
     options,
   },
@@ -127,6 +129,7 @@ export default function transitioner (element, {
   const target = setTarget(element, options, from);
 
   setEvents(target, {
+    name,
     onStart,
     autoCleanup,
     resetHeightOnFinish: options.resetHeightOnFinish,

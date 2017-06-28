@@ -71,7 +71,20 @@ export default class Transition extends React.Component {
       const startTransition = (endNode) => Promise.all(transitions.map((transition) => {
         return transition.start(endNode);
       }))
-      .then(() => process.env.NODE_ENV !== 'production' && console.log('Finished transition.'));
+      .then((results) => {
+        process.env.NODE_ENV !== 'production' && console.log('Finished transition.');
+
+        // Fadeout all expanders
+        return results
+          .filter(({ transition }) => transition === 'expand')
+          .map(({ target }) => {
+            return yubaba.fadeout(target, {
+              duration: 0.75,
+              autoCleanup: true,
+              autoStart: true,
+            }).promise;
+          });
+      });
 
       addToStore(this.props.pair, startTransition);
     } else if (typeof nodeOrFunc === 'function') {
