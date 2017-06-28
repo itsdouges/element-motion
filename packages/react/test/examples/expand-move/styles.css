@@ -1,3 +1,7 @@
+.root {
+  min-height: 1000px;
+}
+
 .box {
   background-color: blue;
   cursor: pointer;
