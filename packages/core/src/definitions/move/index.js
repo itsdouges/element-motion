@@ -1,6 +1,9 @@
 import { calculateElementSize, calculateElementLocation } from '../../lib/dom';
 import { percentageDifference } from '../../lib/math';
 
+// TODO: Fix calculations to be able to be position: absolute.
+// This requires updating the `to` on trigger with the new window position.
+
 export default function move (fromElement, { matchSize } = {}) {
   const fromLocation = calculateElementLocation(fromElement);
   const fromSize = calculateElementSize(fromElement);
@@ -31,7 +34,7 @@ export default function move (fromElement, { matchSize } = {}) {
       ...fromLocation,
       ...fromSize,
       margin: 0,
-      position: 'absolute',
+      position: 'fixed',
       'z-index': 9999,
     },
     to,
