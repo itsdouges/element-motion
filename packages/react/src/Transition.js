@@ -85,8 +85,9 @@ export default class Transition extends React.Component {
       })
       .then((results) => {
         process.env.NODE_ENV !== 'production' && console.log('Finished transition.');
-        // Fadeout and cleanup all expanders
-        return Promise.all(results
+        // Fadeout and cleanup all expanders. This is deliberately a broken promise chain.
+
+        Promise.all(results
           .filter(({ transition }) => transition === 'expand')
           .map(({ target }) => {
             return yubaba.fadeout(target, {
@@ -94,15 +95,13 @@ export default class Transition extends React.Component {
               autoCleanup: true,
               autoStart: true,
             }).promise;
-          })
-          .concat(results));
-      })
-      .then((results) => {
-        // Cleanup everything else left
-        console.log(results);
-        results.forEach((result) => {
-          result.cleanup && result.cleanup();
-        });
+          }))
+          .then((fadeoutResults) => {
+            // Cleanup anything else left
+            fadeoutResults.concat(results).forEach((result) => {
+              result.cleanup && result.cleanup();
+            });
+          });
       });
 
       addToStore(this.props.pair, startTransition);
