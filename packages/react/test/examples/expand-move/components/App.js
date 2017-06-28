@@ -20,7 +20,6 @@ const BoxWithTransition = withTransition([{
   transition: 'move',
   duration: 0.75,
   matchSize: true,
-  autoCleanup: true,
 }])(Box);
 
 const BoxWithReverseTransition = withTransition([{
@@ -33,7 +32,6 @@ const BoxWithReverseTransition = withTransition([{
   transition: 'move',
   duration: 0.75,
   matchSize: true,
-  autoCleanup: false,
 }])(Box);
 
 export default class App extends React.Component {

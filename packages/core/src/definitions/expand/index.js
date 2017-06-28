@@ -46,6 +46,7 @@ export default function expand (element, { background, reverse, cover }) {
       background: background || 'orange',
       position: 'fixed',
       scale: reverse ? scale : undefined,
+      'z-index': 9998,
     },
     to: {
       scale: reverse ? 1 : scale,
