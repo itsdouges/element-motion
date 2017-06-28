@@ -18,7 +18,6 @@ function transition (transitionFunc, element, options) {
   const params = {
     promise: defer.promise,
     start: (data) => {
-      console.log('found data?', data);
       const to = (typeof transitionDefinition.to === 'function') ?
         transitionDefinition.to(data) :
         transitionDefinition.to;

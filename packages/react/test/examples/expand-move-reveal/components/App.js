@@ -13,13 +13,13 @@ const Container = ({ children, className }: any) => (
 
 const BoxWithTransition = withTransition([{
   transition: 'expand',
-  duration: 0.4,
+  duration: 0.5,
   background: '#3d7596',
   autoStart: true,
   cover: true,
 }, {
   transition: 'move',
-  duration: 0.75,
+  duration: 0.5,
   matchSize: true,
 }])(Box);
 

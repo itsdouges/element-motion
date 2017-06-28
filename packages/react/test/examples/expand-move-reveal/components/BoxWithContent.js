@@ -13,7 +13,7 @@ const BoxWithReverseTransition = withTransition([{
   cover: true,
 }, {
   transition: 'move',
-  duration: 0.75,
+  duration: 0.7,
   matchSize: true,
 }])(Box);
 

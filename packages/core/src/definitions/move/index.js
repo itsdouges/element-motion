@@ -5,12 +5,16 @@ import { percentageDifference } from '../../lib/math';
 // This requires updating the `to` on trigger with the new window position.
 
 export default function move (fromElement, { matchSize } = {}) {
-  const fromLocation = calculateElementLocation(fromElement);
+  const fromLocation = calculateElementLocation(fromElement, true);
   const fromSize = calculateElementSize(fromElement);
+
+  console.log('start move', fromLocation);
 
   const to = (toElement) => {
     const toSize = matchSize ? calculateElementSize(toElement) : calculateElementSize(fromElement);
-    const toLocation = calculateElementLocation(toElement);
+    const toLocation = calculateElementLocation(toElement, true);
+
+    console.log(toSize, toLocation);
 
     return {
       ...toLocation,
@@ -34,7 +38,7 @@ export default function move (fromElement, { matchSize } = {}) {
       ...fromLocation,
       ...fromSize,
       margin: 0,
-      position: 'fixed',
+      position: 'absolute',
       'z-index': 9999,
     },
     to,

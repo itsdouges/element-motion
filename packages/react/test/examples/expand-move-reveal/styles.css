@@ -1,3 +1,7 @@
+body {
+  overflow-anchor: none;
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -8,7 +12,7 @@
 }
 
 .root {
-  min-height: 1000px;
+  min-height: 2000px;
 }
 
 .box {

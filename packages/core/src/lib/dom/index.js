@@ -7,12 +7,14 @@ export function calculateElementSize (element) {
   };
 }
 
-export function calculateElementLocation (element) {
-  const rect = element.getBoundingClientRect();
+export function calculateElementLocation (element, calculateViewportScrollOffset) {
+  // const rect = element.getBoundingClientRect();
+  // const offsetY = calculateViewportScrollOffset ? window.scrollY : 0;
+  // const offsetX = calculateViewportScrollOffset ? window.scrollX : 0;
 
   return {
-    left: rect.left + document.body.clientLeft,
-    top: rect.top + document.body.clientTop,
+    left: element.offsetLeft, //rect.left + offsetX,
+    top: element.offsetTop, //rect.top + offsetY,
   };
 }
 

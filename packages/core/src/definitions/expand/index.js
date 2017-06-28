@@ -6,13 +6,12 @@ import {
   calculateElementCenterInViewport,
 } from '../../lib/dom';
 
-// TODO: Fix calculations to be able to be position: absolute.
-// This requires updating the `to` on trigger with the new window position.
-
 export default function expand (element, { background, reverse, cover }) {
-  const location = calculateElementLocation(element);
+  const location = calculateElementLocation(element, true);
   const size = calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
+
+  console.log('start expand', location);
 
   const elementHypotenuse = cover ? calculateHypotenuse(size) : minSize;
 
@@ -47,7 +46,7 @@ export default function expand (element, { background, reverse, cover }) {
       height: elementHypotenuse,
       borderRadius: '50%',
       background: background || 'orange',
-      position: 'fixed',
+      position: 'absolute',
       scale: reverse ? scale : undefined,
       'z-index': 9997,
     },
