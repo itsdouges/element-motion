@@ -65,16 +65,27 @@ export default class Transition extends React.Component {
       const node = nodeOrFunc;
 
       const transitions = this.props.transitions.map(({ transition: name, ...options }) => {
-        return yubaba[name](node.firstElementChild, options);
+        // Hack to get reverse working. Uh. This should probably be rethought.
+        const initTransition = (element) => yubaba[name](element, options);
+
+        return options.reverse
+          ? { start: (endElement) => initTransition(endElement).start }
+          : initTransition(node.firstElementChild);
       });
 
       const startTransition = (endNode) => Promise.all(transitions.map((transition) => {
         return transition.start(endNode);
       }))
       .then((results) => {
+        // Start all reverse transitions
+        return Promise.all(results
+          .filter((result) => typeof result === 'function')
+          .map((start) => start())
+          .concat(results));
+      })
+      .then((results) => {
         process.env.NODE_ENV !== 'production' && console.log('Finished transition.');
-
-        // Fadeout all expanders
+        // Fadeout and destroy all expanders
         return results
           .filter(({ transition }) => transition === 'expand')
           .map(({ target }) => {

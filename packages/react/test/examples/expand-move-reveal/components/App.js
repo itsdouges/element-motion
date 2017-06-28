@@ -17,6 +17,20 @@ const BoxWithTransition = withTransition([{
   autoCleanup: true,
 }])(Box);
 
+const BoxWithReverseTransition = withTransition([{
+  transition: 'expand',
+  duration: 0.4,
+  background: '#3d7596',
+  autoStart: true,
+  reverse: true,
+  cover: true,
+}, {
+  transition: 'move',
+  duration: 0.75,
+  matchSize: true,
+  autoCleanup: true,
+}])(Box);
+
 export default class App extends React.Component {
   state = {
     big: false,
@@ -31,7 +45,7 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
-        {this.state.big && <BoxWithTransition transitionPair="box-to-box" type="big" onClick={this.toggle} />}
+        {this.state.big && <BoxWithReverseTransition transitionPair="box-to-box" type="big" onClick={this.toggle} />}
         {this.state.big || <BoxWithTransition transitionPair="box-to-box" type="small" onClick={this.toggle} className="float-right" />}
       </div>
     );

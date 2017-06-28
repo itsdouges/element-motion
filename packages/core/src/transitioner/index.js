@@ -73,12 +73,10 @@ function setInitialStyles (element, {
     .map((transition) => `${transition} ${duration}s`)
     .join(',');
 
-  if (immediatelyApplyFrom) {
-    if (styleApply) {
-      requestAnimationFrame(() => {
-        applyStyles(element, from);
-      });
-    }
+  if (immediatelyApplyFrom && styleApply) {
+    requestAnimationFrame(() => {
+      applyStyles(element, from);
+    });
   }
 }
 
@@ -90,7 +88,6 @@ function transitionFactory (element, {
   from,
 }) {
   return (to) => {
-    console.log('>>>>>', element, to);
     setTimeout(() => {
       requestAnimationFrame(() => {
         if (applyTranslateTransform) {
