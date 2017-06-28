@@ -31,6 +31,10 @@ export default class Transition extends React.Component {
     options?: {},
   };
 
+  state = {
+    visible: false,
+  };
+
   componentDidMount () {
     process.env.NODE_ENV !== 'production' && console.log('Mounted.');
 
@@ -47,6 +51,9 @@ export default class Transition extends React.Component {
     const nodeOrFunc = readFromStore(this.props.pair);
     if (!nodeOrFunc) {
       process.env.NODE_ENV !== 'production' && console.log('Adding node to store.');
+      this.setState({
+        visible: true,
+      });
       addToStore(this.props.pair, this._node);
       return;
     }
@@ -66,7 +73,11 @@ export default class Transition extends React.Component {
       process.env.NODE_ENV !== 'production' && console.log('Found a transition, starting.');
       const startTransition = nodeOrFunc;
       // We dip into the node and get the _actual_ target (not wrapper container).
-      startTransition(this._node.firstElementChild);
+      startTransition(this._node.firstElementChild).then(() => {
+        this.setState({
+          visible: true,
+        });
+      });
 
       process.env.NODE_ENV !== 'production' && console.log('Resetting store with fresh node.');
       addToStore(this.props.pair, this._node);
@@ -77,7 +88,7 @@ export default class Transition extends React.Component {
 
   render () {
     return (
-      <div ref={(node) => (this._node = node)}>
+      <div ref={(node) => (this._node = node)} style={{ opacity: this.state.visible ? 1 : 0 }}>
         {this.props.children}
       </div>
     );
