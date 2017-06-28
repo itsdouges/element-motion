@@ -37,9 +37,22 @@ export default class App extends React.Component {
   render () {
     return (
       <div className="root">
-        {this.state.big && <Container><BoxWithContent onClick={this.toggle} /></Container>}
+        {this.state.big && (
+          <Container>
+            <BoxWithContent onClick={this.toggle} />
+          </Container>
+        )}
 
-        {this.state.big || <Container><BoxWithTransition transitionPair="box-to-box" type="small" onClick={this.toggle} className="float-right" /></Container>}
+        {this.state.big || (
+          <Container>
+            <BoxWithTransition
+              transitionPair="box-to-box"
+              type="small"
+              onClick={this.toggle}
+              className="float-right"
+            />
+          </Container>
+        )}
       </div>
     );
   }

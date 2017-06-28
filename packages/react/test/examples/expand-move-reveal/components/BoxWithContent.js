@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Box from './Box';
+import TransitionContainer from '../../../../src/TransitionContainer';
 import withTransition from '../../../../src/withTransition';
 
 const BoxWithReverseTransition = withTransition([{
@@ -17,9 +18,9 @@ const BoxWithReverseTransition = withTransition([{
 }])(Box);
 
 const BoxWithContent = ({ onClick }: any) => (
-  <div>
+  <TransitionContainer pair="box-to-box" className="content-margin">
     <BoxWithReverseTransition transitionPair="box-to-box" type="big" onClick={onClick} />
-  </div>
+  </TransitionContainer>
 );
 
 export default BoxWithContent;

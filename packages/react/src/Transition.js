@@ -6,6 +6,19 @@ import React from 'react';
 import * as yubaba from 'yubaba-core';
 
 const nodeStore = {};
+const listenerStore = {};
+
+export function addTransitionListener (pairName: string, cb: (boolean) => void) {
+  listenerStore[pairName] = cb;
+  return () => {
+    delete listenerStore[pairName];
+  };
+}
+
+function notifyTransitionListener (pairName, value) {
+  const cb = listenerStore[pairName];
+  cb && cb(value);
+}
 
 function readFromStore (pairName) {
   return nodeStore[pairName];
@@ -52,6 +65,8 @@ export default class Transition extends React.Component {
     const nodeOrFunc = readFromStore(this.props.pair);
     if (!nodeOrFunc) {
       process.env.NODE_ENV !== 'production' && console.log('Adding node to store.');
+      // need to notify any pairing transition container.
+      notifyTransitionListener(this.props.pair, true);
       this.setState({
         visible: true,
       });
@@ -110,6 +125,8 @@ export default class Transition extends React.Component {
       const startTransition = nodeOrFunc;
       // We dip into the node and get the _actual_ target (not wrapper container).
       startTransition(this._node.firstElementChild).then(() => {
+        // need to notify any pairing transition container.
+        notifyTransitionListener(this.props.pair, true);
         this.setState({
           visible: true,
         });
