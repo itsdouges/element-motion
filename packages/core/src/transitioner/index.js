@@ -46,7 +46,7 @@ function setEvents (element, { onStart, resolve, autoCleanup, resetHeightOnFinis
       });
     }
 
-    if (autoCleanup) {
+    if (!autoCleanup) {
       cleanup();
     }
 
@@ -87,6 +87,7 @@ function transitionFactory (element, {
   from,
 }) {
   return (to) => {
+    console.log('>>>>>', element, to);
     setTimeout(() => {
       requestAnimationFrame(() => {
         if (applyTranslateTransform) {

@@ -1,0 +1,16 @@
+[ignore]
+# https://github.com/facebook/fbjs/issues/64
+.*/node_modules/fbjs.*
+.*/node_modules/config-chain/test/broken.json
+.*/node_modules/npm/test/.*
+config/
+scripts/
+<PROJECT_ROOT>/node_modules/function-batch/index.js.flow
+
+[include]
+
+[libs]
+flow-typed/
+flow/libdefs/
+
+[options]

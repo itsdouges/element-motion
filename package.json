@@ -2,7 +2,7 @@
   "name": "yubaba-mono",
   "version": "0.0.0",
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist",
+    "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "build": "lerna run build",
     "lint": "eslint .",
