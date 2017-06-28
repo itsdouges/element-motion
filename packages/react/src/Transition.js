@@ -9,15 +9,26 @@ const nodeStore = {};
 const listenerStore = {};
 
 export function addTransitionListener (pairName: string, cb: (boolean) => void) {
+  if (typeof listenerStore[pairName] === 'boolean') {
+    cb(listenerStore[pairName]);
+  }
+
   listenerStore[pairName] = cb;
   return () => {
     delete listenerStore[pairName];
   };
 }
 
-function notifyTransitionListener (pairName, value) {
+function notifyTransitionListener (pairName, value: boolean) {
   const cb = listenerStore[pairName];
-  cb && cb(value);
+  console.log(pairName, cb);
+  if (cb) {
+    console.log(`notifying listener for ${pairName}`);
+    cb(value);
+  } else {
+    // notify doesnt exist yet, so lets leave a message.
+    listenerStore[pairName] = value;
+  }
 }
 
 function readFromStore (pairName) {

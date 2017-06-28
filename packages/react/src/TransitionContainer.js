@@ -19,7 +19,7 @@ export default class TransitionContainer extends React.Component {
   };
 
   componentDidMount () {
-    console.log('Transition container mounted.');
+    console.log(this.props.pair)
     this._detatch = addTransitionListener(this.props.pair, this.setVisibility);
   }
 
@@ -28,7 +28,6 @@ export default class TransitionContainer extends React.Component {
   }
 
   setVisibility = (visible: boolean) => {
-    console.log('Notified', visible);
     this.setState({
       visible,
     });
