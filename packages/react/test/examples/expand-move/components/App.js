@@ -33,7 +33,7 @@ const BoxWithReverseTransition = withTransition([{
   transition: 'move',
   duration: 0.75,
   matchSize: true,
-  autoCleanup: true,
+  autoCleanup: false,
 }])(Box);
 
 export default class App extends React.Component {

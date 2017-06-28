@@ -8,7 +8,7 @@ import * as yubaba from 'yubaba-core';
 const nodeStore = {};
 
 function readFromStore (pairName) {
-  return nodeStore[pairName.replace('-1', '')];
+  return nodeStore[pairName];
 }
 
 function addToStore (pairName, nodeOrFunc) {
@@ -85,8 +85,8 @@ export default class Transition extends React.Component {
       })
       .then((results) => {
         process.env.NODE_ENV !== 'production' && console.log('Finished transition.');
-        // Fadeout and destroy all expanders
-        return results
+        // Fadeout and cleanup all expanders
+        return Promise.all(results
           .filter(({ transition }) => transition === 'expand')
           .map(({ target }) => {
             return yubaba.fadeout(target, {
@@ -94,7 +94,15 @@ export default class Transition extends React.Component {
               autoCleanup: true,
               autoStart: true,
             }).promise;
-          });
+          })
+          .concat(results));
+      })
+      .then((results) => {
+        // Cleanup everything else left
+        console.log(results);
+        results.forEach((result) => {
+          result.cleanup && result.cleanup();
+        });
       });
 
       addToStore(this.props.pair, startTransition);

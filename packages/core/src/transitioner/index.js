@@ -34,8 +34,13 @@ function setEvents (element, { onStart, resolve, autoCleanup, name, resetHeightO
     });
   }
 
+  let transitionCleaned = false;
+
   const cleanup = () => {
-    element.parentElement.removeChild(element);
+    if (transitionCleaned) { return; }
+    transitionCleaned = true;
+    // This was erroring. Why?
+    element.parentElement && element.parentElement.removeChild(element);
   };
 
   const transitionEndEvent = () => {
