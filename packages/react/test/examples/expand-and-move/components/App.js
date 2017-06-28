@@ -5,6 +5,12 @@ import Box from './Box';
 import withTransition from '../../../../src/withTransition';
 
 const BoxWithTransition = withTransition([{
+  transition: 'expand',
+  duration: 0.2,
+  background: '#3d7596',
+  autoStart: true,
+  cover: false,
+}, {
   transition: 'move',
   duration: 0.75,
   matchSize: true,

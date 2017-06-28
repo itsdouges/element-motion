@@ -1,6 +1,6 @@
 // @flow
 
-import type { Options } from './Transition';
+import type { TransitionOptions } from './Transition';
 
 import React from 'react';
 import Transition from './Transition';
@@ -9,13 +9,9 @@ type Props = {
   transitionPair: string,
 };
 
-type HOCOptions = Options & {
-  transition: 'move',
-};
-
-const withTransition = ({ transition, ...options }: HOCOptions) => (WrappedComponent: ReactClass<*>) => {
+const withTransition = (transitions: Array<TransitionOptions>) => (WrappedComponent: ReactClass<*>) => {
   return ({ transitionPair, ...props }: Props) => (
-    <Transition pair={transitionPair} transition={transition} options={options}>
+    <Transition pair={transitionPair} transitions={transitions}>
       <WrappedComponent {...props} />
     </Transition>
   );

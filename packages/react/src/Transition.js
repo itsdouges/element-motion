@@ -5,8 +5,6 @@ import type { Children } from 'react';
 import React from 'react';
 import * as yubaba from 'yubaba-core';
 
-export type Options = {};
-
 const nodeStore = {};
 
 function readFromStore (pairName) {
@@ -21,14 +19,17 @@ function removeFromStore (pairName) {
   delete nodeStore[pairName];
 }
 
+export type TransitionOptions = {
+  transition: 'move' | 'expand',
+};
+
 export default class Transition extends React.Component {
   _node: HTMLElement;
 
   props: {
-    transition: 'move',
     pair: string,
     children?: Children,
-    options?: {},
+    transitions: Array<TransitionOptions>,
   };
 
   state = {
@@ -62,11 +63,15 @@ export default class Transition extends React.Component {
       process.env.NODE_ENV !== 'production' && console.log('Intialising transition.');
 
       const node = nodeOrFunc;
-      const transition = yubaba[this.props.transition](node.firstElementChild, this.props.options);
 
-      const startTransition = (endNode) => transition.start(endNode).then(() => {
-        process.env.NODE_ENV !== 'production' && console.log('Finished transition.');
+      const transitions = this.props.transitions.map(({ transition: name, ...options }) => {
+        return yubaba[name](node.firstElementChild, options);
       });
+
+      const startTransition = (endNode) => Promise.all(transitions.map((transition) => {
+        return transition.start(endNode);
+      }))
+      .then(() => process.env.NODE_ENV !== 'production' && console.log('Finished transition.'));
 
       addToStore(this.props.pair, startTransition);
     } else if (typeof nodeOrFunc === 'function') {
