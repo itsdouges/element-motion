@@ -38,7 +38,7 @@ const BoxWithReverseTransition = withTransition([{
 
 export default class App extends React.Component {
   state = {
-    big: true,
+    big: false,
   };
 
   toggle = () => {
