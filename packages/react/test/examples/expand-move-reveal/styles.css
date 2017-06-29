@@ -32,7 +32,11 @@ body {
 
 .box-highlighted {
   cursor: pointer;
-  background: blue;
+  background: #4c76b2;
+  background-image: url('http://i.imgur.com/7vm4hc3.jpg');
+  background-size: cover;
+  background-position: 0 0;
+  background-size: 100% 150%;
 }
 
 .content-margin {
