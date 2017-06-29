@@ -79,3 +79,12 @@ p {
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
   padding-bottom: 0.5em;
 }
+
+.content-text {
+  width: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  font-size: 3em;
+  font-family: sans-serif;
+}

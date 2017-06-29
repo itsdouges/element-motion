@@ -13,12 +13,16 @@ const BoxWithReverseTransition = withTransition([{
   cover: true,
 }, {
   transition: 'move',
-  duration: 0.2,
+  duration: 0.5,
   matchSize: true,
 }])(Box);
 
 const BoxWithContent = ({ onClick }: any) => (
   <TransitionContainer pair="box-to-box" className="content-bg">
+    <div className="content-text">
+      {'THE FIRST ORDER'.split('').map((char) => <span>{char}</span>)}
+    </div>
+
     <div className="content-margin">
       <BoxWithReverseTransition
         className="box-highlighted"
