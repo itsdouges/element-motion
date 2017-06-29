@@ -11,6 +11,8 @@ import {
 function setTarget (element, { newElement, cloneElement, createInBody = true }, fromElement) {
   let target;
 
+  console.log('MAKIN DEM TARGET', fromElement);
+
   if (newElement) {
     target = createElement(fromElement, {
       parentElement: createInBody ? document.body : element.parentElement,
@@ -78,10 +80,16 @@ function setInitialStyles (element, {
     .map((transition) => `${transition} ${duration}s`)
     .join(',');
 
+  console.log('setting initial style for: ', from.transition);
+  console.log(from);
+
   if (immediatelyApplyFrom && styleApply) {
     requestAnimationFrame(() => {
+      console.log('was i dropped?');
       applyStyles(element, from);
     });
+  } else {
+    console.log('nah for: ', from.transition);
   }
 }
 
@@ -107,8 +115,11 @@ function transitionFactory (element, {
         }
 
         if (applyStyle) {
+          console.log('yoo applying', to);
           applyStyles(element, to);
         }
+
+        console.log('DID I FUKIN WORK?');
       });
     }, delay);
   };
@@ -137,6 +148,8 @@ export default function transitioner (element, {
     resetHeightOnFinish: options.resetHeightOnFinish,
     resolve,
   });
+
+  console.log('>>>>', from);
 
   setInitialStyles(target, {
     immediatelyApplyFrom: options.immediatelyApplyFrom,

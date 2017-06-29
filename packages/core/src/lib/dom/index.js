@@ -12,9 +12,23 @@ export function calculateElementLocation (element/* , calculateViewportScrollOff
   // const offsetY = calculateViewportScrollOffset ? window.scrollY : 0;
   // const offsetX = calculateViewportScrollOffset ? window.scrollX : 0;
 
+  // return {
+  //   left: element.offsetLeft, // rect.left + offsetX,
+  //   top: element.offsetTop, // rect.top + offsetY,
+  // };
+
+  const rect = element.getBoundingClientRect();
+  const scrollTop = document.documentElement.scrollTop
+    ? document.documentElement.scrollTop
+    : document.body.scrollTop;
+
+  const scrollLeft = document.documentElement.scrollLeft
+    ? document.documentElement.scrollLeft
+    : document.body.scrollLeft;
+
   return {
-    left: element.offsetLeft, // rect.left + offsetX,
-    top: element.offsetTop, // rect.top + offsetY,
+    left: rect.left + scrollLeft,
+    top: rect.top + scrollTop,
   };
 }
 
@@ -36,10 +50,25 @@ export function calculateWindowCentre () {
   };
 }
 
+const addPxIfNeeded = (key, value) => {
+  switch (key) {
+    case 'width':
+    case 'height':
+    case 'top':
+    case 'left':
+      return typeof value === 'number' ? `${value}px` : value;
+
+    default:
+      return value;
+  }
+};
+
 /* eslint no-param-reassign:0 */
 export function applyStyles (element, styles) {
+  console.log('setting style for', element, styles);
+
   Object.keys(styles).forEach((key) => {
-    element.style[key] = styles[key];
+    element.style[key] = addPxIfNeeded(key, styles[key]);
   });
 }
 
@@ -86,23 +115,37 @@ export function transformScale (element, { scale, transformOrigin }) {
   });
 }
 
+function logStyle (element, styles) {
+  return Object.keys(styles).reduce((obj, key) => ({
+    ...obj,
+    [key]: element.style[key],
+  }), {});
+}
+
 export function createElement (styles, { parentElement = document.body, cloneFrom } = {}) {
   const newElement = document.createElement('div');
   const innerElement = (cloneFrom && cloneFrom.cloneNode(true));
   if (innerElement) {
     applyStyles(innerElement, {
       margin: 0,
+      width: '100%',
+      height: '100%',
     });
+
+    console.log('>>> NEW INNER', innerElement);
 
     innerElement.id = '';
     newElement.appendChild(innerElement);
   }
-
+  console.log('>><< APPLYING', styles);
+  console.log('>><< BEFORE', logStyle(newElement, styles));
   applyStyles(newElement, {
     ...styles,
   });
 
   transformScale(newElement, styles);
+
+  console.log('>><< AFTER', logStyle(newElement, styles));
 
   parentElement.appendChild(newElement);
   return newElement;

@@ -1,8 +1,8 @@
 {
-  "name": "yubaba-react",
+  "name": "react-yubaba",
   "version": "0.0.1",
   "description": "yubaba React",
-  "main": "dist/yubaba-react.js",
+  "main": "dist/react-yubaba.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --open --port 8081",
     "build": "webpack"

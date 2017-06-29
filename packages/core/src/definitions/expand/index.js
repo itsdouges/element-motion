@@ -11,7 +11,7 @@ export default function expand (element, { background, reverse, cover }) {
   const size = calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
 
-  console.log('start expand', location);
+  console.log('start expand', location, size);
 
   const elementHypotenuse = cover ? calculateHypotenuse(size) : minSize;
 
@@ -48,7 +48,7 @@ export default function expand (element, { background, reverse, cover }) {
       background: background || 'orange',
       position: 'absolute',
       scale: reverse ? scale : undefined,
-      'z-index': 9997,
+      zIndex: 9997,
     },
     to: {
       scale: reverse ? 1 : scale,

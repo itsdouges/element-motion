@@ -14,8 +14,6 @@ export default function move (fromElement, { matchSize } = {}) {
     const toSize = matchSize ? calculateElementSize(toElement) : calculateElementSize(fromElement);
     const toLocation = calculateElementLocation(toElement, true);
 
-    console.log(toSize, toLocation);
-
     return {
       ...toLocation,
       ...toSize,
@@ -39,7 +37,7 @@ export default function move (fromElement, { matchSize } = {}) {
       ...fromSize,
       margin: 0,
       position: 'absolute',
-      'z-index': 9999,
+      zIndex: 9999,
     },
     to,
   };
