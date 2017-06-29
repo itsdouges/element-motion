@@ -1,0 +1,81 @@
+body {
+  overflow-anchor: none;
+  overflow-x: hidden;
+  background-color: #000;
+}
+
+p {
+  margin: 2em;
+  font-size: 1.2em;
+  font-family: sans-serif;
+}
+
+.box {
+  display: inline-block;
+  background-color: #fff;
+  background-position: 0 0;
+  cursor: pointer;
+  background-size: 100% 100%;
+}
+
+.box-small {
+  width: 300px;
+  height: 150px;
+  margin: 0.25em;
+}
+
+.box-big {
+  width: 800px;
+  height: 400px;
+}
+
+.box-highlighted {
+  background: #782128;
+  background-position: 0 0;
+  background-size: 100% 100%;
+}
+
+.content-bg {
+  background: #782128;
+  padding: 10em 0;
+}
+
+.vader-container {
+  margin-top: -120px;
+  margin-left: -70px;
+}
+
+.insignia {
+  display: block;
+  margin: 3em auto 2em;
+  width: 75px;
+}
+
+.vader-bg {
+  background-image: url('images/vader-bg.jpg');
+  width: 1200px;
+  height: 600px;
+  background-size: cover;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+}
+
+.container-inner {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 750px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.content-margin {
+  max-width: 800px;
+  min-height: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+  padding-bottom: 0.5em;
+}
