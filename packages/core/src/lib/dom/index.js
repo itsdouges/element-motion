@@ -92,20 +92,25 @@ export function transformTranslate (element, { x, y }) {
   });
 }
 
-export function transformScale (element, { scale, transformOrigin }) {
-  if (!scale) {
+export function transformScale (element, { scale3d, scale, transformOrigin }) {
+  if (!scale3d && !scale) {
     return;
   }
 
-  const scaleModifier = `scale(${scale})`;
+  // scale3d takes presedence
+  const scaleModifier = scale3d ? `scale3d(${scale3d})` : `scale(${scale})`;
+
   let transform = element.style.transform;
   if (transform.indexOf('scale') > -1) {
-    transform = transform.replace(/scale\(.*\)/, scaleModifier);
+    // replace any prexisting transform with a new one.
+    transform = transform.replace(/scale\(.*\)|scale3d\(.*\)/, scaleModifier);
   } else if (transform.length > 0) {
-    transform = `${element.style.transform} scale(${scale})`;
+    transform = `${element.style.transform} ${scaleModifier}`;
   } else {
     transform = scaleModifier;
   }
+
+  console.log('TTTTT', transform);
 
   applyStyles(element, {
     transformOrigin,
@@ -130,6 +135,7 @@ export function createElement (styles, { parentElement = document.body, cloneFro
       margin: 0,
       width: '100%',
       height: '100%',
+      overflow: 'hidden',
     });
 
     console.log('>>> NEW INNER', innerElement);

@@ -17,7 +17,7 @@ export default function move (fromElement, { matchSize } = {}) {
     return {
       ...toLocation,
       ...toSize,
-      scale: matchSize && percentageDifference(toSize.width, fromSize.width),
+      scale3d: matchSize && `${percentageDifference(toSize.width, fromSize.width)}, ${percentageDifference(toSize.height, fromSize.height)}, 1`,
       transformOrigin: '0 0',
     };
   };
