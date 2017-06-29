@@ -10,7 +10,7 @@
 </h1>
 
 <p align="center">
-  <img src="https://github.com/madou/yubaba/blob/master/example.gif?raw=true&yes" style="margin:0 auto" />
+  <img src="https://github.com/madou/yubaba/blob/master/example-transition.gif?raw=true" style="margin:0 auto" />
 </p>
 
 ## Troubleshooting
