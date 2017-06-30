@@ -9,10 +9,6 @@
   <a href="https://travis-ci.org/madou/yubaba"><img alt="Build Status" src="https://travis-ci.org/madou/yubaba.svg?branch=master"></a>
 </h1>
 
-<p align="center">
-  <img src="https://github.com/madou/yubaba/blob/master/example-transition.gif?raw=true" style="margin:0 auto" />
-</p>
-
 ## Troubleshooting
 
 ### Scroll anchoring
