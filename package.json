@@ -14,7 +14,8 @@
     "react:dev": "lerna run start --scope react*",
     "react:tdd": "npm run react:unit -- -w",
     "react:unit": "mocha \"./packages/react/src/**/*.spec.js\" --opts ./packages/react/test/mocha.opts",
-    "codecov": "echo \"not implemented\""
+    "codecov": "echo \"not implemented\"",
+    "docs": "bash ./scripts/buildDocs.sh"
   },
   "devDependencies": {
     "babel": "^6.5.2",

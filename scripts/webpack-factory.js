@@ -29,7 +29,7 @@ module.exports = (params) => {
       ],
     },
     devServer: {
-      publicPath: '/dist/',
+      publicPath: '/',
     },
     plugins: params.plugins,
   };
