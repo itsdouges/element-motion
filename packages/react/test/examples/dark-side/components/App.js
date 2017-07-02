@@ -55,7 +55,7 @@ export default class App extends React.Component {
 
         {this.state.big || (
           <Container className="container">
-            <img alt="Empire Insignia" src={`/${require('../images/logo.png')}`} className="insignia" />
+            <img alt="Empire Insignia" src={`${require('../images/logo.png')}`} className="insignia" />
 
             <div className="container-inner">
               <Box type="small" src="ben.jpeg" />
