@@ -22315,7 +22315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.state.big || _react2.default.createElement(
 	          Container,
 	          { className: 'container' },
-	          _react2.default.createElement('img', { alt: 'Empire Insignia', src: '/' + __webpack_require__(192), className: 'insignia' }),
+	          _react2.default.createElement('img', { alt: 'Empire Insignia', src: '' + __webpack_require__(192), className: 'insignia' }),
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'container-inner' },
@@ -22376,7 +22376,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return _react2.default.createElement('div', _extends({}, props, {
 	    className: 'box box-' + type + (className ? ' ' + className : '')
 	    // $FlowFixMe - Dynamic import
-	    , style: { backgroundImage: 'url(/' + __webpack_require__(186)("./" + src) + ')' }
+	    , style: { backgroundImage: 'url(' + __webpack_require__(186)("./" + src) + ')' }
 	  }));
 	};
 

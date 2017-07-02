@@ -7,7 +7,7 @@ const Box = ({ type, className, src, ...props }: { className?: string, type: 'bi
     {...props}
     className={`box box-${type}${className ? ` ${className}` : ''}`}
     // $FlowFixMe - Dynamic import
-    style={{ backgroundImage: `url(/${require(`../images/${src}`)})` }}
+    style={{ backgroundImage: `url(${require(`../images/${src}`)})` }}
   />
 );
 
