@@ -28,6 +28,16 @@ export default class App extends React.Component {
     big: false,
   };
 
+  componentDidMount () {
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'Escape') {
+        this.setState({
+          big: false,
+        });
+      }
+    });
+  }
+
   toggle = () => {
     this.setState((prevState) => ({
       big: !prevState.big,
@@ -45,21 +55,21 @@ export default class App extends React.Component {
 
         {this.state.big || (
           <Container className="container">
-            <img src="images/logo.png" className="insignia" />
+            <img alt="Empire Insignia" src={`/dist/${require('../images/logo.png')}`} className="insignia" />
 
             <div className="container-inner">
-              <Box type="small" src="images/ben.jpeg" />
-              <Box type="small" src="images/darth-maul.jpg" />
-              <Box type="small" src="images/boba-fett.jpg" />
+              <Box type="small" src="ben.jpeg" />
+              <Box type="small" src="darth-maul.jpg" />
+              <Box type="small" src="boba-fett.jpg" />
               <BoxWithTransition
                 transitionPair="box-to-box"
                 type="small"
                 onClick={this.toggle}
-                src="images/first-order.jpg"
+                src="first-order.jpg"
                 className="box-highlighted"
               />
-              <Box type="small" src="images/emporer.jpg" />
-              <Box type="small" src="images/phasma.jpg" />
+              <Box type="small" src="emporer.jpg" />
+              <Box type="small" src="phasma.jpg" />
             </div>
 
             <div className="vader-container">

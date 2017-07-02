@@ -38,6 +38,7 @@
     "eslint-plugin-jsx-a11y": "^5.0.0",
     "eslint-plugin-mocha": "^4.11.0",
     "eslint-plugin-react": "^7.1.0",
+    "file-loader": "^0.11.2",
     "inject-loader": "^2.0.1",
     "jsdom": "^11.0.0",
     "jsdom-global": "^3.0.2",
