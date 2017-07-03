@@ -38,9 +38,10 @@ export default class App extends React.Component {
     });
   }
 
-  toggle = () => {
+  toggle = (src) => {
     this.setState((prevState) => ({
       big: !prevState.big,
+      src,
     }));
   };
 
@@ -49,7 +50,7 @@ export default class App extends React.Component {
       <div className="root">
         {this.state.big && (
           <Container>
-            <BoxWithContent onClick={this.toggle} />
+            <BoxWithContent onClick={this.toggle} src={this.state.src} />
           </Container>
         )}
 
@@ -61,13 +62,15 @@ export default class App extends React.Component {
               <Box type="small" src="ben.jpeg" />
               <Box type="small" src="darth-maul.jpg" />
               <Box type="small" src="boba-fett.jpg" />
+
               <BoxWithTransition
                 transitionPair="box-to-box"
                 type="small"
-                onClick={this.toggle}
+                onClick={() => this.toggle('first-order.jpg')}
                 src="first-order.jpg"
                 className="box-highlighted"
               />
+
               <Box type="small" src="emporer.jpg" />
               <Box type="small" src="phasma.jpg" />
             </div>

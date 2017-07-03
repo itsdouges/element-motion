@@ -17,7 +17,7 @@ const BoxWithReverseTransition = withTransition([{
   matchSize: true,
 }])(Box);
 
-const BoxWithContent = ({ onClick }: any) => (
+const BoxWithContent = ({ onClick, src }: any) => (
   <TransitionContainer pair="box-to-box" className="content-bg">
     <div className="content-text">
       {'THE FIRST ORDER'.split('').map((char) => <span>{char}</span>)}
@@ -29,7 +29,7 @@ const BoxWithContent = ({ onClick }: any) => (
         transitionPair="box-to-box"
         type="big"
         onClick={onClick}
-        src="first-order.jpg"
+        src={src}
       />
 
       <p>

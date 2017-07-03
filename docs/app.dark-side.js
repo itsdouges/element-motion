@@ -3,10 +3,10 @@
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
-	else if(typeof exports === 'object')
-		exports["yubabaReact"] = factory();
-	else
-		root["yubabaReact"] = factory();
+	else {
+		var a = factory();
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -22279,10 +22279,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref2 = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref2, [this].concat(args))), _this), _this.state = {
 	      big: false
-	    }, _this.toggle = function () {
+	    }, _this.toggle = function (src) {
 	      _this.setState(function (prevState) {
 	        return {
-	          big: !prevState.big
+	          big: !prevState.big,
+	          src: src
 	        };
 	      });
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -22304,13 +22305,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'root' },
 	        this.state.big && _react2.default.createElement(
 	          Container,
 	          null,
-	          _react2.default.createElement(_BoxWithContent2.default, { onClick: this.toggle })
+	          _react2.default.createElement(_BoxWithContent2.default, { onClick: this.toggle, src: this.state.src })
 	        ),
 	        this.state.big || _react2.default.createElement(
 	          Container,
@@ -22325,7 +22328,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _react2.default.createElement(BoxWithTransition, {
 	              transitionPair: 'box-to-box',
 	              type: 'small',
-	              onClick: this.toggle,
+	              onClick: function onClick() {
+	                return _this3.toggle('first-order.jpg');
+	              },
 	              src: 'first-order.jpg',
 	              className: 'box-highlighted'
 	            }),
@@ -22499,7 +22504,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}])(_Box2.default);
 
 	var BoxWithContent = function BoxWithContent(_ref) {
-	  var onClick = _ref.onClick;
+	  var onClick = _ref.onClick,
+	      src = _ref.src;
 	  return _react2.default.createElement(
 	    _TransitionContainer2.default,
 	    { pair: 'box-to-box', className: 'content-bg' },
@@ -22522,7 +22528,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        transitionPair: 'box-to-box',
 	        type: 'big',
 	        onClick: onClick,
-	        src: 'first-order.jpg'
+	        src: src
 	      }),
 	      _react2.default.createElement(
 	        'p',

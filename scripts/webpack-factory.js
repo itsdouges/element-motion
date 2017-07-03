@@ -28,9 +28,9 @@ module.exports = (params) => {
         '.js',
       ],
     },
-    devServer: {
+    devServer: Object.assign({
       publicPath: '/',
-    },
+    }, params.devServer),
     plugins: params.plugins,
   };
 
