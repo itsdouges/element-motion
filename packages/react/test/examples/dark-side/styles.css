@@ -25,8 +25,9 @@ p {
 }
 
 .box-big {
-  width: 800px;
-  height: 400px;
+  position: relative;
+  padding-top: 50%;
+  width: 100%;
 }
 
 .box-highlighted {
@@ -49,6 +50,7 @@ p {
   display: block;
   margin: 3em auto 2em;
   width: 75px;
+  height: 75px;
 }
 
 .vader-bg {
@@ -81,7 +83,8 @@ p {
 }
 
 .content-text {
-  width: 800px;
+  max-width: 800px;
+  padding: 0 0.5em;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;

@@ -23,13 +23,8 @@ export function addTransitionListener (pairName: string, cb: (boolean) => void) 
 function notifyTransitionListener (pairName, value: boolean /* , leaveAMessage?: boolean*/) {
   const cb = listenerStore[pairName];
   if (cb) {
-    console.log(`notifying listener for ${pairName}`);
     cb(value);
-  } // else if (leaveAMessage) {
-    // console.log('Leaving a message for a listener to pick up later.');
-    // notify doesnt exist yet, so lets leave a message.
-    // listenerStore[pairName] = value;
-  // }
+  }
 }
 
 function readFromStore (pairName) {

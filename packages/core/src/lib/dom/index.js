@@ -65,8 +65,6 @@ const addPxIfNeeded = (key, value) => {
 
 /* eslint no-param-reassign:0 */
 export function applyStyles (element, styles) {
-  console.log('setting style for', element, styles);
-
   Object.keys(styles).forEach((key) => {
     element.style[key] = addPxIfNeeded(key, styles[key]);
   });
@@ -110,8 +108,6 @@ export function transformScale (element, { scale3d, scale, transformOrigin }) {
     transform = scaleModifier;
   }
 
-  console.log('TTTTT', transform);
-
   applyStyles(element, {
     transformOrigin,
     backfaceVisibility: 'hidden',
@@ -120,6 +116,7 @@ export function transformScale (element, { scale3d, scale, transformOrigin }) {
   });
 }
 
+// eslint-disable-next-line
 function logStyle (element, styles) {
   return Object.keys(styles).reduce((obj, key) => ({
     ...obj,
@@ -133,25 +130,17 @@ export function createElement (styles, { parentElement = document.body, cloneFro
   if (innerElement) {
     applyStyles(innerElement, {
       margin: 0,
-      width: '100%',
-      height: '100%',
-      overflow: 'hidden',
     });
-
-    console.log('>>> NEW INNER', innerElement);
 
     innerElement.id = '';
     newElement.appendChild(innerElement);
   }
-  console.log('>><< APPLYING', styles);
-  console.log('>><< BEFORE', logStyle(newElement, styles));
+
   applyStyles(newElement, {
     ...styles,
   });
 
   transformScale(newElement, styles);
-
-  console.log('>><< AFTER', logStyle(newElement, styles));
 
   parentElement.appendChild(newElement);
   return newElement;

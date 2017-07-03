@@ -26,6 +26,7 @@ const BoxWithTransition = withTransition([{
 export default class App extends React.Component {
   state = {
     big: false,
+    src: 'first-order.jpg',
   };
 
   componentDidMount () {
@@ -38,7 +39,7 @@ export default class App extends React.Component {
     });
   }
 
-  toggle = (src) => {
+  toggle = (src: string) => {
     this.setState((prevState) => ({
       big: !prevState.big,
       src,

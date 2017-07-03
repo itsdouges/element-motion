@@ -11,8 +11,6 @@ export default function expand (element, { background, reverse, cover }) {
   const size = calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
 
-  console.log('start expand', location, size);
-
   const elementHypotenuse = cover ? calculateHypotenuse(size) : minSize;
 
   const windowHypotenuse = calculateHypotenuse({
