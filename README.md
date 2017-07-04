@@ -15,7 +15,7 @@
 
 <p align="center">
   <br />
-  <img src="https://github.com/madou/yubaba/blob/master/react-the-darks-side.gif?raw=true" style="margin:0 auto" />
+  <img src="https://github.com/madou/yubaba/blob/master/packages/react/test/examples/dark-side/example.gif?raw=true" style="margin:0 auto" />
 </p>
 
 ## [Yubaba Core](https://github.com/madou/yubaba/blob/master/packages/core/README.md)
