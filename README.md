@@ -9,6 +9,15 @@
   <a href="https://travis-ci.org/madou/yubaba"><img alt="Build Status" src="https://travis-ci.org/madou/yubaba.svg?branch=master"></a>
 </h1>
 
+## Examples
+
+### [React: The Dark Side](https://madou.github.io/yubaba/)
+
+<p align="center">
+  <br />
+  <img src="https://github.com/madou/yubaba/blob/master/react-the-darks-side.gif?raw=true" style="margin:0 auto" />
+</p>
+
 ## [Yubaba Core](https://github.com/madou/yubaba/blob/master/packages/core/README.md)
 
 ## [React Bindings](https://github.com/madou/yubaba/blob/master/packages/react/README.md)
