@@ -9,6 +9,10 @@
   <a href="https://travis-ci.org/madou/yubaba"><img alt="Build Status" src="https://travis-ci.org/madou/yubaba.svg?branch=master"></a>
 </h1>
 
+## [Yubaba Core](https://github.com/madou/yubaba/blob/master/packages/core/README.md)
+
+## [React Bindings](https://github.com/madou/yubaba/blob/master/packages/react/README.md)
+
 ## Troubleshooting
 
 ### Scroll anchoring
