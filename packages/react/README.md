@@ -34,6 +34,8 @@ const MySweetList = () => (
 | transitions | `Array<Transition>`  | yes | Array of transitions to apply to the component, see below for more details. |
 | children | `Children`  | no | n/a |
 
+All other props are passed through to the root element.
+
 #### [Transition: See the core README](https://github.com/madou/yubaba/blob/master/packages/core/README.md#Transitions)
 
 ### `withTransition(transitions: Array<Transition>)(ReactClass<*>) => ReactClass<*>`
@@ -87,7 +89,7 @@ const MySweetPage = () => (
     </Transition>
 
     <p>
-      How sweet is this! It's like a honey bee.
+      How sweet is this! It is like a honey bee.
     </p>
   </TransitionContainer>
 );
@@ -95,9 +97,9 @@ const MySweetPage = () => (
 
 #### Props
 
-All props are passed through to the root element.
-
 | prop | type | required | description |
 |-|-|-|-|
 | pair | `string` | yes | Transition pair name. This should be the same name as your pairing `<Transition />`. |
 | children | `Children`  | no | n/a |
+
+All other props are passed through to the root element.

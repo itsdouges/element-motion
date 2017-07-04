@@ -50,6 +50,9 @@ export default class Transition extends React.Component {
     pair: string,
     children?: Children,
     transitions: Array<TransitionOptions>,
+    style?: {
+      [string]: any,
+    },
   };
 
   state = {
@@ -147,8 +150,14 @@ export default class Transition extends React.Component {
   }
 
   render () {
+    const { pair, transitions, style, ...props } = this.props;
+
     return (
-      <div ref={(node) => (this._node = node)} style={{ opacity: this.state.visible ? 1 : 0 }}>
+      <div
+        {...props}
+        ref={(node) => (this._node = node)}
+        style={{ ...style, opacity: this.state.visible ? 1 : 0 }}
+      >
         {this.props.children}
       </div>
     );
