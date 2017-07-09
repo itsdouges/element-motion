@@ -136,12 +136,9 @@ export function createElement (styles, { parentElement = document.body, cloneFro
     newElement.appendChild(innerElement);
   }
 
-  applyStyles(newElement, {
-    ...styles,
-  });
-
+  applyStyles(newElement, styles);
   transformScale(newElement, styles);
-
   parentElement.appendChild(newElement);
+
   return newElement;
 }

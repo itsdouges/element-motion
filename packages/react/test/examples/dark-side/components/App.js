@@ -15,7 +15,6 @@ const BoxWithTransition = withTransition([{
   transition: 'expand',
   duration: 0.5,
   background: '#541219',
-  autoStart: true,
   cover: true,
 }, {
   transition: 'move',

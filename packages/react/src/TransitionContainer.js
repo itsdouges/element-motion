@@ -3,7 +3,7 @@
 import type { Children } from 'react';
 import React from 'react';
 
-import { addTransitionListener } from './Transition';
+import { addTransitionListener } from './orchestrator';
 
 export default class TransitionContainer extends React.Component {
   _detatch: Function;
