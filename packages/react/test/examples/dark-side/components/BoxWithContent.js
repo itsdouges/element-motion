@@ -18,7 +18,7 @@ const BoxWithReverseTransition = withTransition([{
 }])(Box);
 
 const BoxWithContent = ({ onClick, src, description, name }: any) => (
-  <TransitionContainer pair="box-to-box" className="content-bg">
+  <TransitionContainer pair={name} className="content-bg">
     <div className="content-text">
       {name.toUpperCase().split('').map((char) => <span>{char}</span>)}
     </div>

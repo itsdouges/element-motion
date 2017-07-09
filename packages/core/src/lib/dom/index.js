@@ -7,16 +7,7 @@ export function calculateElementSize (element) {
   };
 }
 
-export function calculateElementLocation (element/* , calculateViewportScrollOffset*/) {
-  // const rect = element.getBoundingClientRect();
-  // const offsetY = calculateViewportScrollOffset ? window.scrollY : 0;
-  // const offsetX = calculateViewportScrollOffset ? window.scrollX : 0;
-
-  // return {
-  //   left: element.offsetLeft, // rect.left + offsetX,
-  //   top: element.offsetTop, // rect.top + offsetY,
-  // };
-
+export function calculateElementLocation (element) {
   const rect = element.getBoundingClientRect();
   const scrollTop = document.documentElement.scrollTop
     ? document.documentElement.scrollTop

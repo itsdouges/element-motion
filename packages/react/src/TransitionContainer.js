@@ -19,6 +19,7 @@ export default class TransitionContainer extends React.Component {
   };
 
   componentWillMount () {
+    console.log('wew bois');
     // We need to have this be attached before
     // everything else is mounted, but we don't want to run this on the server.
     // How?
@@ -35,6 +36,7 @@ export default class TransitionContainer extends React.Component {
   }
 
   setVisibility = (visible: boolean) => {
+    console.log(visible, 'fuck')
     this.setState({
       visible,
     });
