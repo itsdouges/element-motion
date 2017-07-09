@@ -1,6 +1,7 @@
 // @flow
 
 import * as yubaba from 'yubaba-core';
+import { calculateElementLocation, calculateElementSize } from '../../core/src/lib/dom';
 
 const REMOVE_DELAY = 100;
 const nodeStore = {};
@@ -31,6 +32,19 @@ function addToStore (pairName, { node, transitions }) {
   nodeStore[pairName].push({ node, transitions });
 }
 
+function updateNodeData (pairName, { node, data }) {
+  nodeStore[pairName] = nodeStore[pairName].map((item) => {
+    if (item.node === node) {
+      return {
+        ...item,
+        data,
+      };
+    }
+
+    return item;
+  });
+}
+
 export function removeFromStore (pairName: string, node: Element, withDelay: boolean = false) {
   const remove = () => (nodeStore[pairName] = nodeStore[pairName].filter(({ node: nodeInStore }) => nodeInStore !== node));
 
@@ -54,6 +68,16 @@ type Options = {
 type Node = {
   node: Element,
   transitions: Array<Transition>,
+  data?: {
+    location: {
+      left: number,
+      top: number,
+    },
+    size: {
+      width: number,
+      height: number,
+    },
+  },
 };
 
 function startTransition (
@@ -64,11 +88,11 @@ function startTransition (
 ) {
   const transitions = fromNode.transitions.map(({ transition: name, ...options }) => {
     // Hack to get reverse working. Uh. This should probably be rethought.
-    const initTransition = (node) => yubaba[name](node, options);
+    const initTransition = (node, metadata) => yubaba[name](node, options, metadata);
 
     return options.reverse
       ? { start: (node) => initTransition(node).start }
-      : initTransition(fromNode.node);
+      : initTransition(fromNode.node, fromNode.data);
   });
 
   Promise
@@ -124,7 +148,19 @@ export default function orchestrator (pairName: string, options: Options) {
   const isInNodeArr = nodeArr.some(({ node }) => options.node === node);
 
   if (nodeArr.length === 1 && isInNodeArr) {
+    // This branch will get triggered only if the component was added, and then removed, from the vDOM.
     process.env.NODE_ENV !== 'production' && console.log(`Found fromNode for "${pairName}" pair, saving dimensions.`);
+
+    const location = calculateElementLocation(options.node);
+    const size = calculateElementSize(options.node);
+
+    updateNodeData(pairName, {
+      node: options.node,
+      data: {
+        location,
+        size,
+      },
+    });
 
     return;
   }

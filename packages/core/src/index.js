@@ -5,8 +5,8 @@ import doFadeout from './definitions/fadeout';
 import doMove from './definitions/move';
 import doReveal from './definitions/reveal';
 
-function transition (transitionFunc, element, options) {
-  const transitionDefinition = transitionFunc(element, options);
+function transition (transitionFunc, element, options, metadata) {
+  const transitionDefinition = transitionFunc(element, options, metadata);
   const defer = deferred();
 
   const start = transitioner(element, {
@@ -34,18 +34,18 @@ function transition (transitionFunc, element, options) {
   return params;
 }
 
-export function expand (element, options) {
-  return transition(doExpand, element, options);
+export function expand (element, options, metadata) {
+  return transition(doExpand, element, options, metadata);
 }
 
-export function fadeout (element, options) {
-  return transition(doFadeout, element, options);
+export function fadeout (element, options, metadata) {
+  return transition(doFadeout, element, options, metadata);
 }
 
-export function move (element, options) {
-  return transition(doMove, element, options);
+export function move (element, options, metadata) {
+  return transition(doMove, element, options, metadata);
 }
 
-export function reveal (element, options) {
-  return transition(doReveal, element, options);
+export function reveal (element, options, metadata) {
+  return transition(doReveal, element, options, metadata);
 }
