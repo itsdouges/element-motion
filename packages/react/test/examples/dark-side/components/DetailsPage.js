@@ -1,11 +1,11 @@
 // @flow
 
 import React from 'react';
-import Box from './Box';
+import Photo from './Photo';
 import TransitionContainer from '../../../../src/TransitionContainer';
 import Transition from '../../../../src/Transition';
 
-const BoxWithContent = ({ onClick, src, description, name, color }: any) => (
+const DetailsPage = ({ onClick, src, description, name, color }: any) => (
   <TransitionContainer pair={name} className="content-bg" style={{ backgroundColor: color }}>
     <div className="content-text">
       {name.toUpperCase().split('').map((char, index) =>
@@ -28,11 +28,10 @@ const BoxWithContent = ({ onClick, src, description, name, color }: any) => (
           matchSize: true,
         }]}
       >
-        <Box
+        <Photo
           className="box-highlighted"
-          transitionPair={name}
-          type="big"
           onClick={onClick}
+          type="big"
           src={src}
         />
       </Transition>
@@ -42,4 +41,4 @@ const BoxWithContent = ({ onClick, src, description, name, color }: any) => (
   </TransitionContainer>
 );
 
-export default BoxWithContent;
+export default DetailsPage;
