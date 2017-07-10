@@ -22231,7 +22231,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _BoxWithContent2 = _interopRequireDefault(_BoxWithContent);
 
-	var _withTransition = __webpack_require__(202);
+	var _withTransition = __webpack_require__(199);
 
 	var _withTransition2 = _interopRequireDefault(_withTransition);
 
@@ -22585,7 +22585,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _TransitionContainer2 = _interopRequireDefault(_TransitionContainer);
 
-	var _withTransition = __webpack_require__(202);
+	var _withTransition = __webpack_require__(199);
 
 	var _withTransition2 = _interopRequireDefault(_withTransition);
 
@@ -22614,11 +22614,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'content-text' },
-	      name.toUpperCase().split('').map(function (char) {
-	        return _react2.default.createElement(
-	          'span',
-	          null,
-	          char
+	      name.toUpperCase().split('').map(function (char, index) {
+	        return (
+	          // eslint-disable-next-line react/no-array-index-key
+	          _react2.default.createElement(
+	            'span',
+	            { key: index },
+	            char
+	          )
 	        );
 	      })
 	    ),
@@ -22657,7 +22660,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _orchestrator = __webpack_require__(197);
+	var _yubabaCore = __webpack_require__(197);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22698,7 +22701,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // We need to have this be attached before
 	      // everything else is mounted, but we don't want to run this on the server.
 	      // How?
-	      this._detatch = (0, _orchestrator.addTransitionListener)(this.props.pair, this.setVisibility);
+	      this._detatch = (0, _yubabaCore.addTransitionListener)(this.props.pair, this.setVisibility);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -22728,211 +22731,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 197 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	exports.addTransitionListener = addTransitionListener;
-	exports.removeFromStore = removeFromStore;
-	exports.default = orchestrator;
-
-	var _yubabaCore = __webpack_require__(198);
-
-	var yubaba = _interopRequireWildcard(_yubabaCore);
-
-	var _dom = __webpack_require__(200);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	var REMOVE_DELAY = 100;
-	var nodeStore = {};
-	var listenerStore = {};
-
-	function addTransitionListener(pairName, cb) {
-	  listenerStore[pairName] = cb;
-
-	  return function () {
-	    delete listenerStore[pairName];
-	  };
-	}
-
-	function notifyTransitionListener(pairName, value) {
-	  // we should be able to handle multiple listeners.
-	  var cb = listenerStore[pairName];
-	  if (cb) {
-	    cb(value);
-	  }
-	}
-
-	function readFromStore(pairName) {
-	  return nodeStore[pairName] || [];
-	}
-
-	function addToStore(pairName, _ref) {
-	  var node = _ref.node,
-	      transitions = _ref.transitions;
-
-	  nodeStore[pairName] = nodeStore[pairName] || [];
-	  nodeStore[pairName].push({ node: node, transitions: transitions });
-	}
-
-	function updateNodeData(pairName, _ref2) {
-	  var node = _ref2.node,
-	      data = _ref2.data;
-
-	  nodeStore[pairName] = nodeStore[pairName].map(function (item) {
-	    if (item.node === node) {
-	      return _extends({}, item, {
-	        data: data
-	      });
-	    }
-
-	    return item;
-	  });
-	}
-
-	function removeFromStore(pairName, node) {
-	  var withDelay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-	  var remove = function remove() {
-	    return nodeStore[pairName] = nodeStore[pairName].filter(function (_ref3) {
-	      var nodeInStore = _ref3.node;
-	      return nodeInStore !== node;
-	    });
-	  };
-
-	  if (withDelay) {
-	    setTimeout(remove, REMOVE_DELAY);
-	  } else {
-	    remove();
-	  }
-	}
-
-	function startTransition(pairName, fromNode, toNode, shouldShow) {
-	  var transitions = fromNode.transitions.map(function (_ref4) {
-	    var name = _ref4.transition,
-	        options = _objectWithoutProperties(_ref4, ['transition']);
-
-	    // Hack to get reverse working. Uh. This should probably be rethought.
-	    var initTransition = function initTransition(node, metadata) {
-	      return yubaba[name](node, options, metadata);
-	    };
-
-	    return options.reverse ? { start: function start(node) {
-	        return initTransition(node).start;
-	      } } : initTransition(fromNode.node, fromNode.data);
-	  });
-
-	  Promise.all(transitions.map(function (transition) {
-	    return transition.start(toNode.node);
-	  })).then(function (results) {
-	    // Start all reverse transitions
-	    return Promise.all(results.filter(function (result) {
-	      return typeof result === 'function';
-	    }).map(function (start) {
-	      return start();
-	    }).concat(results));
-	  }).then(function (results) {
-	    process.env.NODE_ENV !== 'production' && console.log('Finished transition for ' + pairName + '.');
-	    // Fadeout and cleanup all expanders. This is deliberately a broken promise chain.
-
-	    Promise.all(results.filter(function (_ref5) {
-	      var transition = _ref5.transition;
-	      return transition === 'expand';
-	    }).map(function (_ref6) {
-	      var target = _ref6.target;
-
-	      return yubaba.fadeout(target, {
-	        duration: 0.75,
-	        autoCleanup: true,
-	        autoStart: true
-	      }).promise;
-	    })).then(function (fadeoutResults) {
-	      // Cleanup anything else left
-	      fadeoutResults.concat(results).forEach(function (result) {
-	        result.cleanup && result.cleanup();
-	      });
-	    });
-	  }).then(function () {
-	    notifyTransitionListener(pairName, true);
-	    shouldShow(true);
-	  });
-	}
-
-	function orchestrator(pairName, options) {
-	  var nodeArr = readFromStore(pairName);
-
-	  if (nodeArr.length === 0) {
-	    process.env.NODE_ENV !== 'production' && console.log('Found fromNode for "' + pairName + '".');
-
-	    notifyTransitionListener(pairName, true);
-	    options.shouldShow(true);
-	    addToStore(pairName, { node: options.node, transitions: options.transitions });
-
-	    return;
-	  }
-
-	  var isInNodeArr = nodeArr.some(function (_ref7) {
-	    var node = _ref7.node;
-	    return options.node === node;
-	  });
-
-	  if (nodeArr.length === 1 && isInNodeArr) {
-	    // This branch will get triggered only if the component was added, and then removed, from the vDOM.
-	    process.env.NODE_ENV !== 'production' && console.log('Found fromNode for "' + pairName + '" pair, saving dimensions.');
-
-	    var _location = (0, _dom.calculateElementLocation)(options.node);
-	    var _size = (0, _dom.calculateElementSize)(options.node);
-
-	    updateNodeData(pairName, {
-	      node: options.node,
-	      data: {
-	        location: _location,
-	        size: _size
-	      }
-	    });
-
-	    return;
-	  }
-
-	  if (nodeArr.length === 1 && !isInNodeArr) {
-	    process.env.NODE_ENV !== 'production' && console.log('Found toNode for "' + pairName + '" pair, starting transition.');
-
-	    var _nodeArr = _slicedToArray(nodeArr, 1),
-	        fromNode = _nodeArr[0];
-
-	    var toNode = { node: options.node, transitions: options.transitions };
-
-	    addToStore(pairName, toNode);
-	    startTransition(pairName, fromNode, toNode, options.shouldShow);
-
-	    return;
-	  }
-
-	  if (nodeArr.length === 2) {
-	    process.env.NODE_ENV !== 'production' && console.log('Found both nodes for "' + pairName + '", starting transition.');
-
-	    var _nodeArr2 = _slicedToArray(nodeArr, 2),
-	        _fromNode = _nodeArr2[0],
-	        _toNode = _nodeArr2[1];
-
-	    startTransition(pairName, _fromNode, _toNode, options.shouldShow);
-	  }
-	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
@@ -22995,32 +22793,540 @@ return /******/ (function(modules) { // webpackBootstrap
 				Object.defineProperty(exports, "__esModule", {
 					value: true
 				});
+
+				var _orchestrator = __webpack_require__(1);
+
+				Object.defineProperty(exports, 'orchestrator', {
+					enumerable: true,
+					get: function get() {
+						return _interopRequireDefault(_orchestrator).default;
+					}
+				});
+				Object.defineProperty(exports, 'addTransitionListener', {
+					enumerable: true,
+					get: function get() {
+						return _orchestrator.addTransitionListener;
+					}
+				});
+				Object.defineProperty(exports, 'removeFromStore', {
+					enumerable: true,
+					get: function get() {
+						return _orchestrator.removeFromStore;
+					}
+				});
+
+				var _transitions = __webpack_require__(3);
+
+				Object.defineProperty(exports, 'expand', {
+					enumerable: true,
+					get: function get() {
+						return _transitions.expand;
+					}
+				});
+				Object.defineProperty(exports, 'fadeout', {
+					enumerable: true,
+					get: function get() {
+						return _transitions.fadeout;
+					}
+				});
+				Object.defineProperty(exports, 'move', {
+					enumerable: true,
+					get: function get() {
+						return _transitions.move;
+					}
+				});
+				Object.defineProperty(exports, 'reveal', {
+					enumerable: true,
+					get: function get() {
+						return _transitions.reveal;
+					}
+				});
+
+				function _interopRequireDefault(obj) {
+					return obj && obj.__esModule ? obj : { default: obj };
+				}
+
+				/***/
+			},
+			/* 1 */
+			/***/function (module, exports, __webpack_require__) {
+
+				/* WEBPACK VAR INJECTION */(function (process) {
+					'use strict';
+
+					Object.defineProperty(exports, "__esModule", {
+						value: true
+					});
+
+					var _slicedToArray = function () {
+						function sliceIterator(arr, i) {
+							var _arr = [];var _n = true;var _d = false;var _e = undefined;try {
+								for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+									_arr.push(_s.value);if (i && _arr.length === i) break;
+								}
+							} catch (err) {
+								_d = true;_e = err;
+							} finally {
+								try {
+									if (!_n && _i["return"]) _i["return"]();
+								} finally {
+									if (_d) throw _e;
+								}
+							}return _arr;
+						}return function (arr, i) {
+							if (Array.isArray(arr)) {
+								return arr;
+							} else if (Symbol.iterator in Object(arr)) {
+								return sliceIterator(arr, i);
+							} else {
+								throw new TypeError("Invalid attempt to destructure non-iterable instance");
+							}
+						};
+					}();
+
+					var _extends = Object.assign || function (target) {
+						for (var i = 1; i < arguments.length; i++) {
+							var source = arguments[i];for (var key in source) {
+								if (Object.prototype.hasOwnProperty.call(source, key)) {
+									target[key] = source[key];
+								}
+							}
+						}return target;
+					};
+
+					exports.addTransitionListener = addTransitionListener;
+					exports.removeFromStore = removeFromStore;
+					exports.default = orchestrator;
+
+					var _transitions = __webpack_require__(3);
+
+					var yubabaTransitions = _interopRequireWildcard(_transitions);
+
+					var _dom = __webpack_require__(5);
+
+					function _interopRequireWildcard(obj) {
+						if (obj && obj.__esModule) {
+							return obj;
+						} else {
+							var newObj = {};if (obj != null) {
+								for (var key in obj) {
+									if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+								}
+							}newObj.default = obj;return newObj;
+						}
+					}
+
+					function _objectWithoutProperties(obj, keys) {
+						var target = {};for (var i in obj) {
+							if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+						}return target;
+					}
+
+					var REMOVE_DELAY = 100;
+					var nodeStore = {};
+					var listenerStore = {};
+
+					function addTransitionListener(pairName, cb) {
+						listenerStore[pairName] = cb;
+
+						return function () {
+							delete listenerStore[pairName];
+						};
+					}
+
+					function notifyTransitionListener(pairName, value) {
+						// we should be able to handle multiple listeners.
+						var cb = listenerStore[pairName];
+						if (cb) {
+							cb(value);
+						}
+					}
+
+					function readFromStore(pairName) {
+						return nodeStore[pairName] || [];
+					}
+
+					function addToStore(pairName, _ref) {
+						var node = _ref.node,
+						    transitions = _ref.transitions;
+
+						nodeStore[pairName] = nodeStore[pairName] || [];
+						nodeStore[pairName].push({ node: node, transitions: transitions });
+					}
+
+					function updateNodeData(pairName, _ref2) {
+						var node = _ref2.node,
+						    data = _ref2.data;
+
+						nodeStore[pairName] = nodeStore[pairName].map(function (item) {
+							if (item.node === node) {
+								return _extends({}, item, {
+									data: data
+								});
+							}
+
+							return item;
+						});
+					}
+
+					function removeFromStore(pairName, node) {
+						var withDelay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+						var remove = function remove() {
+							return nodeStore[pairName] = nodeStore[pairName].filter(function (_ref3) {
+								var nodeInStore = _ref3.node;
+								return nodeInStore !== node;
+							});
+						};
+
+						if (withDelay) {
+							setTimeout(remove, REMOVE_DELAY);
+						} else {
+							remove();
+						}
+					}
+
+					function startTransition(pairName, fromNode, toNode, shouldShow) {
+						var transitions = fromNode.transitions.map(function (_ref4) {
+							var name = _ref4.transition,
+							    options = _objectWithoutProperties(_ref4, ['transition']);
+
+							// Hack to get reverse working. Uh. This should probably be rethought.
+							var initTransition = function initTransition(node, metadata) {
+								return yubabaTransitions[name](node, options, metadata);
+							};
+
+							return options.reverse ? { start: function start(node) {
+									return initTransition(node).start;
+								} } : initTransition(fromNode.node, fromNode.data);
+						});
+
+						Promise.all(transitions.map(function (transition) {
+							return transition.start(toNode.node);
+						})).then(function (results) {
+							// Start all reverse transitions
+							return Promise.all(results.filter(function (result) {
+								return typeof result === 'function';
+							}).map(function (start) {
+								return start();
+							}).concat(results));
+						}).then(function (results) {
+							process.env.NODE_ENV !== 'production' && console.log('Finished transition for ' + pairName + '.');
+							// Fadeout and cleanup all expanders. This is deliberately a broken promise chain.
+
+							Promise.all(results.filter(function (_ref5) {
+								var transition = _ref5.transition;
+								return transition === 'expand';
+							}).map(function (_ref6) {
+								var target = _ref6.target;
+
+								return yubabaTransitions.fadeout(target, {
+									duration: 0.75,
+									autoCleanup: true,
+									autoStart: true
+								}).promise;
+							})).then(function (fadeoutResults) {
+								// Cleanup anything else left
+								fadeoutResults.concat(results).forEach(function (result) {
+									result.cleanup && result.cleanup();
+								});
+							});
+						}).then(function () {
+							notifyTransitionListener(pairName, true);
+							shouldShow(true);
+						});
+					}
+
+					function orchestrator(pairName, options) {
+						var nodeArr = readFromStore(pairName);
+
+						if (nodeArr.length === 0) {
+							process.env.NODE_ENV !== 'production' && console.log('Found fromNode for "' + pairName + '".');
+
+							notifyTransitionListener(pairName, true);
+							options.shouldShow(true);
+							addToStore(pairName, { node: options.node, transitions: options.transitions });
+
+							return;
+						}
+
+						var isInNodeArr = nodeArr.some(function (_ref7) {
+							var node = _ref7.node;
+							return options.node === node;
+						});
+
+						if (nodeArr.length === 1 && isInNodeArr) {
+							// This branch will get triggered only if the component was added, and then removed, from the vDOM.
+							process.env.NODE_ENV !== 'production' && console.log('Found fromNode for "' + pairName + '" pair, saving dimensions.');
+
+							var _location = (0, _dom.calculateElementLocation)(options.node);
+							var _size = (0, _dom.calculateElementSize)(options.node);
+
+							updateNodeData(pairName, {
+								node: options.node,
+								data: {
+									location: _location,
+									size: _size
+								}
+							});
+
+							return;
+						}
+
+						if (nodeArr.length === 1 && !isInNodeArr) {
+							process.env.NODE_ENV !== 'production' && console.log('Found toNode for "' + pairName + '" pair, starting transition.');
+
+							var _nodeArr = _slicedToArray(nodeArr, 1),
+							    fromNode = _nodeArr[0];
+
+							var toNode = { node: options.node, transitions: options.transitions };
+
+							addToStore(pairName, toNode);
+							startTransition(pairName, fromNode, toNode, options.shouldShow);
+
+							return;
+						}
+
+						if (nodeArr.length === 2) {
+							process.env.NODE_ENV !== 'production' && console.log('Found both nodes for "' + pairName + '", starting transition.');
+
+							var _nodeArr2 = _slicedToArray(nodeArr, 2),
+							    _fromNode = _nodeArr2[0],
+							    _toNode = _nodeArr2[1];
+
+							startTransition(pairName, _fromNode, _toNode, options.shouldShow);
+						}
+					}
+					/* WEBPACK VAR INJECTION */
+				}).call(exports, __webpack_require__(2));
+
+				/***/
+			},
+			/* 2 */
+			/***/function (module, exports) {
+
+				// shim for using process in browser
+				var process = module.exports = {};
+
+				// cached from whatever global is present so that test runners that stub it
+				// don't break things.  But we need to wrap it in a try catch in case it is
+				// wrapped in strict mode code which doesn't define any globals.  It's inside a
+				// function because try/catches deoptimize in certain engines.
+
+				var cachedSetTimeout;
+				var cachedClearTimeout;
+
+				function defaultSetTimout() {
+					throw new Error('setTimeout has not been defined');
+				}
+				function defaultClearTimeout() {
+					throw new Error('clearTimeout has not been defined');
+				}
+				(function () {
+					try {
+						if (typeof setTimeout === 'function') {
+							cachedSetTimeout = setTimeout;
+						} else {
+							cachedSetTimeout = defaultSetTimout;
+						}
+					} catch (e) {
+						cachedSetTimeout = defaultSetTimout;
+					}
+					try {
+						if (typeof clearTimeout === 'function') {
+							cachedClearTimeout = clearTimeout;
+						} else {
+							cachedClearTimeout = defaultClearTimeout;
+						}
+					} catch (e) {
+						cachedClearTimeout = defaultClearTimeout;
+					}
+				})();
+				function runTimeout(fun) {
+					if (cachedSetTimeout === setTimeout) {
+						//normal enviroments in sane situations
+						return setTimeout(fun, 0);
+					}
+					// if setTimeout wasn't available but was latter defined
+					if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+						cachedSetTimeout = setTimeout;
+						return setTimeout(fun, 0);
+					}
+					try {
+						// when when somebody has screwed with setTimeout but no I.E. maddness
+						return cachedSetTimeout(fun, 0);
+					} catch (e) {
+						try {
+							// When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+							return cachedSetTimeout.call(null, fun, 0);
+						} catch (e) {
+							// same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+							return cachedSetTimeout.call(this, fun, 0);
+						}
+					}
+				}
+				function runClearTimeout(marker) {
+					if (cachedClearTimeout === clearTimeout) {
+						//normal enviroments in sane situations
+						return clearTimeout(marker);
+					}
+					// if clearTimeout wasn't available but was latter defined
+					if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+						cachedClearTimeout = clearTimeout;
+						return clearTimeout(marker);
+					}
+					try {
+						// when when somebody has screwed with setTimeout but no I.E. maddness
+						return cachedClearTimeout(marker);
+					} catch (e) {
+						try {
+							// When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+							return cachedClearTimeout.call(null, marker);
+						} catch (e) {
+							// same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+							// Some versions of I.E. have different rules for clearTimeout vs setTimeout
+							return cachedClearTimeout.call(this, marker);
+						}
+					}
+				}
+				var queue = [];
+				var draining = false;
+				var currentQueue;
+				var queueIndex = -1;
+
+				function cleanUpNextTick() {
+					if (!draining || !currentQueue) {
+						return;
+					}
+					draining = false;
+					if (currentQueue.length) {
+						queue = currentQueue.concat(queue);
+					} else {
+						queueIndex = -1;
+					}
+					if (queue.length) {
+						drainQueue();
+					}
+				}
+
+				function drainQueue() {
+					if (draining) {
+						return;
+					}
+					var timeout = runTimeout(cleanUpNextTick);
+					draining = true;
+
+					var len = queue.length;
+					while (len) {
+						currentQueue = queue;
+						queue = [];
+						while (++queueIndex < len) {
+							if (currentQueue) {
+								currentQueue[queueIndex].run();
+							}
+						}
+						queueIndex = -1;
+						len = queue.length;
+					}
+					currentQueue = null;
+					draining = false;
+					runClearTimeout(timeout);
+				}
+
+				process.nextTick = function (fun) {
+					var args = new Array(arguments.length - 1);
+					if (arguments.length > 1) {
+						for (var i = 1; i < arguments.length; i++) {
+							args[i - 1] = arguments[i];
+						}
+					}
+					queue.push(new Item(fun, args));
+					if (queue.length === 1 && !draining) {
+						runTimeout(drainQueue);
+					}
+				};
+
+				// v8 likes predictible objects
+				function Item(fun, array) {
+					this.fun = fun;
+					this.array = array;
+				}
+				Item.prototype.run = function () {
+					this.fun.apply(null, this.array);
+				};
+				process.title = 'browser';
+				process.browser = true;
+				process.env = {};
+				process.argv = [];
+				process.version = ''; // empty string to avoid regexp issues
+				process.versions = {};
+
+				function noop() {}
+
+				process.on = noop;
+				process.addListener = noop;
+				process.once = noop;
+				process.off = noop;
+				process.removeListener = noop;
+				process.removeAllListeners = noop;
+				process.emit = noop;
+				process.prependListener = noop;
+				process.prependOnceListener = noop;
+
+				process.listeners = function (name) {
+					return [];
+				};
+
+				process.binding = function (name) {
+					throw new Error('process.binding is not supported');
+				};
+
+				process.cwd = function () {
+					return '/';
+				};
+				process.chdir = function (dir) {
+					throw new Error('process.chdir is not supported');
+				};
+				process.umask = function () {
+					return 0;
+				};
+
+				/***/
+			},
+			/* 3 */
+			/***/function (module, exports, __webpack_require__) {
+
+				'use strict';
+
+				Object.defineProperty(exports, "__esModule", {
+					value: true
+				});
 				exports.expand = expand;
 				exports.fadeout = fadeout;
 				exports.move = move;
 				exports.reveal = reveal;
 
-				var _transitioner = __webpack_require__(1);
+				var _transitioner = __webpack_require__(4);
 
 				var _transitioner2 = _interopRequireDefault(_transitioner);
 
-				var _deferred = __webpack_require__(4);
+				var _deferred = __webpack_require__(7);
 
 				var _deferred2 = _interopRequireDefault(_deferred);
 
-				var _expand = __webpack_require__(5);
+				var _expand = __webpack_require__(8);
 
 				var _expand2 = _interopRequireDefault(_expand);
 
-				var _fadeout = __webpack_require__(6);
+				var _fadeout = __webpack_require__(9);
 
 				var _fadeout2 = _interopRequireDefault(_fadeout);
 
-				var _move = __webpack_require__(7);
+				var _move = __webpack_require__(10);
 
 				var _move2 = _interopRequireDefault(_move);
 
-				var _reveal = __webpack_require__(8);
+				var _reveal = __webpack_require__(11);
 
 				var _reveal2 = _interopRequireDefault(_reveal);
 
@@ -23073,7 +23379,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 1 */
+			/* 4 */
 			/***/function (module, exports, __webpack_require__) {
 
 				'use strict';
@@ -23083,7 +23389,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 				exports.default = transitioner;
 
-				var _dom = __webpack_require__(2);
+				var _dom = __webpack_require__(5);
 
 				// NOTE: createInBody is forced to be true for now as the node in react is immediately removed
 				// after the transition begins. If it's in that contain, the transition element is removed too!
@@ -23249,7 +23555,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 2 */
+			/* 5 */
 			/***/function (module, exports, __webpack_require__) {
 
 				'use strict';
@@ -23278,7 +23584,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				exports.transformScale = transformScale;
 				exports.createElement = createElement;
 
-				var _math = __webpack_require__(3);
+				var _math = __webpack_require__(6);
 
 				function _defineProperty(obj, key, value) {
 					if (key in obj) {
@@ -23430,7 +23736,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 3 */
+			/* 6 */
 			/***/function (module, exports) {
 
 				"use strict";
@@ -23457,7 +23763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 4 */
+			/* 7 */
 			/***/function (module, exports) {
 
 				"use strict";
@@ -23484,7 +23790,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 5 */
+			/* 8 */
 			/***/function (module, exports, __webpack_require__) {
 
 				'use strict';
@@ -23494,9 +23800,9 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 				exports.default = expand;
 
-				var _math = __webpack_require__(3);
+				var _math = __webpack_require__(6);
 
-				var _dom = __webpack_require__(2);
+				var _dom = __webpack_require__(5);
 
 				function expand(element, _ref) {
 					var background = _ref.background,
@@ -23553,7 +23859,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 6 */
+			/* 9 */
 			/***/function (module, exports) {
 
 				'use strict';
@@ -23580,7 +23886,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 7 */
+			/* 10 */
 			/***/function (module, exports, __webpack_require__) {
 
 				'use strict';
@@ -23601,9 +23907,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				exports.default = move;
 
-				var _dom = __webpack_require__(2);
+				var _dom = __webpack_require__(5);
 
-				var _math = __webpack_require__(3);
+				var _math = __webpack_require__(6);
 
 				function move(fromElement) {
 					var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
@@ -23645,7 +23951,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 8 */
+			/* 11 */
 			/***/function (module, exports) {
 
 				'use strict';
@@ -23691,10 +23997,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	;
 	//# sourceMappingURL=yubaba-core.js.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(199)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(198)(module)))
 
 /***/ }),
-/* 199 */
+/* 198 */
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -23710,199 +24016,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 200 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	exports.calculateElementSize = calculateElementSize;
-	exports.calculateElementLocation = calculateElementLocation;
-	exports.calculateElementCircumcircle = calculateElementCircumcircle;
-	exports.calculateWindowCentre = calculateWindowCentre;
-	exports.applyStyles = applyStyles;
-	exports.calculateElementCenterInViewport = calculateElementCenterInViewport;
-	exports.transformTranslate = transformTranslate;
-	exports.transformScale = transformScale;
-	exports.createElement = createElement;
-
-	var _math = __webpack_require__(201);
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	function calculateElementSize(element) {
-	  return {
-	    width: element.clientWidth,
-	    height: element.clientHeight
-	  };
-	}
-
-	function calculateElementLocation(element) {
-	  var rect = element.getBoundingClientRect();
-	  var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
-
-	  var scrollLeft = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft;
-
-	  return {
-	    left: rect.left + scrollLeft,
-	    top: rect.top + scrollTop
-	  };
-	}
-
-	function calculateElementCircumcircle(element) {
-	  var size = calculateElementSize(element);
-	  var diameter = (0, _math.calculateHypotenuse)(size);
-	  var location = calculateElementLocation(element);
-
-	  return _extends({}, location, {
-	    diameter: diameter
-	  });
-	}
-
-	function calculateWindowCentre() {
-	  return {
-	    left: Math.ceil(window.innerWidth / 2),
-	    top: Math.ceil(window.innerHeight / 2)
-	  };
-	}
-
-	var addPxIfNeeded = function addPxIfNeeded(key, value) {
-	  switch (key) {
-	    case 'width':
-	    case 'height':
-	    case 'top':
-	    case 'left':
-	      return typeof value === 'number' ? value + 'px' : value;
-
-	    default:
-	      return value;
-	  }
-	};
-
-	/* eslint no-param-reassign:0 */
-	function applyStyles(element, styles) {
-	  Object.keys(styles).forEach(function (key) {
-	    element.style[key] = addPxIfNeeded(key, styles[key]);
-	  });
-	}
-
-	function calculateElementCenterInViewport(element) {
-	  var location = calculateElementLocation(element);
-	  var size = calculateElementSize(element);
-
-	  return {
-	    top: location.top + Math.ceil(size.width / 2),
-	    left: location.left - Math.ceil(size.height / 2)
-	  };
-	}
-
-	function transformTranslate(element, _ref) {
-	  var x = _ref.x,
-	      y = _ref.y;
-
-	  if (!x || !y) {
-	    return;
-	  }
-
-	  applyStyles(element, {
-	    transform: 'translate3d(' + x + 'px, ' + y + 'px, 0)'
-	  });
-	}
-
-	function transformScale(element, _ref2) {
-	  var scale3d = _ref2.scale3d,
-	      scale = _ref2.scale,
-	      transformOrigin = _ref2.transformOrigin;
-
-	  if (!scale3d && !scale) {
-	    return;
-	  }
-
-	  // scale3d takes presedence
-	  var scaleModifier = scale3d ? 'scale3d(' + scale3d + ')' : 'scale(' + scale + ')';
-
-	  var transform = element.style.transform;
-	  if (transform.indexOf('scale') > -1) {
-	    // replace any prexisting transform with a new one.
-	    transform = transform.replace(/scale\(.*\)|scale3d\(.*\)/, scaleModifier);
-	  } else if (transform.length > 0) {
-	    transform = element.style.transform + ' ' + scaleModifier;
-	  } else {
-	    transform = scaleModifier;
-	  }
-
-	  applyStyles(element, {
-	    transformOrigin: transformOrigin,
-	    backfaceVisibility: 'hidden',
-	    webkitBackgroundClip: 'content-box',
-	    transform: transform
-	  });
-	}
-
-	// eslint-disable-next-line
-	function logStyle(element, styles) {
-	  return Object.keys(styles).reduce(function (obj, key) {
-	    return _extends({}, obj, _defineProperty({}, key, element.style[key]));
-	  }, {});
-	}
-
-	function createElement(styles) {
-	  var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-	      _ref3$parentElement = _ref3.parentElement,
-	      parentElement = _ref3$parentElement === undefined ? document.body : _ref3$parentElement,
-	      cloneFrom = _ref3.cloneFrom;
-
-	  var newElement = document.createElement('div');
-	  var innerElement = cloneFrom && cloneFrom.cloneNode(true);
-	  if (innerElement) {
-	    applyStyles(innerElement, {
-	      margin: 0
-	    });
-
-	    innerElement.id = '';
-	    newElement.appendChild(innerElement);
-	  }
-
-	  applyStyles(newElement, styles);
-	  transformScale(newElement, styles);
-	  parentElement.appendChild(newElement);
-
-	  return newElement;
-	}
-
-/***/ }),
-/* 201 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.calculateHypotenuse = calculateHypotenuse;
-	exports.percentageDifference = percentageDifference;
-	function calculateHypotenuse(_ref) {
-	  var width = _ref.width,
-	      height = _ref.height;
-
-	  var x2 = Math.pow(width, 2);
-	  var y2 = Math.pow(height, 2);
-
-	  var hypotenuse = Math.sqrt(x2 + y2);
-	  return Math.ceil(hypotenuse);
-	}
-
-	function percentageDifference(from, to) {
-	  return from / to;
-	}
-
-/***/ }),
-/* 202 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23915,7 +24029,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Transition = __webpack_require__(203);
+	var _Transition = __webpack_require__(200);
 
 	var _Transition2 = _interopRequireDefault(_Transition);
 
@@ -23941,7 +24055,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = withTransition;
 
 /***/ }),
-/* 203 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23958,9 +24072,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _orchestrator = __webpack_require__(197);
-
-	var _orchestrator2 = _interopRequireDefault(_orchestrator);
+	var _yubabaCore = __webpack_require__(197);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24006,7 +24118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.initialise();
 
 	      if (this._node.firstElementChild) {
-	        (0, _orchestrator.removeFromStore)(this.props.pair, this._node.firstElementChild, true);
+	        (0, _yubabaCore.removeFromStore)(this.props.pair, this._node.firstElementChild, true);
 	      }
 	    }
 	  }, {
@@ -24016,7 +24128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return;
 	      }
 
-	      (0, _orchestrator2.default)(this.props.pair, {
+	      (0, _yubabaCore.orchestrator)(this.props.pair, {
 	        node: this._node.firstElementChild,
 	        transitions: this.props.transitions,
 	        shouldShow: this.setVisibility
