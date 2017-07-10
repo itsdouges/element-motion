@@ -110,7 +110,7 @@ const items = [{
 
 export default class App extends React.Component {
   state = {
-    big: false,
+    big: true,
     item: items[0],
   };
 

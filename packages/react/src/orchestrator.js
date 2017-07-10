@@ -127,7 +127,6 @@ function startTransition (
       });
     })
     .then(() => {
-      console.log('yeh')
       notifyTransitionListener(pairName, true);
       shouldShow(true);
     });

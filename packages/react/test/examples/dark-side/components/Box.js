@@ -2,8 +2,11 @@
 
 import React from 'react';
 
-const Box = ({ type, className, src, onClick }: { className?: string, type: 'big' | 'small', src: string }) => (
+type Props = { className?: string, type: 'big' | 'small', src: string, onClick: Function };
+
+const Box = ({ type, className, src, onClick }: Props) => (
   <div
+    role="presentation"
     onClick={onClick}
     className={`box box-${type}${className ? ` ${className}` : ''}`}
     // $FlowFixMe - Dynamic import
