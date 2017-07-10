@@ -1,13 +1,13 @@
 import { calculateHypotenuse } from '../../lib/math';
 import {
   calculateElementSize,
-  calculateElementLocation,
   calculateWindowCentre,
   calculateElementCenterInViewport,
 } from '../../lib/dom';
+import calculateFromLocation from '../../lib/location';
 
 export default function expand (element, { background, reverse, cover }, metadata = {}) {
-  const location = metadata.location || calculateElementLocation(element, true);
+  const location = calculateFromLocation(element, metadata);
   const size = metadata.size || calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
 

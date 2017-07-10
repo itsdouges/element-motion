@@ -7,8 +7,7 @@ export function calculateElementSize (element) {
   };
 }
 
-export function calculateElementLocation (element) {
-  const rect = element.getBoundingClientRect();
+export function getDocumentScroll () {
   const scrollTop = document.documentElement.scrollTop
     ? document.documentElement.scrollTop
     : document.body.scrollTop;
@@ -18,8 +17,23 @@ export function calculateElementLocation (element) {
     : document.body.scrollLeft;
 
   return {
+    scrollTop,
+    scrollLeft,
+  };
+}
+
+export function calculateElementLocation (element) {
+  const rect = element.getBoundingClientRect();
+  const { scrollLeft, scrollTop } = getDocumentScroll();
+
+  return {
     left: rect.left + scrollLeft,
     top: rect.top + scrollTop,
+    raw: {
+      rect,
+      scrollTop,
+      scrollLeft,
+    },
   };
 }
 
