@@ -1,9 +1,9 @@
 import { calculateElementSize, calculateElementLocation } from '../../lib/dom';
 import { percentageDifference } from '../../lib/math';
 
-export default function move (fromElement, { matchSize } = {}) {
-  const fromLocation = calculateElementLocation(fromElement, true);
-  const fromSize = calculateElementSize(fromElement);
+export default function move (fromElement, { matchSize } = {}, metadata = {}) {
+  const fromLocation = metadata.location || calculateElementLocation(fromElement, true);
+  const fromSize = metadata.size || calculateElementSize(fromElement);
 
   const to = (toElement) => {
     const toSize = matchSize ? calculateElementSize(toElement) : calculateElementSize(fromElement);

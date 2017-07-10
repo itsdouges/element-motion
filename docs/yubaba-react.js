@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _withTransition = __webpack_require__(41);
+	var _withTransition = __webpack_require__(43);
 
 	Object.defineProperty(exports, 'withTransition', {
 	  enumerable: true,
@@ -79,7 +79,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _Transition = __webpack_require__(38);
+	var _Transition = __webpack_require__(44);
 
 	var _Transition2 = _interopRequireDefault(_Transition);
 
@@ -105,7 +105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Transition = __webpack_require__(38);
+	var _orchestrator = __webpack_require__(38);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -146,13 +146,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // We need to have this be attached before
 	      // everything else is mounted, but we don't want to run this on the server.
 	      // How?
-	      this._detatch = (0, _Transition.addTransitionListener)(this.props.pair, this.setVisibility);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      // console.log('>>> TransitionContainer has mounted');
-	      // this._detatch = addTransitionListener(this.props.pair, this.setVisibility);
+	      this._detatch = (0, _orchestrator.addTransitionListener)(this.props.pair, this.setVisibility);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -4804,210 +4798,199 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	exports.addTransitionListener = addTransitionListener;
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
+	exports.removeFromStore = removeFromStore;
+	exports.default = orchestrator;
 
 	var _yubabaCore = __webpack_require__(39);
 
 	var yubaba = _interopRequireWildcard(_yubabaCore);
 
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	var _dom = __webpack_require__(41);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
+	var REMOVE_DELAY = 100;
 	var nodeStore = {};
 	var listenerStore = {};
 
 	function addTransitionListener(pairName, cb) {
-	  if (typeof listenerStore[pairName] === 'boolean') {
-	    // message was left, lets pick it up.
-	    cb(listenerStore[pairName]);
-	  }
-
 	  listenerStore[pairName] = cb;
+
 	  return function () {
 	    delete listenerStore[pairName];
 	  };
 	}
 
-	function notifyTransitionListener(pairName, value /* , leaveAMessage?: boolean*/) {
+	function notifyTransitionListener(pairName, value) {
+	  // we should be able to handle multiple listeners.
 	  var cb = listenerStore[pairName];
 	  if (cb) {
-	    console.log('notifying listener for ' + pairName);
 	    cb(value);
-	  } // else if (leaveAMessage) {
-	  // console.log('Leaving a message for a listener to pick up later.');
-	  // notify doesnt exist yet, so lets leave a message.
-	  // listenerStore[pairName] = value;
-	  // }
+	  }
 	}
 
 	function readFromStore(pairName) {
-	  return nodeStore[pairName];
+	  return nodeStore[pairName] || [];
 	}
 
-	function addToStore(pairName, nodeOrFunc) {
-	  nodeStore[pairName] = nodeOrFunc;
+	function addToStore(pairName, _ref) {
+	  var node = _ref.node,
+	      transitions = _ref.transitions;
+
+	  nodeStore[pairName] = nodeStore[pairName] || [];
+	  nodeStore[pairName].push({ node: node, transitions: transitions });
 	}
 
-	// function removeFromStore (pairName) {
-	//   delete nodeStore[pairName];
-	// }
+	function updateNodeData(pairName, _ref2) {
+	  var node = _ref2.node,
+	      data = _ref2.data;
 
-	var Transition = function (_React$Component) {
-	  _inherits(Transition, _React$Component);
-
-	  function Transition() {
-	    var _ref;
-
-	    var _temp, _this, _ret;
-
-	    _classCallCheck(this, Transition);
-
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
+	  nodeStore[pairName] = nodeStore[pairName].map(function (item) {
+	    if (item.node === node) {
+	      return _extends({}, item, {
+	        data: data
+	      });
 	    }
 
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Transition.__proto__ || Object.getPrototypeOf(Transition)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-	      visible: false
-	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	    return item;
+	  });
+	}
+
+	function removeFromStore(pairName, node) {
+	  var withDelay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+	  var remove = function remove() {
+	    return nodeStore[pairName] = nodeStore[pairName].filter(function (_ref3) {
+	      var nodeInStore = _ref3.node;
+	      return nodeInStore !== node;
+	    });
+	  };
+
+	  if (withDelay) {
+	    setTimeout(remove, REMOVE_DELAY);
+	  } else {
+	    remove();
+	  }
+	}
+
+	function startTransition(pairName, fromNode, toNode, shouldShow) {
+	  var transitions = fromNode.transitions.map(function (_ref4) {
+	    var name = _ref4.transition,
+	        options = _objectWithoutProperties(_ref4, ['transition']);
+
+	    // Hack to get reverse working. Uh. This should probably be rethought.
+	    var initTransition = function initTransition(node, metadata) {
+	      return yubaba[name](node, options, metadata);
+	    };
+
+	    return options.reverse ? { start: function start(node) {
+	        return initTransition(node).start;
+	      } } : initTransition(fromNode.node, fromNode.data);
+	  });
+
+	  Promise.all(transitions.map(function (transition) {
+	    return transition.start(toNode.node);
+	  })).then(function (results) {
+	    // Start all reverse transitions
+	    return Promise.all(results.filter(function (result) {
+	      return typeof result === 'function';
+	    }).map(function (start) {
+	      return start();
+	    }).concat(results));
+	  }).then(function (results) {
+	    process.env.NODE_ENV !== 'production' && console.log('Finished transition for ' + pairName + '.');
+	    // Fadeout and cleanup all expanders. This is deliberately a broken promise chain.
+
+	    Promise.all(results.filter(function (_ref5) {
+	      var transition = _ref5.transition;
+	      return transition === 'expand';
+	    }).map(function (_ref6) {
+	      var target = _ref6.target;
+
+	      return yubaba.fadeout(target, {
+	        duration: 0.75,
+	        autoCleanup: true,
+	        autoStart: true
+	      }).promise;
+	    })).then(function (fadeoutResults) {
+	      // Cleanup anything else left
+	      fadeoutResults.concat(results).forEach(function (result) {
+	        result.cleanup && result.cleanup();
+	      });
+	    });
+	  }).then(function () {
+	    notifyTransitionListener(pairName, true);
+	    shouldShow(true);
+	  });
+	}
+
+	function orchestrator(pairName, options) {
+	  var nodeArr = readFromStore(pairName);
+
+	  if (nodeArr.length === 0) {
+	    process.env.NODE_ENV !== 'production' && console.log('Found fromNode for "' + pairName + '".');
+
+	    notifyTransitionListener(pairName, true);
+	    options.shouldShow(true);
+	    addToStore(pairName, { node: options.node, transitions: options.transitions });
+
+	    return;
 	  }
 
-	  _createClass(Transition, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      process.env.NODE_ENV !== 'production' && console.log('Mounted.');
+	  var isInNodeArr = nodeArr.some(function (_ref7) {
+	    var node = _ref7.node;
+	    return options.node === node;
+	  });
 
-	      this.initialise();
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      process.env.NODE_ENV !== 'production' && console.log('Unmounting.');
+	  if (nodeArr.length === 1 && isInNodeArr) {
+	    // This branch will get triggered only if the component was added, and then removed, from the vDOM.
+	    process.env.NODE_ENV !== 'production' && console.log('Found fromNode for "' + pairName + '" pair, saving dimensions.');
 
-	      this.initialise();
-	    }
-	  }, {
-	    key: 'initialise',
-	    value: function initialise() {
-	      var _this2 = this;
+	    var _location = (0, _dom.calculateElementLocation)(options.node);
+	    var _size = (0, _dom.calculateElementSize)(options.node);
 
-	      var nodeOrFunc = readFromStore(this.props.pair);
-	      if (!nodeOrFunc) {
-	        process.env.NODE_ENV !== 'production' && console.log('Nothing left in store, adding node to store.');
-	        // need to notify any pairing transition container.
-	        notifyTransitionListener(this.props.pair, true);
-	        this.setState({
-	          visible: true
-	        });
-	        addToStore(this.props.pair, this._node);
-	        return;
+	    updateNodeData(pairName, {
+	      node: options.node,
+	      data: {
+	        location: _location,
+	        size: _size
 	      }
+	    });
 
-	      if (nodeOrFunc === this._node) {
-	        process.env.NODE_ENV !== 'production' && console.log('Intialising transition.');
+	    return;
+	  }
 
-	        var node = nodeOrFunc;
+	  if (nodeArr.length === 1 && !isInNodeArr) {
+	    process.env.NODE_ENV !== 'production' && console.log('Found toNode for "' + pairName + '" pair, starting transition.');
 
-	        var _transitions = this.props.transitions.map(function (_ref2) {
-	          var name = _ref2.transition,
-	              options = _objectWithoutProperties(_ref2, ['transition']);
+	    var _nodeArr = _slicedToArray(nodeArr, 1),
+	        fromNode = _nodeArr[0];
 
-	          // Hack to get reverse working. Uh. This should probably be rethought.
-	          var initTransition = function initTransition(element) {
-	            return yubaba[name](element, options);
-	          };
+	    var toNode = { node: options.node, transitions: options.transitions };
 
-	          return options.reverse ? { start: function start(endElement) {
-	              return initTransition(endElement).start;
-	            } } : initTransition(node.firstElementChild);
-	        });
+	    addToStore(pairName, toNode);
+	    startTransition(pairName, fromNode, toNode, options.shouldShow);
 
-	        var startTransition = function startTransition(endNode) {
-	          return Promise.all(_transitions.map(function (transition) {
-	            return transition.start(endNode);
-	          })).then(function (results) {
-	            // Start all reverse transitions
-	            return Promise.all(results.filter(function (result) {
-	              return typeof result === 'function';
-	            }).map(function (start) {
-	              return start();
-	            }).concat(results));
-	          }).then(function (results) {
-	            process.env.NODE_ENV !== 'production' && console.log('Finished transition.');
-	            // Fadeout and cleanup all expanders. This is deliberately a broken promise chain.
+	    return;
+	  }
 
-	            Promise.all(results.filter(function (_ref3) {
-	              var transition = _ref3.transition;
-	              return transition === 'expand';
-	            }).map(function (_ref4) {
-	              var target = _ref4.target;
+	  if (nodeArr.length === 2) {
+	    process.env.NODE_ENV !== 'production' && console.log('Found both nodes for "' + pairName + '", starting transition.');
 
-	              return yubaba.fadeout(target, {
-	                duration: 0.75,
-	                autoCleanup: true,
-	                autoStart: true
-	              }).promise;
-	            })).then(function (fadeoutResults) {
-	              // Cleanup anything else left
-	              fadeoutResults.concat(results).forEach(function (result) {
-	                result.cleanup && result.cleanup();
-	              });
-	            });
-	          });
-	        };
+	    var _nodeArr2 = _slicedToArray(nodeArr, 2),
+	        _fromNode = _nodeArr2[0],
+	        _toNode = _nodeArr2[1];
 
-	        addToStore(this.props.pair, startTransition);
-	      } else if (typeof nodeOrFunc === 'function') {
-	        process.env.NODE_ENV !== 'production' && console.log('Found a transition, starting.');
-	        var _startTransition = nodeOrFunc;
-	        // We dip into the node and get the _actual_ target (not wrapper container).
-	        _startTransition(this._node.firstElementChild).then(function () {
-	          // need to notify any pairing transition container.
-	          notifyTransitionListener(_this2.props.pair, true);
-	          _this2.setState({
-	            visible: true
-	          });
-	        });
-
-	        process.env.NODE_ENV !== 'production' && console.log('Resetting store with fresh node.');
-	        addToStore(this.props.pair, this._node);
-	      } else {
-	        process.env.NODE_ENV !== 'production' && console.log('Did not find same node nor waiting transition.');
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { ref: function ref(node) {
-	            return _this3._node = node;
-	          }, style: { opacity: this.state.visible ? 1 : 0 } },
-	        this.props.children
-	      );
-	    }
-	  }]);
-
-	  return Transition;
-	}(_react2.default.Component);
-
-		exports.default = Transition;
+	    startTransition(pairName, _fromNode, _toNode, options.shouldShow);
+	  }
+	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
@@ -5107,8 +5090,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					return obj && obj.__esModule ? obj : { default: obj };
 				}
 
-				function transition(transitionFunc, element, options) {
-					var transitionDefinition = transitionFunc(element, options);
+				function transition(transitionFunc, element, options, metadata) {
+					var transitionDefinition = transitionFunc(element, options, metadata);
 					var defer = (0, _deferred2.default)();
 
 					var _start = (0, _transitioner2.default)(element, {
@@ -5134,20 +5117,20 @@ return /******/ (function(modules) { // webpackBootstrap
 					return params;
 				}
 
-				function expand(element, options) {
-					return transition(_expand2.default, element, options);
+				function expand(element, options, metadata) {
+					return transition(_expand2.default, element, options, metadata);
 				}
 
-				function fadeout(element, options) {
-					return transition(_fadeout2.default, element, options);
+				function fadeout(element, options, metadata) {
+					return transition(_fadeout2.default, element, options, metadata);
 				}
 
-				function move(element, options) {
-					return transition(_move2.default, element, options);
+				function move(element, options, metadata) {
+					return transition(_move2.default, element, options, metadata);
 				}
 
-				function reveal(element, options) {
-					return transition(_reveal2.default, element, options);
+				function reveal(element, options, metadata) {
+					return transition(_reveal2.default, element, options, metadata);
 				}
 
 				/***/
@@ -5173,8 +5156,6 @@ return /******/ (function(modules) { // webpackBootstrap
 					    createInBody = _ref$createInBody === undefined ? true : _ref$createInBody;
 
 					var target = void 0;
-
-					console.log('MAKIN DEM TARGET', fromElement);
 
 					if (newElement) {
 						target = (0, _dom.createElement)(fromElement, {
@@ -5251,16 +5232,10 @@ return /******/ (function(modules) { // webpackBootstrap
 						return transition + ' ' + duration + 's';
 					}).join(',');
 
-					console.log('setting initial style for: ', from.transition);
-					console.log(from);
-
 					if (immediatelyApplyFrom && styleApply) {
 						requestAnimationFrame(function () {
-							console.log('was i dropped?');
 							(0, _dom.applyStyles)(element, from);
 						});
-					} else {
-						console.log('nah for: ', from.transition);
 					}
 				}
 
@@ -5286,11 +5261,8 @@ return /******/ (function(modules) { // webpackBootstrap
 								}
 
 								if (applyStyle) {
-									console.log('yoo applying', to);
 									(0, _dom.applyStyles)(element, to);
 								}
-
-								console.log('DID I FUKIN WORK?');
 							});
 						}, delay);
 					};
@@ -5319,8 +5291,6 @@ return /******/ (function(modules) { // webpackBootstrap
 						resetHeightOnFinish: options.resetHeightOnFinish,
 						resolve: resolve
 					});
-
-					console.log('>>>>', from);
 
 					setInitialStyles(target, {
 						immediatelyApplyFrom: options.immediatelyApplyFrom,
@@ -5387,16 +5357,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					};
 				}
 
-				function calculateElementLocation(element /* , calculateViewportScrollOffset*/) {
-					// const rect = element.getBoundingClientRect();
-					// const offsetY = calculateViewportScrollOffset ? window.scrollY : 0;
-					// const offsetX = calculateViewportScrollOffset ? window.scrollX : 0;
-
-					// return {
-					//   left: element.offsetLeft, // rect.left + offsetX,
-					//   top: element.offsetTop, // rect.top + offsetY,
-					// };
-
+				function calculateElementLocation(element) {
 					var rect = element.getBoundingClientRect();
 					var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
 
@@ -5440,8 +5401,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/* eslint no-param-reassign:0 */
 				function applyStyles(element, styles) {
-					console.log('setting style for', element, styles);
-
 					Object.keys(styles).forEach(function (key) {
 						element.style[key] = addPxIfNeeded(key, styles[key]);
 					});
@@ -5492,8 +5451,6 @@ return /******/ (function(modules) { // webpackBootstrap
 						transform = scaleModifier;
 					}
 
-					console.log('TTTTT', transform);
-
 					applyStyles(element, {
 						transformOrigin: transformOrigin,
 						backfaceVisibility: 'hidden',
@@ -5502,6 +5459,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					});
 				}
 
+				// eslint-disable-next-line
 				function logStyle(element, styles) {
 					return Object.keys(styles).reduce(function (obj, key) {
 						return _extends({}, obj, _defineProperty({}, key, element.style[key]));
@@ -5518,26 +5476,17 @@ return /******/ (function(modules) { // webpackBootstrap
 					var innerElement = cloneFrom && cloneFrom.cloneNode(true);
 					if (innerElement) {
 						applyStyles(innerElement, {
-							margin: 0,
-							width: '100%',
-							height: '100%',
-							overflow: 'hidden'
+							margin: 0
 						});
-
-						console.log('>>> NEW INNER', innerElement);
 
 						innerElement.id = '';
 						newElement.appendChild(innerElement);
 					}
-					console.log('>><< APPLYING', styles);
-					console.log('>><< BEFORE', logStyle(newElement, styles));
-					applyStyles(newElement, _extends({}, styles));
 
+					applyStyles(newElement, styles);
 					transformScale(newElement, styles);
-
-					console.log('>><< AFTER', logStyle(newElement, styles));
-
 					parentElement.appendChild(newElement);
+
 					return newElement;
 				}
 
@@ -5615,12 +5564,11 @@ return /******/ (function(modules) { // webpackBootstrap
 					var background = _ref.background,
 					    reverse = _ref.reverse,
 					    cover = _ref.cover;
+					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-					var location = (0, _dom.calculateElementLocation)(element, true);
-					var size = (0, _dom.calculateElementSize)(element);
+					var location = metadata.location || (0, _dom.calculateElementLocation)(element, true);
+					var size = metadata.size || (0, _dom.calculateElementSize)(element);
 					var minSize = Math.min(size.width, size.height);
-
-					console.log('start expand', location, size);
 
 					var elementHypotenuse = cover ? (0, _math.calculateHypotenuse)(size) : minSize;
 
@@ -5719,17 +5667,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var _math = __webpack_require__(3);
 
-				// TODO: Fix calculations to be able to be position: absolute.
-				// This requires updating the `to` on trigger with the new window position.
-
 				function move(fromElement) {
 					var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
 					    matchSize = _ref.matchSize;
 
-					var fromLocation = (0, _dom.calculateElementLocation)(fromElement, true);
-					var fromSize = (0, _dom.calculateElementSize)(fromElement);
+					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-					console.log('start move', fromLocation);
+					var fromLocation = metadata.location || (0, _dom.calculateElementLocation)(fromElement, true);
+					var fromSize = metadata.size || (0, _dom.calculateElementSize)(fromElement);
 
 					var to = function to(toElement) {
 						var toSize = matchSize ? (0, _dom.calculateElementSize)(toElement) : (0, _dom.calculateElementSize)(fromElement);
@@ -5836,11 +5781,203 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports.calculateElementSize = calculateElementSize;
+	exports.calculateElementLocation = calculateElementLocation;
+	exports.calculateElementCircumcircle = calculateElementCircumcircle;
+	exports.calculateWindowCentre = calculateWindowCentre;
+	exports.applyStyles = applyStyles;
+	exports.calculateElementCenterInViewport = calculateElementCenterInViewport;
+	exports.transformTranslate = transformTranslate;
+	exports.transformScale = transformScale;
+	exports.createElement = createElement;
+
+	var _math = __webpack_require__(42);
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function calculateElementSize(element) {
+	  return {
+	    width: element.clientWidth,
+	    height: element.clientHeight
+	  };
+	}
+
+	function calculateElementLocation(element) {
+	  var rect = element.getBoundingClientRect();
+	  var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+
+	  var scrollLeft = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft;
+
+	  return {
+	    left: rect.left + scrollLeft,
+	    top: rect.top + scrollTop
+	  };
+	}
+
+	function calculateElementCircumcircle(element) {
+	  var size = calculateElementSize(element);
+	  var diameter = (0, _math.calculateHypotenuse)(size);
+	  var location = calculateElementLocation(element);
+
+	  return _extends({}, location, {
+	    diameter: diameter
+	  });
+	}
+
+	function calculateWindowCentre() {
+	  return {
+	    left: Math.ceil(window.innerWidth / 2),
+	    top: Math.ceil(window.innerHeight / 2)
+	  };
+	}
+
+	var addPxIfNeeded = function addPxIfNeeded(key, value) {
+	  switch (key) {
+	    case 'width':
+	    case 'height':
+	    case 'top':
+	    case 'left':
+	      return typeof value === 'number' ? value + 'px' : value;
+
+	    default:
+	      return value;
+	  }
+	};
+
+	/* eslint no-param-reassign:0 */
+	function applyStyles(element, styles) {
+	  Object.keys(styles).forEach(function (key) {
+	    element.style[key] = addPxIfNeeded(key, styles[key]);
+	  });
+	}
+
+	function calculateElementCenterInViewport(element) {
+	  var location = calculateElementLocation(element);
+	  var size = calculateElementSize(element);
+
+	  return {
+	    top: location.top + Math.ceil(size.width / 2),
+	    left: location.left - Math.ceil(size.height / 2)
+	  };
+	}
+
+	function transformTranslate(element, _ref) {
+	  var x = _ref.x,
+	      y = _ref.y;
+
+	  if (!x || !y) {
+	    return;
+	  }
+
+	  applyStyles(element, {
+	    transform: 'translate3d(' + x + 'px, ' + y + 'px, 0)'
+	  });
+	}
+
+	function transformScale(element, _ref2) {
+	  var scale3d = _ref2.scale3d,
+	      scale = _ref2.scale,
+	      transformOrigin = _ref2.transformOrigin;
+
+	  if (!scale3d && !scale) {
+	    return;
+	  }
+
+	  // scale3d takes presedence
+	  var scaleModifier = scale3d ? 'scale3d(' + scale3d + ')' : 'scale(' + scale + ')';
+
+	  var transform = element.style.transform;
+	  if (transform.indexOf('scale') > -1) {
+	    // replace any prexisting transform with a new one.
+	    transform = transform.replace(/scale\(.*\)|scale3d\(.*\)/, scaleModifier);
+	  } else if (transform.length > 0) {
+	    transform = element.style.transform + ' ' + scaleModifier;
+	  } else {
+	    transform = scaleModifier;
+	  }
+
+	  applyStyles(element, {
+	    transformOrigin: transformOrigin,
+	    backfaceVisibility: 'hidden',
+	    webkitBackgroundClip: 'content-box',
+	    transform: transform
+	  });
+	}
+
+	// eslint-disable-next-line
+	function logStyle(element, styles) {
+	  return Object.keys(styles).reduce(function (obj, key) {
+	    return _extends({}, obj, _defineProperty({}, key, element.style[key]));
+	  }, {});
+	}
+
+	function createElement(styles) {
+	  var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+	      _ref3$parentElement = _ref3.parentElement,
+	      parentElement = _ref3$parentElement === undefined ? document.body : _ref3$parentElement,
+	      cloneFrom = _ref3.cloneFrom;
+
+	  var newElement = document.createElement('div');
+	  var innerElement = cloneFrom && cloneFrom.cloneNode(true);
+	  if (innerElement) {
+	    applyStyles(innerElement, {
+	      margin: 0
+	    });
+
+	    innerElement.id = '';
+	    newElement.appendChild(innerElement);
+	  }
+
+	  applyStyles(newElement, styles);
+	  transformScale(newElement, styles);
+	  parentElement.appendChild(newElement);
+
+	  return newElement;
+	}
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.calculateHypotenuse = calculateHypotenuse;
+	exports.percentageDifference = percentageDifference;
+	function calculateHypotenuse(_ref) {
+	  var width = _ref.width,
+	      height = _ref.height;
+
+	  var x2 = Math.pow(width, 2);
+	  var y2 = Math.pow(height, 2);
+
+	  var hypotenuse = Math.sqrt(x2 + y2);
+	  return Math.ceil(hypotenuse);
+	}
+
+	function percentageDifference(from, to) {
+	  return from / to;
+	}
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Transition = __webpack_require__(38);
+	var _Transition = __webpack_require__(44);
 
 	var _Transition2 = _interopRequireDefault(_Transition);
 
@@ -5864,6 +6001,117 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 		exports.default = withTransition;
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _orchestrator = __webpack_require__(38);
+
+	var _orchestrator2 = _interopRequireDefault(_orchestrator);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Transition = function (_React$Component) {
+	  _inherits(Transition, _React$Component);
+
+	  function Transition() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, Transition);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Transition.__proto__ || Object.getPrototypeOf(Transition)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	      visible: false
+	    }, _this.setVisibility = function (visible) {
+	      _this.setState({
+	        visible: visible
+	      });
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(Transition, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.initialise();
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.initialise();
+
+	      if (this._node.firstElementChild) {
+	        (0, _orchestrator.removeFromStore)(this.props.pair, this._node.firstElementChild, true);
+	      }
+	    }
+	  }, {
+	    key: 'initialise',
+	    value: function initialise() {
+	      if (!this._node.firstElementChild) {
+	        return;
+	      }
+
+	      (0, _orchestrator2.default)(this.props.pair, {
+	        node: this._node.firstElementChild,
+	        transitions: this.props.transitions,
+	        shouldShow: this.setVisibility
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      var _props = this.props,
+	          pair = _props.pair,
+	          transitions = _props.transitions,
+	          style = _props.style,
+	          props = _objectWithoutProperties(_props, ['pair', 'transitions', 'style']);
+
+	      return _react2.default.createElement(
+	        'div',
+	        _extends({}, props, {
+	          ref: function ref(node) {
+	            return _this2._node = node;
+	          },
+	          style: _extends({}, style, { opacity: this.state.visible ? 1 : 0 })
+	        }),
+	        this.props.children
+	      );
+	    }
+	  }]);
+
+	  return Transition;
+	}(_react2.default.Component);
+
+		exports.default = Transition;
 
 /***/ })
 /******/ ])
