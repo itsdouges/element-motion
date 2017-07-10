@@ -1,6 +1,6 @@
 // @flow
 
-import * as yubaba from 'yubaba-core';
+import * as yubabaTransitions from './transitions';
 import { calculateElementLocation, calculateElementSize } from '../../core/src/lib/dom';
 
 const REMOVE_DELAY = 100;
@@ -46,7 +46,8 @@ function updateNodeData (pairName, { node, data }) {
 }
 
 export function removeFromStore (pairName: string, node: Element, withDelay: boolean = false) {
-  const remove = () => (nodeStore[pairName] = nodeStore[pairName].filter(({ node: nodeInStore }) => nodeInStore !== node));
+  const remove = () => (nodeStore[pairName] = nodeStore[pairName]
+    .filter(({ node: nodeInStore }) => nodeInStore !== node));
 
   if (withDelay) {
     setTimeout(remove, REMOVE_DELAY);
@@ -88,7 +89,7 @@ function startTransition (
 ) {
   const transitions = fromNode.transitions.map(({ transition: name, ...options }) => {
     // Hack to get reverse working. Uh. This should probably be rethought.
-    const initTransition = (node, metadata) => yubaba[name](node, options, metadata);
+    const initTransition = (node, metadata) => yubabaTransitions[name](node, options, metadata);
 
     return options.reverse
       ? { start: (node) => initTransition(node).start }
@@ -112,7 +113,7 @@ function startTransition (
         results
           .filter(({ transition }) => transition === 'expand')
           .map(({ target }) => {
-            return yubaba.fadeout(target, {
+            return yubabaTransitions.fadeout(target, {
               duration: 0.75,
               autoCleanup: true,
               autoStart: true,

@@ -1,6 +1,6 @@
 // @flow
 
-import type { TransitionOptions } from './Transition';
+import type { Transition as TransitionOptions } from 'yubaba-core';
 
 import React from 'react';
 import Transition from './Transition';

@@ -20,7 +20,9 @@ const BoxWithReverseTransition = withTransition([{
 const BoxWithContent = ({ onClick, src, description, name }: any) => (
   <TransitionContainer pair={name} className="content-bg">
     <div className="content-text">
-      {name.toUpperCase().split('').map((char) => <span>{char}</span>)}
+      {name.toUpperCase().split('').map((char, index) =>
+        // eslint-disable-next-line react/no-array-index-key
+        <span key={index}>{char}</span>)}
     </div>
 
     <div className="content-margin">

@@ -3,7 +3,7 @@
 import type { Children } from 'react';
 import React from 'react';
 
-import { addTransitionListener } from './orchestrator';
+import { addTransitionListener } from 'yubaba-core';
 
 export default class TransitionContainer extends React.Component {
   _detatch: Function;

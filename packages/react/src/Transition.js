@@ -1,10 +1,10 @@
 // @flow
 
 import type { Children } from 'react';
-import type { Transition as TransitionOptions } from './orchestrator';
+import type { Transition as TransitionOptions } from 'yubaba-core';
 
 import React from 'react';
-import orchestrator, { removeFromStore } from './orchestrator';
+import { orchestrator, removeFromStore } from 'yubaba-core';
 
 export default class Transition extends React.Component {
   _node: HTMLElement;

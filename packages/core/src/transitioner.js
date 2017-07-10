@@ -4,7 +4,7 @@ import {
   applyStyles,
   transformTranslate,
   transformScale,
-} from '../lib/dom';
+} from './lib/dom';
 
 // NOTE: createInBody is forced to be true for now as the node in react is immediately removed
 // after the transition begins. If it's in that contain, the transition element is removed too!
