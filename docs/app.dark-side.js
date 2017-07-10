@@ -22215,6 +22215,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -22229,7 +22231,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _BoxWithContent2 = _interopRequireDefault(_BoxWithContent);
 
-	var _withTransition = __webpack_require__(200);
+	var _withTransition = __webpack_require__(202);
 
 	var _withTransition2 = _interopRequireDefault(_withTransition);
 
@@ -22253,15 +22255,118 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var BoxWithTransition = (0, _withTransition2.default)([{
 	  transition: 'expand',
-	  duration: 0.5,
+	  duration: 0.4,
 	  background: '#541219',
-	  autoStart: true,
 	  cover: true
 	}, {
 	  transition: 'move',
 	  duration: 0.5,
 	  matchSize: true
 	}])(_Box2.default);
+
+	var items = [{
+	  name: 'First Order',
+	  src: 'first-order.jpg',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "The First Order, simply referred to as the Order, was a political and military faction—ruled by Supreme Leader Snoke and allied with the Knights of Ren—that came into existence as a result of the fall of the Galactic Empire. In the aftermath of the Battle of Jakku, the Empire formally surrendered to the New Republic by signing the Galactic Concordance, a peace treaty that marked the end of the Galactic Civil War in 5 ABY. In spite of its collapse the Empire's legacy survived in the Unknown Regions of the galaxy where former members of the Imperial Military plotted their return to power. Their cause would grow in support through some Imperial sympathizers who briefly inhabited a wing of Republic politics before abandoning the nascent democracy to join the Imperial-based movement in the Unknown Regions. Inspired by the fascist ideals of the Empire, this movement ultimately resulted in the formation of the First Order."
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "In the decades that followed the Empire's defeat, the First Order gradually built its strength through the secret mobilization of new fleets and armies in violation of the Galactic Concordance and Republic law. Despite further acts of defiance to the treaty, the Galactic Senate did not regard the First Order as a serious threat to the Republic. However, the Senate's inaction motivated the Rebel veteran Princess Leia Organa to found the Resistance. Although the First Order became entangled in a conflict with Organa's group, the Republic remained its primary target. After thirty years of plotting their revenge against the government that overthrew the Empire, the First Order test-fired the superweapon of Starkiller Base on the Hosnian system and thereby destroyed Hosnian Prime, the capital world of the Republic. Shortly thereafter, the Resistance launched a counterattack that resulted in the base's destruction."
+	    )
+	  )
+	}, {
+	  name: 'Palpatine',
+	  src: 'emporer.jpg',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'Palpatine, also known as Darth Sidious, was a Force-sensitive Human male who served as the last Supreme Chancellor of the Galactic Republic and the first Emperor of the Galactic Empire. A Dark Lord of the Sith in the Order of the Sith Lords, recorded by history as the most powerful who had ever lived, his entire life was the culmination of a thousand-year plan to overthrow the Republic and the Jedi Order from within.'
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "Born in 82 BBY on the planet Naboo to the aristocratic House Palpatine, Palpatine discovered the Sith at a young age as a collector of dark side artifacts. In 65 BBY, he met Hego Damask, a Muun businessman who was in reality the Sith Lord Darth Plagueis. Under Plagueis's manipulation, Palpatine killed his father and pledged himself to his new Master's dark side teachings as Darth Sidious. Palpatine lived a double life for many years, serving an untarnished career as Naboo's ambassador in the Galactic Senate while learning from his master and training a young Zabrak as the Sith assassin Darth Maul. Plagueis and Sidious, both exceptionally skilled and powerful in the Force, were able to conceal their identities from the Jedi for decades. As Plagueis privately searched for the key to eternal life, Sidious manipulated galactic politics, culminating in the blockade of Naboo by the Trade Federation. In the wake of the political crisis, the Galactic Senate voted to elect him as Supreme Chancellor, and around the same time, in accordance with Bane's Rule of Two, Palpatine murdered Plagueis and usurped the role of Sith Master."
+	    )
+	  )
+	}, {
+	  name: 'Darth Maul',
+	  src: 'darth-maul.jpg',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'Maul was a Dathomirian Zabrak male who lived during the last days of the Galactic Republic and the reign of the Galactic Empire. Maul, the son of Mother Talzin of the Nightsisters, was taken as the Sith apprentice of Darth Sidious, the Dark Lord of the Sith, and given the name Darth Maul. After revealing the existence of the Sith to the Jedi Order, Maul fell in a lightsaber duel against Obi-Wan Kenobi during the Battle of Naboo. Over a decade later, he returned from exile and formed the criminal army known as the Shadow Collective, intent on reclaiming the power he had lost. His quest for revenge against Kenobi and the Sith continued into the Imperial age, bringing him into conflict with the early rebellion against the Empire.'
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "As a Sith Lord, Maul believed it was his destiny to rule the galaxy and bring about the end of the Jedi and the Republic. After the Battle of Naboo, that destiny was taken by Count Dooku, a former Jedi Master who became Sidious' new apprentice. The Sith's war to destroy the Republic began without Maul, as the Clone Wars raged across the galaxy, but Maul returned during the conflict and brought the Shadow Collective together to destroy his enemies and regain what he had lost. He led the takeover of the planet Mandalore with the help of his allies, the Mandalorian splinter group Death Watch, and killed Duchess Satine Kryze as part of his revenge against Kenobi, as she was an old friend and romantic interest of the venerable Jedi Master. Maul was captured and imprisoned by Sidious soon thereafter, who used his former apprentice as part of a plot to eliminate Mother Talzin, whom Sidious considered a threat to his future rule of the galaxy."
+	    )
+	  )
+	}, {
+	  name: 'Boba Fett',
+	  src: 'boba-fett.jpg',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "Boba Fett was a male human bounty hunter, and the genetic clone of infamous bounty hunter Jango Fett. Boba was created by the cloners on Kamino and was physically identical to the clone troopers created for the Grand Army of the Republic, though Boba was unaltered and did not grow at the same accelerated rate as the other clones. Raised as Jango's son, Boba learned the combat skills necessary to one day become a bounty hunter in his own right."
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'Jango was killed during the Battle of Geonosis, which sparked the Clone Wars between the Galactic Republic and the Confederacy of Independent Systems. The young boy swore vengeance against Jedi Master Mace Windu, who killed Jango, and teamed with a group of bounty hunters that included Aurra Sing and Bossk. Their plot to kill Windu failed, and Boba realized that he had gone too far in trying to kill the Jedi Master—but he vowed never to forgive Windu. After serving a brief prison sentence, Boba formed a team of bounty hunters and took on a number of missions.'
+	    )
+	  )
+	}, {
+	  name: 'Kylo Ren',
+	  src: 'ben.jpeg',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "Kylo Ren, a human male, was a Force warrior and a former Jedi trainee under his uncle, Jedi Master Luke Skywalker, before Ren destroyed Skywalker's attempt to restore the Jedi Order and became an apprentice of Supreme Leader Snoke of the First Order. Given the name Ben Solo, he was born in 5 ABY, one year after the Battle of Endor, on the planet Chandrila to Princess Leia Organa and General Han Solo, whose busy lives left Ben with feelings of abandonment. This was exploited by the Supreme Leader, who tempted him to the dark side of the Force. Though Organa hoped training with Skywalker would help her son, he was seduced to the dark side, destroyed his fellow Jedi students, and became one of the Knights of Ren, earning the moniker of 'Jedi Killer' amongst the First Order ranks. He idolized his grandfather, the fallen Sith Lord Darth Vader, and hoped to finish what Vader started: the elimination of the Jedi. As a member of the First Order, Ren represented its mystical side and was able to command the First Order's armies, leading to a tense competition between Ren and First Order officers, such as General Armitage Hux."
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "After Ren's fall, Skywalker vanished into exile to search for the first Jedi Temple. Years later, the First Order recovered part of a map to Ahch-To, where the temple was found, in the archives of the Galactic Empire. They learned that Lor San Tekka, a member of the Church of the Force on the planet Jakku, had the rest of the map fragment, so Ren commanded the First Order forces in search of the map. The map fell into the hands of the Resistance, as Organa, the leader of the small military opposition to the First Order, hoped to find her twin brother and bring him back into the fight against the dark side. Ren hunted the map across the galaxy and eventually learned that it and the droid who carried it, BB-8, had come into Solo's possession. He tracked them to Takodana, where Ren discovered Rey, a Force-sensitive who had seen the map and was helping BB-8. Ren brought Rey to Starkiller Base, a First Order-controlled planet with a built-in superweapon, and attempted to probe her mind for the map's information, but she resisted and eventually managed to escape. Shortly after, the Resistance attacked Starkiller Base in the hopes of destroying it, and Ren encountered Solo once again. After a brief confrontation, he killed his father, hoping to eliminate the light that Ren struggled with inside himself. Ren then pursued Rey and the fugitive stormtrooper Finn into a forest as the battle raged on above. He engaged both in a lightsaber duel, besting Finn before being beaten and injured by Rey. As Starkiller Base began to implode from the attack, the Supreme Leader ordered General Hux to bring Ren before him so his training could be completed."
+	    )
+	  )
+	}, {
+	  name: 'Captain Phasma',
+	  src: 'phasma.jpg',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "Phasma was a human female stormtrooper Captain of the First Order. She served as part of the unofficial commanding triumvirate for the First Order and their Starkiller Base operation, taking charge of the command of the First Order's stormtrooper soldiers. During the First Order–Resistance conflict, which took place 30 years after the Battle of Endor, Phasma served alongside the dark enforcer Kylo Ren and General Armitage Hux in their efforts against the Resistance."
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "Under orders from the Supreme Leader of the First Order, Snoke, the triumvirate searched for a galaxy map that would lead to the last of the Jedi, Luke Skywalker, on the planet Jakku. After the sacking of the village Tuanul, Phasma and her stormtroopers killed the survivors under orders from Ren. Afterward, FN-2187, one of her division's stormtroopers, had an awakening that led to him betraying the First Order, despite Phasma's efforts at reconditioning him. The First Order eventually decided on unleashing their Starkiller superweapon, an event which led to the destruction of the Hosnian system, where the New Republic's capital was located, for which Phasma was present."
+	    )
+	  )
+	}];
 
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
@@ -22278,12 +22383,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref2 = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref2, [this].concat(args))), _this), _this.state = {
-	      big: false
-	    }, _this.toggle = function (src) {
+	      big: false,
+	      item: items[0]
+	    }, _this.select = function (item) {
 	      _this.setState(function (prevState) {
 	        return {
 	          big: !prevState.big,
-	          src: src
+	          item: item
 	        };
 	      });
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -22313,7 +22419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.state.big && _react2.default.createElement(
 	          Container,
 	          null,
-	          _react2.default.createElement(_BoxWithContent2.default, { onClick: this.toggle, src: this.state.src })
+	          _react2.default.createElement(_BoxWithContent2.default, _extends({ onClick: this.select }, this.state.item))
 	        ),
 	        this.state.big || _react2.default.createElement(
 	          Container,
@@ -22322,20 +22428,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'container-inner' },
-	            _react2.default.createElement(_Box2.default, { type: 'small', src: 'ben.jpeg' }),
-	            _react2.default.createElement(_Box2.default, { type: 'small', src: 'darth-maul.jpg' }),
-	            _react2.default.createElement(_Box2.default, { type: 'small', src: 'boba-fett.jpg' }),
-	            _react2.default.createElement(BoxWithTransition, {
-	              transitionPair: 'box-to-box',
-	              type: 'small',
-	              onClick: function onClick() {
-	                return _this3.toggle('first-order.jpg');
-	              },
-	              src: 'first-order.jpg',
-	              className: 'box-highlighted'
-	            }),
-	            _react2.default.createElement(_Box2.default, { type: 'small', src: 'emporer.jpg' }),
-	            _react2.default.createElement(_Box2.default, { type: 'small', src: 'phasma.jpg' })
+	            items.map(function (item) {
+	              return _react2.default.createElement(BoxWithTransition, _extends({}, item, {
+	                key: item.name,
+	                type: 'small',
+	                className: 'box-highlighted',
+	                transitionPair: item.name,
+	                onClick: function onClick() {
+	                  return _this3.select(item);
+	                }
+	              }));
+	            })
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -22362,27 +22465,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	var Box = function Box(_ref) {
 	  var type = _ref.type,
 	      className = _ref.className,
 	      src = _ref.src,
-	      props = _objectWithoutProperties(_ref, ['type', 'className', 'src']);
-
-	  return _react2.default.createElement('div', _extends({}, props, {
+	      onClick = _ref.onClick;
+	  return _react2.default.createElement('div', {
+	    role: 'presentation',
+	    onClick: onClick,
 	    className: 'box box-' + type + (className ? ' ' + className : '')
 	    // $FlowFixMe - Dynamic import
 	    , style: { backgroundImage: 'url(' + __webpack_require__(186)("./" + src) + ')' }
-	  }));
+	  });
 	};
 
 		exports.default = Box;
@@ -22485,7 +22585,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _TransitionContainer2 = _interopRequireDefault(_TransitionContainer);
 
-	var _withTransition = __webpack_require__(200);
+	var _withTransition = __webpack_require__(202);
 
 	var _withTransition2 = _interopRequireDefault(_withTransition);
 
@@ -22493,26 +22593,28 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var BoxWithReverseTransition = (0, _withTransition2.default)([{
 	  transition: 'expand',
-	  duration: 0.5,
+	  duration: 0.3,
 	  background: '#782128',
 	  reverse: true,
 	  cover: true
 	}, {
 	  transition: 'move',
-	  duration: 0.5,
+	  duration: 0.4,
 	  matchSize: true
 	}])(_Box2.default);
 
 	var BoxWithContent = function BoxWithContent(_ref) {
 	  var onClick = _ref.onClick,
-	      src = _ref.src;
+	      src = _ref.src,
+	      description = _ref.description,
+	      name = _ref.name;
 	  return _react2.default.createElement(
 	    _TransitionContainer2.default,
-	    { pair: 'box-to-box', className: 'content-bg' },
+	    { pair: name, className: 'content-bg' },
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'content-text' },
-	      'THE FIRST ORDER'.split('').map(function (char) {
+	      name.toUpperCase().split('').map(function (char) {
 	        return _react2.default.createElement(
 	          'span',
 	          null,
@@ -22525,21 +22627,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      { className: 'content-margin' },
 	      _react2.default.createElement(BoxWithReverseTransition, {
 	        className: 'box-highlighted',
-	        transitionPair: 'box-to-box',
+	        transitionPair: name,
 	        type: 'big',
 	        onClick: onClick,
 	        src: src
 	      }),
-	      _react2.default.createElement(
-	        'p',
-	        null,
-	        "The First Order, simply referred to as the Order, was a political and military faction—ruled by Supreme Leader Snoke and allied with the Knights of Ren—that came into existence as a result of the fall of the Galactic Empire. In the aftermath of the Battle of Jakku, the Empire formally surrendered to the New Republic by signing the Galactic Concordance, a peace treaty that marked the end of the Galactic Civil War in 5 ABY. In spite of its collapse the Empire's legacy survived in the Unknown Regions of the galaxy where former members of the Imperial Military plotted their return to power. Their cause would grow in support through some Imperial sympathizers who briefly inhabited a wing of Republic politics before abandoning the nascent democracy to join the Imperial-based movement in the Unknown Regions. Inspired by the fascist ideals of the Empire, this movement ultimately resulted in the formation of the First Order."
-	      ),
-	      _react2.default.createElement(
-	        'p',
-	        null,
-	        "In the decades that followed the Empire's defeat, the First Order gradually built its strength through the secret mobilization of new fleets and armies in violation of the Galactic Concordance and Republic law. Despite further acts of defiance to the treaty, the Galactic Senate did not regard the First Order as a serious threat to the Republic. However, the Senate's inaction motivated the Rebel veteran Princess Leia Organa to found the Resistance. Although the First Order became entangled in a conflict with Organa's group, the Republic remained its primary target. After thirty years of plotting their revenge against the government that overthrew the Empire, the First Order test-fired the superweapon of Starkiller Base on the Hosnian system and thereby destroyed Hosnian Prime, the capital world of the Republic. Shortly thereafter, the Resistance launched a counterattack that resulted in the base's destruction."
-	      )
+	      description
 	    )
 	  );
 	};
@@ -22564,7 +22657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Transition = __webpack_require__(197);
+	var _orchestrator = __webpack_require__(197);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22605,13 +22698,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // We need to have this be attached before
 	      // everything else is mounted, but we don't want to run this on the server.
 	      // How?
-	      this._detatch = (0, _Transition.addTransitionListener)(this.props.pair, this.setVisibility);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      // console.log('>>> TransitionContainer has mounted');
-	      // this._detatch = addTransitionListener(this.props.pair, this.setVisibility);
+	      this._detatch = (0, _orchestrator.addTransitionListener)(this.props.pair, this.setVisibility);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -22649,210 +22736,199 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	exports.addTransitionListener = addTransitionListener;
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
+	exports.removeFromStore = removeFromStore;
+	exports.default = orchestrator;
 
 	var _yubabaCore = __webpack_require__(198);
 
 	var yubaba = _interopRequireWildcard(_yubabaCore);
 
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	var _dom = __webpack_require__(200);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
+	var REMOVE_DELAY = 100;
 	var nodeStore = {};
 	var listenerStore = {};
 
 	function addTransitionListener(pairName, cb) {
-	  if (typeof listenerStore[pairName] === 'boolean') {
-	    // message was left, lets pick it up.
-	    cb(listenerStore[pairName]);
-	  }
-
 	  listenerStore[pairName] = cb;
+
 	  return function () {
 	    delete listenerStore[pairName];
 	  };
 	}
 
-	function notifyTransitionListener(pairName, value /* , leaveAMessage?: boolean*/) {
+	function notifyTransitionListener(pairName, value) {
+	  // we should be able to handle multiple listeners.
 	  var cb = listenerStore[pairName];
 	  if (cb) {
-	    console.log('notifying listener for ' + pairName);
 	    cb(value);
-	  } // else if (leaveAMessage) {
-	  // console.log('Leaving a message for a listener to pick up later.');
-	  // notify doesnt exist yet, so lets leave a message.
-	  // listenerStore[pairName] = value;
-	  // }
+	  }
 	}
 
 	function readFromStore(pairName) {
-	  return nodeStore[pairName];
+	  return nodeStore[pairName] || [];
 	}
 
-	function addToStore(pairName, nodeOrFunc) {
-	  nodeStore[pairName] = nodeOrFunc;
+	function addToStore(pairName, _ref) {
+	  var node = _ref.node,
+	      transitions = _ref.transitions;
+
+	  nodeStore[pairName] = nodeStore[pairName] || [];
+	  nodeStore[pairName].push({ node: node, transitions: transitions });
 	}
 
-	// function removeFromStore (pairName) {
-	//   delete nodeStore[pairName];
-	// }
+	function updateNodeData(pairName, _ref2) {
+	  var node = _ref2.node,
+	      data = _ref2.data;
 
-	var Transition = function (_React$Component) {
-	  _inherits(Transition, _React$Component);
-
-	  function Transition() {
-	    var _ref;
-
-	    var _temp, _this, _ret;
-
-	    _classCallCheck(this, Transition);
-
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
+	  nodeStore[pairName] = nodeStore[pairName].map(function (item) {
+	    if (item.node === node) {
+	      return _extends({}, item, {
+	        data: data
+	      });
 	    }
 
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Transition.__proto__ || Object.getPrototypeOf(Transition)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-	      visible: false
-	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	    return item;
+	  });
+	}
+
+	function removeFromStore(pairName, node) {
+	  var withDelay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+	  var remove = function remove() {
+	    return nodeStore[pairName] = nodeStore[pairName].filter(function (_ref3) {
+	      var nodeInStore = _ref3.node;
+	      return nodeInStore !== node;
+	    });
+	  };
+
+	  if (withDelay) {
+	    setTimeout(remove, REMOVE_DELAY);
+	  } else {
+	    remove();
+	  }
+	}
+
+	function startTransition(pairName, fromNode, toNode, shouldShow) {
+	  var transitions = fromNode.transitions.map(function (_ref4) {
+	    var name = _ref4.transition,
+	        options = _objectWithoutProperties(_ref4, ['transition']);
+
+	    // Hack to get reverse working. Uh. This should probably be rethought.
+	    var initTransition = function initTransition(node, metadata) {
+	      return yubaba[name](node, options, metadata);
+	    };
+
+	    return options.reverse ? { start: function start(node) {
+	        return initTransition(node).start;
+	      } } : initTransition(fromNode.node, fromNode.data);
+	  });
+
+	  Promise.all(transitions.map(function (transition) {
+	    return transition.start(toNode.node);
+	  })).then(function (results) {
+	    // Start all reverse transitions
+	    return Promise.all(results.filter(function (result) {
+	      return typeof result === 'function';
+	    }).map(function (start) {
+	      return start();
+	    }).concat(results));
+	  }).then(function (results) {
+	    process.env.NODE_ENV !== 'production' && console.log('Finished transition for ' + pairName + '.');
+	    // Fadeout and cleanup all expanders. This is deliberately a broken promise chain.
+
+	    Promise.all(results.filter(function (_ref5) {
+	      var transition = _ref5.transition;
+	      return transition === 'expand';
+	    }).map(function (_ref6) {
+	      var target = _ref6.target;
+
+	      return yubaba.fadeout(target, {
+	        duration: 0.75,
+	        autoCleanup: true,
+	        autoStart: true
+	      }).promise;
+	    })).then(function (fadeoutResults) {
+	      // Cleanup anything else left
+	      fadeoutResults.concat(results).forEach(function (result) {
+	        result.cleanup && result.cleanup();
+	      });
+	    });
+	  }).then(function () {
+	    notifyTransitionListener(pairName, true);
+	    shouldShow(true);
+	  });
+	}
+
+	function orchestrator(pairName, options) {
+	  var nodeArr = readFromStore(pairName);
+
+	  if (nodeArr.length === 0) {
+	    process.env.NODE_ENV !== 'production' && console.log('Found fromNode for "' + pairName + '".');
+
+	    notifyTransitionListener(pairName, true);
+	    options.shouldShow(true);
+	    addToStore(pairName, { node: options.node, transitions: options.transitions });
+
+	    return;
 	  }
 
-	  _createClass(Transition, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      process.env.NODE_ENV !== 'production' && console.log('Mounted.');
+	  var isInNodeArr = nodeArr.some(function (_ref7) {
+	    var node = _ref7.node;
+	    return options.node === node;
+	  });
 
-	      this.initialise();
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      process.env.NODE_ENV !== 'production' && console.log('Unmounting.');
+	  if (nodeArr.length === 1 && isInNodeArr) {
+	    // This branch will get triggered only if the component was added, and then removed, from the vDOM.
+	    process.env.NODE_ENV !== 'production' && console.log('Found fromNode for "' + pairName + '" pair, saving dimensions.');
 
-	      this.initialise();
-	    }
-	  }, {
-	    key: 'initialise',
-	    value: function initialise() {
-	      var _this2 = this;
+	    var _location = (0, _dom.calculateElementLocation)(options.node);
+	    var _size = (0, _dom.calculateElementSize)(options.node);
 
-	      var nodeOrFunc = readFromStore(this.props.pair);
-	      if (!nodeOrFunc) {
-	        process.env.NODE_ENV !== 'production' && console.log('Nothing left in store, adding node to store.');
-	        // need to notify any pairing transition container.
-	        notifyTransitionListener(this.props.pair, true);
-	        this.setState({
-	          visible: true
-	        });
-	        addToStore(this.props.pair, this._node);
-	        return;
+	    updateNodeData(pairName, {
+	      node: options.node,
+	      data: {
+	        location: _location,
+	        size: _size
 	      }
+	    });
 
-	      if (nodeOrFunc === this._node) {
-	        process.env.NODE_ENV !== 'production' && console.log('Intialising transition.');
+	    return;
+	  }
 
-	        var node = nodeOrFunc;
+	  if (nodeArr.length === 1 && !isInNodeArr) {
+	    process.env.NODE_ENV !== 'production' && console.log('Found toNode for "' + pairName + '" pair, starting transition.');
 
-	        var _transitions = this.props.transitions.map(function (_ref2) {
-	          var name = _ref2.transition,
-	              options = _objectWithoutProperties(_ref2, ['transition']);
+	    var _nodeArr = _slicedToArray(nodeArr, 1),
+	        fromNode = _nodeArr[0];
 
-	          // Hack to get reverse working. Uh. This should probably be rethought.
-	          var initTransition = function initTransition(element) {
-	            return yubaba[name](element, options);
-	          };
+	    var toNode = { node: options.node, transitions: options.transitions };
 
-	          return options.reverse ? { start: function start(endElement) {
-	              return initTransition(endElement).start;
-	            } } : initTransition(node.firstElementChild);
-	        });
+	    addToStore(pairName, toNode);
+	    startTransition(pairName, fromNode, toNode, options.shouldShow);
 
-	        var startTransition = function startTransition(endNode) {
-	          return Promise.all(_transitions.map(function (transition) {
-	            return transition.start(endNode);
-	          })).then(function (results) {
-	            // Start all reverse transitions
-	            return Promise.all(results.filter(function (result) {
-	              return typeof result === 'function';
-	            }).map(function (start) {
-	              return start();
-	            }).concat(results));
-	          }).then(function (results) {
-	            process.env.NODE_ENV !== 'production' && console.log('Finished transition.');
-	            // Fadeout and cleanup all expanders. This is deliberately a broken promise chain.
+	    return;
+	  }
 
-	            Promise.all(results.filter(function (_ref3) {
-	              var transition = _ref3.transition;
-	              return transition === 'expand';
-	            }).map(function (_ref4) {
-	              var target = _ref4.target;
+	  if (nodeArr.length === 2) {
+	    process.env.NODE_ENV !== 'production' && console.log('Found both nodes for "' + pairName + '", starting transition.');
 
-	              return yubaba.fadeout(target, {
-	                duration: 0.75,
-	                autoCleanup: true,
-	                autoStart: true
-	              }).promise;
-	            })).then(function (fadeoutResults) {
-	              // Cleanup anything else left
-	              fadeoutResults.concat(results).forEach(function (result) {
-	                result.cleanup && result.cleanup();
-	              });
-	            });
-	          });
-	        };
+	    var _nodeArr2 = _slicedToArray(nodeArr, 2),
+	        _fromNode = _nodeArr2[0],
+	        _toNode = _nodeArr2[1];
 
-	        addToStore(this.props.pair, startTransition);
-	      } else if (typeof nodeOrFunc === 'function') {
-	        process.env.NODE_ENV !== 'production' && console.log('Found a transition, starting.');
-	        var _startTransition = nodeOrFunc;
-	        // We dip into the node and get the _actual_ target (not wrapper container).
-	        _startTransition(this._node.firstElementChild).then(function () {
-	          // need to notify any pairing transition container.
-	          notifyTransitionListener(_this2.props.pair, true);
-	          _this2.setState({
-	            visible: true
-	          });
-	        });
-
-	        process.env.NODE_ENV !== 'production' && console.log('Resetting store with fresh node.');
-	        addToStore(this.props.pair, this._node);
-	      } else {
-	        process.env.NODE_ENV !== 'production' && console.log('Did not find same node nor waiting transition.');
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { ref: function ref(node) {
-	            return _this3._node = node;
-	          }, style: { opacity: this.state.visible ? 1 : 0 } },
-	        this.props.children
-	      );
-	    }
-	  }]);
-
-	  return Transition;
-	}(_react2.default.Component);
-
-		exports.default = Transition;
+	    startTransition(pairName, _fromNode, _toNode, options.shouldShow);
+	  }
+	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
@@ -22952,8 +23028,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					return obj && obj.__esModule ? obj : { default: obj };
 				}
 
-				function transition(transitionFunc, element, options) {
-					var transitionDefinition = transitionFunc(element, options);
+				function transition(transitionFunc, element, options, metadata) {
+					var transitionDefinition = transitionFunc(element, options, metadata);
 					var defer = (0, _deferred2.default)();
 
 					var _start = (0, _transitioner2.default)(element, {
@@ -22979,20 +23055,20 @@ return /******/ (function(modules) { // webpackBootstrap
 					return params;
 				}
 
-				function expand(element, options) {
-					return transition(_expand2.default, element, options);
+				function expand(element, options, metadata) {
+					return transition(_expand2.default, element, options, metadata);
 				}
 
-				function fadeout(element, options) {
-					return transition(_fadeout2.default, element, options);
+				function fadeout(element, options, metadata) {
+					return transition(_fadeout2.default, element, options, metadata);
 				}
 
-				function move(element, options) {
-					return transition(_move2.default, element, options);
+				function move(element, options, metadata) {
+					return transition(_move2.default, element, options, metadata);
 				}
 
-				function reveal(element, options) {
-					return transition(_reveal2.default, element, options);
+				function reveal(element, options, metadata) {
+					return transition(_reveal2.default, element, options, metadata);
 				}
 
 				/***/
@@ -23018,8 +23094,6 @@ return /******/ (function(modules) { // webpackBootstrap
 					    createInBody = _ref$createInBody === undefined ? true : _ref$createInBody;
 
 					var target = void 0;
-
-					console.log('MAKIN DEM TARGET', fromElement);
 
 					if (newElement) {
 						target = (0, _dom.createElement)(fromElement, {
@@ -23096,16 +23170,10 @@ return /******/ (function(modules) { // webpackBootstrap
 						return transition + ' ' + duration + 's';
 					}).join(',');
 
-					console.log('setting initial style for: ', from.transition);
-					console.log(from);
-
 					if (immediatelyApplyFrom && styleApply) {
 						requestAnimationFrame(function () {
-							console.log('was i dropped?');
 							(0, _dom.applyStyles)(element, from);
 						});
-					} else {
-						console.log('nah for: ', from.transition);
 					}
 				}
 
@@ -23131,11 +23199,8 @@ return /******/ (function(modules) { // webpackBootstrap
 								}
 
 								if (applyStyle) {
-									console.log('yoo applying', to);
 									(0, _dom.applyStyles)(element, to);
 								}
-
-								console.log('DID I FUKIN WORK?');
 							});
 						}, delay);
 					};
@@ -23164,8 +23229,6 @@ return /******/ (function(modules) { // webpackBootstrap
 						resetHeightOnFinish: options.resetHeightOnFinish,
 						resolve: resolve
 					});
-
-					console.log('>>>>', from);
 
 					setInitialStyles(target, {
 						immediatelyApplyFrom: options.immediatelyApplyFrom,
@@ -23232,16 +23295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					};
 				}
 
-				function calculateElementLocation(element /* , calculateViewportScrollOffset*/) {
-					// const rect = element.getBoundingClientRect();
-					// const offsetY = calculateViewportScrollOffset ? window.scrollY : 0;
-					// const offsetX = calculateViewportScrollOffset ? window.scrollX : 0;
-
-					// return {
-					//   left: element.offsetLeft, // rect.left + offsetX,
-					//   top: element.offsetTop, // rect.top + offsetY,
-					// };
-
+				function calculateElementLocation(element) {
 					var rect = element.getBoundingClientRect();
 					var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
 
@@ -23285,8 +23339,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/* eslint no-param-reassign:0 */
 				function applyStyles(element, styles) {
-					console.log('setting style for', element, styles);
-
 					Object.keys(styles).forEach(function (key) {
 						element.style[key] = addPxIfNeeded(key, styles[key]);
 					});
@@ -23337,8 +23389,6 @@ return /******/ (function(modules) { // webpackBootstrap
 						transform = scaleModifier;
 					}
 
-					console.log('TTTTT', transform);
-
 					applyStyles(element, {
 						transformOrigin: transformOrigin,
 						backfaceVisibility: 'hidden',
@@ -23347,6 +23397,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					});
 				}
 
+				// eslint-disable-next-line
 				function logStyle(element, styles) {
 					return Object.keys(styles).reduce(function (obj, key) {
 						return _extends({}, obj, _defineProperty({}, key, element.style[key]));
@@ -23363,26 +23414,17 @@ return /******/ (function(modules) { // webpackBootstrap
 					var innerElement = cloneFrom && cloneFrom.cloneNode(true);
 					if (innerElement) {
 						applyStyles(innerElement, {
-							margin: 0,
-							width: '100%',
-							height: '100%',
-							overflow: 'hidden'
+							margin: 0
 						});
-
-						console.log('>>> NEW INNER', innerElement);
 
 						innerElement.id = '';
 						newElement.appendChild(innerElement);
 					}
-					console.log('>><< APPLYING', styles);
-					console.log('>><< BEFORE', logStyle(newElement, styles));
-					applyStyles(newElement, _extends({}, styles));
 
+					applyStyles(newElement, styles);
 					transformScale(newElement, styles);
-
-					console.log('>><< AFTER', logStyle(newElement, styles));
-
 					parentElement.appendChild(newElement);
+
 					return newElement;
 				}
 
@@ -23460,12 +23502,11 @@ return /******/ (function(modules) { // webpackBootstrap
 					var background = _ref.background,
 					    reverse = _ref.reverse,
 					    cover = _ref.cover;
+					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-					var location = (0, _dom.calculateElementLocation)(element, true);
-					var size = (0, _dom.calculateElementSize)(element);
+					var location = metadata.location || (0, _dom.calculateElementLocation)(element, true);
+					var size = metadata.size || (0, _dom.calculateElementSize)(element);
 					var minSize = Math.min(size.width, size.height);
-
-					console.log('start expand', location, size);
 
 					var elementHypotenuse = cover ? (0, _math.calculateHypotenuse)(size) : minSize;
 
@@ -23564,17 +23605,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var _math = __webpack_require__(3);
 
-				// TODO: Fix calculations to be able to be position: absolute.
-				// This requires updating the `to` on trigger with the new window position.
-
 				function move(fromElement) {
 					var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
 					    matchSize = _ref.matchSize;
 
-					var fromLocation = (0, _dom.calculateElementLocation)(fromElement, true);
-					var fromSize = (0, _dom.calculateElementSize)(fromElement);
+					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-					console.log('start move', fromLocation);
+					var fromLocation = metadata.location || (0, _dom.calculateElementLocation)(fromElement, true);
+					var fromSize = metadata.size || (0, _dom.calculateElementSize)(fromElement);
 
 					var to = function to(toElement) {
 						var toSize = matchSize ? (0, _dom.calculateElementSize)(toElement) : (0, _dom.calculateElementSize)(fromElement);
@@ -23681,11 +23719,203 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports.calculateElementSize = calculateElementSize;
+	exports.calculateElementLocation = calculateElementLocation;
+	exports.calculateElementCircumcircle = calculateElementCircumcircle;
+	exports.calculateWindowCentre = calculateWindowCentre;
+	exports.applyStyles = applyStyles;
+	exports.calculateElementCenterInViewport = calculateElementCenterInViewport;
+	exports.transformTranslate = transformTranslate;
+	exports.transformScale = transformScale;
+	exports.createElement = createElement;
+
+	var _math = __webpack_require__(201);
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function calculateElementSize(element) {
+	  return {
+	    width: element.clientWidth,
+	    height: element.clientHeight
+	  };
+	}
+
+	function calculateElementLocation(element) {
+	  var rect = element.getBoundingClientRect();
+	  var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+
+	  var scrollLeft = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft;
+
+	  return {
+	    left: rect.left + scrollLeft,
+	    top: rect.top + scrollTop
+	  };
+	}
+
+	function calculateElementCircumcircle(element) {
+	  var size = calculateElementSize(element);
+	  var diameter = (0, _math.calculateHypotenuse)(size);
+	  var location = calculateElementLocation(element);
+
+	  return _extends({}, location, {
+	    diameter: diameter
+	  });
+	}
+
+	function calculateWindowCentre() {
+	  return {
+	    left: Math.ceil(window.innerWidth / 2),
+	    top: Math.ceil(window.innerHeight / 2)
+	  };
+	}
+
+	var addPxIfNeeded = function addPxIfNeeded(key, value) {
+	  switch (key) {
+	    case 'width':
+	    case 'height':
+	    case 'top':
+	    case 'left':
+	      return typeof value === 'number' ? value + 'px' : value;
+
+	    default:
+	      return value;
+	  }
+	};
+
+	/* eslint no-param-reassign:0 */
+	function applyStyles(element, styles) {
+	  Object.keys(styles).forEach(function (key) {
+	    element.style[key] = addPxIfNeeded(key, styles[key]);
+	  });
+	}
+
+	function calculateElementCenterInViewport(element) {
+	  var location = calculateElementLocation(element);
+	  var size = calculateElementSize(element);
+
+	  return {
+	    top: location.top + Math.ceil(size.width / 2),
+	    left: location.left - Math.ceil(size.height / 2)
+	  };
+	}
+
+	function transformTranslate(element, _ref) {
+	  var x = _ref.x,
+	      y = _ref.y;
+
+	  if (!x || !y) {
+	    return;
+	  }
+
+	  applyStyles(element, {
+	    transform: 'translate3d(' + x + 'px, ' + y + 'px, 0)'
+	  });
+	}
+
+	function transformScale(element, _ref2) {
+	  var scale3d = _ref2.scale3d,
+	      scale = _ref2.scale,
+	      transformOrigin = _ref2.transformOrigin;
+
+	  if (!scale3d && !scale) {
+	    return;
+	  }
+
+	  // scale3d takes presedence
+	  var scaleModifier = scale3d ? 'scale3d(' + scale3d + ')' : 'scale(' + scale + ')';
+
+	  var transform = element.style.transform;
+	  if (transform.indexOf('scale') > -1) {
+	    // replace any prexisting transform with a new one.
+	    transform = transform.replace(/scale\(.*\)|scale3d\(.*\)/, scaleModifier);
+	  } else if (transform.length > 0) {
+	    transform = element.style.transform + ' ' + scaleModifier;
+	  } else {
+	    transform = scaleModifier;
+	  }
+
+	  applyStyles(element, {
+	    transformOrigin: transformOrigin,
+	    backfaceVisibility: 'hidden',
+	    webkitBackgroundClip: 'content-box',
+	    transform: transform
+	  });
+	}
+
+	// eslint-disable-next-line
+	function logStyle(element, styles) {
+	  return Object.keys(styles).reduce(function (obj, key) {
+	    return _extends({}, obj, _defineProperty({}, key, element.style[key]));
+	  }, {});
+	}
+
+	function createElement(styles) {
+	  var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+	      _ref3$parentElement = _ref3.parentElement,
+	      parentElement = _ref3$parentElement === undefined ? document.body : _ref3$parentElement,
+	      cloneFrom = _ref3.cloneFrom;
+
+	  var newElement = document.createElement('div');
+	  var innerElement = cloneFrom && cloneFrom.cloneNode(true);
+	  if (innerElement) {
+	    applyStyles(innerElement, {
+	      margin: 0
+	    });
+
+	    innerElement.id = '';
+	    newElement.appendChild(innerElement);
+	  }
+
+	  applyStyles(newElement, styles);
+	  transformScale(newElement, styles);
+	  parentElement.appendChild(newElement);
+
+	  return newElement;
+	}
+
+/***/ }),
+/* 201 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.calculateHypotenuse = calculateHypotenuse;
+	exports.percentageDifference = percentageDifference;
+	function calculateHypotenuse(_ref) {
+	  var width = _ref.width,
+	      height = _ref.height;
+
+	  var x2 = Math.pow(width, 2);
+	  var y2 = Math.pow(height, 2);
+
+	  var hypotenuse = Math.sqrt(x2 + y2);
+	  return Math.ceil(hypotenuse);
+	}
+
+	function percentageDifference(from, to) {
+	  return from / to;
+	}
+
+/***/ }),
+/* 202 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Transition = __webpack_require__(197);
+	var _Transition = __webpack_require__(203);
 
 	var _Transition2 = _interopRequireDefault(_Transition);
 
@@ -23709,6 +23939,117 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 		exports.default = withTransition;
+
+/***/ }),
+/* 203 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _orchestrator = __webpack_require__(197);
+
+	var _orchestrator2 = _interopRequireDefault(_orchestrator);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Transition = function (_React$Component) {
+	  _inherits(Transition, _React$Component);
+
+	  function Transition() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, Transition);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Transition.__proto__ || Object.getPrototypeOf(Transition)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	      visible: false
+	    }, _this.setVisibility = function (visible) {
+	      _this.setState({
+	        visible: visible
+	      });
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(Transition, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.initialise();
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.initialise();
+
+	      if (this._node.firstElementChild) {
+	        (0, _orchestrator.removeFromStore)(this.props.pair, this._node.firstElementChild, true);
+	      }
+	    }
+	  }, {
+	    key: 'initialise',
+	    value: function initialise() {
+	      if (!this._node.firstElementChild) {
+	        return;
+	      }
+
+	      (0, _orchestrator2.default)(this.props.pair, {
+	        node: this._node.firstElementChild,
+	        transitions: this.props.transitions,
+	        shouldShow: this.setVisibility
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      var _props = this.props,
+	          pair = _props.pair,
+	          transitions = _props.transitions,
+	          style = _props.style,
+	          props = _objectWithoutProperties(_props, ['pair', 'transitions', 'style']);
+
+	      return _react2.default.createElement(
+	        'div',
+	        _extends({}, props, {
+	          ref: function ref(node) {
+	            return _this2._node = node;
+	          },
+	          style: _extends({}, style, { opacity: this.state.visible ? 1 : 0 })
+	        }),
+	        this.props.children
+	      );
+	    }
+	  }]);
+
+	  return Transition;
+	}(_react2.default.Component);
+
+		exports.default = Transition;
 
 /***/ })
 /******/ ])

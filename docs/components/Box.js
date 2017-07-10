@@ -2,9 +2,12 @@
 
 import React from 'react';
 
-const Box = ({ type, className, src, ...props }: { className?: string, type: 'big' | 'small', src: string }) => (
+type Props = { className?: string, type: 'big' | 'small', src: string, onClick: Function };
+
+const Box = ({ type, className, src, onClick }: Props) => (
   <div
-    {...props}
+    role="presentation"
+    onClick={onClick}
     className={`box box-${type}${className ? ` ${className}` : ''}`}
     // $FlowFixMe - Dynamic import
     style={{ backgroundImage: `url(${require(`../images/${src}`)})` }}
