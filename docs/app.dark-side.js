@@ -22223,17 +22223,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Box = __webpack_require__(185);
+	var _DetailsPage = __webpack_require__(185);
 
-	var _Box2 = _interopRequireDefault(_Box);
+	var _DetailsPage2 = _interopRequireDefault(_DetailsPage);
 
-	var _BoxWithContent = __webpack_require__(195);
+	var _ListPage = __webpack_require__(201);
 
-	var _BoxWithContent2 = _interopRequireDefault(_BoxWithContent);
+	var _ListPage2 = _interopRequireDefault(_ListPage);
 
-	var _withTransition = __webpack_require__(199);
+	var _data = __webpack_require__(202);
 
-	var _withTransition2 = _interopRequireDefault(_withTransition);
+	var _data2 = _interopRequireDefault(_data);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22243,136 +22243,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Container = function Container(_ref) {
-	  var children = _ref.children,
-	      className = _ref.className;
-	  return _react2.default.createElement(
-	    'div',
-	    { className: className },
-	    children
-	  );
-	};
-
-	var BoxWithTransition = (0, _withTransition2.default)([{
-	  transition: 'expand',
-	  duration: 0.4,
-	  background: '#541219',
-	  cover: true
-	}, {
-	  transition: 'move',
-	  duration: 0.5,
-	  matchSize: true
-	}])(_Box2.default);
-
-	var items = [{
-	  name: 'First Order',
-	  src: 'first-order.jpg',
-	  description: _react2.default.createElement(
-	    'content',
-	    null,
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      "The First Order, simply referred to as the Order, was a political and military faction—ruled by Supreme Leader Snoke and allied with the Knights of Ren—that came into existence as a result of the fall of the Galactic Empire. In the aftermath of the Battle of Jakku, the Empire formally surrendered to the New Republic by signing the Galactic Concordance, a peace treaty that marked the end of the Galactic Civil War in 5 ABY. In spite of its collapse the Empire's legacy survived in the Unknown Regions of the galaxy where former members of the Imperial Military plotted their return to power. Their cause would grow in support through some Imperial sympathizers who briefly inhabited a wing of Republic politics before abandoning the nascent democracy to join the Imperial-based movement in the Unknown Regions. Inspired by the fascist ideals of the Empire, this movement ultimately resulted in the formation of the First Order."
-	    ),
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      "In the decades that followed the Empire's defeat, the First Order gradually built its strength through the secret mobilization of new fleets and armies in violation of the Galactic Concordance and Republic law. Despite further acts of defiance to the treaty, the Galactic Senate did not regard the First Order as a serious threat to the Republic. However, the Senate's inaction motivated the Rebel veteran Princess Leia Organa to found the Resistance. Although the First Order became entangled in a conflict with Organa's group, the Republic remained its primary target. After thirty years of plotting their revenge against the government that overthrew the Empire, the First Order test-fired the superweapon of Starkiller Base on the Hosnian system and thereby destroyed Hosnian Prime, the capital world of the Republic. Shortly thereafter, the Resistance launched a counterattack that resulted in the base's destruction."
-	    )
-	  )
-	}, {
-	  name: 'Palpatine',
-	  src: 'emporer.jpg',
-	  description: _react2.default.createElement(
-	    'content',
-	    null,
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      'Palpatine, also known as Darth Sidious, was a Force-sensitive Human male who served as the last Supreme Chancellor of the Galactic Republic and the first Emperor of the Galactic Empire. A Dark Lord of the Sith in the Order of the Sith Lords, recorded by history as the most powerful who had ever lived, his entire life was the culmination of a thousand-year plan to overthrow the Republic and the Jedi Order from within.'
-	    ),
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      "Born in 82 BBY on the planet Naboo to the aristocratic House Palpatine, Palpatine discovered the Sith at a young age as a collector of dark side artifacts. In 65 BBY, he met Hego Damask, a Muun businessman who was in reality the Sith Lord Darth Plagueis. Under Plagueis's manipulation, Palpatine killed his father and pledged himself to his new Master's dark side teachings as Darth Sidious. Palpatine lived a double life for many years, serving an untarnished career as Naboo's ambassador in the Galactic Senate while learning from his master and training a young Zabrak as the Sith assassin Darth Maul. Plagueis and Sidious, both exceptionally skilled and powerful in the Force, were able to conceal their identities from the Jedi for decades. As Plagueis privately searched for the key to eternal life, Sidious manipulated galactic politics, culminating in the blockade of Naboo by the Trade Federation. In the wake of the political crisis, the Galactic Senate voted to elect him as Supreme Chancellor, and around the same time, in accordance with Bane's Rule of Two, Palpatine murdered Plagueis and usurped the role of Sith Master."
-	    )
-	  )
-	}, {
-	  name: 'Darth Maul',
-	  src: 'darth-maul.jpg',
-	  description: _react2.default.createElement(
-	    'content',
-	    null,
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      'Maul was a Dathomirian Zabrak male who lived during the last days of the Galactic Republic and the reign of the Galactic Empire. Maul, the son of Mother Talzin of the Nightsisters, was taken as the Sith apprentice of Darth Sidious, the Dark Lord of the Sith, and given the name Darth Maul. After revealing the existence of the Sith to the Jedi Order, Maul fell in a lightsaber duel against Obi-Wan Kenobi during the Battle of Naboo. Over a decade later, he returned from exile and formed the criminal army known as the Shadow Collective, intent on reclaiming the power he had lost. His quest for revenge against Kenobi and the Sith continued into the Imperial age, bringing him into conflict with the early rebellion against the Empire.'
-	    ),
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      "As a Sith Lord, Maul believed it was his destiny to rule the galaxy and bring about the end of the Jedi and the Republic. After the Battle of Naboo, that destiny was taken by Count Dooku, a former Jedi Master who became Sidious' new apprentice. The Sith's war to destroy the Republic began without Maul, as the Clone Wars raged across the galaxy, but Maul returned during the conflict and brought the Shadow Collective together to destroy his enemies and regain what he had lost. He led the takeover of the planet Mandalore with the help of his allies, the Mandalorian splinter group Death Watch, and killed Duchess Satine Kryze as part of his revenge against Kenobi, as she was an old friend and romantic interest of the venerable Jedi Master. Maul was captured and imprisoned by Sidious soon thereafter, who used his former apprentice as part of a plot to eliminate Mother Talzin, whom Sidious considered a threat to his future rule of the galaxy."
-	    )
-	  )
-	}, {
-	  name: 'Boba Fett',
-	  src: 'boba-fett.jpg',
-	  description: _react2.default.createElement(
-	    'content',
-	    null,
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      "Boba Fett was a male human bounty hunter, and the genetic clone of infamous bounty hunter Jango Fett. Boba was created by the cloners on Kamino and was physically identical to the clone troopers created for the Grand Army of the Republic, though Boba was unaltered and did not grow at the same accelerated rate as the other clones. Raised as Jango's son, Boba learned the combat skills necessary to one day become a bounty hunter in his own right."
-	    ),
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      'Jango was killed during the Battle of Geonosis, which sparked the Clone Wars between the Galactic Republic and the Confederacy of Independent Systems. The young boy swore vengeance against Jedi Master Mace Windu, who killed Jango, and teamed with a group of bounty hunters that included Aurra Sing and Bossk. Their plot to kill Windu failed, and Boba realized that he had gone too far in trying to kill the Jedi Master—but he vowed never to forgive Windu. After serving a brief prison sentence, Boba formed a team of bounty hunters and took on a number of missions.'
-	    )
-	  )
-	}, {
-	  name: 'Kylo Ren',
-	  src: 'ben.jpeg',
-	  description: _react2.default.createElement(
-	    'content',
-	    null,
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      "Kylo Ren, a human male, was a Force warrior and a former Jedi trainee under his uncle, Jedi Master Luke Skywalker, before Ren destroyed Skywalker's attempt to restore the Jedi Order and became an apprentice of Supreme Leader Snoke of the First Order. Given the name Ben Solo, he was born in 5 ABY, one year after the Battle of Endor, on the planet Chandrila to Princess Leia Organa and General Han Solo, whose busy lives left Ben with feelings of abandonment. This was exploited by the Supreme Leader, who tempted him to the dark side of the Force. Though Organa hoped training with Skywalker would help her son, he was seduced to the dark side, destroyed his fellow Jedi students, and became one of the Knights of Ren, earning the moniker of 'Jedi Killer' amongst the First Order ranks. He idolized his grandfather, the fallen Sith Lord Darth Vader, and hoped to finish what Vader started: the elimination of the Jedi. As a member of the First Order, Ren represented its mystical side and was able to command the First Order's armies, leading to a tense competition between Ren and First Order officers, such as General Armitage Hux."
-	    ),
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      "After Ren's fall, Skywalker vanished into exile to search for the first Jedi Temple. Years later, the First Order recovered part of a map to Ahch-To, where the temple was found, in the archives of the Galactic Empire. They learned that Lor San Tekka, a member of the Church of the Force on the planet Jakku, had the rest of the map fragment, so Ren commanded the First Order forces in search of the map. The map fell into the hands of the Resistance, as Organa, the leader of the small military opposition to the First Order, hoped to find her twin brother and bring him back into the fight against the dark side. Ren hunted the map across the galaxy and eventually learned that it and the droid who carried it, BB-8, had come into Solo's possession. He tracked them to Takodana, where Ren discovered Rey, a Force-sensitive who had seen the map and was helping BB-8. Ren brought Rey to Starkiller Base, a First Order-controlled planet with a built-in superweapon, and attempted to probe her mind for the map's information, but she resisted and eventually managed to escape. Shortly after, the Resistance attacked Starkiller Base in the hopes of destroying it, and Ren encountered Solo once again. After a brief confrontation, he killed his father, hoping to eliminate the light that Ren struggled with inside himself. Ren then pursued Rey and the fugitive stormtrooper Finn into a forest as the battle raged on above. He engaged both in a lightsaber duel, besting Finn before being beaten and injured by Rey. As Starkiller Base began to implode from the attack, the Supreme Leader ordered General Hux to bring Ren before him so his training could be completed."
-	    )
-	  )
-	}, {
-	  name: 'Captain Phasma',
-	  src: 'phasma.jpg',
-	  description: _react2.default.createElement(
-	    'content',
-	    null,
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      "Phasma was a human female stormtrooper Captain of the First Order. She served as part of the unofficial commanding triumvirate for the First Order and their Starkiller Base operation, taking charge of the command of the First Order's stormtrooper soldiers. During the First Order–Resistance conflict, which took place 30 years after the Battle of Endor, Phasma served alongside the dark enforcer Kylo Ren and General Armitage Hux in their efforts against the Resistance."
-	    ),
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      "Under orders from the Supreme Leader of the First Order, Snoke, the triumvirate searched for a galaxy map that would lead to the last of the Jedi, Luke Skywalker, on the planet Jakku. After the sacking of the village Tuanul, Phasma and her stormtroopers killed the survivors under orders from Ren. Afterward, FN-2187, one of her division's stormtroopers, had an awakening that led to him betraying the First Order, despite Phasma's efforts at reconditioning him. The First Order eventually decided on unleashing their Starkiller superweapon, an event which led to the destruction of the Hosnian system, where the New Republic's capital was located, for which Phasma was present."
-	    )
-	  )
-	}];
-
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
 
 	  function App() {
-	    var _ref2;
+	    var _ref;
 
 	    var _temp, _this, _ret;
 
@@ -22382,13 +22257,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      args[_key] = arguments[_key];
 	    }
 
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref2 = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref2, [this].concat(args))), _this), _this.state = {
-	      big: false,
-	      item: items[0]
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	      item: _data2.default[0],
+	      showDetails: false
 	    }, _this.select = function (item) {
 	      _this.setState(function (prevState) {
 	        return {
-	          big: !prevState.big,
+	          showDetails: !prevState.showDetails,
 	          item: item
 	        };
 	      });
@@ -22403,7 +22278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      window.addEventListener('keyup', function (e) {
 	        if (e.key === 'Escape') {
 	          _this2.setState({
-	            big: false
+	            showDetails: false
 	          });
 	        }
 	      });
@@ -22411,41 +22286,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
-
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'root' },
-	        this.state.big && _react2.default.createElement(
-	          Container,
-	          null,
-	          _react2.default.createElement(_BoxWithContent2.default, _extends({ onClick: this.select }, this.state.item))
-	        ),
-	        this.state.big || _react2.default.createElement(
-	          Container,
-	          { className: 'container' },
-	          _react2.default.createElement('img', { alt: 'Empire Insignia', src: '' + __webpack_require__(192), className: 'insignia' }),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'container-inner' },
-	            items.map(function (item) {
-	              return _react2.default.createElement(BoxWithTransition, _extends({}, item, {
-	                key: item.name,
-	                type: 'small',
-	                className: 'box-highlighted',
-	                transitionPair: item.name,
-	                onClick: function onClick() {
-	                  return _this3.select(item);
-	                }
-	              }));
-	            })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'vader-container' },
-	            _react2.default.createElement('div', { className: 'vader-bg' })
-	          )
-	        )
+	        this.state.showDetails && _react2.default.createElement(_DetailsPage2.default, _extends({ onClick: this.select }, this.state.item)),
+	        this.state.showDetails || _react2.default.createElement(_ListPage2.default, { onClick: this.select })
 	      );
 	    }
 	  }]);
@@ -22469,148 +22314,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _Photo = __webpack_require__(186);
 
-	var Box = function Box(_ref) {
-	  var type = _ref.type,
-	      className = _ref.className,
-	      src = _ref.src,
-	      onClick = _ref.onClick;
-	  return _react2.default.createElement('div', {
-	    role: 'presentation',
-	    onClick: onClick,
-	    className: 'box box-' + type + (className ? ' ' + className : '')
-	    // $FlowFixMe - Dynamic import
-	    , style: { backgroundImage: 'url(' + __webpack_require__(186)("./" + src) + ')' }
-	  });
-	};
-
-		exports.default = Box;
-
-/***/ }),
-/* 186 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var map = {
-		"./ben.jpeg": 187,
-		"./boba-fett.jpg": 188,
-		"./darth-maul.jpg": 189,
-		"./emporer.jpg": 190,
-		"./first-order.jpg": 191,
-		"./logo.png": 192,
-		"./phasma.jpg": 193,
-		"./vader-bg.jpg": 194
-	};
-	function webpackContext(req) {
-		return __webpack_require__(webpackContextResolve(req));
-	};
-	function webpackContextResolve(req) {
-		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
-	};
-	webpackContext.keys = function webpackContextKeys() {
-		return Object.keys(map);
-	};
-	webpackContext.resolve = webpackContextResolve;
-	module.exports = webpackContext;
-	webpackContext.id = 186;
-
-
-/***/ }),
-/* 187 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "8a464c9422e28ba921e1c81014698eb0.jpeg";
-
-/***/ }),
-/* 188 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "4ee07170671ad66100723baa08c32519.jpg";
-
-/***/ }),
-/* 189 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "c7a058c1de8bc9ae6a25447def718f65.jpg";
-
-/***/ }),
-/* 190 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "8ca37614228a99bc2162906462b7137f.jpg";
-
-/***/ }),
-/* 191 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "35027b655a0676efb8b9edd5cd7e2186.jpg";
-
-/***/ }),
-/* 192 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "c5371459ae8c680a5d0ae97ae5e59ce5.png";
-
-/***/ }),
-/* 193 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "e1dec3fb145762747cd5da0fd3aadf83.jpg";
-
-/***/ }),
-/* 194 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "c19759a5042ae33a1ceb3a87efed741c.jpg";
-
-/***/ }),
-/* 195 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Box = __webpack_require__(185);
-
-	var _Box2 = _interopRequireDefault(_Box);
+	var _Photo2 = _interopRequireDefault(_Photo);
 
 	var _TransitionContainer = __webpack_require__(196);
 
 	var _TransitionContainer2 = _interopRequireDefault(_TransitionContainer);
 
-	var _withTransition = __webpack_require__(199);
+	var _Transition = __webpack_require__(199);
 
-	var _withTransition2 = _interopRequireDefault(_withTransition);
+	var _Transition2 = _interopRequireDefault(_Transition);
+
+	var _ScrollToTOpOnMount = __webpack_require__(200);
+
+	var _ScrollToTOpOnMount2 = _interopRequireDefault(_ScrollToTOpOnMount);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var BoxWithReverseTransition = (0, _withTransition2.default)([{
-	  transition: 'expand',
-	  duration: 0.3,
-	  background: '#782128',
-	  reverse: true,
-	  cover: true
-	}, {
-	  transition: 'move',
-	  duration: 0.4,
-	  matchSize: true
-	}])(_Box2.default);
-
-	var BoxWithContent = function BoxWithContent(_ref) {
+	var DetailsPage = function DetailsPage(_ref) {
 	  var onClick = _ref.onClick,
 	      src = _ref.src,
 	      description = _ref.description,
-	      name = _ref.name;
+	      name = _ref.name,
+	      color = _ref.color;
 	  return _react2.default.createElement(
 	    _TransitionContainer2.default,
-	    { pair: name, className: 'content-bg' },
+	    { pair: name, className: 'content-bg', style: { backgroundColor: color } },
+	    _react2.default.createElement(_ScrollToTOpOnMount2.default, null),
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'content-text' },
@@ -22628,19 +22359,143 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'content-margin' },
-	      _react2.default.createElement(BoxWithReverseTransition, {
-	        className: 'box-highlighted',
-	        transitionPair: name,
-	        type: 'big',
-	        onClick: onClick,
-	        src: src
-	      }),
+	      _react2.default.createElement(
+	        _Transition2.default,
+	        {
+	          pair: name,
+	          transitions: [{
+	            transition: 'expand',
+	            duration: 0.3,
+	            background: color,
+	            reverse: true,
+	            cover: true
+	          }, {
+	            transition: 'move',
+	            duration: 0.4,
+	            matchSize: true
+	          }]
+	        },
+	        _react2.default.createElement(_Photo2.default, {
+	          className: 'box-highlighted',
+	          onClick: onClick,
+	          type: 'big',
+	          src: src
+	        })
+	      ),
 	      description
 	    )
 	  );
 	};
 
-		exports.default = BoxWithContent;
+		exports.default = DetailsPage;
+
+/***/ }),
+/* 186 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Photo = function Photo(_ref) {
+	  var type = _ref.type,
+	      className = _ref.className,
+	      src = _ref.src,
+	      onClick = _ref.onClick;
+	  return _react2.default.createElement('div', {
+	    role: 'presentation',
+	    onClick: onClick,
+	    className: 'box box-' + type + (className ? ' ' + className : '')
+	    // $FlowFixMe - Dynamic import
+	    , style: { backgroundImage: 'url(' + __webpack_require__(187)("./" + src) + ')' }
+	  });
+	};
+
+		exports.default = Photo;
+
+/***/ }),
+/* 187 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./ben.jpeg": 188,
+		"./boba-fett.jpg": 189,
+		"./darth-maul.jpg": 190,
+		"./emporer.jpg": 191,
+		"./first-order.jpg": 192,
+		"./logo.png": 193,
+		"./phasma.jpg": 194,
+		"./vader-bg.jpg": 195
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 187;
+
+
+/***/ }),
+/* 188 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "8a464c9422e28ba921e1c81014698eb0.jpeg";
+
+/***/ }),
+/* 189 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "4ee07170671ad66100723baa08c32519.jpg";
+
+/***/ }),
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "c7a058c1de8bc9ae6a25447def718f65.jpg";
+
+/***/ }),
+/* 191 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "8ca37614228a99bc2162906462b7137f.jpg";
+
+/***/ }),
+/* 192 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "35027b655a0676efb8b9edd5cd7e2186.jpg";
+
+/***/ }),
+/* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "c5371459ae8c680a5d0ae97ae5e59ce5.png";
+
+/***/ }),
+/* 194 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "e1dec3fb145762747cd5da0fd3aadf83.jpg";
+
+/***/ }),
+/* 195 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "c19759a5042ae33a1ceb3a87efed741c.jpg";
 
 /***/ }),
 /* 196 */
@@ -23318,15 +23173,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var _expand2 = _interopRequireDefault(_expand);
 
-				var _fadeout = __webpack_require__(9);
+				var _fadeout = __webpack_require__(10);
 
 				var _fadeout2 = _interopRequireDefault(_fadeout);
 
-				var _move = __webpack_require__(10);
+				var _move = __webpack_require__(11);
 
 				var _move2 = _interopRequireDefault(_move);
 
-				var _reveal = __webpack_require__(11);
+				var _reveal = __webpack_require__(12);
 
 				var _reveal2 = _interopRequireDefault(_reveal);
 
@@ -23575,6 +23430,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				};
 
 				exports.calculateElementSize = calculateElementSize;
+				exports.getDocumentScroll = getDocumentScroll;
 				exports.calculateElementLocation = calculateElementLocation;
 				exports.calculateElementCircumcircle = calculateElementCircumcircle;
 				exports.calculateWindowCentre = calculateWindowCentre;
@@ -23601,15 +23457,32 @@ return /******/ (function(modules) { // webpackBootstrap
 					};
 				}
 
-				function calculateElementLocation(element) {
-					var rect = element.getBoundingClientRect();
+				function getDocumentScroll() {
 					var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
 
 					var scrollLeft = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft;
 
 					return {
+						scrollTop: scrollTop,
+						scrollLeft: scrollLeft
+					};
+				}
+
+				function calculateElementLocation(element) {
+					var rect = element.getBoundingClientRect();
+
+					var _getDocumentScroll = getDocumentScroll(),
+					    scrollLeft = _getDocumentScroll.scrollLeft,
+					    scrollTop = _getDocumentScroll.scrollTop;
+
+					return {
 						left: rect.left + scrollLeft,
-						top: rect.top + scrollTop
+						top: rect.top + scrollTop,
+						raw: {
+							rect: rect,
+							scrollTop: scrollTop,
+							scrollLeft: scrollLeft
+						}
 					};
 				}
 
@@ -23804,13 +23677,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var _dom = __webpack_require__(5);
 
+				var _location = __webpack_require__(9);
+
+				var _location2 = _interopRequireDefault(_location);
+
+				function _interopRequireDefault(obj) {
+					return obj && obj.__esModule ? obj : { default: obj };
+				}
+
 				function expand(element, _ref) {
 					var background = _ref.background,
 					    reverse = _ref.reverse,
 					    cover = _ref.cover;
 					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-					var location = metadata.location || (0, _dom.calculateElementLocation)(element, true);
+					var location = (0, _location2.default)(element, metadata);
 					var size = metadata.size || (0, _dom.calculateElementSize)(element);
 					var minSize = Math.min(size.width, size.height);
 
@@ -23860,6 +23741,39 @@ return /******/ (function(modules) { // webpackBootstrap
 				/***/
 			},
 			/* 9 */
+			/***/function (module, exports, __webpack_require__) {
+
+				'use strict';
+
+				Object.defineProperty(exports, "__esModule", {
+					value: true
+				});
+				exports.default = calculateLocation;
+
+				var _dom = __webpack_require__(5);
+
+				function calculateLocation(node, metadata) {
+					var initialLocation = metadata.location;
+					if (!initialLocation) {
+						return (0, _dom.calculateElementLocation)(node);
+					}
+
+					var _getDocumentScroll = (0, _dom.getDocumentScroll)(),
+					    scrollTop = _getDocumentScroll.scrollTop,
+					    scrollLeft = _getDocumentScroll.scrollLeft;
+
+					var scrollTopDiff = scrollTop - initialLocation.raw.scrollTop;
+					var scrollLeftDiff = scrollLeft - initialLocation.raw.scrollLeft;
+
+					return {
+						top: initialLocation.top + scrollTopDiff,
+						left: initialLocation.left + scrollLeftDiff
+					};
+				}
+
+				/***/
+			},
+			/* 10 */
 			/***/function (module, exports) {
 
 				'use strict';
@@ -23886,7 +23800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 10 */
+			/* 11 */
 			/***/function (module, exports, __webpack_require__) {
 
 				'use strict';
@@ -23911,13 +23825,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var _math = __webpack_require__(6);
 
+				var _location = __webpack_require__(9);
+
+				var _location2 = _interopRequireDefault(_location);
+
+				function _interopRequireDefault(obj) {
+					return obj && obj.__esModule ? obj : { default: obj };
+				}
+
 				function move(fromElement) {
 					var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
 					    matchSize = _ref.matchSize;
 
 					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-					var fromLocation = metadata.location || (0, _dom.calculateElementLocation)(fromElement, true);
+					var fromLocation = (0, _location2.default)(fromElement, metadata);
 					var fromSize = metadata.size || (0, _dom.calculateElementSize)(fromElement);
 
 					var to = function to(toElement) {
@@ -23951,7 +23873,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 11 */
+			/* 12 */
 			/***/function (module, exports) {
 
 				'use strict';
@@ -24017,45 +23939,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 199 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Transition = __webpack_require__(200);
-
-	var _Transition2 = _interopRequireDefault(_Transition);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	var withTransition = function withTransition(transitions) {
-	  return function (WrappedComponent) {
-	    return function (_ref) {
-	      var transitionPair = _ref.transitionPair,
-	          props = _objectWithoutProperties(_ref, ['transitionPair']);
-
-	      return _react2.default.createElement(
-	        _Transition2.default,
-	        { pair: transitionPair, transitions: transitions },
-	        _react2.default.createElement(WrappedComponent, props)
-	      );
-	    };
-	  };
-	};
-
-		exports.default = withTransition;
-
-/***/ }),
-/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24162,6 +24045,266 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react2.default.Component);
 
 		exports.default = Transition;
+
+/***/ }),
+/* 200 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ScrollToTopOnMount = function (_React$Component) {
+	  _inherits(ScrollToTopOnMount, _React$Component);
+
+	  function ScrollToTopOnMount() {
+	    _classCallCheck(this, ScrollToTopOnMount);
+
+	    return _possibleConstructorReturn(this, (ScrollToTopOnMount.__proto__ || Object.getPrototypeOf(ScrollToTopOnMount)).apply(this, arguments));
+	  }
+
+	  _createClass(ScrollToTopOnMount, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      window.scrollTo(0, 0);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return null;
+	    }
+	  }]);
+
+	  return ScrollToTopOnMount;
+	}(_react2.default.Component);
+
+		exports.default = ScrollToTopOnMount;
+
+/***/ }),
+/* 201 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Photo = __webpack_require__(186);
+
+	var _Photo2 = _interopRequireDefault(_Photo);
+
+	var _Transition = __webpack_require__(199);
+
+	var _Transition2 = _interopRequireDefault(_Transition);
+
+	var _data = __webpack_require__(202);
+
+	var _data2 = _interopRequireDefault(_data);
+
+	var _ScrollToTOpOnMount = __webpack_require__(200);
+
+	var _ScrollToTOpOnMount2 = _interopRequireDefault(_ScrollToTOpOnMount);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ListPage = function ListPage(_ref) {
+	  var _onClick = _ref.onClick;
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'container' },
+	    _react2.default.createElement(_ScrollToTOpOnMount2.default, null),
+	    _react2.default.createElement('img', { alt: 'Empire Insignia', src: '' + __webpack_require__(193), className: 'insignia' }),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'container-inner' },
+	      _data2.default.map(function (item) {
+	        return _react2.default.createElement(
+	          _Transition2.default,
+	          {
+	            key: item.name,
+	            pair: item.name,
+	            transitions: [{
+	              transition: 'expand',
+	              duration: 0.4,
+	              background: item.color,
+	              cover: true
+	            }, {
+	              transition: 'move',
+	              duration: 0.5,
+	              matchSize: true
+	            }]
+	          },
+	          _react2.default.createElement(_Photo2.default, _extends({}, item, {
+	            key: item.name,
+	            type: 'small',
+	            className: 'box-highlighted',
+	            onClick: function onClick() {
+	              return _onClick(item);
+	            }
+	          }))
+	        );
+	      })
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'vader-container' },
+	      _react2.default.createElement('div', { className: 'vader-bg' })
+	    )
+	  );
+	};
+
+		exports.default = ListPage;
+
+/***/ }),
+/* 202 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var items = [{
+	  name: 'First Order',
+	  src: 'first-order.jpg',
+	  color: '#792226',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "The First Order, simply referred to as the Order, was a political and military faction—ruled by Supreme Leader Snoke and allied with the Knights of Ren—that came into existence as a result of the fall of the Galactic Empire. In the aftermath of the Battle of Jakku, the Empire formally surrendered to the New Republic by signing the Galactic Concordance, a peace treaty that marked the end of the Galactic Civil War in 5 ABY. In spite of its collapse the Empire's legacy survived in the Unknown Regions of the galaxy where former members of the Imperial Military plotted their return to power. Their cause would grow in support through some Imperial sympathizers who briefly inhabited a wing of Republic politics before abandoning the nascent democracy to join the Imperial-based movement in the Unknown Regions. Inspired by the fascist ideals of the Empire, this movement ultimately resulted in the formation of the First Order."
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "In the decades that followed the Empire's defeat, the First Order gradually built its strength through the secret mobilization of new fleets and armies in violation of the Galactic Concordance and Republic law. Despite further acts of defiance to the treaty, the Galactic Senate did not regard the First Order as a serious threat to the Republic. However, the Senate's inaction motivated the Rebel veteran Princess Leia Organa to found the Resistance. Although the First Order became entangled in a conflict with Organa's group, the Republic remained its primary target. After thirty years of plotting their revenge against the government that overthrew the Empire, the First Order test-fired the superweapon of Starkiller Base on the Hosnian system and thereby destroyed Hosnian Prime, the capital world of the Republic. Shortly thereafter, the Resistance launched a counterattack that resulted in the base's destruction."
+	    )
+	  )
+	}, {
+	  name: 'Palpatine',
+	  src: 'emporer.jpg',
+	  color: '#387089',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'Palpatine, also known as Darth Sidious, was a Force-sensitive Human male who served as the last Supreme Chancellor of the Galactic Republic and the first Emperor of the Galactic Empire. A Dark Lord of the Sith in the Order of the Sith Lords, recorded by history as the most powerful who had ever lived, his entire life was the culmination of a thousand-year plan to overthrow the Republic and the Jedi Order from within.'
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "Born in 82 BBY on the planet Naboo to the aristocratic House Palpatine, Palpatine discovered the Sith at a young age as a collector of dark side artifacts. In 65 BBY, he met Hego Damask, a Muun businessman who was in reality the Sith Lord Darth Plagueis. Under Plagueis's manipulation, Palpatine killed his father and pledged himself to his new Master's dark side teachings as Darth Sidious. Palpatine lived a double life for many years, serving an untarnished career as Naboo's ambassador in the Galactic Senate while learning from his master and training a young Zabrak as the Sith assassin Darth Maul. Plagueis and Sidious, both exceptionally skilled and powerful in the Force, were able to conceal their identities from the Jedi for decades. As Plagueis privately searched for the key to eternal life, Sidious manipulated galactic politics, culminating in the blockade of Naboo by the Trade Federation. In the wake of the political crisis, the Galactic Senate voted to elect him as Supreme Chancellor, and around the same time, in accordance with Bane's Rule of Two, Palpatine murdered Plagueis and usurped the role of Sith Master."
+	    )
+	  )
+	}, {
+	  name: 'Darth Maul',
+	  src: 'darth-maul.jpg',
+	  color: '#ae7b5c',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'Maul was a Dathomirian Zabrak male who lived during the last days of the Galactic Republic and the reign of the Galactic Empire. Maul, the son of Mother Talzin of the Nightsisters, was taken as the Sith apprentice of Darth Sidious, the Dark Lord of the Sith, and given the name Darth Maul. After revealing the existence of the Sith to the Jedi Order, Maul fell in a lightsaber duel against Obi-Wan Kenobi during the Battle of Naboo. Over a decade later, he returned from exile and formed the criminal army known as the Shadow Collective, intent on reclaiming the power he had lost. His quest for revenge against Kenobi and the Sith continued into the Imperial age, bringing him into conflict with the early rebellion against the Empire.'
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "As a Sith Lord, Maul believed it was his destiny to rule the galaxy and bring about the end of the Jedi and the Republic. After the Battle of Naboo, that destiny was taken by Count Dooku, a former Jedi Master who became Sidious' new apprentice. The Sith's war to destroy the Republic began without Maul, as the Clone Wars raged across the galaxy, but Maul returned during the conflict and brought the Shadow Collective together to destroy his enemies and regain what he had lost. He led the takeover of the planet Mandalore with the help of his allies, the Mandalorian splinter group Death Watch, and killed Duchess Satine Kryze as part of his revenge against Kenobi, as she was an old friend and romantic interest of the venerable Jedi Master. Maul was captured and imprisoned by Sidious soon thereafter, who used his former apprentice as part of a plot to eliminate Mother Talzin, whom Sidious considered a threat to his future rule of the galaxy."
+	    )
+	  )
+	}, {
+	  name: 'Boba Fett',
+	  src: 'boba-fett.jpg',
+	  color: '#afae8f',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "Boba Fett was a male human bounty hunter, and the genetic clone of infamous bounty hunter Jango Fett. Boba was created by the cloners on Kamino and was physically identical to the clone troopers created for the Grand Army of the Republic, though Boba was unaltered and did not grow at the same accelerated rate as the other clones. Raised as Jango's son, Boba learned the combat skills necessary to one day become a bounty hunter in his own right."
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'Jango was killed during the Battle of Geonosis, which sparked the Clone Wars between the Galactic Republic and the Confederacy of Independent Systems. The young boy swore vengeance against Jedi Master Mace Windu, who killed Jango, and teamed with a group of bounty hunters that included Aurra Sing and Bossk. Their plot to kill Windu failed, and Boba realized that he had gone too far in trying to kill the Jedi Master—but he vowed never to forgive Windu. After serving a brief prison sentence, Boba formed a team of bounty hunters and took on a number of missions.'
+	    )
+	  )
+	}, {
+	  name: 'Kylo Ren',
+	  src: 'ben.jpeg',
+	  color: '#6a686d',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "Kylo Ren, a human male, was a Force warrior and a former Jedi trainee under his uncle, Jedi Master Luke Skywalker, before Ren destroyed Skywalker's attempt to restore the Jedi Order and became an apprentice of Supreme Leader Snoke of the First Order. Given the name Ben Solo, he was born in 5 ABY, one year after the Battle of Endor, on the planet Chandrila to Princess Leia Organa and General Han Solo, whose busy lives left Ben with feelings of abandonment. This was exploited by the Supreme Leader, who tempted him to the dark side of the Force. Though Organa hoped training with Skywalker would help her son, he was seduced to the dark side, destroyed his fellow Jedi students, and became one of the Knights of Ren, earning the moniker of 'Jedi Killer' amongst the First Order ranks. He idolized his grandfather, the fallen Sith Lord Darth Vader, and hoped to finish what Vader started: the elimination of the Jedi. As a member of the First Order, Ren represented its mystical side and was able to command the First Order's armies, leading to a tense competition between Ren and First Order officers, such as General Armitage Hux."
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "After Ren's fall, Skywalker vanished into exile to search for the first Jedi Temple. Years later, the First Order recovered part of a map to Ahch-To, where the temple was found, in the archives of the Galactic Empire. They learned that Lor San Tekka, a member of the Church of the Force on the planet Jakku, had the rest of the map fragment, so Ren commanded the First Order forces in search of the map. The map fell into the hands of the Resistance, as Organa, the leader of the small military opposition to the First Order, hoped to find her twin brother and bring him back into the fight against the dark side. Ren hunted the map across the galaxy and eventually learned that it and the droid who carried it, BB-8, had come into Solo's possession. He tracked them to Takodana, where Ren discovered Rey, a Force-sensitive who had seen the map and was helping BB-8. Ren brought Rey to Starkiller Base, a First Order-controlled planet with a built-in superweapon, and attempted to probe her mind for the map's information, but she resisted and eventually managed to escape. Shortly after, the Resistance attacked Starkiller Base in the hopes of destroying it, and Ren encountered Solo once again. After a brief confrontation, he killed his father, hoping to eliminate the light that Ren struggled with inside himself. Ren then pursued Rey and the fugitive stormtrooper Finn into a forest as the battle raged on above. He engaged both in a lightsaber duel, besting Finn before being beaten and injured by Rey. As Starkiller Base began to implode from the attack, the Supreme Leader ordered General Hux to bring Ren before him so his training could be completed."
+	    )
+	  )
+	}, {
+	  name: 'Captain Phasma',
+	  src: 'phasma.jpg',
+	  color: '#233d4a',
+	  description: _react2.default.createElement(
+	    'content',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "Phasma was a human female stormtrooper Captain of the First Order. She served as part of the unofficial commanding triumvirate for the First Order and their Starkiller Base operation, taking charge of the command of the First Order's stormtrooper soldiers. During the First Order–Resistance conflict, which took place 30 years after the Battle of Endor, Phasma served alongside the dark enforcer Kylo Ren and General Armitage Hux in their efforts against the Resistance."
+	    ),
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      "Under orders from the Supreme Leader of the First Order, Snoke, the triumvirate searched for a galaxy map that would lead to the last of the Jedi, Luke Skywalker, on the planet Jakku. After the sacking of the village Tuanul, Phasma and her stormtroopers killed the survivors under orders from Ren. Afterward, FN-2187, one of her division's stormtroopers, had an awakening that led to him betraying the First Order, despite Phasma's efforts at reconditioning him. The First Order eventually decided on unleashing their Starkiller superweapon, an event which led to the destruction of the Hosnian system, where the New Republic's capital was located, for which Phasma was present."
+	    )
+	  )
+	}];
+
+		exports.default = items;
 
 /***/ })
 /******/ ])

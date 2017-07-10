@@ -5377,15 +5377,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var _expand2 = _interopRequireDefault(_expand);
 
-				var _fadeout = __webpack_require__(9);
+				var _fadeout = __webpack_require__(10);
 
 				var _fadeout2 = _interopRequireDefault(_fadeout);
 
-				var _move = __webpack_require__(10);
+				var _move = __webpack_require__(11);
 
 				var _move2 = _interopRequireDefault(_move);
 
-				var _reveal = __webpack_require__(11);
+				var _reveal = __webpack_require__(12);
 
 				var _reveal2 = _interopRequireDefault(_reveal);
 
@@ -5634,6 +5634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				};
 
 				exports.calculateElementSize = calculateElementSize;
+				exports.getDocumentScroll = getDocumentScroll;
 				exports.calculateElementLocation = calculateElementLocation;
 				exports.calculateElementCircumcircle = calculateElementCircumcircle;
 				exports.calculateWindowCentre = calculateWindowCentre;
@@ -5660,15 +5661,32 @@ return /******/ (function(modules) { // webpackBootstrap
 					};
 				}
 
-				function calculateElementLocation(element) {
-					var rect = element.getBoundingClientRect();
+				function getDocumentScroll() {
 					var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
 
 					var scrollLeft = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft;
 
 					return {
+						scrollTop: scrollTop,
+						scrollLeft: scrollLeft
+					};
+				}
+
+				function calculateElementLocation(element) {
+					var rect = element.getBoundingClientRect();
+
+					var _getDocumentScroll = getDocumentScroll(),
+					    scrollLeft = _getDocumentScroll.scrollLeft,
+					    scrollTop = _getDocumentScroll.scrollTop;
+
+					return {
 						left: rect.left + scrollLeft,
-						top: rect.top + scrollTop
+						top: rect.top + scrollTop,
+						raw: {
+							rect: rect,
+							scrollTop: scrollTop,
+							scrollLeft: scrollLeft
+						}
 					};
 				}
 
@@ -5863,13 +5881,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var _dom = __webpack_require__(5);
 
+				var _location = __webpack_require__(9);
+
+				var _location2 = _interopRequireDefault(_location);
+
+				function _interopRequireDefault(obj) {
+					return obj && obj.__esModule ? obj : { default: obj };
+				}
+
 				function expand(element, _ref) {
 					var background = _ref.background,
 					    reverse = _ref.reverse,
 					    cover = _ref.cover;
 					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-					var location = metadata.location || (0, _dom.calculateElementLocation)(element, true);
+					var location = (0, _location2.default)(element, metadata);
 					var size = metadata.size || (0, _dom.calculateElementSize)(element);
 					var minSize = Math.min(size.width, size.height);
 
@@ -5919,6 +5945,39 @@ return /******/ (function(modules) { // webpackBootstrap
 				/***/
 			},
 			/* 9 */
+			/***/function (module, exports, __webpack_require__) {
+
+				'use strict';
+
+				Object.defineProperty(exports, "__esModule", {
+					value: true
+				});
+				exports.default = calculateLocation;
+
+				var _dom = __webpack_require__(5);
+
+				function calculateLocation(node, metadata) {
+					var initialLocation = metadata.location;
+					if (!initialLocation) {
+						return (0, _dom.calculateElementLocation)(node);
+					}
+
+					var _getDocumentScroll = (0, _dom.getDocumentScroll)(),
+					    scrollTop = _getDocumentScroll.scrollTop,
+					    scrollLeft = _getDocumentScroll.scrollLeft;
+
+					var scrollTopDiff = scrollTop - initialLocation.raw.scrollTop;
+					var scrollLeftDiff = scrollLeft - initialLocation.raw.scrollLeft;
+
+					return {
+						top: initialLocation.top + scrollTopDiff,
+						left: initialLocation.left + scrollLeftDiff
+					};
+				}
+
+				/***/
+			},
+			/* 10 */
 			/***/function (module, exports) {
 
 				'use strict';
@@ -5945,7 +6004,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 10 */
+			/* 11 */
 			/***/function (module, exports, __webpack_require__) {
 
 				'use strict';
@@ -5970,13 +6029,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var _math = __webpack_require__(6);
 
+				var _location = __webpack_require__(9);
+
+				var _location2 = _interopRequireDefault(_location);
+
+				function _interopRequireDefault(obj) {
+					return obj && obj.__esModule ? obj : { default: obj };
+				}
+
 				function move(fromElement) {
 					var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
 					    matchSize = _ref.matchSize;
 
 					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-					var fromLocation = metadata.location || (0, _dom.calculateElementLocation)(fromElement, true);
+					var fromLocation = (0, _location2.default)(fromElement, metadata);
 					var fromSize = metadata.size || (0, _dom.calculateElementSize)(fromElement);
 
 					var to = function to(toElement) {
@@ -6010,7 +6077,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 11 */
+			/* 12 */
 			/***/function (module, exports) {
 
 				'use strict';

@@ -4,7 +4,7 @@ import React from 'react';
 
 type Props = { className?: string, type: 'big' | 'small', src: string, onClick: Function };
 
-const Box = ({ type, className, src, onClick }: Props) => (
+const Photo = ({ type, className, src, onClick }: Props) => (
   <div
     role="presentation"
     onClick={onClick}
@@ -14,4 +14,4 @@ const Box = ({ type, className, src, onClick }: Props) => (
   />
 );
 
-export default Box;
+export default Photo;

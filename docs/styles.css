@@ -1,5 +1,4 @@
 body {
-  overflow-anchor: none;
   overflow-x: hidden;
   background-color: #000;
 }
@@ -37,7 +36,6 @@ p {
 }
 
 .content-bg {
-  background: #782128;
   padding: 10em 0;
 }
 
@@ -74,7 +72,6 @@ p {
 
 .content-margin {
   max-width: 800px;
-  min-height: 1000px;
   width: 100%;
   margin: 0 auto;
   background: #fff;
