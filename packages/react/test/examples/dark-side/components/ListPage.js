@@ -4,9 +4,11 @@ import React from 'react';
 import Photo from './Photo';
 import Transition from '../../../../src/Transition';
 import items from './data';
+import ScrollToTopOnMount from '../../ScrollToTOpOnMount';
 
 const ListPage = ({ onClick }: { onClick: Function }) => (
   <div className="container">
+    <ScrollToTopOnMount />
     <img alt="Empire Insignia" src={`${require('../images/logo.png')}`} className="insignia" />
 
     <div className="container-inner">
