@@ -7,13 +7,13 @@ import withTransition from '../../../../src/withTransition';
 
 const BoxWithReverseTransition = withTransition([{
   transition: 'expand',
-  duration: 0.5,
+  duration: 0.3,
   background: '#782128',
   reverse: true,
   cover: true,
 }, {
   transition: 'move',
-  duration: 0.2,
+  duration: 0.4,
   matchSize: true,
 }])(Box);
 

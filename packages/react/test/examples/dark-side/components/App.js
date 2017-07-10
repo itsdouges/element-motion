@@ -13,7 +13,7 @@ const Container = ({ children, className }: any) => (
 
 const BoxWithTransition = withTransition([{
   transition: 'expand',
-  duration: 0.7,
+  duration: 0.4,
   background: '#541219',
   cover: true,
 }, {
@@ -110,7 +110,7 @@ const items = [{
 
 export default class App extends React.Component {
   state = {
-    big: true,
+    big: false,
     item: items[0],
   };
 
