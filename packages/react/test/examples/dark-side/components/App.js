@@ -13,7 +13,7 @@ const Container = ({ children, className }: any) => (
 
 const BoxWithTransition = withTransition([{
   transition: 'expand',
-  duration: 0.5,
+  duration: 0.7,
   background: '#541219',
   cover: true,
 }, {
