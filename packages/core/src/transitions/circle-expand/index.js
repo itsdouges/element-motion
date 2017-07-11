@@ -13,11 +13,10 @@ import calculateFromLocation from '../../lib/location';
 type Options = {
   background?: string,
   cover?: boolean,
-  reverse?: boolean,
   zIndex?: number,
 };
 
-export default function expand (element: HTMLElement, options: Options, metadata: Metadata = {}) {
+export default function circleExpand (element: HTMLElement, options: Options, metadata: Metadata = {}) {
   const location = calculateFromLocation(element, metadata);
   const size = metadata.size || calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
@@ -42,7 +41,7 @@ export default function expand (element: HTMLElement, options: Options, metadata
   const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
 
   return {
-    name: 'expand',
+    name: 'circle-expand',
     options: {
       newElement: true,
       applyScaleTransform: true,

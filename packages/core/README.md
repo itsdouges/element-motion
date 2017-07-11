@@ -18,7 +18,6 @@ transition.start();
 
 ### General options
 
-- autoStart (bool)
 - autoCleanup (bool)
 - duration (number)
 - delay (number)

@@ -17,7 +17,7 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
           key={item.name}
           pair={item.name}
           transitions={[{
-            transition: 'expand',
+            transition: 'circle-expand',
             duration: 0.4,
             background: item.color,
           }, {

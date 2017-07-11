@@ -9,7 +9,7 @@ import items from './data';
 export default class App extends React.Component {
   state = {
     item: items[0],
-    showDetails: false,
+    showDetails: true,
   };
 
   componentDidMount () {

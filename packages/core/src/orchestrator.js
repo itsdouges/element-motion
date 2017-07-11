@@ -81,6 +81,8 @@ type Node = {
   },
 };
 
+const toCamelCase = (str) => str.replace(/-[a-z]/g, (match) => match[1].toUpperCase());
+
 function startTransition (
   pairName: string,
   fromNode: Node,
@@ -89,15 +91,15 @@ function startTransition (
 ) {
   const transitions = fromNode.transitions.map(({ transition: name, ...options }) => {
     // Hack to get reverse working. Uh. This should probably be rethought.
-    const initTransition = (node, metadata) => yubabaTransitions[name](node, options, metadata);
+    const initTransition = (node, metadata) => yubabaTransitions[toCamelCase(name)](node, options, metadata);
 
-    return options.reverse
-      ? { start: (node) => initTransition(node).start }
+    return name === 'circle-shrink'
+      ? (node) => initTransition(node)
       : initTransition(fromNode.node, fromNode.data);
   });
 
   Promise
-    .all(transitions.map((transition) => transition.start(toNode.node)))
+    .all(transitions.map((transition) => transition(toNode.node)))
     .then((results) => {
       // Start all reverse transitions
       return Promise.all(results
@@ -111,13 +113,12 @@ function startTransition (
 
       Promise.all(
         results
-          .filter(({ transition }) => transition === 'expand')
+          .filter(({ transition }) => transition === 'circle-shrink')
           .map(({ target }) => {
             return yubabaTransitions.fadeout(target, {
               duration: 0.75,
               autoCleanup: true,
-              autoStart: true,
-            }).promise;
+            })();
           })
       )
       .then((fadeoutResults) => {

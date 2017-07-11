@@ -19,14 +19,16 @@ const DetailsPage = ({ onClick, src, description, name, color }: any) => (
     <div className="content-margin">
       <Transition
         pair={name}
-        transitions={[{
-          transition: 'expand',
+        transitions={[[{
+          transition: 'circle-shrink',
           duration: 0.3,
           background: color,
-          reverse: true,
         }, {
           transition: 'move',
           duration: 0.4,
+        }], {
+          transition: 'fadeout',
+          duration: 0.3,
         }]}
       >
         <Photo
