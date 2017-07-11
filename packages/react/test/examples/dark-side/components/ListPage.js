@@ -20,11 +20,9 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
             transition: 'expand',
             duration: 0.4,
             background: item.color,
-            cover: true,
           }, {
             transition: 'move',
             duration: 0.5,
-            matchSize: true,
           }]}
         >
           <Photo

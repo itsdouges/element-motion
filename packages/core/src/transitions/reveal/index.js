@@ -1,7 +1,14 @@
-export default function reveal (element, { showFromElement, reverse }) {
+// @flow
+
+type Options = {
+  showFromElement: HTMLElement,
+  reverse?: boolean,
+};
+
+export default function reveal (element: HTMLElement, options: Options) {
   const from = {
-    height: showFromElement.clientHeight,
-    width: showFromElement.clientWidth,
+    height: options.showFromElement.clientHeight,
+    width: options.showFromElement.clientWidth,
     overflow: 'hidden',
     'z-index': 9998,
   };
@@ -16,11 +23,11 @@ export default function reveal (element, { showFromElement, reverse }) {
     name: 'reveal',
     options: {
       immediatelyApplyFrom: true,
-      resetHeightOnFinish: !reverse,
+      resetHeightOnFinish: !options.reverse,
       applyStyles: true,
       transitions: ['width', 'height'],
     },
-    from: reverse ? to : from,
-    to: reverse ? from : to,
+    from: options.reverse ? to : from,
+    to: options.reverse ? from : to,
   };
 }

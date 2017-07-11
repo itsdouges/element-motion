@@ -2,7 +2,11 @@
 
 import { calculateElementLocation, getDocumentScroll } from './dom';
 
-type Metadata = {
+export type Metadata = {
+  size?: {
+    width: number,
+    height: number,
+  },
   location?: {
     top: number,
     left: number,

@@ -1,3 +1,5 @@
+// @flow
+
 export default function fadeout () {
   return {
     name: 'fadeout',

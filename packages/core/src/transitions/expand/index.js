@@ -1,3 +1,7 @@
+// @flow
+
+import type { Metadata } from '../../lib/location';
+
 import { calculateHypotenuse } from '../../lib/math';
 import {
   calculateElementSize,
@@ -6,12 +10,19 @@ import {
 } from '../../lib/dom';
 import calculateFromLocation from '../../lib/location';
 
-export default function expand (element, { background, reverse, cover }, metadata = {}) {
+type Options = {
+  background?: string,
+  cover?: boolean,
+  reverse?: boolean,
+  zIndex?: number,
+};
+
+export default function expand (element: HTMLElement, options: Options, metadata: Metadata = {}) {
   const location = calculateFromLocation(element, metadata);
   const size = metadata.size || calculateElementSize(element);
   const minSize = Math.min(size.width, size.height);
 
-  const elementHypotenuse = cover ? calculateHypotenuse(size) : minSize;
+  const elementHypotenuse = options.cover === false ? minSize : calculateHypotenuse(size);
 
   const windowHypotenuse = calculateHypotenuse({
     width: window.innerWidth,
@@ -43,13 +54,13 @@ export default function expand (element, { background, reverse, cover }, metadat
       width: elementHypotenuse,
       height: elementHypotenuse,
       borderRadius: '50%',
-      background: background || 'orange',
+      background: options.background,
       position: 'absolute',
-      scale: reverse ? scale : undefined,
-      zIndex: 9997,
+      scale: options.reverse ? scale : undefined,
+      zIndex: options.zIndex || 9997,
     },
     to: {
-      scale: reverse ? 1 : scale,
+      scale: options.reverse ? 1 : scale,
     },
   };
 }

@@ -24,11 +24,9 @@ const DetailsPage = ({ onClick, src, description, name, color }: any) => (
           duration: 0.3,
           background: color,
           reverse: true,
-          cover: true,
         }, {
           transition: 'move',
           duration: 0.4,
-          matchSize: true,
         }]}
       >
         <Photo
