@@ -83,54 +83,56 @@ type Node = {
 
 const toCamelCase = (str) => str.replace(/-[a-z]/g, (match) => match[1].toUpperCase());
 
+function prepareTransition (transition, fromNode, toNode) {
+  const { transition: name, ...options } = transition;
+  return yubabaTransitions[toCamelCase(name)](fromNode.node, options, fromNode.data)(toNode.node)
+    .then((result) => {
+      return { result, options };
+    });
+}
+
 function startTransition (
   pairName: string,
   fromNode: Node,
   toNode: Node,
   shouldShow: (boolean) => void,
 ) {
-  const transitions = fromNode.transitions.map(({ transition: name, ...options }) => {
-    // Hack to get reverse working. Uh. This should probably be rethought.
-    const initTransition = (node, metadata) => yubabaTransitions[toCamelCase(name)](node, options, metadata);
+  const transitionsStarters = fromNode.transitions.map((transition) => {
+    if (Array.isArray(transition)) {
+      const transitionGroup = transition;
 
-    return name === 'circle-shrink'
-      ? (node) => initTransition(node)
-      : initTransition(fromNode.node, fromNode.data);
+      return () => Promise.all(
+        transitionGroup.map((transitionChild) => prepareTransition(transitionChild, fromNode, toNode))
+      );
+    }
+
+    return () => prepareTransition(transition, fromNode, toNode);
   });
 
-  Promise
-    .all(transitions.map((transition) => transition(toNode.node)))
-    .then((results) => {
-      // Start all reverse transitions
-      return Promise.all(results
-        .filter((result) => typeof result === 'function')
-        .map((start) => start())
-        .concat(results));
-    })
-    .then((results) => {
-      process.env.NODE_ENV !== 'production' && console.log(`Finished transition for ${pairName}.`);
-      // Fadeout and cleanup all expanders. This is deliberately a broken promise chain.
+  let results = [];
 
-      Promise.all(
-        results
-          .filter(({ transition }) => transition === 'circle-shrink')
-          .map(({ target }) => {
-            return yubabaTransitions.fadeout(target, {
-              duration: 0.75,
-              autoCleanup: true,
-            })();
-          })
-      )
-      .then((fadeoutResults) => {
-        // Cleanup anything else left
-        fadeoutResults.concat(results).forEach((result) => {
-          result.cleanup && result.cleanup();
-        });
-      });
-    })
+  transitionsStarters
+    .reduce((promise, start) => promise.then(() => {
+      return start().then((result) => (results = results.concat(result)));
+    }), Promise.resolve())
     .then(() => {
+      process.env.NODE_ENV !== 'production' && console.log(`Finished transition for ${pairName}.`);
+
       notifyTransitionListener(pairName, true);
       shouldShow(true);
+
+      const fadeouts = results
+        .filter(({ options }) => options.fadeout)
+        .map(({ result, options }) => {
+          return yubabaTransitions.fadeout(result.target, {
+            duration: options.fadeout,
+          })();
+        });
+
+      return Promise.all(fadeouts);
+    })
+    .then(() => {
+      results.forEach(({ result }) => result.cleanup());
     });
 }
 

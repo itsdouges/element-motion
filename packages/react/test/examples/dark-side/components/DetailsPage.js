@@ -23,13 +23,11 @@ const DetailsPage = ({ onClick, src, description, name, color }: any) => (
           transition: 'circle-shrink',
           duration: 0.3,
           background: color,
+          fadeout: 0.5,
         }, {
           transition: 'move',
           duration: 0.4,
-        }], {
-          transition: 'fadeout',
-          duration: 0.3,
-        }]}
+        }]]}
       >
         <Photo
           className="box-highlighted"
