@@ -1,4 +1,3 @@
-/* eslint no-param-reassign:0, no-unused-expressions:0 */
 import {
   createElement,
   applyStyles,
@@ -74,6 +73,7 @@ function setInitialStyles (element, {
   duration,
   transitions,
 }) {
+  // eslint-disable-next-line no-param-reassign
   element.style.transition = transitions
     .map((transition) => `${transition} ${duration}s`)
     .join(',');

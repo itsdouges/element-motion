@@ -1,4 +1,11 @@
-export function calculateHypotenuse ({ width, height }) {
+// @flow
+
+type Dimensions = {
+  width: number,
+  height: number,
+};
+
+export function calculateHypotenuse ({ width, height }: Dimensions) {
   const x2 = width ** 2;
   const y2 = height ** 2;
 
@@ -6,6 +13,6 @@ export function calculateHypotenuse ({ width, height }) {
   return Math.ceil(hypotenuse);
 }
 
-export function percentageDifference (from, to) {
+export function percentageDifference (from: number, to: number) {
   return from / to;
 }

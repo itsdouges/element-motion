@@ -61,13 +61,13 @@ export type Transition = {
 };
 
 type Options = {
-  node: Element,
+  node: HTMLElement,
   transitions: Array<Transition>,
   shouldShow: (show: boolean) => void,
 };
 
 type Node = {
-  node: Element,
+  node: HTMLElement,
   transitions: Array<Transition>,
   data?: {
     location: {

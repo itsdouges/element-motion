@@ -1,6 +1,8 @@
+// @flow
+
 import { calculateHypotenuse } from '../math';
 
-export function calculateElementSize (element) {
+export function calculateElementSize (element: HTMLElement) {
   return {
     width: element.clientWidth,
     height: element.clientHeight,
@@ -8,21 +10,21 @@ export function calculateElementSize (element) {
 }
 
 export function getDocumentScroll () {
-  const scrollTop = document.documentElement.scrollTop
+  const scrollTop = document.documentElement && document.documentElement.scrollTop
     ? document.documentElement.scrollTop
-    : document.body.scrollTop;
+    : document.body && document.body.scrollTop;
 
-  const scrollLeft = document.documentElement.scrollLeft
+  const scrollLeft = document.documentElement && document.documentElement.scrollLeft
     ? document.documentElement.scrollLeft
-    : document.body.scrollLeft;
+    : document.body && document.body.scrollLeft;
 
   return {
-    scrollTop,
-    scrollLeft,
+    scrollTop: scrollTop || 0,
+    scrollLeft: scrollLeft || 0,
   };
 }
 
-export function calculateElementLocation (element) {
+export function calculateElementLocation (element: HTMLElement) {
   const rect = element.getBoundingClientRect();
   const { scrollLeft, scrollTop } = getDocumentScroll();
 
@@ -37,7 +39,7 @@ export function calculateElementLocation (element) {
   };
 }
 
-export function calculateElementCircumcircle (element) {
+export function calculateElementCircumcircle (element: HTMLElement) {
   const size = calculateElementSize(element);
   const diameter = calculateHypotenuse(size);
   const location = calculateElementLocation(element);
@@ -55,7 +57,7 @@ export function calculateWindowCentre () {
   };
 }
 
-const addPxIfNeeded = (key, value) => {
+const addPxIfNeeded = (key: string, value: string | number): string => {
   switch (key) {
     case 'width':
     case 'height':
@@ -64,18 +66,20 @@ const addPxIfNeeded = (key, value) => {
       return typeof value === 'number' ? `${value}px` : value;
 
     default:
-      return value;
+      return String(value);
   }
 };
 
-/* eslint no-param-reassign:0 */
-export function applyStyles (element, styles) {
-  Object.keys(styles).forEach((key) => {
+type Styles = { [string]: string | number };
+
+export function applyStyles (element: HTMLElement, styles: Styles) {
+  Object.keys(styles).forEach((key: any) => {
+    // eslint-disable-next-line no-param-reassign
     element.style[key] = addPxIfNeeded(key, styles[key]);
   });
 }
 
-export function calculateElementCenterInViewport (element) {
+export function calculateElementCenterInViewport (element: HTMLElement) {
   const location = calculateElementLocation(element);
   const size = calculateElementSize(element);
 
@@ -85,7 +89,12 @@ export function calculateElementCenterInViewport (element) {
   };
 }
 
-export function transformTranslate (element, { x, y }) {
+type XY = {
+  x?: number,
+  y?: number,
+};
+
+export function transformTranslate (element: HTMLElement, { x, y }: XY) {
   if (!x || !y) {
     return;
   }
@@ -95,13 +104,13 @@ export function transformTranslate (element, { x, y }) {
   });
 }
 
-export function transformScale (element, { scale3d, scale, transformOrigin }) {
+export function transformScale (element: HTMLElement, { scale3d, scale, transformOrigin }: Styles) {
   if (!scale3d && !scale) {
     return;
   }
 
   // scale3d takes presedence
-  const scaleModifier = scale3d ? `scale3d(${scale3d})` : `scale(${scale})`;
+  const scaleModifier = scale3d ? `scale3d(${scale3d})` : `scale(${scale || 0})`;
 
   let transform = element.style.transform;
   if (transform.indexOf('scale') > -1) {
@@ -121,17 +130,16 @@ export function transformScale (element, { scale3d, scale, transformOrigin }) {
   });
 }
 
-// eslint-disable-next-line
-function logStyle (element, styles) {
-  return Object.keys(styles).reduce((obj, key) => ({
-    ...obj,
-    [key]: element.style[key],
-  }), {});
-}
+type CreateOptions = {
+  parentElement?: HTMLElement,
+  cloneFrom: HTMLElement,
+};
 
-export function createElement (styles, { parentElement = document.body, cloneFrom } = {}) {
+export function createElement (styles: Styles, { parentElement, cloneFrom }: CreateOptions = {}) {
   const newElement = document.createElement('div');
   const innerElement = (cloneFrom && cloneFrom.cloneNode(true));
+  const parent = (parentElement || document.body);
+
   if (innerElement) {
     applyStyles(innerElement, {
       margin: 0,
@@ -143,7 +151,7 @@ export function createElement (styles, { parentElement = document.body, cloneFro
 
   applyStyles(newElement, styles);
   transformScale(newElement, styles);
-  parentElement.appendChild(newElement);
+  parent && parent.appendChild(newElement);
 
   return newElement;
 }

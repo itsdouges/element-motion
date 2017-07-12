@@ -17,7 +17,7 @@ export default function move (fromElement: HTMLElement, options: Options = {}, m
 
   const to = (toElement: HTMLElement) => {
     const toSize = options.matchSize === false ? calculateElementSize(fromElement) : calculateElementSize(toElement);
-    const toLocation = calculateElementLocation(toElement, true);
+    const toLocation = calculateElementLocation(toElement);
 
     return {
       ...toLocation,

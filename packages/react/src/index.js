@@ -1,3 +1,5 @@
+// @flow
+
 import Transition from './Transition';
 
 export { default as TransitionContainer } from './TransitionContainer';
