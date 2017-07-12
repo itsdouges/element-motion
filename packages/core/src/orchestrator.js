@@ -8,18 +8,18 @@ const nodeStore = {};
 const listenerStore = {};
 
 export function addTransitionListener (pairName: string, cb: (boolean) => void) {
-  listenerStore[pairName] = cb;
+  listenerStore[pairName] = (listenerStore[pairName] || []);
+  listenerStore[pairName].push(cb);
 
   return () => {
-    delete listenerStore[pairName];
+    listenerStore[pairName] = listenerStore[pairName].filter((listener) => listener !== cb);
   };
 }
 
 function notifyTransitionListener (pairName, value: boolean) {
-  // we should be able to handle multiple listeners.
-  const cb = listenerStore[pairName];
-  if (cb) {
-    cb(value);
+  const cbArr = listenerStore[pairName];
+  if (cbArr && cbArr.length) {
+    cbArr.forEach((cb) => cb(value));
   }
 }
 
@@ -63,7 +63,6 @@ export type Transition = {
 type Options = {
   node: HTMLElement,
   transitions: Array<Transition>,
-  shouldShow: (show: boolean) => void,
 };
 
 type Node = {
@@ -111,7 +110,6 @@ function startTransition (
   pairName: string,
   fromNode: Node,
   toNode: Node,
-  shouldShow: (boolean) => void,
 ) {
   const transitionsStarters = fromNode.transitions.map((transition) => {
     if (Array.isArray(transition)) {
@@ -135,7 +133,6 @@ function startTransition (
       process.env.NODE_ENV !== 'production' && console.log(`Finished transition for ${pairName}.`);
 
       notifyTransitionListener(pairName, true);
-      shouldShow(true);
 
       const fadeouts = results
         .filter(({ options }) => options.fadeout)
@@ -159,7 +156,6 @@ export default function orchestrator (pairName: string, options: Options) {
     process.env.NODE_ENV !== 'production' && console.log(`Found fromNode for "${pairName}".`);
 
     notifyTransitionListener(pairName, true);
-    options.shouldShow(true);
     addToStore(pairName, { node: options.node, transitions: options.transitions });
 
     return;
@@ -192,7 +188,7 @@ export default function orchestrator (pairName: string, options: Options) {
     const toNode = { node: options.node, transitions: options.transitions };
 
     addToStore(pairName, toNode);
-    startTransition(pairName, fromNode, toNode, options.shouldShow);
+    startTransition(pairName, fromNode, toNode);
 
     return;
   }
@@ -201,6 +197,6 @@ export default function orchestrator (pairName: string, options: Options) {
     process.env.NODE_ENV !== 'production' && console.log(`Found both nodes for "${pairName}", starting transition.`);
     const [fromNode, toNode] = nodeArr;
 
-    startTransition(pairName, fromNode, toNode, options.shouldShow);
+    startTransition(pairName, fromNode, toNode);
   }
 }

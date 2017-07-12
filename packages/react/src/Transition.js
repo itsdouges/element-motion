@@ -4,10 +4,11 @@ import type { Children } from 'react';
 import type { Transition as TransitionOptions } from 'yubaba-core';
 
 import React from 'react';
-import { orchestrator, removeFromStore } from 'yubaba-core';
+import { orchestrator, removeFromStore, addTransitionListener } from 'yubaba-core';
 
 export default class Transition extends React.Component {
   _node: HTMLElement;
+  _detatch: Function;
 
   props: {
     pair: string,
@@ -23,10 +24,12 @@ export default class Transition extends React.Component {
   };
 
   componentDidMount () {
+    this._detatch = addTransitionListener(this.props.pair, this.setVisibility);
     this.initialise();
   }
 
   componentWillUnmount () {
+    this._detatch();
     this.initialise();
 
     if (this._node.firstElementChild) {
