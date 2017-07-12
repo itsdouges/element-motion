@@ -15,7 +15,7 @@
     "react:tdd": "npm run react:unit -- -w",
     "react:unit": "mocha \"./packages/react/src/**/*.spec.js\" --opts ./packages/react/test/mocha.opts",
     "codecov": "echo \"not implemented\"",
-    "docs": "bash ./scripts/buildDocs.sh"
+    "docs": "NODE_ENV=production bash ./scripts/buildDocs.sh"
   },
   "devDependencies": {
     "babel": "^6.5.2",

@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = (params) => {
   const config = {
     entry: params.entry,
@@ -31,7 +33,10 @@ module.exports = (params) => {
     devServer: Object.assign({
       publicPath: '/',
     }, params.devServer),
-    plugins: params.plugins,
+    plugins: [params.plugins].concat([
+      new webpack.EnvironmentPlugin(['NODE_ENV']),
+      process.env.NODE_ENV === 'production' && new webpack.optimize.UglifyJsPlugin(),
+    ]).filter(Boolean),
   };
 
   if (params.loaders) {
