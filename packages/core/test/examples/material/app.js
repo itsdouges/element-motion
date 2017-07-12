@@ -49,7 +49,6 @@
       })
       .then(function () {
         itemsContainer.style.opacity = 0;
-        console.log('transitionTo: finished');
       });
   }
 
@@ -82,9 +81,6 @@
           autoCleanup: true,
           autoStart: true,
         }).promise;
-      })
-      .then(function () {
-        console.log('transitonFrom: finished')
       });
   }
 

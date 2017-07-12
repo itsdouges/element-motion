@@ -83,12 +83,28 @@ type Node = {
 
 const toCamelCase = (str) => str.replace(/-[a-z]/g, (match) => match[1].toUpperCase());
 
+// This isn't fantastic. Basically the crux of the problem is
+// for these transitions they need the "end" element to act as the
+// "start" element. Don't have a elegant solution yet.
+// Issue: https://github.com/madou/yubaba/issues/31
+const toNodeFirstList = ['circle-shrink'];
+
 function prepareTransition (transition, fromNode, toNode) {
   const { transition: name, ...options } = transition;
-  return yubabaTransitions[toCamelCase(name)](fromNode.node, options, fromNode.data)(toNode.node)
-    .then((result) => {
-      return { result, options };
-    });
+  let toElement;
+  let fromElement;
+  let metadata;
+
+  if (toNodeFirstList.includes(name)) {
+    fromElement = toNode.node;
+  } else {
+    fromElement = fromNode.node;
+    toElement = toNode.node;
+    metadata = fromNode.data;
+  }
+
+  return yubabaTransitions[toCamelCase(name)](fromElement, options, metadata)(toElement)
+    .then((result) => ({ result, options }));
 }
 
 function startTransition (

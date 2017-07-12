@@ -20,13 +20,13 @@ const DetailsPage = ({ onClick, src, description, name, color }: any) => (
       <Transition
         pair={name}
         transitions={[[{
-          transition: 'circle-shrink',
-          duration: 0.3,
-          background: color,
-          fadeout: 0.5,
-        }, {
           transition: 'move',
           duration: 0.4,
+        }, {
+          transition: 'circle-shrink',
+          duration: 0.4,
+          background: color,
+          fadeout: 0.5,
         }]]}
       >
         <Photo

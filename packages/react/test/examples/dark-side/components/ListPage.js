@@ -19,7 +19,7 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
           transitions={[[{
             transition: 'circle-expand',
             background: item.color,
-            duration: 0.4,
+            duration: 0.6,
             fadeout: 0.5,
           }, {
             transition: 'move',
