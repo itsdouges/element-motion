@@ -19,17 +19,15 @@ const DetailsPage = ({ onClick, src, description, name, color }: any) => (
     <div className="content-margin">
       <Transition
         pair={name}
-        transitions={[{
-          transition: 'expand',
-          duration: 0.3,
-          background: color,
-          reverse: true,
-          cover: true,
-        }, {
+        transitions={[[{
           transition: 'move',
           duration: 0.4,
-          matchSize: true,
-        }]}
+        }, {
+          transition: 'circle-shrink',
+          duration: 0.4,
+          background: color,
+          fadeout: 0.5,
+        }]]}
       >
         <Photo
           className="box-highlighted"

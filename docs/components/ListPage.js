@@ -16,16 +16,15 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
         <Transition
           key={item.name}
           pair={item.name}
-          transitions={[{
-            transition: 'expand',
-            duration: 0.4,
+          transitions={[[{
+            transition: 'circle-expand',
             background: item.color,
-            cover: true,
+            duration: 0.6,
+            fadeout: 0.5,
           }, {
             transition: 'move',
             duration: 0.5,
-            matchSize: true,
-          }]}
+          }]]}
         >
           <Photo
             {...item}

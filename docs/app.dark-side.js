@@ -22363,17 +22363,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _Transition2.default,
 	        {
 	          pair: name,
-	          transitions: [{
-	            transition: 'expand',
-	            duration: 0.3,
-	            background: color,
-	            reverse: true,
-	            cover: true
-	          }, {
+	          transitions: [[{
 	            transition: 'move',
+	            duration: 0.4
+	          }, {
+	            transition: 'circle-shrink',
 	            duration: 0.4,
-	            matchSize: true
-	          }]
+	            background: color,
+	            fadeout: 0.5
+	          }]]
 	        },
 	        _react2.default.createElement(_Photo2.default, {
 	          className: 'box-highlighted',
@@ -22553,10 +22551,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(TransitionContainer, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      // We need to have this be attached before
-	      // everything else is mounted, but we don't want to run this on the server.
-	      // How?
-	      this._detatch = (0, _yubabaCore.addTransitionListener)(this.props.pair, this.setVisibility);
+	      if (document) {
+	        this._detatch = (0, _yubabaCore.addTransitionListener)(this.props.pair, this.setVisibility);
+	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -22841,54 +22838,88 @@ return /******/ (function(modules) { // webpackBootstrap
 						}
 					}
 
+					var toCamelCase = function toCamelCase(str) {
+						return str.replace(/-[a-z]/g, function (match) {
+							return match[1].toUpperCase();
+						});
+					};
+
+					// This isn't fantastic. Basically the crux of the problem is
+					// for these transitions they need the "end" element to act as the
+					// "start" element. Don't have a elegant solution yet.
+					// Issue: https://github.com/madou/yubaba/issues/31
+					var toNodeFirstList = ['circle-shrink'];
+
+					function prepareTransition(transition, fromNode, toNode) {
+						var name = transition.transition,
+						    options = _objectWithoutProperties(transition, ['transition']);
+
+						var toElement = void 0;
+						var fromElement = void 0;
+						var metadata = void 0;
+
+						if (toNodeFirstList.includes(name)) {
+							fromElement = toNode.node;
+						} else {
+							fromElement = fromNode.node;
+							toElement = toNode.node;
+							metadata = fromNode.data;
+						}
+
+						return yubabaTransitions[toCamelCase(name)](fromElement, options, metadata)(toElement).then(function (result) {
+							return { result: result, options: options };
+						});
+					}
+
 					function startTransition(pairName, fromNode, toNode, shouldShow) {
-						var transitions = fromNode.transitions.map(function (_ref4) {
-							var name = _ref4.transition,
-							    options = _objectWithoutProperties(_ref4, ['transition']);
+						var transitionsStarters = fromNode.transitions.map(function (transition) {
+							if (Array.isArray(transition)) {
+								var transitionGroup = transition;
 
-							// Hack to get reverse working. Uh. This should probably be rethought.
-							var initTransition = function initTransition(node, metadata) {
-								return yubabaTransitions[name](node, options, metadata);
+								return function () {
+									return Promise.all(transitionGroup.map(function (transitionChild) {
+										return prepareTransition(transitionChild, fromNode, toNode);
+									}));
+								};
+							}
+
+							return function () {
+								return prepareTransition(transition, fromNode, toNode);
 							};
-
-							return options.reverse ? { start: function start(node) {
-									return initTransition(node).start;
-								} } : initTransition(fromNode.node, fromNode.data);
 						});
 
-						Promise.all(transitions.map(function (transition) {
-							return transition.start(toNode.node);
-						})).then(function (results) {
-							// Start all reverse transitions
-							return Promise.all(results.filter(function (result) {
-								return typeof result === 'function';
-							}).map(function (start) {
-								return start();
-							}).concat(results));
-						}).then(function (results) {
-							process.env.NODE_ENV !== 'production' && console.log('Finished transition for ' + pairName + '.');
-							// Fadeout and cleanup all expanders. This is deliberately a broken promise chain.
+						var results = [];
 
-							Promise.all(results.filter(function (_ref5) {
-								var transition = _ref5.transition;
-								return transition === 'expand';
-							}).map(function (_ref6) {
-								var target = _ref6.target;
-
-								return yubabaTransitions.fadeout(target, {
-									duration: 0.75,
-									autoCleanup: true,
-									autoStart: true
-								}).promise;
-							})).then(function (fadeoutResults) {
-								// Cleanup anything else left
-								fadeoutResults.concat(results).forEach(function (result) {
-									result.cleanup && result.cleanup();
+						transitionsStarters.reduce(function (promise, start) {
+							return promise.then(function () {
+								return start().then(function (result) {
+									return results = results.concat(result);
 								});
 							});
-						}).then(function () {
+						}, Promise.resolve()).then(function () {
+							process.env.NODE_ENV !== 'production' && console.log('Finished transition for ' + pairName + '.');
+
 							notifyTransitionListener(pairName, true);
 							shouldShow(true);
+
+							var fadeouts = results.filter(function (_ref4) {
+								var options = _ref4.options;
+								return options.fadeout;
+							}).map(function (_ref5) {
+								var result = _ref5.result,
+								    options = _ref5.options;
+
+								return yubabaTransitions.fadeout(result.target, {
+									duration: options.fadeout
+								})();
+							});
+
+							return Promise.all(fadeouts);
+						}).then(function () {
+							results.forEach(function (_ref6) {
+								var result = _ref6.result;
+								return result.cleanup();
+							});
 						});
 					}
 
@@ -23156,7 +23187,9 @@ return /******/ (function(modules) { // webpackBootstrap
 				Object.defineProperty(exports, "__esModule", {
 					value: true
 				});
-				exports.expand = expand;
+				exports.custom = undefined;
+				exports.circleExpand = circleExpand;
+				exports.circleShrink = circleShrink;
 				exports.fadeout = fadeout;
 				exports.move = move;
 				exports.reveal = reveal;
@@ -23169,19 +23202,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var _deferred2 = _interopRequireDefault(_deferred);
 
-				var _expand = __webpack_require__(8);
+				var _circleExpand = __webpack_require__(8);
 
-				var _expand2 = _interopRequireDefault(_expand);
+				var _circleExpand2 = _interopRequireDefault(_circleExpand);
 
-				var _fadeout = __webpack_require__(10);
+				var _circleShrink = __webpack_require__(10);
+
+				var _circleShrink2 = _interopRequireDefault(_circleShrink);
+
+				var _fadeout = __webpack_require__(11);
 
 				var _fadeout2 = _interopRequireDefault(_fadeout);
 
-				var _move = __webpack_require__(11);
+				var _move = __webpack_require__(12);
 
 				var _move2 = _interopRequireDefault(_move);
 
-				var _reveal = __webpack_require__(12);
+				var _reveal = __webpack_require__(13);
 
 				var _reveal2 = _interopRequireDefault(_reveal);
 
@@ -23193,31 +23230,27 @@ return /******/ (function(modules) { // webpackBootstrap
 					var transitionDefinition = transitionFunc(element, options, metadata);
 					var defer = (0, _deferred2.default)();
 
-					var _start = (0, _transitioner2.default)(element, {
+					var start = (0, _transitioner2.default)(element, {
 						options: options,
 						transition: transitionDefinition,
 						resolve: defer.resolve
 					});
 
-					var params = {
-						promise: defer.promise,
-						start: function start(data) {
-							var to = typeof transitionDefinition.to === 'function' ? transitionDefinition.to(data) : transitionDefinition.to;
+					return function (toElement) {
+						var to = typeof transitionDefinition.to === 'function' ? transitionDefinition.to(toElement) : transitionDefinition.to;
 
-							_start(to);
-							return defer.promise;
-						}
+						start(to);
+
+						return defer.promise;
 					};
-
-					if (options.autoStart) {
-						params.start();
-					}
-
-					return params;
 				}
 
-				function expand(element, options, metadata) {
-					return transition(_expand2.default, element, options, metadata);
+				function circleExpand(element, options, metadata) {
+					return transition(_circleExpand2.default, element, options, metadata);
+				}
+
+				function circleShrink(element, options, metadata) {
+					return transition(_circleShrink2.default, element, options, metadata);
 				}
 
 				function fadeout(element, options, metadata) {
@@ -23231,6 +23264,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				function reveal(element, options, metadata) {
 					return transition(_reveal2.default, element, options, metadata);
 				}
+
+				var custom = exports.custom = transition;
 
 				/***/
 			},
@@ -23671,7 +23706,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				Object.defineProperty(exports, "__esModule", {
 					value: true
 				});
-				exports.default = expand;
+				exports.default = circleExpand;
 
 				var _math = __webpack_require__(6);
 
@@ -23685,17 +23720,14 @@ return /******/ (function(modules) { // webpackBootstrap
 					return obj && obj.__esModule ? obj : { default: obj };
 				}
 
-				function expand(element, _ref) {
-					var background = _ref.background,
-					    reverse = _ref.reverse,
-					    cover = _ref.cover;
+				function circleExpand(element, options) {
 					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
 					var location = (0, _location2.default)(element, metadata);
 					var size = metadata.size || (0, _dom.calculateElementSize)(element);
 					var minSize = Math.min(size.width, size.height);
 
-					var elementHypotenuse = cover ? (0, _math.calculateHypotenuse)(size) : minSize;
+					var elementHypotenuse = options.cover === false ? minSize : (0, _math.calculateHypotenuse)(size);
 
 					var windowHypotenuse = (0, _math.calculateHypotenuse)({
 						width: window.innerWidth,
@@ -23715,7 +23747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					var scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
 
 					return {
-						name: 'expand',
+						name: 'circle-expand',
 						options: {
 							newElement: true,
 							applyScaleTransform: true,
@@ -23727,13 +23759,13 @@ return /******/ (function(modules) { // webpackBootstrap
 							width: elementHypotenuse,
 							height: elementHypotenuse,
 							borderRadius: '50%',
-							background: background || 'orange',
+							background: options.background,
 							position: 'absolute',
-							scale: reverse ? scale : undefined,
-							zIndex: 9997
+							scale: options.reverse ? scale : undefined,
+							zIndex: options.zIndex || 9997
 						},
 						to: {
-							scale: reverse ? 1 : scale
+							scale: options.reverse ? 1 : scale
 						}
 					};
 				}
@@ -23774,6 +23806,47 @@ return /******/ (function(modules) { // webpackBootstrap
 				/***/
 			},
 			/* 10 */
+			/***/function (module, exports, __webpack_require__) {
+
+				'use strict';
+
+				Object.defineProperty(exports, "__esModule", {
+					value: true
+				});
+
+				var _extends = Object.assign || function (target) {
+					for (var i = 1; i < arguments.length; i++) {
+						var source = arguments[i];for (var key in source) {
+							if (Object.prototype.hasOwnProperty.call(source, key)) {
+								target[key] = source[key];
+							}
+						}
+					}return target;
+				};
+
+				exports.default = circleShrink;
+
+				var _circleExpand = __webpack_require__(8);
+
+				var _circleExpand2 = _interopRequireDefault(_circleExpand);
+
+				function _interopRequireDefault(obj) {
+					return obj && obj.__esModule ? obj : { default: obj };
+				}
+
+				function circleShrink(element, options) {
+					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+					return _extends({}, (0, _circleExpand2.default)(element, _extends({}, options, {
+						reverse: true
+					}), metadata), {
+						name: 'circle-shrink'
+					});
+				}
+
+				/***/
+			},
+			/* 11 */
 			/***/function (module, exports) {
 
 				'use strict';
@@ -23800,7 +23873,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 11 */
+			/* 12 */
 			/***/function (module, exports, __webpack_require__) {
 
 				'use strict';
@@ -23834,21 +23907,19 @@ return /******/ (function(modules) { // webpackBootstrap
 				}
 
 				function move(fromElement) {
-					var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-					    matchSize = _ref.matchSize;
-
+					var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 					var metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
 					var fromLocation = (0, _location2.default)(fromElement, metadata);
 					var fromSize = metadata.size || (0, _dom.calculateElementSize)(fromElement);
 
 					var to = function to(toElement) {
-						var toSize = matchSize ? (0, _dom.calculateElementSize)(toElement) : (0, _dom.calculateElementSize)(fromElement);
+						var toSize = options.matchSize === false ? (0, _dom.calculateElementSize)(fromElement) : (0, _dom.calculateElementSize)(toElement);
 						var toLocation = (0, _dom.calculateElementLocation)(toElement, true);
 
 						return _extends({}, toLocation, toSize, {
-							scale3d: matchSize && (0, _math.percentageDifference)(toSize.width, fromSize.width) + ', ' + (0, _math.percentageDifference)(toSize.height, fromSize.height) + ', 1',
-							transformOrigin: '0 0'
+							transformOrigin: '0 0',
+							scale3d: options.matchSize === false || (0, _math.percentageDifference)(toSize.width, fromSize.width) + ', ' + (0, _math.percentageDifference)(toSize.height, fromSize.height) + ', 1'
 						});
 					};
 
@@ -23865,7 +23936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						from: _extends({}, fromLocation, fromSize, {
 							margin: 0,
 							position: 'absolute',
-							zIndex: 9999
+							zIndex: options.zIndex || 9999
 						}),
 						to: to
 					};
@@ -23873,7 +23944,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				/***/
 			},
-			/* 12 */
+			/* 13 */
 			/***/function (module, exports) {
 
 				'use strict';
@@ -23882,13 +23953,10 @@ return /******/ (function(modules) { // webpackBootstrap
 					value: true
 				});
 				exports.default = reveal;
-				function reveal(element, _ref) {
-					var showFromElement = _ref.showFromElement,
-					    reverse = _ref.reverse;
-
+				function reveal(element, options) {
 					var from = {
-						height: showFromElement.clientHeight,
-						width: showFromElement.clientWidth,
+						height: options.showFromElement.clientHeight,
+						width: options.showFromElement.clientWidth,
 						overflow: 'hidden',
 						'z-index': 9998
 					};
@@ -23903,12 +23971,12 @@ return /******/ (function(modules) { // webpackBootstrap
 						name: 'reveal',
 						options: {
 							immediatelyApplyFrom: true,
-							resetHeightOnFinish: !reverse,
+							resetHeightOnFinish: !options.reverse,
 							applyStyles: true,
 							transitions: ['width', 'height']
 						},
-						from: reverse ? to : from,
-						to: reverse ? from : to
+						from: options.reverse ? to : from,
+						to: options.reverse ? from : to
 					};
 				}
 
@@ -24146,16 +24214,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	          {
 	            key: item.name,
 	            pair: item.name,
-	            transitions: [{
-	              transition: 'expand',
-	              duration: 0.4,
+	            transitions: [[{
+	              transition: 'circle-expand',
 	              background: item.color,
-	              cover: true
+	              duration: 0.6,
+	              fadeout: 0.5
 	            }, {
 	              transition: 'move',
-	              duration: 0.5,
-	              matchSize: true
-	            }]
+	              duration: 0.5
+	            }]]
 	          },
 	          _react2.default.createElement(_Photo2.default, _extends({}, item, {
 	            key: item.name,
