@@ -20,9 +20,9 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
           key={item.name}
           pair={item.name}
           animations={[[{
-            animationName: 'circle-expand',
+            animationName: 'swipe',
             background: item.color,
-            duration: 600,
+            duration: 300,
             fadeout: 500,
           }, {
             animationName: 'move',

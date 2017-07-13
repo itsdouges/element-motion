@@ -10,6 +10,7 @@ import buildCircleShrink from './circle-shrink';
 import buildFadeout from './fadeout';
 import buildMove from './move';
 import buildReveal from './reveal';
+import buildSwipe from './swipe';
 
 type AnimationFunc = (element: HTMLElement, options: Object, metadata?: Metadata) => ({
   name: string,
@@ -57,6 +58,10 @@ export function move (element: HTMLElement, options: Object, metadata?: Metadata
 
 export function reveal (element: HTMLElement, options: Object, metadata?: Metadata) {
   return animate(buildReveal, element, options, metadata);
+}
+
+export function swipe (element: HTMLElement, options: Object, metadata?: Metadata) {
+  return animate(buildSwipe, element, options, metadata);
 }
 
 export const custom = animate;

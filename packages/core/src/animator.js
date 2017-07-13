@@ -101,6 +101,6 @@ export default function animator (element: HTMLElement, { animation, resolve, op
     resolvePromise: resolve,
     animationName: animation.name,
     duration: options.duration || 500,
-    easing: options.easing || 'ease-in-out',
+    easing: options.easing || animation.options.easing || 'ease-in-out',
   });
 }
