@@ -3,9 +3,9 @@
 import type { Children } from 'react';
 import React from 'react';
 
-import { addTransitionListener } from 'yubaba-core';
+import { addListener } from 'yubaba-core';
 
-export default class TransitionContainer extends React.Component {
+export default class AnimateContainer extends React.Component {
   _detatch: Function;
 
   props: {
@@ -20,7 +20,7 @@ export default class TransitionContainer extends React.Component {
 
   componentWillMount () {
     if (document) {
-      this._detatch = addTransitionListener(this.props.pair, this.setVisibility);
+      this._detatch = addListener(this.props.pair, this.setVisibility);
     }
   }
 

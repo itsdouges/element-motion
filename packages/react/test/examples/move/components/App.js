@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Box from './Box';
-import withTransition from '../../../../src/withTransition';
+import withAnimation from '../../../../src/withAnimation';
 
-const BoxWithTransition = withTransition([{
+const BoxWithAnimation = withAnimation([{
   transition: 'move',
   duration: 0.75,
   matchSize: true,
@@ -25,8 +25,8 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
-        {this.state.big && <BoxWithTransition transitionPair="box-to-box" type="big" onClick={this.toggle} />}
-        {this.state.big || <BoxWithTransition transitionPair="box-to-box" type="small" onClick={this.toggle} className="float-right" />}
+        {this.state.big && <BoxWithAnimation animationPair="box-to-box" type="big" onClick={this.toggle} />}
+        {this.state.big || <BoxWithAnimation animationPair="box-to-box" type="small" onClick={this.toggle} className="float-right" />}
       </div>
     );
   }

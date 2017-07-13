@@ -2,12 +2,12 @@
 
 import React from 'react';
 import Photo from './Photo';
-import TransitionContainer from '../../../../src/TransitionContainer';
-import Transition from '../../../../src/Transition';
+import AnimationContainer from '../../../../src/AnimateContainer';
+import Animate from '../../../../src/Animate';
 import ScrollToTopOnMount from '../../ScrollToTOpOnMount';
 
 const DetailsPage = ({ onClick, src, description, name, color }: any) => (
-  <TransitionContainer pair={name} className="content-bg" style={{ backgroundColor: color }}>
+  <AnimationContainer pair={name} className="content-bg" style={{ backgroundColor: color }}>
     <ScrollToTopOnMount />
 
     <div className="content-text">
@@ -17,13 +17,13 @@ const DetailsPage = ({ onClick, src, description, name, color }: any) => (
     </div>
 
     <div className="content-margin">
-      <Transition
+      <Animate
         pair={name}
-        transitions={[[{
-          transition: 'move',
+        animations={[[{
+          animationName: 'move',
           duration: 400,
         }, {
-          transition: 'circle-shrink',
+          animationName: 'circle-shrink',
           duration: 400,
           background: color,
           fadeout: 500,
@@ -35,11 +35,11 @@ const DetailsPage = ({ onClick, src, description, name, color }: any) => (
           type="big"
           src={src}
         />
-      </Transition>
+      </Animate>
 
       {description}
     </div>
-  </TransitionContainer>
+  </AnimationContainer>
 );
 
 export default DetailsPage;

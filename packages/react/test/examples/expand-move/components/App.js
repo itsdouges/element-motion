@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Box from './Box';
-import withTransition from '../../../../src/withTransition';
+import withAnimation from '../../../../src/withAnimation';
 
 const Container = ({ children }: any) => (
   <div>
@@ -10,7 +10,7 @@ const Container = ({ children }: any) => (
   </div>
 );
 
-const BoxWithTransition = withTransition([{
+const BoxwithAnimation = withAnimation([{
   transition: 'expand',
   duration: 0.4,
   background: '#3d7596',
@@ -22,7 +22,7 @@ const BoxWithTransition = withTransition([{
   matchSize: true,
 }])(Box);
 
-const BoxWithReverseTransition = withTransition([{
+const BoxWithReverseTransition = withAnimation([{
   transition: 'expand',
   duration: 0.4,
   background: '#3d7596',
@@ -48,9 +48,9 @@ export default class App extends React.Component {
   render () {
     return (
       <div className="root">
-        {this.state.big && <Container><BoxWithReverseTransition transitionPair="box-to-box" type="big" onClick={this.toggle} /></Container>}
+        {this.state.big && <Container><BoxWithReverseTransition animationPair="box-to-box" type="big" onClick={this.toggle} /></Container>}
 
-        {this.state.big || <Container><BoxWithTransition transitionPair="box-to-box" type="small" onClick={this.toggle} className="float-right" /></Container>}
+        {this.state.big || <Container><BoxwithAnimation animationPair="box-to-box" type="small" onClick={this.toggle} className="float-right" /></Container>}
       </div>
     );
   }

@@ -3,7 +3,7 @@
 import React from 'react';
 import Box from './Box';
 import BoxWithContent from './BoxWithContent';
-import withTransition from '../../../../src/withTransition';
+import withAnimation from '../../../../src/withAnimation';
 
 const Container = ({ children, className }: any) => (
   <div className={className}>
@@ -11,7 +11,7 @@ const Container = ({ children, className }: any) => (
   </div>
 );
 
-const BoxWithTransition = withTransition([{
+const BoxWithTransition = withAnimation([{
   transition: 'expand',
   duration: 0.5,
   background: '#3d7596',
@@ -49,7 +49,7 @@ export default class App extends React.Component {
             <Box type="small" />
             <Box type="small" />
             <BoxWithTransition
-              transitionPair="box-to-box"
+              animationPair="box-to-box"
               type="small"
               onClick={this.toggle}
               className="box-highlighted"

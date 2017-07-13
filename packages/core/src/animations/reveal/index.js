@@ -31,6 +31,7 @@ export default function reveal (element: HTMLElement, options: Options, metadata
       ...metadata,
     },
     from: options.reverse ? to : from,
+    // $FlowFixMe - This isn't in the new world yet.
     to: options.reverse ? from : to,
   };
 }

@@ -1,5 +1,3 @@
-// @flow
-
 export default function deferred () {
   let resolve;
   let reject;

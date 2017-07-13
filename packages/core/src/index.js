@@ -1,8 +1,8 @@
 // @flow
 
-export type { Transition } from './orchestrator';
+export type { Animation } from './orchestrator';
 
-export { default as orchestrator, addTransitionListener, removeFromStore } from './orchestrator';
+export { default as orchestrator, addListener, removeFromStore } from './orchestrator';
 
 export {
   circleExpand,
@@ -10,4 +10,4 @@ export {
   fadeout,
   move,
   reveal,
-} from './transitions';
+} from './animations';

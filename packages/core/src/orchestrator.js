@@ -1,13 +1,13 @@
 // @flow
 
-import * as yubabaTransitions from './transitions';
+import * as animationDefinitions from './animations';
 import { calculateElementLocation, calculateElementSize } from '../../core/src/lib/dom';
 
 const REMOVE_DELAY = 100;
 const nodeStore = {};
 const listenerStore = {};
 
-export function addTransitionListener (pairName: string, cb: (boolean) => void) {
+export function addListener (pairName: string, cb: (boolean) => void) {
   listenerStore[pairName] = (listenerStore[pairName] || []);
   listenerStore[pairName].push(cb);
 
@@ -16,7 +16,7 @@ export function addTransitionListener (pairName: string, cb: (boolean) => void) 
   };
 }
 
-function notifyTransitionListener (pairName, value: boolean) {
+function notifyListener (pairName, value: boolean) {
   const cbArr = listenerStore[pairName];
   if (cbArr && cbArr.length) {
     cbArr.forEach((cb) => cb(value));
@@ -27,9 +27,9 @@ function readFromStore (pairName) {
   return nodeStore[pairName] || [];
 }
 
-function addToStore (pairName, { node, transitions }) {
+function addToStore (pairName, { node, animations }) {
   nodeStore[pairName] = (nodeStore[pairName] || []);
-  nodeStore[pairName].push({ node, transitions });
+  nodeStore[pairName].push({ node, animations });
 }
 
 function updateNodeData (pairName, { node, data }) {
@@ -56,18 +56,18 @@ export function removeFromStore (pairName: string, node: Element, withDelay: boo
   }
 }
 
-export type Transition = {
-  transition: 'move' | 'expand',
+export type Animation = {
+  animationName: 'move' | 'expand',
 };
 
 type Options = {
   node: HTMLElement,
-  transitions: Array<Transition>,
+  animations: Array<Animation>,
 };
 
 type Node = {
   node: HTMLElement,
-  transitions: Array<Transition>,
+  animations: Array<Animation>,
   data?: {
     location: {
       left: number,
@@ -83,24 +83,24 @@ type Node = {
 const toCamelCase = (str) => str.replace(/-[a-z]/g, (match) => match[1].toUpperCase());
 
 // This isn't fantastic. Basically the crux of the problem is
-// for these transitions they need the "end" element to act as the
+// for these animations they need the "end" element to act as the
 // "start" element. Don't have a elegant solution yet.
 // Issue: https://github.com/madou/yubaba/issues/31
 const toNodeFirstList = ['circle-shrink'];
-const inFlightTransitions = {};
+const inFlightAnimations = {};
 
-function prepareTransition (pairName, transition, fromNode, toNode) {
-  const { transition: name, ...options } = transition;
+function prepareAnimation (pairName, animation, fromNode, toNode) {
+  const { animationName: name, ...options } = animation;
   const inFlightName = `${pairName}${name}`;
 
   let toElement;
   let fromElement;
   let metadata;
 
-  if (inFlightTransitions[inFlightName]) {
-    process.env.NODE_ENV !== 'production' && console.log(`Found an inflight transition for ${pairName}, hijacking.`);
+  if (inFlightAnimations[inFlightName]) {
+    process.env.NODE_ENV !== 'production' && console.log(`Found an inflight animation for ${pairName}, hijacking.`);
 
-    fromElement = inFlightTransitions[inFlightName];
+    fromElement = inFlightAnimations[inFlightName];
     toElement = toNode.node;
     metadata = {
       newElement: false,
@@ -117,55 +117,55 @@ function prepareTransition (pairName, transition, fromNode, toNode) {
   const optionsWithStartCb = {
     ...options,
     onStart: ({ target }) => {
-      inFlightTransitions[inFlightName] = target;
+      inFlightAnimations[inFlightName] = target;
     },
   };
 
-  return yubabaTransitions[toCamelCase(name)](fromElement, optionsWithStartCb, metadata)(toElement)
+  return animationDefinitions[toCamelCase(name)](fromElement, optionsWithStartCb, metadata)(toElement)
     .then((result) => ({ result, options }));
 }
 
-function startTransition (
+function animate (
   pairName: string,
   fromNode: Node,
   toNode: Node,
 ) {
-  const transitionsStarters = fromNode.transitions.map((transition) => {
-    if (Array.isArray(transition)) {
-      const transitionGroup = transition;
+  const animationsStarters = fromNode.animations.map((animation) => {
+    if (Array.isArray(animation)) {
+      const animationGroup = animation;
 
       return () => Promise.all(
-        transitionGroup.map((transitionChild) => prepareTransition(pairName, transitionChild, fromNode, toNode))
+        animationGroup.map((animationChild) => prepareAnimation(pairName, animationChild, fromNode, toNode))
       );
     }
 
-    return () => prepareTransition(pairName, transition, fromNode, toNode);
+    return () => prepareAnimation(pairName, animation, fromNode, toNode);
   });
 
   let results = [];
 
-  transitionsStarters
+  animationsStarters
     .reduce((promise, start) => promise.then(() => {
       return start().then((result) => (results = results.concat(result)));
     }), Promise.resolve())
     .then(() => {
-      process.env.NODE_ENV !== 'production' && console.log(`Finished transition for ${pairName}.`);
+      process.env.NODE_ENV !== 'production' && console.log(`Finished animations for ${pairName}.`);
 
-      notifyTransitionListener(pairName, true);
+      notifyListener(pairName, true);
 
       const fadeouts = results
         .filter(({ options }) => options.fadeout)
         .map(({ result, options }) => {
-          return yubabaTransitions.fadeout(result.target, {
+          return animationDefinitions.fadeout(result.target, {
             duration: options.fadeout,
-          })();
+          })(result.target);
         });
 
       return Promise.all(fadeouts);
     })
     .then(() => {
       results.forEach(({ result }) => {
-        delete inFlightTransitions[`${pairName}${result.transition}`];
+        delete inFlightAnimations[`${pairName}${result.animationName}`];
         result.cleanup();
       });
     });
@@ -177,8 +177,8 @@ export default function orchestrator (pairName: string, options: Options) {
   if (nodeArr.length === 0) {
     process.env.NODE_ENV !== 'production' && console.log(`Found fromNode for "${pairName}".`);
 
-    notifyTransitionListener(pairName, true);
-    addToStore(pairName, { node: options.node, transitions: options.transitions });
+    notifyListener(pairName, true);
+    addToStore(pairName, { node: options.node, animations: options.animations });
 
     return;
   }
@@ -204,21 +204,21 @@ export default function orchestrator (pairName: string, options: Options) {
   }
 
   if (nodeArr.length === 1 && !isInNodeArr) {
-    process.env.NODE_ENV !== 'production' && console.log(`Found toNode for "${pairName}" pair, starting transition.`);
+    process.env.NODE_ENV !== 'production' && console.log(`Found toNode for "${pairName}" pair, starting animation.`);
 
     const [fromNode] = nodeArr;
-    const toNode = { node: options.node, transitions: options.transitions };
+    const toNode = { node: options.node, animations: options.animations };
 
     addToStore(pairName, toNode);
-    startTransition(pairName, fromNode, toNode);
+    animate(pairName, fromNode, toNode);
 
     return;
   }
 
   if (nodeArr.length === 2) {
-    process.env.NODE_ENV !== 'production' && console.log(`Found both nodes for "${pairName}", starting transition.`);
+    process.env.NODE_ENV !== 'production' && console.log(`Found both nodes for "${pairName}", starting animation.`);
     const [fromNode, toNode] = nodeArr;
 
-    startTransition(pairName, fromNode, toNode);
+    animate(pairName, fromNode, toNode);
   }
 }

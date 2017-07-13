@@ -70,7 +70,7 @@ const addPxIfNeeded = (key: string, value: string | number): string => {
   }
 };
 
-type Styles = { [string]: string | number };
+export type Styles = { [string]: string | number };
 
 export function applyStyles (element: HTMLElement, styles: Styles) {
   Object.keys(styles).forEach((key: any) => {
@@ -111,11 +111,11 @@ export function buildScaleTransform ({ scale3d, scale }: Styles) {
 }
 
 type CreateOptions = {
-  parentElement?: HTMLElement,
-  cloneFrom: HTMLElement,
+  parentElement?: ?HTMLElement,
+  cloneFrom?: ?HTMLElement,
 };
 
-export function createElement (styles: Styles, { parentElement, cloneFrom }: CreateOptions = {}) {
+export function createElement (styles: Styles, { parentElement, cloneFrom }: CreateOptions) {
   const newElement = document.createElement('div');
   const innerElement = (cloneFrom && cloneFrom.cloneNode(true));
   const parent = (parentElement || document.body);
@@ -130,7 +130,6 @@ export function createElement (styles: Styles, { parentElement, cloneFrom }: Cre
   }
 
   applyStyles(newElement, styles);
-  // transformScale(newElement, styles);
   parent && parent.appendChild(newElement);
 
   return newElement;

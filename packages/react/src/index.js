@@ -1,7 +1,7 @@
 // @flow
 
-import Transition from './Transition';
+import Animate from './Animate';
 
-export { default as TransitionContainer } from './TransitionContainer';
-export { default as withTransition } from './withTransition';
-export default Transition;
+export { default as AnimateContainer } from './AnimateContainer';
+export { default as withAnimation } from './withAnimation';
+export default Animate;

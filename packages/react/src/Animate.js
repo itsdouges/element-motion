@@ -1,19 +1,19 @@
 // @flow
 
 import type { Children } from 'react';
-import type { Transition as TransitionOptions } from 'yubaba-core';
+import type { Animation } from 'yubaba-core';
 
 import React from 'react';
-import { orchestrator, removeFromStore, addTransitionListener } from 'yubaba-core';
+import { orchestrator, removeFromStore, addListener } from 'yubaba-core';
 
-export default class Transition extends React.Component {
+export default class Animate extends React.Component {
   _node: HTMLElement;
   _detatch: Function;
 
   props: {
     pair: string,
     children?: Children,
-    transitions: Array<TransitionOptions>,
+    animations: Array<Animation>,
     style?: {
       [string]: any,
     },
@@ -24,7 +24,7 @@ export default class Transition extends React.Component {
   };
 
   componentDidMount () {
-    this._detatch = addTransitionListener(this.props.pair, this.setVisibility);
+    this._detatch = addListener(this.props.pair, this.setVisibility);
     this.initialise();
   }
 
@@ -50,13 +50,13 @@ export default class Transition extends React.Component {
 
     orchestrator(this.props.pair, {
       node: this._node.firstElementChild,
-      transitions: this.props.transitions,
+      animations: this.props.animations,
       shouldShow: this.setVisibility,
     });
   }
 
   render () {
-    const { pair, transitions, style, ...props } = this.props;
+    const { pair, animations, style, ...props } = this.props;
 
     return (
       <div
