@@ -46,6 +46,7 @@ export default function circleExpand (element: HTMLElement, options: Options, me
       newElement: true,
       applyScaleTransform: true,
       transitions: ['transform'],
+      ...metadata,
     },
     from: {
       left: location.left - ((elementHypotenuse - size.width) / 2),

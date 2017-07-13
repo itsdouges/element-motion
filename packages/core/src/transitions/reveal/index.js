@@ -1,11 +1,13 @@
 // @flow
 
+import type { Metadata } from '../../lib/location';
+
 type Options = {
   showFromElement: HTMLElement,
   reverse?: boolean,
 };
 
-export default function reveal (element: HTMLElement, options: Options) {
+export default function reveal (element: HTMLElement, options: Options, metadata: Metadata = {}) {
   const from = {
     height: options.showFromElement.clientHeight,
     width: options.showFromElement.clientWidth,
@@ -26,6 +28,7 @@ export default function reveal (element: HTMLElement, options: Options) {
       resetHeightOnFinish: !options.reverse,
       applyStyles: true,
       transitions: ['width', 'height'],
+      ...metadata,
     },
     from: options.reverse ? to : from,
     to: options.reverse ? from : to,

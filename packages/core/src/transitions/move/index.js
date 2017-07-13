@@ -36,6 +36,7 @@ export default function move (fromElement: HTMLElement, options: Options = {}, m
       transitions: ['transform'],
       createInBody: true,
       immediatelyApplyFrom: true,
+      ...metadata,
     },
     from: {
       ...fromLocation,

@@ -7,15 +7,15 @@ import {
 
 // NOTE: createInBody is forced to be true for now as the node in react is immediately removed
 // after the transition begins. If it's in that contain, the transition element is removed too!
-function setTarget (element, { newElement, cloneElement, createInBody = true }, fromElement) {
+function setTarget (element, { newElement, cloneElement, createInBody = true }, fromStyles) {
   let target;
 
   if (newElement) {
-    target = createElement(fromElement, {
+    target = createElement(fromStyles, {
       parentElement: createInBody ? document.body : element.parentElement,
     });
   } else if (cloneElement) {
-    target = createElement(fromElement, {
+    target = createElement(fromStyles, {
       cloneFrom: element,
       parentElement: createInBody ? document.body : element.parentElement,
     });

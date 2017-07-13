@@ -87,14 +87,26 @@ const toCamelCase = (str) => str.replace(/-[a-z]/g, (match) => match[1].toUpperC
 // "start" element. Don't have a elegant solution yet.
 // Issue: https://github.com/madou/yubaba/issues/31
 const toNodeFirstList = ['circle-shrink'];
+const inFlightTransitions = {};
 
-function prepareTransition (transition, fromNode, toNode) {
+function prepareTransition (pairName, transition, fromNode, toNode) {
   const { transition: name, ...options } = transition;
+  const inFlightName = `${pairName}${name}`;
+
   let toElement;
   let fromElement;
   let metadata;
 
-  if (toNodeFirstList.includes(name)) {
+  if (inFlightTransitions[inFlightName]) {
+    process.env.NODE_ENV !== 'production' && console.log(`Found an inflight transition for ${pairName}, hijacking.`);
+
+    fromElement = inFlightTransitions[inFlightName];
+    toElement = toNode.node;
+    metadata = {
+      newElement: false,
+      cloneElement: false,
+    };
+  } else if (toNodeFirstList.includes(name)) {
     fromElement = toNode.node;
   } else {
     fromElement = fromNode.node;
@@ -102,7 +114,14 @@ function prepareTransition (transition, fromNode, toNode) {
     metadata = fromNode.data;
   }
 
-  return yubabaTransitions[toCamelCase(name)](fromElement, options, metadata)(toElement)
+  const optionsWithStartCb = {
+    ...options,
+    onStart: ({ target }) => {
+      inFlightTransitions[inFlightName] = target;
+    },
+  };
+
+  return yubabaTransitions[toCamelCase(name)](fromElement, optionsWithStartCb, metadata)(toElement)
     .then((result) => ({ result, options }));
 }
 
@@ -116,11 +135,11 @@ function startTransition (
       const transitionGroup = transition;
 
       return () => Promise.all(
-        transitionGroup.map((transitionChild) => prepareTransition(transitionChild, fromNode, toNode))
+        transitionGroup.map((transitionChild) => prepareTransition(pairName, transitionChild, fromNode, toNode))
       );
     }
 
-    return () => prepareTransition(transition, fromNode, toNode);
+    return () => prepareTransition(pairName, transition, fromNode, toNode);
   });
 
   let results = [];
@@ -145,7 +164,10 @@ function startTransition (
       return Promise.all(fadeouts);
     })
     .then(() => {
-      results.forEach(({ result }) => result.cleanup());
+      results.forEach(({ result }) => {
+        delete inFlightTransitions[`${pairName}${result.transition}`];
+        result.cleanup();
+      });
     });
 }
 
