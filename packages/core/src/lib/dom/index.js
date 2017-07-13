@@ -94,40 +94,20 @@ type XY = {
   y?: number,
 };
 
-export function transformTranslate (element: HTMLElement, { x, y }: XY) {
+export function buildTranslateTransform ({ x, y }: XY) {
   if (!x || !y) {
-    return;
+    return '';
   }
 
-  applyStyles(element, {
-    transform: `translate3d(${x}px, ${y}px, 0)`,
-  });
+  return `translate3d(${x}px, ${y}px, 0)`;
 }
 
-export function transformScale (element: HTMLElement, { scale3d, scale, transformOrigin }: Styles) {
+export function buildScaleTransform ({ scale3d, scale }: Styles) {
   if (!scale3d && !scale) {
-    return;
+    return '';
   }
 
-  // scale3d takes presedence
-  const scaleModifier = scale3d ? `scale3d(${scale3d})` : `scale(${scale || 0})`;
-
-  let transform = element.style.transform;
-  if (transform.indexOf('scale') > -1) {
-    // replace any prexisting transform with a new one.
-    transform = transform.replace(/scale\(.*\)|scale3d\(.*\)/, scaleModifier);
-  } else if (transform.length > 0) {
-    transform = `${element.style.transform} ${scaleModifier}`;
-  } else {
-    transform = scaleModifier;
-  }
-
-  applyStyles(element, {
-    transformOrigin,
-    backfaceVisibility: 'hidden',
-    webkitBackgroundClip: 'content-box',
-    transform,
-  });
+  return scale3d ? `scale3d(${scale3d})` : `scale(${scale || 0})`;
 }
 
 type CreateOptions = {
@@ -150,7 +130,7 @@ export function createElement (styles: Styles, { parentElement, cloneFrom }: Cre
   }
 
   applyStyles(newElement, styles);
-  transformScale(newElement, styles);
+  // transformScale(newElement, styles);
   parent && parent.appendChild(newElement);
 
   return newElement;

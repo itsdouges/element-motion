@@ -22,11 +22,11 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
           transitions={[[{
             transition: 'circle-expand',
             background: item.color,
-            duration: 0.6,
-            fadeout: 0.5,
+            duration: 600,
+            fadeout: 500,
           }, {
             transition: 'move',
-            duration: 0.5,
+            duration: 500,
           }]]}
         >
           <Photo

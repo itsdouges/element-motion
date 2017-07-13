@@ -1,13 +1,8 @@
-import {
-  createElement,
-  applyStyles,
-  transformTranslate,
-  transformScale,
-} from './lib/dom';
+import { createElement } from './lib/dom';
 
 // NOTE: createInBody is forced to be true for now as the node in react is immediately removed
 // after the transition begins. If it's in that contain, the transition element is removed too!
-function setTarget (element, { newElement, cloneElement, createInBody = true }, fromStyles) {
+function getTargetElement (element, { newElement, cloneElement, createInBody = true }, fromStyles) {
   let target;
 
   if (newElement) {
@@ -26,131 +21,57 @@ function setTarget (element, { newElement, cloneElement, createInBody = true }, 
   return target;
 }
 
-function setEvents (element, { onStart, resolve, autoCleanup, name, resetHeightOnFinish }) {
-  if (onStart) {
-    onStart({
-      target: element,
-    });
-  }
+function prepareAnimation (element, { delay, duration, resolvePromise, transitionName, onStart }) {
+  let cleanedUp = false;
 
-  let transitionCleaned = false;
-
-  const cleanup = () => {
-    if (transitionCleaned) { return; }
-    transitionCleaned = true;
-    // This was erroring. Why?
-    element.parentElement && element.parentElement.removeChild(element);
-  };
-
-  const transitionEndEvent = () => {
-    element.removeEventListener('transitionend', transitionEndEvent, false);
-
-    if (resetHeightOnFinish) {
-      applyStyles(element, {
-        height: 'auto',
-        width: 'auto',
+  return (transitionTo) => {
+    if (onStart) {
+      onStart({
+        transition: transitionName,
+        target: element,
       });
     }
 
-    if (autoCleanup) {
-      cleanup();
-    }
-
-    return resolve({
-      transition: name,
-      target: element,
-      cleanup,
+    const animation = element.animate(transitionTo.keyframes, {
+      delay,
+      duration,
+      easing: 'ease-in-out',
+      fill: 'forwards',
     });
-  };
 
-  element.addEventListener('transitionend', transitionEndEvent, false);
-}
+    animation.onfinish = () => {
+      return resolvePromise({
+        transition: transitionName,
+        target: element,
+        cleanup: () => {
+          if (cleanedUp) {
+            return;
+          }
 
-function setInitialStyles (element, {
-  from,
-  immediatelyApplyFrom,
-  styleApply,
-  duration,
-  transitions,
-}) {
-  // eslint-disable-next-line no-param-reassign
-  element.style.transition = transitions
-    .map((transition) => `${transition} ${duration}s`)
-    .join(',');
-
-  if (immediatelyApplyFrom && styleApply) {
-    requestAnimationFrame(() => {
-      applyStyles(element, from);
-    });
-  }
-}
-
-function transitionFactory (element, {
-  applyTranslateTransform,
-  applyScaleTransform,
-  applyStyle,
-  delay,
-  from,
-}) {
-  return (to) => {
-    setTimeout(() => {
-      requestAnimationFrame(() => {
-        if (applyTranslateTransform) {
-          transformTranslate(element, {
-            x: to.left - from.left,
-            y: to.top - from.top,
-          });
-        }
-
-        if (applyScaleTransform) {
-          transformScale(element, to);
-        }
-
-        if (applyStyle) {
-          applyStyles(element, to);
-        }
+          cleanedUp = true;
+          element.parentElement && element.parentElement.removeChild(element);
+        },
       });
-    }, delay);
+    };
   };
 }
 
 export default function transitioner (element, {
-  transition: {
-    name,
-    from,
-    options,
-  },
+  transition,
+  resolve,
   options: {
     onStart,
-    delay = 5,
-    duration = 0.5,
-    autoCleanup,
-  },
-  resolve,
-}) {
-  const target = setTarget(element, options, from);
-
-  setEvents(target, {
-    name,
-    onStart,
-    autoCleanup,
-    resetHeightOnFinish: options.resetHeightOnFinish,
-    resolve,
-  });
-
-  setInitialStyles(target, {
-    immediatelyApplyFrom: options.immediatelyApplyFrom,
-    styleApply: options.applyStyles,
-    transitions: options.transitions,
-    duration,
-    from,
-  });
-
-  return transitionFactory(target, {
-    from,
-    applyTranslateTransform: options.applyTranslateTransform,
-    applyScaleTransform: options.applyScaleTransform,
-    applyStyle: options.applyStyles,
     delay,
+    duration = 500,
+  },
+}) {
+  const target = getTargetElement(element, transition.options || {}, transition.from || {});
+
+  return prepareAnimation(target, {
+    transitionName: transition.name,
+    resolvePromise: resolve,
+    duration,
+    delay,
+    onStart,
   });
 }

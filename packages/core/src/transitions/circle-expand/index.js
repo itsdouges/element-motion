@@ -44,8 +44,6 @@ export default function circleExpand (element: HTMLElement, options: Options, me
     name: 'circle-expand',
     options: {
       newElement: true,
-      applyScaleTransform: true,
-      transitions: ['transform'],
       ...metadata,
     },
     from: {
@@ -56,11 +54,14 @@ export default function circleExpand (element: HTMLElement, options: Options, me
       borderRadius: '50%',
       background: options.background,
       position: 'absolute',
-      scale: options.reverse ? scale : undefined,
       zIndex: options.zIndex || 9997,
     },
     to: {
-      scale: options.reverse ? 1 : scale,
+      keyframes: [{
+        transform: `scale(${options.reverse ? scale : 1})`,
+      }, {
+        transform: `scale(${options.reverse ? 1 : scale})`,
+      }],
     },
   };
 }
