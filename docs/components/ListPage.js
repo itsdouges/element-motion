@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Photo from './Photo';
-import Transition from '../../../../src/Transition';
+import Animate from '../../../../src/Animate';
 import items from './data';
 import createScrollStore from './KeepScrollPosition';
 
@@ -16,17 +16,17 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
 
     <div className="container-inner">
       {items.map((item) => (
-        <Transition
+        <Animate
           key={item.name}
           pair={item.name}
-          transitions={[[{
-            transition: 'circle-expand',
+          animations={[[{
+            animationName: 'swipe',
             background: item.color,
-            duration: 0.6,
-            fadeout: 0.5,
+            duration: 300,
+            fadeout: 500,
           }, {
-            transition: 'move',
-            duration: 0.5,
+            animationName: 'move',
+            duration: 500,
           }]]}
         >
           <Photo
@@ -36,7 +36,7 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
             className="box-highlighted"
             onClick={() => onClick(item)}
           />
-        </Transition>
+        </Animate>
       ))}
     </div>
 
