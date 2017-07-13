@@ -97,16 +97,7 @@ function prepareAnimation (pairName, animation, fromNode, toNode) {
   let fromElement;
   let metadata;
 
-  if (inFlightAnimations[inFlightName]) {
-    process.env.NODE_ENV !== 'production' && console.log(`Found an inflight animation for ${pairName}, hijacking.`);
-
-    fromElement = inFlightAnimations[inFlightName];
-    toElement = toNode.node;
-    metadata = {
-      newElement: false,
-      cloneElement: false,
-    };
-  } else if (toNodeFirstList.includes(name)) {
+  if (toNodeFirstList.includes(name)) {
     fromElement = toNode.node;
   } else {
     fromElement = fromNode.node;
@@ -116,8 +107,9 @@ function prepareAnimation (pairName, animation, fromNode, toNode) {
 
   const optionsWithStartCb = {
     ...options,
-    onStart: ({ target }) => {
-      inFlightAnimations[inFlightName] = target;
+    onStart: (anim) => {
+      process.env.NODE_ENV !== 'production' && console.log(`Starting ${inFlightName} animation.`);
+      inFlightAnimations[inFlightName] = anim.target;
     },
   };
 

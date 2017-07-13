@@ -25,24 +25,25 @@ function getTargetElement (element, { newElement, cloneElement, fromStyles }) {
 
 export type AnimationKeyframes = Array<Styles>;
 
-function prepareAnimation (element, { delay, duration, resolvePromise, animationName, onStart }) {
+function prepareAnimation (element, { easing, delay, duration, resolvePromise, animationName, onStart }) {
   let cleanedUp = false;
 
   return (animateTo: { keyframes: AnimationKeyframes }) => {
-    if (onStart) {
-      onStart({
-        animationName,
-        target: element,
-      });
-    }
-
     // $FlowFixMe - animate isn't on HTMLElement atm. We should fix this.
     const animation = element.animate(animateTo.keyframes, {
       delay,
       duration,
-      easing: 'ease-in-out',
+      easing,
       fill: 'forwards',
     });
+
+    if (onStart) {
+      onStart({
+        animation,
+        animationName,
+        target: element,
+      });
+    }
 
     animation.onfinish = () => {
       return resolvePromise({
@@ -61,6 +62,10 @@ function prepareAnimation (element, { delay, duration, resolvePromise, animation
   };
 }
 
+type Animation = {
+
+};
+
 type AnimationOptions = {
   animation: {
     name: string,
@@ -70,8 +75,10 @@ type AnimationOptions = {
   options: {
     duration: number,
     delay?: number,
+    easing?: string,
     onStart?: ({
       animationName: string,
+      animation: Animation,
       target: HTMLElement,
     }) => {},
   },
@@ -90,9 +97,10 @@ export default function animator (element: HTMLElement, { animation, resolve, op
 
   return prepareAnimation(target, {
     delay: options.delay,
-    duration: options.duration || 500,
     onStart: options.onStart,
     resolvePromise: resolve,
     animationName: animation.name,
+    duration: options.duration || 500,
+    easing: options.easing || 'ease-in-out',
   });
 }

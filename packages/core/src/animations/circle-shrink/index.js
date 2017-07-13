@@ -16,6 +16,5 @@ export default function circleShrink (element: HTMLElement, options: Options, me
       ...options,
       reverse: true,
     }, metadata),
-    name: 'circle-shrink',
   };
 }
