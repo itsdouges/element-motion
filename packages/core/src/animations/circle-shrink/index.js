@@ -15,6 +15,7 @@ export default function circleShrink (element: HTMLElement, options: Options, me
     ...circleExpand(element, {
       ...options,
       reverse: true,
+      easing: 'ease-out',
     }, metadata),
   };
 }
