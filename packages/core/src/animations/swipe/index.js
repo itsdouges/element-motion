@@ -13,7 +13,7 @@ export default function swipe (element: HTMLElement, options: Options) {
       easing: 'ease-out',
     },
     from: {
-      position: 'absolute',
+      position: 'fixed',
       left: -50,
       right: -50,
       top: -50,
