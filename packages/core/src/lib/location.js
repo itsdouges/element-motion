@@ -1,13 +1,11 @@
 // @flow
 
-import { calculateElementLocation, getDocumentScroll } from './dom';
+import { getElementSizeLocation, getDocumentScroll } from './dom';
 
 export type Metadata = {
-  size?: {
+  sizeLocation?: {
     width: number,
     height: number,
-  },
-  location?: {
     top: number,
     left: number,
     raw: {
@@ -17,18 +15,19 @@ export type Metadata = {
   },
 };
 
-export default function calculateLocation (node: HTMLElement, metadata: Metadata) {
-  const initialLocation = metadata.location;
-  if (!initialLocation) {
-    return calculateElementLocation(node);
+export default function calculateFromSizeLocation (node: HTMLElement, metadata: Metadata) {
+  const initialSizeLocation = metadata.sizeLocation;
+  if (!initialSizeLocation) {
+    return getElementSizeLocation(node);
   }
 
   const { scrollTop, scrollLeft } = getDocumentScroll();
-  const scrollTopDiff = (scrollTop - initialLocation.raw.scrollTop);
-  const scrollLeftDiff = (scrollLeft - initialLocation.raw.scrollLeft);
+  const scrollTopDiff = (scrollTop - initialSizeLocation.raw.scrollTop);
+  const scrollLeftDiff = (scrollLeft - initialSizeLocation.raw.scrollLeft);
 
   return {
-    top: initialLocation.top + scrollTopDiff,
-    left: initialLocation.left + scrollLeftDiff,
+    ...initialSizeLocation,
+    top: initialSizeLocation.top + scrollTopDiff,
+    left: initialSizeLocation.left + scrollLeftDiff,
   };
 }

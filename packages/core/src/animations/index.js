@@ -19,7 +19,7 @@ type AnimationFunc = (element: HTMLElement, options: Object, metadata?: Metadata
   to: { keyframes: AnimationKeyframes } | (toElement: HTMLElement) => { keyframes: AnimationKeyframes },
 });
 
-function animate (animationBuilder: AnimationFunc, element: HTMLElement, options: Object, metadata?: Metadata) {
+export function animate (animationBuilder: AnimationFunc, element: HTMLElement, options: Object, metadata?: Metadata) {
   const animation = animationBuilder(element, options, metadata);
   const defer = deferred();
 
@@ -63,5 +63,3 @@ export function reveal (element: HTMLElement, options: Object, metadata?: Metada
 export function swipe (element: HTMLElement, options: Object, metadata?: Metadata) {
   return animate(buildSwipe, element, options, metadata);
 }
-
-export const custom = animate;

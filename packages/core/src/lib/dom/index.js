@@ -2,13 +2,6 @@
 
 import { calculateHypotenuse } from '../math';
 
-export function calculateElementSize (element: HTMLElement) {
-  return {
-    width: element.clientWidth,
-    height: element.clientHeight,
-  };
-}
-
 export function getDocumentScroll () {
   const scrollTop = document.documentElement && document.documentElement.scrollTop
     ? document.documentElement.scrollTop
@@ -24,13 +17,15 @@ export function getDocumentScroll () {
   };
 }
 
-export function calculateElementLocation (element: HTMLElement) {
+export function getElementSizeLocation (element: HTMLElement) {
   const rect = element.getBoundingClientRect();
   const { scrollLeft, scrollTop } = getDocumentScroll();
 
   return {
     left: rect.left + scrollLeft,
     top: rect.top + scrollTop,
+    width: rect.width,
+    height: rect.height,
     raw: {
       rect,
       scrollTop,
@@ -40,12 +35,12 @@ export function calculateElementLocation (element: HTMLElement) {
 }
 
 export function calculateElementCircumcircle (element: HTMLElement) {
-  const size = calculateElementSize(element);
+  const { left, top, ...size } = getElementSizeLocation(element);
   const diameter = calculateHypotenuse(size);
-  const location = calculateElementLocation(element);
 
   return {
-    ...location,
+    left,
+    top,
     diameter,
   };
 }
@@ -80,12 +75,11 @@ export function applyStyles (element: HTMLElement, styles: Styles) {
 }
 
 export function calculateElementCenterInViewport (element: HTMLElement) {
-  const location = calculateElementLocation(element);
-  const size = calculateElementSize(element);
+  const sizeLocation = getElementSizeLocation(element);
 
   return {
-    top: location.top + Math.ceil(size.width / 2),
-    left: location.left - Math.ceil(size.height / 2),
+    top: sizeLocation.top + Math.ceil(sizeLocation.width / 2),
+    left: sizeLocation.left - Math.ceil(sizeLocation.height / 2),
   };
 }
 

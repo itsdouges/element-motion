@@ -1,7 +1,7 @@
 // @flow
 
 import * as animationDefinitions from './animations';
-import { calculateElementLocation, calculateElementSize } from '../../core/src/lib/dom';
+import { getElementSizeLocation } from '../../core/src/lib/dom';
 
 const REMOVE_DELAY = 100;
 const nodeStore = {};
@@ -32,12 +32,12 @@ function addToStore (pairName, { node, animations }) {
   nodeStore[pairName].push({ node, animations });
 }
 
-function updateNodeData (pairName, { node, data }) {
+function updateNodeData (pairName, { node, metadata }) {
   nodeStore[pairName] = nodeStore[pairName].map((item) => {
     if (item.node === node) {
       return {
         ...item,
-        data,
+        metadata,
       };
     }
 
@@ -68,7 +68,7 @@ type Options = {
 type Node = {
   node: HTMLElement,
   animations: Array<Animation>,
-  data?: {
+  metadata?: {
     location: {
       left: number,
       top: number,
@@ -81,6 +81,7 @@ type Node = {
 };
 
 const toCamelCase = (str) => str.replace(/-[a-z]/g, (match) => match[1].toUpperCase());
+const buildInflightName = (pairName, animationName) => `${pairName}${animationName}`;
 
 // This isn't fantastic. Basically the crux of the problem is
 // for these animations they need the "end" element to act as the
@@ -91,7 +92,7 @@ const inFlightAnimations = {};
 
 function prepareAnimation (pairName, animation, fromNode, toNode) {
   const { animationName: name, ...options } = animation;
-  const inFlightName = `${pairName}${name}`;
+  const inflightName = buildInflightName(pairName, name);
 
   let toElement;
   let fromElement;
@@ -102,14 +103,14 @@ function prepareAnimation (pairName, animation, fromNode, toNode) {
   } else {
     fromElement = fromNode.node;
     toElement = toNode.node;
-    metadata = fromNode.data;
+    metadata = fromNode.metadata;
   }
 
   const optionsWithStartCb = {
     ...options,
     onStart: (anim) => {
-      process.env.NODE_ENV !== 'production' && console.log(`Starting ${inFlightName} animation.`);
-      inFlightAnimations[inFlightName] = anim.target;
+      process.env.NODE_ENV !== 'production' && console.log(`Starting ${inflightName} animation.`);
+      inFlightAnimations[inflightName] = anim;
     },
   };
 
@@ -157,7 +158,7 @@ function animate (
     })
     .then(() => {
       results.forEach(({ result }) => {
-        delete inFlightAnimations[`${pairName}${result.animationName}`];
+        delete inFlightAnimations[buildInflightName(pairName, result.animationName)];
         result.cleanup();
       });
     });
@@ -181,14 +182,12 @@ export default function orchestrator (pairName: string, options: Options) {
     // This branch will get triggered only if the component was added, and then removed, from the vDOM.
     process.env.NODE_ENV !== 'production' && console.log(`Found fromNode for "${pairName}" pair, saving dimensions.`);
 
-    const location = calculateElementLocation(options.node);
-    const size = calculateElementSize(options.node);
+    const elementSizeLocation = getElementSizeLocation(options.node);
 
     updateNodeData(pairName, {
       node: options.node,
-      data: {
-        location,
-        size,
+      metadata: {
+        sizeLocation: elementSizeLocation,
       },
     });
 

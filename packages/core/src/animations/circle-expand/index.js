@@ -4,11 +4,10 @@ import type { Metadata } from '../../lib/location';
 
 import { calculateHypotenuse } from '../../lib/math';
 import {
-  calculateElementSize,
   calculateWindowCentre,
   calculateElementCenterInViewport,
 } from '../../lib/dom';
-import calculateFromLocation from '../../lib/location';
+import calculateFromSizeLocation from '../../lib/location';
 
 type Options = {
   background?: string,
@@ -17,11 +16,10 @@ type Options = {
 };
 
 export default function circleExpand (element: HTMLElement, options: Options, metadata: Metadata = {}) {
-  const location = calculateFromLocation(element, metadata);
-  const size = metadata.size || calculateElementSize(element);
-  const minSize = Math.min(size.width, size.height);
+  const sizeLocation = calculateFromSizeLocation(element, metadata);
+  const minSize = Math.min(sizeLocation.width, sizeLocation.height);
 
-  const elementHypotenuse = options.cover === false ? minSize : calculateHypotenuse(size);
+  const elementHypotenuse = options.cover === false ? minSize : calculateHypotenuse(sizeLocation);
 
   const windowHypotenuse = calculateHypotenuse({
     width: window.innerWidth,
@@ -47,8 +45,8 @@ export default function circleExpand (element: HTMLElement, options: Options, me
       ...metadata,
     },
     from: {
-      left: location.left - ((elementHypotenuse - size.width) / 2),
-      top: location.top - ((elementHypotenuse - size.height) / 2),
+      left: sizeLocation.left - ((elementHypotenuse - sizeLocation.width) / 2),
+      top: sizeLocation.top - ((elementHypotenuse - sizeLocation.height) / 2),
       width: elementHypotenuse,
       height: elementHypotenuse,
       borderRadius: '50%',
