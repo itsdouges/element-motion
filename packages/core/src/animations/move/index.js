@@ -27,7 +27,7 @@ export default function move (fromElement: HTMLElement, options: Options = {}, m
       zIndex: options.zIndex || 9999,
     },
     keyframes: (toElement: HTMLElement) => {
-      const toSizeLocation = getElementSizeLocation(toElement);
+      const toSizeLocation = getElementSizeLocation(toElement, { useOffsetSize: true });
 
       const x = toSizeLocation.left - sizeLocation.left;
       const y = toSizeLocation.top - sizeLocation.top;

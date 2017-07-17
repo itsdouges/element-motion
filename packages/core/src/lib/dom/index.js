@@ -25,15 +25,29 @@ type SizeLocation = {
   raw: Object,
 };
 
-export function getElementSizeLocation (element: HTMLElement): SizeLocation {
+type Options = {
+  useOffsetSize?: boolean,
+};
+
+export function getElementSizeLocation (element: HTMLElement, { useOffsetSize }: Options = {}): SizeLocation {
   const rect = element.getBoundingClientRect();
   const { scrollLeft, scrollTop } = getDocumentScroll();
+  let topOffset = 0;
+  let leftOffset = 0;
+
+  if (useOffsetSize) {
+    // If we're calculating from offset size, we need to calcuate the difference between
+    // offset/bounding height/width and remove it from bounding left/top.
+
+    topOffset = (rect.height - element.offsetHeight) / 2;
+    leftOffset = (rect.width - element.offsetWidth) / 2;
+  }
 
   return {
-    left: rect.left + scrollLeft,
-    top: rect.top + scrollTop,
-    width: rect.width,
-    height: rect.height,
+    left: rect.left + scrollLeft + leftOffset,
+    top: rect.top + scrollTop + topOffset,
+    width: useOffsetSize ? element.offsetWidth : rect.width,
+    height: useOffsetSize ? element.offsetHeight : rect.height,
     raw: {
       rect,
       scrollTop,
