@@ -19,6 +19,7 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
         <Animate
           key={item.name}
           pair={item.name}
+          className="wobble-in"
           animations={[[{
             animationName: 'swipe',
             background: item.color,
