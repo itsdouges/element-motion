@@ -28,9 +28,9 @@ export type AnimationKeyframes = Array<Styles>;
 function prepareAnimation (element, { easing, delay, duration, resolvePromise, animationName, onStart }) {
   let cleanedUp = false;
 
-  return (animateTo: { keyframes: AnimationKeyframes }) => {
+  return (keyframes: AnimationKeyframes) => {
     // $FlowFixMe - animate isn't on HTMLElement atm. We should fix this.
-    const animation = element.animate(animateTo.keyframes, {
+    const animation = element.animate(keyframes, {
       delay,
       duration,
       easing,
@@ -70,7 +70,7 @@ type AnimationOptions = {
   animation: {
     name: string,
     options: Object,
-    from: Styles,
+    styles: Styles,
   },
   options: {
     duration: number,
@@ -92,7 +92,7 @@ type AnimationOptions = {
 export default function animator (element: HTMLElement, { animation, resolve, options }: AnimationOptions) {
   const target = getTargetElement(element, {
     ...animation.options,
-    fromStyles: animation.from,
+    fromStyles: animation.styles,
   });
 
   return prepareAnimation(target, {

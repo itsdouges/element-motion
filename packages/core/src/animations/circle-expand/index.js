@@ -18,7 +18,6 @@ type Options = {
 export default function circleExpand (element: HTMLElement, options: Options, metadata: Metadata = {}) {
   const sizeLocation = calculateFromSizeLocation(element, metadata);
   const minSize = Math.min(sizeLocation.width, sizeLocation.height);
-
   const elementHypotenuse = options.cover === false ? minSize : calculateHypotenuse(sizeLocation);
 
   const windowHypotenuse = calculateHypotenuse({
@@ -35,7 +34,6 @@ export default function circleExpand (element: HTMLElement, options: Options, me
   };
 
   const hypotenuseDifference = calculateHypotenuse(difference);
-
   const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
 
   return {
@@ -44,22 +42,20 @@ export default function circleExpand (element: HTMLElement, options: Options, me
       newElement: true,
       ...metadata,
     },
-    from: {
+    styles: {
       left: sizeLocation.left - ((elementHypotenuse - sizeLocation.width) / 2),
       top: sizeLocation.top - ((elementHypotenuse - sizeLocation.height) / 2),
       width: elementHypotenuse,
       height: elementHypotenuse,
       borderRadius: '50%',
-      background: options.background,
       position: 'absolute',
+      backgroundColor: options.background || '',
       zIndex: options.zIndex || 9997,
     },
-    to: {
-      keyframes: [{
-        transform: `scale(${options.reverse ? scale : 1})`,
-      }, {
-        transform: `scale(${options.reverse ? 1 : scale})`,
-      }],
-    },
+    keyframes: [{
+      transform: `scale(${options.reverse ? scale : 1})`,
+    }, {
+      transform: `scale(${options.reverse ? 1 : scale})`,
+    }],
   };
 }

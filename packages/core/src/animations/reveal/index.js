@@ -30,8 +30,8 @@ export default function reveal (element: HTMLElement, options: Options, metadata
       transitions: ['width', 'height'],
       ...metadata,
     },
-    from: options.reverse ? to : from,
+    styles: options.reverse ? to : from,
     // $FlowFixMe - This isn't in the new world yet.
-    to: options.reverse ? from : to,
+    keyframes: options.reverse ? from : to,
   };
 }

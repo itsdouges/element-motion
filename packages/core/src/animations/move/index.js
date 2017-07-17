@@ -11,7 +11,7 @@ type Options = {
 };
 
 export default function move (fromElement: HTMLElement, options: Options = {}, metadata: Metadata = {}) {
-  const fromSizeLocation = calculateFromSizeLocation(fromElement, metadata);
+  const { raw, ...sizeLocation } = calculateFromSizeLocation(fromElement, metadata);
 
   return {
     name: 'move',
@@ -19,26 +19,24 @@ export default function move (fromElement: HTMLElement, options: Options = {}, m
       cloneElement: true,
       ...metadata,
     },
-    from: {
-      ...fromSizeLocation,
+    styles: {
+      ...sizeLocation,
       margin: 0,
       transformOrigin: '0 0',
       position: 'absolute',
       zIndex: options.zIndex || 9999,
     },
-    to: (toElement: HTMLElement) => {
+    keyframes: (toElement: HTMLElement) => {
       const toSizeLocation = getElementSizeLocation(toElement);
 
-      const x = toSizeLocation.left - fromSizeLocation.left;
-      const y = toSizeLocation.top - fromSizeLocation.top;
+      const x = toSizeLocation.left - sizeLocation.left;
+      const y = toSizeLocation.top - sizeLocation.top;
 
-      return {
-        keyframes: [{
-          transform: 'translate3d(0, 0, 0) scale3d(1, 1, 1)',
-        }, {
-          transform: `translate3d(${x}px, ${y}px, 0) scale3d(${percentageDifference(toSizeLocation.width, fromSizeLocation.width)}, ${percentageDifference(toSizeLocation.height, fromSizeLocation.height)}, 1)`,
-        }],
-      };
+      return [{
+        transform: 'translate3d(0, 0, 0) scale3d(1, 1, 1)',
+      }, {
+        transform: `translate3d(${x}px, ${y}px, 0) scale3d(${percentageDifference(toSizeLocation.width, sizeLocation.width)}, ${percentageDifference(toSizeLocation.height, sizeLocation.height)}, 1)`,
+      }];
     },
   };
 }

@@ -2,6 +2,7 @@
 
 import type { Metadata } from '../lib/location';
 import type { AnimationKeyframes } from '../animator';
+import type { Styles } from '../lib/dom';
 
 import animator from '../animator';
 import deferred from '../lib/deferred';
@@ -15,8 +16,8 @@ import buildSwipe from './swipe';
 type AnimationFunc = (element: HTMLElement, options: Object, metadata?: Metadata) => ({
   name: string,
   options: Object,
-  from: Object,
-  to: { keyframes: AnimationKeyframes } | (toElement: HTMLElement) => { keyframes: AnimationKeyframes },
+  styles: Styles,
+  keyframes: AnimationKeyframes | (toElement: HTMLElement) => AnimationKeyframes,
 });
 
 export function animate (animationBuilder: AnimationFunc, element: HTMLElement, options: Object, metadata?: Metadata) {
@@ -30,11 +31,11 @@ export function animate (animationBuilder: AnimationFunc, element: HTMLElement, 
   });
 
   return (toElement: HTMLElement) => {
-    const animateTo = (typeof animation.to === 'function')
-      ? animation.to(toElement)
-      : animation.to;
+    const keyframes = (typeof animation.keyframes === 'function')
+      ? animation.keyframes(toElement)
+      : animation.keyframes;
 
-    start(animateTo);
+    start(keyframes);
 
     return defer.promise;
   };

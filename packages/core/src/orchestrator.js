@@ -4,36 +4,36 @@ import * as animationDefinitions from './animations';
 import { getElementSizeLocation } from '../../core/src/lib/dom';
 
 const REMOVE_DELAY = 100;
-const nodeStore = {};
-const listenerStore = {};
+const NODE_STORE = {};
+const LISTENER_STORE = {};
 
 export function addListener (pairName: string, cb: (boolean) => void) {
-  listenerStore[pairName] = (listenerStore[pairName] || []);
-  listenerStore[pairName].push(cb);
+  LISTENER_STORE[pairName] = (LISTENER_STORE[pairName] || []);
+  LISTENER_STORE[pairName].push(cb);
 
   return () => {
-    listenerStore[pairName] = listenerStore[pairName].filter((listener) => listener !== cb);
+    LISTENER_STORE[pairName] = LISTENER_STORE[pairName].filter((listener) => listener !== cb);
   };
 }
 
 function notifyListener (pairName, value: boolean) {
-  const cbArr = listenerStore[pairName];
+  const cbArr = LISTENER_STORE[pairName];
   if (cbArr && cbArr.length) {
     cbArr.forEach((cb) => cb(value));
   }
 }
 
 function readFromStore (pairName) {
-  return nodeStore[pairName] || [];
+  return NODE_STORE[pairName] || [];
 }
 
 function addToStore (pairName, { node, animations }) {
-  nodeStore[pairName] = (nodeStore[pairName] || []);
-  nodeStore[pairName].push({ node, animations });
+  NODE_STORE[pairName] = (NODE_STORE[pairName] || []);
+  NODE_STORE[pairName].push({ node, animations });
 }
 
 function updateNodeData (pairName, { node, metadata }) {
-  nodeStore[pairName] = nodeStore[pairName].map((item) => {
+  NODE_STORE[pairName] = NODE_STORE[pairName].map((item) => {
     if (item.node === node) {
       return {
         ...item,
@@ -46,7 +46,7 @@ function updateNodeData (pairName, { node, metadata }) {
 }
 
 export function removeFromStore (pairName: string, node: Element, withDelay: boolean = false) {
-  const remove = () => (nodeStore[pairName] = nodeStore[pairName]
+  const remove = () => (NODE_STORE[pairName] = NODE_STORE[pairName]
     .filter(({ node: nodeInStore }) => nodeInStore !== node));
 
   if (withDelay) {
@@ -106,15 +106,13 @@ function prepareAnimation (pairName, animation, fromNode, toNode) {
     metadata = fromNode.metadata;
   }
 
-  const optionsWithStartCb = {
+  return animationDefinitions[toCamelCase(name)](fromElement, {
     ...options,
     onStart: (anim) => {
       process.env.NODE_ENV !== 'production' && console.log(`Starting ${inflightName} animation.`);
       inFlightAnimations[inflightName] = anim;
     },
-  };
-
-  return animationDefinitions[toCamelCase(name)](fromElement, optionsWithStartCb, metadata)(toElement)
+  }, metadata)(toElement)
     .then((result) => ({ result, options }));
 }
 

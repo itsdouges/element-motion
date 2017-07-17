@@ -12,7 +12,7 @@ export default function swipe (element: HTMLElement, options: Options) {
       newElement: true,
       easing: 'ease-out',
     },
-    from: {
+    styles: {
       position: 'fixed',
       left: -50,
       right: -50,
@@ -21,12 +21,10 @@ export default function swipe (element: HTMLElement, options: Options) {
       zIndex: options.zIndex || 9997,
       background: options.background,
     },
-    to: {
-      keyframes: [{
-        transform: 'translateY(100%)',
-      }, {
-        transform: 'translateY(0)',
-      }],
-    },
+    keyframes: [{
+      transform: 'translateY(100%)',
+    }, {
+      transform: 'translateY(0)',
+    }],
   };
 }

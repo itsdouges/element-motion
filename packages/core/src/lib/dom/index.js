@@ -17,7 +17,15 @@ export function getDocumentScroll () {
   };
 }
 
-export function getElementSizeLocation (element: HTMLElement) {
+type SizeLocation = {
+  left: number,
+  top: number,
+  width: number,
+  height: number,
+  raw: Object,
+};
+
+export function getElementSizeLocation (element: HTMLElement): SizeLocation {
   const rect = element.getBoundingClientRect();
   const { scrollLeft, scrollTop } = getDocumentScroll();
 
