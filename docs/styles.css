@@ -90,22 +90,22 @@ p {
 }
 
 @keyframes wobble {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.5;
+  from {
+    transform: scale(0.7);
+    opacity: 0;
   }
-  100% {
+  to {
     transform: scale(1);
     opacity: 1;
   }
 }
 
 .wobble-in {
-  transform: scale(0.9);
+  transform: scale(0.7);
   animation-name: wobble;
   animation-duration: 0.2s;
   animation-fill-mode: forwards;
-  opacity: 0.5;
+  opacity: 0 !important;
   animation-timing-function: ease-out;
 }
 

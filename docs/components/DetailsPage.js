@@ -4,7 +4,7 @@ import React from 'react';
 import Photo from './Photo';
 import AnimationContainer from '../../../../src/AnimateContainer';
 import Animate from '../../../../src/Animate';
-import ScrollToTopOnMount from '../../ScrollToTOpOnMount';
+import ScrollToTopOnMount from '../../ScrollToTopOnMount';
 
 const DetailsPage = ({ onClick, src, description, name, color }: any) => (
   <AnimationContainer pair={name} className="content-bg" style={{ backgroundColor: color }}>
