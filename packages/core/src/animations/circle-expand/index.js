@@ -16,7 +16,7 @@ type Options = {
 };
 
 export default function circleExpand (element: HTMLElement, options: Options, metadata: Metadata = {}) {
-  const sizeLocation = calculateFromSizeLocation(element, metadata);
+  const sizeLocation = calculateFromSizeLocation(element, metadata, { useOffsetSize: true });
   const minSize = Math.min(sizeLocation.width, sizeLocation.height);
   const elementHypotenuse = options.cover === false ? minSize : calculateHypotenuse(sizeLocation);
 

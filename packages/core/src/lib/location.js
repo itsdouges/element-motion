@@ -15,10 +15,18 @@ export type Metadata = {
   },
 };
 
-export default function calculateFromSizeLocation (node: HTMLElement, metadata: Metadata) {
+type Options = {
+  useOffsetsize?: boolean,
+};
+
+export default function calculateFromSizeLocation (
+  node: HTMLElement,
+  metadata: Metadata,
+  { useOffsetSize }: Options = {},
+) {
   const initialSizeLocation = metadata.sizeLocation;
   if (!initialSizeLocation) {
-    return getElementSizeLocation(node);
+    return getElementSizeLocation(node, { useOffsetSize });
   }
 
   const { scrollTop, scrollLeft } = getDocumentScroll();
