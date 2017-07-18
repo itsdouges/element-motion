@@ -16,7 +16,7 @@ export type Metadata = {
 };
 
 type Options = {
-  useOffsetsize?: boolean,
+  useOffsetSize?: boolean,
 };
 
 export default function calculateFromSizeLocation (
