@@ -3,9 +3,18 @@
 import * as animationDefinitions from './animations';
 import { getElementSizeLocation } from '../../core/src/lib/dom';
 
+const toCamelCase = (str) => str.replace(/-[a-z]/g, (match) => match[1].toUpperCase());
+const buildInflightName = (pairName, animationName) => `${pairName}${animationName}`;
+
+// This isn't fantastic. Basically the crux of the problem is
+// for these animations they need the "end" element to act as the
+// "start" element. Don't have a elegant solution yet.
+// Issue: https://github.com/madou/yubaba/issues/31
+const REQUIRES_LAST_NODE_AS_FIRST = ['circle-shrink'];
 const REMOVE_DELAY = 100;
 const NODE_STORE = {};
 const LISTENER_STORE = {};
+// const INFLIGHT_ANIMATIONS = {};
 
 export function addListener (pairName: string, cb: (boolean) => void) {
   LISTENER_STORE[pairName] = (LISTENER_STORE[pairName] || []);
@@ -80,16 +89,6 @@ type Node = {
   },
 };
 
-const toCamelCase = (str) => str.replace(/-[a-z]/g, (match) => match[1].toUpperCase());
-const buildInflightName = (pairName, animationName) => `${pairName}${animationName}`;
-
-// This isn't fantastic. Basically the crux of the problem is
-// for these animations they need the "end" element to act as the
-// "start" element. Don't have a elegant solution yet.
-// Issue: https://github.com/madou/yubaba/issues/31
-const toNodeFirstList = ['circle-shrink'];
-const inFlightAnimations = {};
-
 function prepareAnimation (pairName, animation, fromNode, toNode) {
   const { animationName: name, ...options } = animation;
   const inflightName = buildInflightName(pairName, name);
@@ -98,7 +97,17 @@ function prepareAnimation (pairName, animation, fromNode, toNode) {
   let fromElement;
   let metadata;
 
-  if (toNodeFirstList.includes(name)) {
+  // if (INFLIGHT_ANIMATIONS[inflightName]) {
+    // fromElement = toNode.node;
+    // INFLIGHT_ANIMATIONS[inflightName].animation.pause();
+
+    // fromElement = INFLIGHT_ANIMATIONS[inflightName].target;
+    // toElement = toNode.node;
+    // metadata = {
+    //   sizeLocation: getElementSizeLocation(fromElement, { useOffsetSize: true }),
+    // };
+  // } else
+  if (REQUIRES_LAST_NODE_AS_FIRST.includes(name)) {
     fromElement = toNode.node;
   } else {
     fromElement = fromNode.node;
@@ -108,9 +117,9 @@ function prepareAnimation (pairName, animation, fromNode, toNode) {
 
   return animationDefinitions[toCamelCase(name)](fromElement, {
     ...options,
-    onStart: (anim) => {
+    onStart: (/* anim*/) => {
       process.env.NODE_ENV !== 'production' && console.log(`Starting ${inflightName} animation.`);
-      inFlightAnimations[inflightName] = anim;
+      // INFLIGHT_ANIMATIONS[inflightName] = anim;
     },
   }, metadata)(toElement)
     .then((result) => ({ result, options }));
@@ -156,7 +165,7 @@ function animate (
     })
     .then(() => {
       results.forEach(({ result }) => {
-        delete inFlightAnimations[buildInflightName(pairName, result.animationName)];
+        // delete INFLIGHT_ANIMATIONS[buildInflightName(pairName, result.animationName)];
         result.cleanup();
       });
     });
