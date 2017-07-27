@@ -1,6 +1,6 @@
 {
   "name": "yubaba-core",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "yubaba Core",
   "main": "dist/yubaba-core.js",
   "scripts": {
