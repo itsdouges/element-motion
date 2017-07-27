@@ -1,6 +1,6 @@
 {
   "lerna": "2.0.0-beta.18",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "npmClient": "yarn",
   "publishConfig": {
     "ignore": [
