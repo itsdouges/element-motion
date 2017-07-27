@@ -3,7 +3,7 @@
 const { version } = require('../package.json');
 const { exec } = require('child_process');
 
-exec(`lerna publish --yes --skip-npm --skip-git --force-publish=* --repo-version=${version}`, (error, stdout, stderr) => {
+function handleErr (err, stderr, stdout) {
   if (error) {
     console.error(error);
     process.exit(1);
@@ -12,5 +12,9 @@ exec(`lerna publish --yes --skip-npm --skip-git --force-publish=* --repo-version
 
   console.log(stderr);
   console.log(stdout);
-  process.exit(0);
+}
+
+exec(`lerna publish --yes --skip-npm --skip-git --force-publish=* --repo-version=${version}`, (error, stdout, stderr) => {
+  handleErr(error, stderr, stdout);
+  exec(`git add .`, handleErr);
 });
