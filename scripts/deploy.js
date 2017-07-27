@@ -10,7 +10,7 @@ exec(`lerna publish --yes --skip-npm --skip-git --force-publish=* --repo-version
     return;
   }
 
-  console.log(strerr);
+  console.log(stderr);
   console.log(stdout);
   process.exit(0);
 });
