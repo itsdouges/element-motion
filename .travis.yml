@@ -8,12 +8,9 @@ cache:
   directories:
     - node_modules
 after_success: npm run codecov
-before_deploy: "echo hello"
 deploy:
-  provider: npm
-  script: npm run deploy
+  provider: script
+  script: touch ~/.npmrc && echo "//registry.npmjs.org/:_authToken=$NPM_KEY" >> .npmrc && npm run deploy
   skip_cleanup: true
-  email: "laheen@gmail.com"
-  api_key: $NPM_KEY
   on:
     tags: true
