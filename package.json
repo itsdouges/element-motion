@@ -23,7 +23,7 @@
     "core:publish": "cd packages/core && npm publish",
     "react:publish": "cd packages/react && npm publish",
     "preversion": "npm test",
-    "version": "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && npm run ./scripts/deploy",
+    "version": "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && node ./scripts/deploy",
     "postversion": "git push && git push --tags"
   },
   "devDependencies": {
