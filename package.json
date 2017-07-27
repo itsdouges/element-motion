@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean",
+    "clean": "lerna clean --yes && rm -rf packages/core/dist/ && rm -rf packages/react/dist/",
     "build": "lerna run build",
     "lint": "eslint .",
     "test": "npm run lint && npm run unit && npm run flow",
@@ -18,7 +18,7 @@
     "react:unit": "mocha \"./packages/react/src/**/*.spec.js\" --opts ./packages/react/test/mocha.opts",
     "codecov": "echo \"not implemented\"",
     "docs": "NODE_ENV=production bash ./scripts/buildDocs.sh",
-    "publish": "lerna publish --yes --skip-npm"
+    "publish": "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && lerna publish --yes --skip-npm"
   },
   "devDependencies": {
     "babel": "^6.5.2",
