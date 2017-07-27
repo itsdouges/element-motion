@@ -3,14 +3,15 @@ node_js:
   - "7.9.0"
 script:
   - npm run bootstrap && npm run test && npm run build
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: bash scripts/deploy.sh
-  on:
-    all_branches: true
 cache:
   yarn: true
   directories:
     - node_modules
 after_success: npm run codecov
+deploy:
+  provider: npm
+  skip_cleanup: true
+  email: "laheen@gmail.com"
+  api_key: $NPM_KEY
+  on:
+    tags: true
