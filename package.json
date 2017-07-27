@@ -2,7 +2,7 @@
   "name": "yubaba",
   "private": true,
   "license": "MIT",
-  "version": "0.0.0",
+  "version": "0.1.8",
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes && rm -rf packages/core/dist/ && rm -rf packages/react/dist/",
@@ -22,7 +22,9 @@
     "publish": "npm run core:publish && npm run react:publish",
     "core:publish": "cd packages/core && npm publish",
     "react:publish": "cd packages/react && npm publish",
-    "prepare-publish": "lerna publish --yes --skip-npm --force-publish=*"
+    "preversion": "npm test",
+    "version": "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && npm run ./scripts/deploy",
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
     "babel": "^6.5.2",
