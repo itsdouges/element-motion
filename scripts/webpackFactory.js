@@ -35,7 +35,6 @@ module.exports = (params) => {
     }, params.devServer),
     plugins: [params.plugins].concat([
       new webpack.EnvironmentPlugin(['NODE_ENV']),
-      process.env.NODE_ENV === 'production' && new webpack.optimize.UglifyJsPlugin(),
     ]).filter(Boolean),
   };
 

@@ -1,4 +1,4 @@
-const buildConfig = require('../../scripts/webpack-factory');
+const buildConfig = require('../../scripts/webpackFactory');
 
 const lib = {
   entry: {
@@ -22,7 +22,7 @@ const makeTestPage = (name) => ({
 
 const config = process.env.EXAMPLE ? makeTestPage(process.env.EXAMPLE) : [
   lib,
-  makeTestPage('dark-side'),
-];
+  process.env.NODE_ENV !== 'production' && makeTestPage('dark-side'),
+].filter(Boolean);
 
 module.exports = Array.isArray(config) ? config.map(buildConfig) : buildConfig(config);

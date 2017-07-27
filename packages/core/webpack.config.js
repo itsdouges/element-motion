@@ -1,8 +1,10 @@
-module.exports = require('../../scripts/webpack-factory')({
-  entry: {
+const _ = require('lodash');
+
+module.exports = require('../../scripts/webpackFactory')({
+  entry: _.pickBy({
     'yubaba-core': './src/index',
-    'app.move': './test/examples/move/app',
-  },
+    'app.move': process.env.NODE_ENV !== 'production' && './test/examples/move/app',
+  }, Boolean),
   path: './dist',
   filename: '[name].js',
   library: 'yubaba',
