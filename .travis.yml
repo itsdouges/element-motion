@@ -8,6 +8,7 @@ cache:
   directories:
     - node_modules
 after_success: npm run codecov
+before_deploy: "echo hello"
 deploy:
   provider: npm
   script: npm run deploy
