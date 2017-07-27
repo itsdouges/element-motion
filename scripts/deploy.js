@@ -16,5 +16,5 @@ function handleErr (error, stderr, stdout) {
 
 exec(`lerna publish --yes --skip-npm --skip-git --force-publish=* --repo-version=${version}`, (error, stdout, stderr) => {
   handleErr(error, stderr, stdout);
-  exec(`git add .`, handleErr);
+  exec('git add .', handleErr);
 });
