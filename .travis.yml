@@ -10,7 +10,7 @@ cache:
 after_success: npm run codecov
 deploy:
   provider: script
-  script: touch ~/.npmrc && echo "//registry.npmjs.org/:_authToken=$NPM_KEY" >> .npmrc && npm run publish
+  script: touch ./.npmrc && echo "//registry.npmjs.org/:_authToken=$NPM_KEY" >> .npmrc && npm run publish
   skip_cleanup: true
   on:
     tags: true
