@@ -3,7 +3,7 @@
 const { version } = require('../package.json');
 const { exec } = require('child_process');
 
-function handleErr (err, stderr, stdout) {
+function handleErr (error, stderr, stdout) {
   if (error) {
     console.error(error);
     process.exit(1);
