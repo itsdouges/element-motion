@@ -6,10 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
 
-## [undefined][] - 2017-07-27
+## [0.1.0][] - 2017-07-27
 ### Added
 - Initial release
 
 
-[Unreleased]: https://github.com/madou/yubaba/compare/vundefined...HEAD
-[undefined]: https://github.com/madou/yubaba/tree/vundefined
+[Unreleased]: https://github.com/madou/yubaba/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/madou/yubaba/tree/v0.1.0

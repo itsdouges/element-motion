@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "7.9.0"
 script:
-  - npm run bootstrap && npm run test && npm run build
+  - npm run bootstrap && npm run build && npm run test
 cache:
   yarn: true
   directories:
@@ -13,5 +13,6 @@ deploy:
   skip_cleanup: true
   email: "laheen@gmail.com"
   api_key: $NPM_KEY
+  before_deploy: "npm run publish"
   on:
     tags: true

@@ -2,6 +2,7 @@
   "name": "yubaba",
   "private": true,
   "license": "MIT",
+  "version": "0.0.0",
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes && rm -rf packages/core/dist/ && rm -rf packages/react/dist/",
@@ -18,7 +19,10 @@
     "react:unit": "mocha \"./packages/react/src/**/*.spec.js\" --opts ./packages/react/test/mocha.opts",
     "codecov": "echo \"not implemented\"",
     "docs": "NODE_ENV=production bash ./scripts/buildDocs.sh",
-    "publish": "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && lerna publish --yes --skip-npm"
+    "publish": "npm run core:publish && npm run react:publish",
+    "core:publish": "cd packages/core && npm publish",
+    "react:publish": "cd packages/react && npm publish",
+    "prepare-publish": "lerna publish --yes --skip-npm --conventional-commits && git push && git push --tags"
   },
   "devDependencies": {
     "babel": "^6.5.2",
