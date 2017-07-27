@@ -22,7 +22,7 @@
     "publish": "npm run core:publish && npm run react:publish",
     "core:publish": "cd packages/core && npm publish",
     "react:publish": "cd packages/react && npm publish",
-    "prepare-publish": "lerna publish --yes --skip-npm --conventional-commits --force-publish=*"
+    "prepare-publish": "lerna publish --yes --skip-npm --force-publish=*"
   },
   "devDependencies": {
     "babel": "^6.5.2",

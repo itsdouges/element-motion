@@ -10,9 +10,9 @@ cache:
 after_success: npm run codecov
 deploy:
   provider: npm
+  script: npm run deploy
   skip_cleanup: true
   email: "laheen@gmail.com"
   api_key: $NPM_KEY
-  before_deploy: "npm run publish"
   on:
     tags: true
