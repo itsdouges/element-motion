@@ -36,7 +36,7 @@ const AnimatedBlock = () => (
 
 All other props are passed through to the root element.
 
-#### [Animation Orchestration: See the core README](https://github.com/madou/yubaba/blob/master/packages/core/README.md#Animation%20Orchestration)
+#### [Animation Orchestration: See the core README](https://github.com/madou/yubaba/blob/master/packages/core/README.md#animation-orchestration)
 
 ### `withAnimation(animations: Array<Animation | Array<Animation>>)(ReactClass<*>) => ReactClass<*>`
 
