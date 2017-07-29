@@ -1,5 +1,4 @@
 <p align="center">
-  <br />
   <img src="https://github.com/madou/yubaba/blob/master/icon.png?raw=true" style="margin:0 auto" />
 </p>
 
@@ -7,43 +6,62 @@
   yubaba
 
   <a href="https://travis-ci.org/madou/yubaba"><img alt="Build Status" src="https://travis-ci.org/madou/yubaba.svg?branch=master"></a>
+  <a href="https://codecov.io/gh/madou/yubaba"><img alt="codecov" src="https://codecov.io/gh/madou/yubaba/branch/master/graph/badge.svg"></a>
+  <a href="https://david-dm.org/madou/yubaba"><img alt="Dependency Status" src="http://img.shields.io/david/madou/yubaba.svg?style=flat-squarer"></a>
 </h1>
 
-Yubaba is an animation orchestration library that aims to expose a simple api to perform complex animations between page elements. React bindings are available, with Vue, Angular, and more coming soon.
+Yubaba is an animation orchestration library that aims to make complex animations between page elements easy. React bindings are available, with Vue, Angular, and more coming soon.
 
-It's as easy as defining your start component:
+Let's assume we're using React. It's as easy as:
+
+1. Declaring your start component:
 
 ```javascript
+import Animate from 'react-yubaba';
+
 const SmallBox = () => (
-  <Animate pair="my-animation" animations={[{
-    animationName: 'move',
-    duration: 500,
-  }]}>
+  <Animate
+    pair="my-animation"
+    animations={[{
+      animationName: 'move',
+      duration: 500,
+    }]}
+  >
     <div className="my-small-box" />
   </Animate>
 );
 ```
 
-Defining your end component:
+1. Declaring your end component:
 
 ```javascript
+import Animate from 'react-yubaba';
+
 const BigBox = () => (
-  <Animate pair="my-animation" animations={[{
-    animationName: 'move',
-    duration: 500,
-  }]}>
+  <Animate
+    pair="my-animation"
+    animations={[{
+      animationName: 'move',
+      duration: 500,
+    }]}
+  >
     <div className="my-big-box" />
   </Animate>
 );
 ```
 
-And mounting them when appropriate:
+1. And mounting them when appropriate:
 
 ```javascript
-<div>
-  {bigShown && <BigBox />}
-  {bigShown || <SmallBox />}
-</div>
+import BigBox from './big-box';
+import SmallBox from './small-box';
+
+const BoxShower = ({ bigShown }) => (
+  <div>
+    {bigShown && <BigBox />}
+    {bigShown || <SmallBox />}
+  </div>
+);
 ```
 
 Yubaba does all the heavy lifting behind the scenes! Check out the README's below.
@@ -59,6 +77,5 @@ Yubaba does all the heavy lifting behind the scenes! Check out the README's belo
 ### [React: The Dark Side](https://github.com/madou/yubaba/tree/master/packages/react/test/examples/dark-side/)
 
 <p align="center">
-  <br />
   <a href="https://madou.github.io/yubaba/"><img src="https://github.com/madou/yubaba/blob/master/packages/react/test/examples/dark-side/example.gif?raw=true" style="margin:0 auto" /></a>
 </p>
