@@ -1,4 +1,4 @@
-# react-yubaba
+# react-yubaba [![NPM version](http://img.shields.io/npm/v/react-yubaba.svg?style=flat-square)](https://www.npmjs.com/package/react-yubaba) [![NPM downloads](http://img.shields.io/npm/dm/react-yubaba.svg?style=flat-square)](https://www.npmjs.com/package/react-yubaba)
 
 ```sh
 npm install react-yubaba
@@ -6,23 +6,23 @@ npm install react-yubaba
 
 ## Usage
 
-### `<Transition />`
+### `<Animate />`
 
-This is the base component for `react-yubaba`. `<Transition />` should be created in pairs, one for the source, one for the destination, using the `pair` prop, with an optional `<TransitionContainer />`.
+This is the primary component used. An `<Animate />` should be created in pairs, one for the source, one for the destination, using the `pair` prop.
 
 ```javascript
-import Transition from 'react-yubaba';
+import Animate from 'react-yubaba';
 
-const MySweetList = () => (
-  <Transition
+const AnimatedBlock = () => (
+  <Animate
     pair="page-to-sweet"
-    transitions={[{
-      transition: 'move',
+    animations={[{
+      animationName: 'move',
       duration: 0.5,
     }]}
   >
-    <div>sweet transitions</div>
-  </Transition>
+    <div>This is a block</div>
+  </Animate>
 );
 ```
 
@@ -30,68 +30,64 @@ const MySweetList = () => (
 
 | prop | type | required | description |
 |-|-|-|-|
-| pair | `string` | yes | Transition pair name. This should be the same name as your pairing `<Transition />`. |
-| transitions | `Array<Transition>`  | yes | Array of transitions to apply to the component, see below for more details. |
+| pair | `string` | yes | Animation pair name. Both the source and destination `<Animate />` should have the same pair name. |
+| animations | `Array<Animation | Array<Animation>>`  | yes | Array of animations to apply to the component, see below for more details. |
 | children | `Children`  | no | n/a |
 
 All other props are passed through to the root element.
 
-#### [Transition: See the core README](https://github.com/madou/yubaba/blob/master/packages/core/README.md#Transitions)
+#### [Animation Orchestration: See the core README](https://github.com/madou/yubaba/blob/master/packages/core/README.md#Animation%20Orchestration)
 
-### `withTransition(transitions: Array<Transition>)(ReactClass<*>) => ReactClass<*>`
+### `withAnimation(animations: Array<Animation | Array<Animation>>)(ReactClass<*>) => ReactClass<*>`
 
-If you find you don't need to define the transitions during the react lifecycle you can use the
-`withTransition` decorator to define them up front.
+If you find you don't need to define the transitions during the react lifecycle you can use this decorator to define them.
 
 ```javascript
-import { withTransition } from 'react-yubaba';
+import { withAnimation } from 'react-yubaba';
 
-const Sweet = () => <div>sweet transitions</div>;
-const SweetWithTransition = withTransition([{
-  transition: 'move',
+const Block = () => <div>Text Block</div>;
+
+const AnimatedBlock = withAnimation([{
+  animationName: 'move',
   duration: 0.5,
-}])(Sweet);
+}])(Block);
 
-const MySweetList = () => (
-  <SweetWithTransition transitionPair="page-to-sweet" />
-);
+const Page = () => <AnimatedBlock animationPair="page-to-sweet" />;
 ```
-
-#### [Transition: See the core README](https://github.com/madou/yubaba/blob/master/packages/core/README.md#Transitions)
 
 #### Props
 
 | prop | type | required | description |
 |-|-|-|-|
-| transitionPair | `string` | yes | Transition pair name. This should be the same name as your pairing `<Transition />`. |
+| animationPair | `string` | yes | Animation pair name. Both the source and destination `<Animate />` should have the same pair name. |
 
-### `<TransitionContainer />`
+### `<AnimateContainer />`
 
-Useful if you have content you want to keep hidden until a transition has completed.
-It shows it's children based on two cases:
+Useful if you have content you want to keep hidden until an animation pair has finished.
+The children are shown in two cases:
 
-1) Pairing transition completed (delayed show)
-1) Pairing transition is not yet initialised (immediate show)
+1) When the container mounts and then the animation pair finishes
+1) When the container mounts and there is no animation prepared yet
 
 ```javascript
-import { TransitionContainer } from 'react-yubaba';
+import { AnimateContainer } from 'react-yubaba';
 
-const MySweetPage = () => (
-  <TransitionContainer pair="page-to-sweet" className="MySweetPage_root">
-    <Transition
-      pair="page-to-sweet"
+const Page = () => (
+  <AnimateContainer pair="my-animation-pair">
+    <Animate
+      pair="my-animation-pair"
       transitions={[{
         transition: 'move',
         duration: 0.5,
       }]}
     >
-      <div>sweet transitions</div>
-    </Transition>
+      <div>My block of text</div>
+    </Animate>
 
     <p>
-      How sweet is this! It is like a honey bee.
+      My block of content
     </p>
-  </TransitionContainer>
+  </AnimateContainer>
 );
 ```
 
@@ -99,7 +95,7 @@ const MySweetPage = () => (
 
 | prop | type | required | description |
 |-|-|-|-|
-| pair | `string` | yes | Transition pair name. This should be the same name as your pairing `<Transition />`. |
+| pair | `string` | yes | Animation pair name. Both the source and destination `<Animate />` should have the same pair name. |
 | children | `Children`  | no | n/a |
 
 All other props are passed through to the root element.

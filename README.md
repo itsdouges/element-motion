@@ -9,6 +9,10 @@
   <a href="https://travis-ci.org/madou/yubaba"><img alt="Build Status" src="https://travis-ci.org/madou/yubaba.svg?branch=master"></a>
 </h1>
 
+## [Yubaba Core README](https://github.com/madou/yubaba/blob/master/packages/core/README.md)
+
+## [React Bindings README](https://github.com/madou/yubaba/blob/master/packages/react/README.md)
+
 ## Examples
 
 ### [React: The Dark Side](https://madou.github.io/yubaba/)
@@ -17,10 +21,6 @@
   <br />
   <img src="https://github.com/madou/yubaba/blob/master/packages/react/test/examples/dark-side/example.gif?raw=true" style="margin:0 auto" />
 </p>
-
-## [Yubaba Core](https://github.com/madou/yubaba/blob/master/packages/core/README.md)
-
-## [React Bindings](https://github.com/madou/yubaba/blob/master/packages/react/README.md)
 
 ## Troubleshooting
 

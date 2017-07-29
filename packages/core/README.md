@@ -1,98 +1,174 @@
-# yubaba-core
+# yubaba-core [![NPM version](http://img.shields.io/npm/v/yubaba-core.svg?style=flat-square)](https://www.npmjs.com/package/yubaba-core) [![NPM downloads](http://img.shields.io/npm/dm/yubaba-core.svg?style=flat-square)](https://www.npmjs.com/package/yubaba-core)
 
 ```sh
 npm install yubaba-core
 ```
 
-## Usage
+## Animation Orchestration
 
-#### Method signature
+Defined animations are calculated in blocks of arrays. For example, for the given animation definition:
 
 ```javascript
-import { func } from 'yubaba-core';
-const transition = func(DOMElement, options);
-
-transition.promise.then();
-transition.start();
+const animation = [
+  {
+    animationName: 'circle-shrink',
+    duration: 400,
+    background: '#fff',
+    fadeout: 500,
+  },
+  {
+    animationName: 'move',
+    duration: 400,
+  },
+];
 ```
+
+This will circle expand from the source element, and when the animation is complete will move the element from the source to the destination.
+
+But what if we wanted both to happen at the same time? Well given the next animation definition:
+
+```javascript
+const animation = [
+  [
+    {
+      animationName: 'circle-shrink',
+      duration: 400,
+      background: '#fff',
+      fadeout: 500,
+    },
+    {
+      animationName: 'move',
+      duration: 400,
+    },
+  ],
+];
+```
+
+We've moved the animations inside another array. This will make both animations happen at the same time. You can mix and match as well! We can have animations happen at the same time, and then after they finish fire off other animations, like so:
+
+```javascript
+const animation = [
+  [
+    {
+      animationName: 'circle-shrink',
+      duration: 400,
+      background: '#fff',
+      fadeout: 500,
+    },
+    {
+      animationName: 'move',
+      duration: 400,
+    },
+  ],
+  {
+    animationName: 'circle-expand',
+    duration: 100,
+    background: '#000',
+  },
+];
+```
+
+### Common Props
+
+| prop | type | required | description |
+|-|-|-|-|
+| animationName | `string` | yes | The animation name. See below for the animation definitions. The name should be in `kebab-case`. |
+| duration | `number` | yes | In ms, the duration of the animation. |
+| fadeout | `number` | no | Fadeout the animation at the end of the animation. In ms. |
+
+For the specific props for each animation look below in Animation Definitions.
+
+## Animation Definitions
 
 ### General options
 
-- autoCleanup (bool)
-- duration (number)
-- delay (number)
-- onStart (func)
+- autoCleanup (bool, optional)
+- duration (number, optional)
+- delay (number, optional)
+- onStart (func, optional)
 
-#### Transition object
-
-- promise (Promise)
-- start (func, returns Promise)
-
-### Move
+### `move`
 
 #### Options
 
-- matchSize (bool)
+- zIndex (number, optional)
 
 #### Usage
 
 ```javascript
 import { move } from 'yubaba-core';
 
-const transition = move(document.getElementById('start-element'), {
-  matchSize: true,
+const animate = move(document.getElementById('start-element'), {
+  zIndex: 2,
 });
 
-transition.start(document.getElementById('end-element'));
+animate(document.getElementById('end-element')).then();
 ```
 
-### Expand
+### `circleExpand`
 
 #### Options
 
 - background (string)
-- reverse (bool)
-- cover (bool)
+- cover (bool, optional)
+- zIndex (number, optional)
 
 #### Usage
 
 ```javascript
-import { expand } from 'yubaba-core';
+import { circleExpand } from 'yubaba-core';
 
-expand(document.getElementById('start-element'), {
-  autoStart: true,
+const animate = circleExpand(document.getElementById('start-element'), {
   background: 'blue',
 });
+
+// Note no end element needed
+animate().then();
 ```
 
-### Reveal
+### `circleShrink`
 
 #### Options
 
-- showFromElement (DOMElement)
-- reverse (bool)
+- background (string)
+- cover (bool, optional)
+- zIndex (number, optional)
 
 #### Usage
 
-```html
-<div id="start-container">
-  <div id="start-icon"></div>
-</div>
-```
-
 ```javascript
-import { reveal } from 'material-transitions-core';
+import { circleShrink } from 'yubaba-core';
 
-const transition = reveal(document.getElementById('start-container'), {
-  matchSize: true,
-  showFromElement: document.getElementById('start-icon'),
+const animate = circleShrink(document.getElementById('start-element'), {
+  background: 'blue',
 });
 
-transition.start();
+// Note no end element needed
+animate().then();
 ```
 
+### `swipe`
 
-### Fadeout
+#### Options
+
+- background (string)
+- cover (bool, optional)
+- zIndex (number, optional)
+
+#### Usage
+
+```javascript
+import { swipe } from 'yubaba-core';
+
+const animate = swipe(document.getElementById('start-element'), {
+  background: 'blue',
+});
+
+// Note no end element needed
+animate().then();
+```
+
+### `fadeout`
 
 #### Options
 
@@ -103,7 +179,8 @@ None.
 ```javascript
 import { fadeout } from 'yubaba-core';
 
-fadeout(document.getElementById('start-element'), {
-  autoStart: true,
-});
+const animate = fadeout(document.getElementById('start-element'))();
+
+// Note no end element needed
+animate().then();
 ```
