@@ -13,8 +13,7 @@
     "yubaba-core": "^0.1.9"
   },
   "peerDependencies": {
-    "react": "^15.1.0",
-    "react-addons-transition-group": "^15.1.0"
+    "react": "0.13.x || 0.14.x || ^15.0.0-0 || 15.x"
   },
   "devDependencies": {
     "babel-preset-react": "^6.5.0",
