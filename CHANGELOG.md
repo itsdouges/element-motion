@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
+
+## [0.1.13][] - 2017-07-30
 ### Changed
 - Improved readmes slightly
 
@@ -30,7 +32,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial release
 
 
-[Unreleased]: https://github.com/madou/yubaba/compare/v0.1.12...HEAD
+[Unreleased]: https://github.com/madou/yubaba/compare/v0.1.13...HEAD
+[0.1.13]: https://github.com/madou/yubaba/compare/v0.1.12...v0.1.13
 [0.1.12]: https://github.com/madou/yubaba/compare/v0.1.11...v0.1.12
 [0.1.11]: https://github.com/madou/yubaba/compare/v0.1.10...v0.1.11
 [0.1.10]: https://github.com/madou/yubaba/compare/v0.1.9...v0.1.10
