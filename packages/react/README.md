@@ -4,6 +4,10 @@
 npm install react-yubaba
 ```
 
+## Requirements
+
+Under the hood yubaba uses the [https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API](Web Animations API). Make sure you [have a polyfill](https://github.com/web-animations/web-animations-js) if targetting browsers that don't support it.
+
 ## Usage
 
 ### `<Animate />`
