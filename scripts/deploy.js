@@ -12,6 +12,7 @@ function handleErr (error, stderr, stdout) {
 
   console.log(stderr);
   console.log(stdout);
+  process.exit(0);
 }
 
 exec(`lerna publish --yes --skip-npm --skip-git --force-publish=* --repo-version=${version}`, (error, stdout, stderr) => {
