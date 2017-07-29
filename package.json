@@ -2,7 +2,7 @@
   "name": "yubaba",
   "private": true,
   "license": "MIT",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes && rm -rf packages/core/dist/ && rm -rf packages/react/dist/",
