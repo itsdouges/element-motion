@@ -6,7 +6,7 @@ npm install yubaba-core
 
 ## Requirements
 
-Under the hood yubaba uses the [https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API](Web Animations API). Make sure you [have a polyfill](https://github.com/web-animations/web-animations-js) if targetting browsers that don't support it.
+Under the hood yubaba uses the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API). Make sure you [have a polyfill](https://github.com/web-animations/web-animations-js) if targetting browsers that don't support it.
 
 ## Animation Orchestration
 
