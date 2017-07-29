@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = (params) => {
-  const config = {
+  const config = Object.assign({}, params, {
     entry: params.entry,
     output: {
       path: params.path,
@@ -36,7 +36,7 @@ module.exports = (params) => {
     plugins: [params.plugins].concat([
       new webpack.EnvironmentPlugin(['NODE_ENV']),
     ]).filter(Boolean),
-  };
+  });
 
   if (params.loaders) {
     config.module.loaders = config.module.loaders.concat(params.loaders);

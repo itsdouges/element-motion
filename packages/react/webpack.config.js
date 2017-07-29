@@ -4,6 +4,13 @@ const lib = {
   entry: {
     'yubaba-react': './src/index',
   },
+  externals: {
+    react: {
+      commonjs: 'react',
+      amd: 'react',
+      root: 'React',
+    },
+  },
   path: './dist',
   filename: '[name].js',
   library: 'yubabaReact',

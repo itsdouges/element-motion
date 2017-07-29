@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
+### Removed
+- Unneeded files from package output
+- Added react as an external
 
 ## [0.1.9][] - 2017-07-28
 ### Added
