@@ -1,6 +1,6 @@
 {
   "name": "react-yubaba",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "yubaba React",
   "main": "dist/react-yubaba.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "madou",
   "license": "MIT",
   "dependencies": {
-    "yubaba-core": "^0.1.10"
+    "yubaba-core": "^0.1.11"
   },
   "peerDependencies": {
     "react": "0.13.x || 0.14.x || ^15.0.0-0 || 15.x"
