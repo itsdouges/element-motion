@@ -75,23 +75,20 @@ const animation = [
 | animationName | `string` | yes | The animation name. See below for the animation definitions. The name should be in `kebab-case`. |
 | duration | `number` | yes | In ms, the duration of the animation. |
 | fadeout | `number` | no | Fadeout the animation at the end of the animation. In ms. |
+| delay | `number` | no | Delays the animation in ms. |
+| onStart | `Function` | no | Callback that is triggered when the animation is started. |
 
 For the specific props for each animation look below in Animation Definitions.
 
 ## Animation Definitions
 
-### General options
-
-- autoCleanup (bool, optional)
-- duration (number, optional)
-- delay (number, optional)
-- onStart (func, optional)
-
 ### `move`
 
-#### Options
+#### Extra Options
 
-- zIndex (number, optional)
+| prop | type | required | description |
+|-|-|-|-|
+| zIndex | `number` | no | zIndex override |
 
 #### Usage
 
@@ -107,11 +104,13 @@ animate(document.getElementById('end-element')).then();
 
 ### `circleExpand`
 
-#### Options
+#### Extra Options
 
-- background (string)
-- cover (bool, optional)
-- zIndex (number, optional)
+| prop | type | required | description |
+|-|-|-|-|
+| background | `string` | yes | Background style for the animation container. |
+| cover | `boolean` | no | Should the animation container cover the entire viewport. Defaults to true. |
+| zIndex | `number` | no | zIndex override |
 
 #### Usage
 
@@ -128,11 +127,13 @@ animate().then();
 
 ### `circleShrink`
 
-#### Options
+#### Extra Options
 
-- background (string)
-- cover (bool, optional)
-- zIndex (number, optional)
+| prop | type | required | description |
+|-|-|-|-|
+| background | `string` | yes | Background style for the animation container. |
+| cover | `boolean` | no | Should the animation container cover the entire viewport. Defaults to true. |
+| zIndex | `number` | no | zIndex override |
 
 #### Usage
 
@@ -149,11 +150,13 @@ animate().then();
 
 ### `swipe`
 
-#### Options
+#### Extra Options
 
-- background (string)
-- cover (bool, optional)
-- zIndex (number, optional)
+| prop | type | required | description |
+|-|-|-|-|
+| background | `string` | yes | Background style for the animation container. |
+| cover | `boolean` | no | Should the animation container cover the entire viewport. Defaults to true. |
+| zIndex | `number` | no | zIndex override |
 
 #### Usage
 
@@ -169,10 +172,6 @@ animate().then();
 ```
 
 ### `fadeout`
-
-#### Options
-
-None.
 
 #### Usage
 
