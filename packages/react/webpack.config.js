@@ -10,6 +10,11 @@ const lib = {
       amd: 'react',
       root: 'React',
     },
+    'yubaba-core': {
+      commonjs: 'yubaba-core',
+      amd: 'yubaba',
+      root: 'yubaba',
+    },
   },
   path: './dist',
   filename: '[name].js',
