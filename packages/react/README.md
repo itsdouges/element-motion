@@ -31,7 +31,7 @@ const AnimatedBlock = () => (
 | prop | type | required | description |
 |-|-|-|-|
 | pair | `string` | yes | Animation pair name. Both the source and destination `<Animate />` should have the same pair name. |
-| animations | `Array<Animation | Array<Animation>>`  | yes | Array of animations to apply to the component, see below for more details. |
+| animations | `Array<Animation \| Array<Animation>>`  | yes | Array of animations to apply to the component, see below for more details. |
 | children | `Children`  | no | n/a |
 
 All other props are passed through to the root element.
