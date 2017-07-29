@@ -1,8 +1,10 @@
 {
   "name": "yubaba",
   "private": true,
-  "license": "MIT",
   "version": "0.1.14",
+  "repository": "madou/yubaba",
+  "author": "Michael Dougall",
+  "license": "MIT",
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes && rm -rf packages/core/dist/ && rm -rf packages/react/dist/",

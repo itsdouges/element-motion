@@ -3,12 +3,13 @@
   "version": "0.1.14",
   "description": "yubaba Core",
   "main": "dist/yubaba-core.js",
+  "repository": "madou/yubaba",
+  "author": "Michael Dougall",
+  "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --open",
     "build": "webpack"
   },
-  "author": "madou",
-  "license": "MIT",
   "devDependencies": {
     "normalize.css": "^7.0.0"
   }
