@@ -32,7 +32,7 @@ const SmallBox = () => (
 );
 ```
 
-1. Declaring your end component:
+2. Declaring your end component:
 
 ```javascript
 import Animate from 'react-yubaba';
@@ -50,7 +50,7 @@ const BigBox = () => (
 );
 ```
 
-1. And mounting them when appropriate:
+3. And mounting them when appropriate:
 
 ```javascript
 import BigBox from './big-box';
@@ -64,7 +64,7 @@ const BoxShower = ({ bigShown }) => (
 );
 ```
 
-Yubaba does all the heavy lifting behind the scenes! Check out the README's below.
+Yubaba does all the heavy lifting behind the scenes! Check out the READMEs below.
 
 ## [Yubaba Core README](https://github.com/madou/yubaba/blob/master/packages/core/README.md)
 
