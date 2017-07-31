@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import 'normalize.css';
 import App from './App';
 
-import '../common/styles.css';
+import '../assets/styles.css';
 
 const rootEl = document.createElement('div');
 document.body && document.body.appendChild(rootEl);

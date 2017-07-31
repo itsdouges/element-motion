@@ -10,7 +10,7 @@ const Photo = ({ type, className, src, onClick }: Props) => (
     onClick={onClick}
     className={`box box-${type}${className ? ` ${className}` : ''}`}
     // $FlowFixMe - Dynamic import
-    style={{ backgroundImage: `url(${require(`../common/images/${src}`)})` }}
+    style={{ backgroundImage: `url(${require(`../assets/images/${src}`)})` }}
   />
 );
 

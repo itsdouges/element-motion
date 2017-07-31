@@ -12,7 +12,7 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
   <div className="container">
     <RestoreScrollPositionOnMount />
 
-    <img alt="Empire Insignia" src={`/${require('../common/images/logo.png')}`} className="insignia" />
+    <img alt="Empire Insignia" src={`/${require('../assets/images/logo.png')}`} className="insignia" />
 
     <div className="container-inner">
       {items.map((item) => (
@@ -23,11 +23,11 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
           animations={[[{
             animationName: 'swipe',
             background: item.color,
-            duration: 300,
+            duration: 200,
             fadeout: 500,
           }, {
             animationName: 'move',
-            duration: 500,
+            duration: 300,
           }]]}
         >
           <Photo
