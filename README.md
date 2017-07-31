@@ -25,54 +25,72 @@ Yubaba is an animation orchestration library that aims to make complex animation
 
 Let's assume we're using React. It's as easy as:
 
-1. Declaring your start component:
-
 ```javascript
-import Animate from 'react-yubaba';
+import React from "react";
+import { render } from "react-dom";
+import Animate from "react-yubaba";
 
-const SmallBox = () => (
-  <Animate
-    pair="my-animation"
-    animations={[{
-      animationName: 'move',
-      duration: 500,
-    }]}
-  >
-    <div className="my-small-box" />
-  </Animate>
-);
-```
+const boxStyles = {
+  width: 100,
+  height: 100,
+  backgroundColor: 'blue',
+};
 
-2. Declaring your end component:
+const bigBoxStyles = {
+  ...boxStyles,
+  width: 400,
+  height: 400,
+};
 
-```javascript
-import Animate from 'react-yubaba';
+class App extends React.Component {
+  state = {
+    bigShown: false,
+  };
 
-const BigBox = () => (
-  <Animate
-    pair="my-animation"
-    animations={[{
-      animationName: 'move',
-      duration: 500,
-    }]}
-  >
-    <div className="my-big-box" />
-  </Animate>
-);
-```
+  toggle = () => this.setState((prevState) => ({
+    bigShown: !prevState.bigShown,
+  }));
 
-3. And mounting them when appropriate:
+  render () {
+    return (
+      <div>
+        {/* Render the from component */}
+        {this.state.bigShown || (
+          <Animate
+            // Make sure both from and to components
+            // have the same pair name!
+            pair="small-and-big"
+            animations={[{
+              animationName: "move",
+              duration: 500
+            }]}
+          >
+            <div onClick={this.toggle} style={boxStyles} />
+          </Animate>
+        )}
 
-```javascript
-import BigBox from './big-box';
-import SmallBox from './small-box';
+        {/* Render the to component */}
+        {this.state.bigShown && (
+          <Animate
+            // Make sure both from and to components
+            // have the same pair name!
+            pair="small-and-big"
+            animations={[{
+              animationName: "move",
+              duration: 500
+            }]}
+          >
+            <div onClick={this.toggle} style={bigBoxStyles} />
+          </Animate>
+        )}
+      </div>
+    );
+  }
+}
 
-const BoxShower = ({ bigShown }) => (
-  <div>
-    {bigShown && <BigBox />}
-    {bigShown || <SmallBox />}
-  </div>
-);
+// And then click on the elements for the transition to start!
+
+render(<App />, document.getElementById('root'));
 ```
 
 Yubaba does all the heavy lifting behind the scenes! Check out the READMEs below.
