@@ -13,6 +13,11 @@ module.exports = (params) => {
     module: {
       loaders: [
         {
+          test: /\.(css)$/,
+          loader: 'style-loader!css-loader',
+          name: 'assets/[name].[ext]',
+        },
+        {
           test: /\.js$/,
           loader: 'babel-loader',
           exclude: /node_modules/,
@@ -21,6 +26,8 @@ module.exports = (params) => {
           test: /\.(png|jpg|jpeg|gif)$/,
           loader: 'file-loader',
           exlude: /node_moduels/,
+          name: 'assets/[name].[ext]',
+          publicPath: 'asd',
         },
       ],
     },
@@ -33,7 +40,7 @@ module.exports = (params) => {
     devServer: Object.assign({
       publicPath: '/',
     }, params.devServer),
-    plugins: [params.plugins].concat([
+    plugins: [].concat(params.plugins).concat([
       new webpack.EnvironmentPlugin(['NODE_ENV']),
     ]).filter(Boolean),
   });
