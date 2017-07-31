@@ -8,7 +8,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes && rm -rf packages/core/dist/ && rm -rf packages/react/dist/",
-    "build": "lerna run build",
+    "build": "lerna run build && node ./scripts buildDocs.js",
     "lint": "eslint .",
     "test": "npm run lint && npm run unit && npm run flow",
     "unit": "npm run core:unit && npm run react:unit",
@@ -56,6 +56,7 @@
     "eslint-plugin-react": "^7.1.0",
     "file-loader": "^0.11.2",
     "flow-bin": "^0.51.0",
+    "glob": "^7.1.2",
     "html-webpack-plugin": "^2.29.0",
     "inject-loader": "^2.0.1",
     "jsdom": "^11.0.0",
@@ -72,6 +73,7 @@
     "sinon": "^2.3.5",
     "sinon-chai": "^2.11.0",
     "style-loader": "^0.18.2",
+    "subdirs": "^1.0.1",
     "version-changelog": "^2.1.0",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
