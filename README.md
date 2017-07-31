@@ -1,7 +1,7 @@
 
 
 <h1 align="center">
-  <img src="https://github.com/madou/yubaba/blob/master/icon.png?raw=true" style="margin:0 auto;width:100px;height:100px;" />
+  <img src="https://github.com/madou/yubaba/blob/master/icon.png?raw=true" width="100px" height="100px" style="margin:0 auto;width:100px;height:100px;" />
   <div align="center">
     yubaba
   </div>
