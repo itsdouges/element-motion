@@ -3,7 +3,7 @@
 import React from 'react';
 import Box from './Box';
 import BoxWithContent from './BoxWithContent';
-import withAnimation from '../../../../src/withAnimation';
+import { withAnimation } from '../../../packages/react/src';
 
 const Container = ({ children, className }: any) => (
   <div className={className}>
@@ -11,17 +11,19 @@ const Container = ({ children, className }: any) => (
   </div>
 );
 
-const BoxWithTransition = withAnimation([{
-  transition: 'expand',
-  duration: 0.5,
+// Note both animations happen at the same time because they're
+// inside their own array!
+const BoxWithTransition = withAnimation([[{
+  animationName: 'circle-expand',
+  duration: 400,
   background: '#3d7596',
-  autoStart: true,
-  cover: true,
+  // Note fadeout is truthy! If it's false, it will disappear immediately after the
+  // animation.
+  fadeout: 100,
 }, {
-  transition: 'move',
-  duration: 0.5,
-  matchSize: true,
-}])(Box);
+  animationName: 'move',
+  duration: 500,
+}]])(Box);
 
 export default class App extends React.Component {
   state = {

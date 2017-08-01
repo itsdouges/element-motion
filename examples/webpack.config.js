@@ -1,17 +1,24 @@
 const buildConfig = require('../scripts/webpackFactory');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const PORT = '3000';
+const PORT = '2222';
 
 const makeTestPage = (name) => ({
   entry: {
     [name]: `./examples/${name}`,
   },
+  noLib: true,
   path: `${__dirname}/../docs/examples/${name}`,
+  publicPath: process.env.EXAMPLE ? '/' : `/examples/${name}/`,
   filename: '[name].js',
   devServer: {
     publicPath: '/',
     port: PORT,
+  },
+  resolve: {
+    alias: {
+      'yubaba-core': `${__dirname}/../packages/core/src`,
+    },
   },
   plugins: [
     new HtmlWebpackPlugin(),

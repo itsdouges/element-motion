@@ -12,7 +12,7 @@ const ListPage = ({ onClick }: { onClick: Function }) => (
   <div className="container">
     <RestoreScrollPositionOnMount />
 
-    <img alt="Empire Insignia" src={`/${require('../assets/images/logo.png')}`} className="insignia" />
+    <img alt="Empire Insignia" src={`${require('../assets/images/logo.png')}`} className="insignia" />
 
     <div className="container-inner">
       {items.map((item) => (

@@ -6,11 +6,11 @@ module.exports = (params) => {
     output: {
       path: params.path,
       filename: params.filename,
-      library: params.library,
-      libraryTarget: 'umd',
+      publicPath: params.publicPath,
     },
     devtool: 'cheap-module-source-map',
     module: {
+      strictExportPresence: true,
       loaders: [
         {
           test: /\.(css)$/,
@@ -27,16 +27,15 @@ module.exports = (params) => {
           loader: 'file-loader',
           exlude: /node_moduels/,
           name: 'assets/[name].[ext]',
-          publicPath: 'asd',
         },
       ],
     },
-    resolve: {
+    resolve: Object.assign({
       extensions: [
         '',
         '.js',
       ],
-    },
+    }, params.resolve),
     devServer: Object.assign({
       publicPath: '/',
     }, params.devServer),

@@ -2,20 +2,22 @@
 
 import React from 'react';
 import Box from './Box';
-import AnimateContainer from '../../../../src/AnimateContainer';
-import withAnimation from '../../../../src/withAnimation';
 
-const BoxWithReverseTransition = withAnimation([{
-  transition: 'expand',
-  duration: 0.4,
+import { withAnimation, AnimateContainer } from '../../../packages/react/src';
+
+// Note both animations happen at the same time because they're
+// inside their own array!
+const BoxWithReverseTransition = withAnimation([[{
+  animationName: 'circle-shrink',
+  duration: 700,
   background: '#3d7596',
-  reverse: true,
-  cover: true,
+  // Note fadeout is true! If it's false, it will disappear immediately after the
+  // animation.
+  fadeout: 200,
 }, {
-  transition: 'move',
-  duration: 0.7,
-  matchSize: true,
-}])(Box);
+  animationName: 'move',
+  duration: 400,
+}]])(Box);
 
 const BoxWithContent = ({ onClick }: any) => (
   <AnimateContainer pair="box-to-box" className="content-margin">

@@ -26,8 +26,6 @@ async function build () {
     if (err) {
       console.error(err);
     }
-
-    console.log('Finished!');
   });
 }
 
