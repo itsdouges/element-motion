@@ -8,7 +8,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes && rm -rf packages/core/dist/ && rm -rf packages/react/dist/",
-    "build": "lerna run build && node ./scripts buildDocs.js",
+    "build": "lerna run build",
     "lint": "eslint .",
     "test": "npm run lint && npm run unit && npm run flow",
     "unit": "npm run core:unit && npm run react:unit",
