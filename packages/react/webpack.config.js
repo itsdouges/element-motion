@@ -21,4 +21,5 @@ module.exports = buildConfig({
   path: './dist',
   filename: '[name].js',
   library: 'reactYubaba',
+  devtool: 'cheap-module-source-map',
 });

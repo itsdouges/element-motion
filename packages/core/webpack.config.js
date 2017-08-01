@@ -5,4 +5,5 @@ module.exports = require('../../scripts/webpackFactory')({
   path: './dist',
   filename: '[name].js',
   library: 'yubaba',
+  devtool: 'cheap-module-source-map',
 });

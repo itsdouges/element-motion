@@ -11,7 +11,7 @@ const Links = () => (
   <div className="link-container">
     <a className="github-cta" href="https://github.com/madou/yubaba">Back to GitHub</a>
     {links.map((link) =>
-      libraries.map((lib) => <a href={`/yubaba/examples/${lib}/${link}`}>{`${lib}js ${link}`}</a>))}
+      libraries.map((lib) => <a href={`/yubaba/examples/${link}/${lib}`}>{`${lib}js ${link}`}</a>))}
   </div>
 );
 

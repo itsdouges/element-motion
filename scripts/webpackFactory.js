@@ -8,7 +8,6 @@ module.exports = (params) => {
       filename: params.filename,
       publicPath: params.publicPath,
     },
-    devtool: 'cheap-module-source-map',
     module: {
       strictExportPresence: true,
       loaders: [

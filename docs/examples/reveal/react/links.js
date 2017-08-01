@@ -75,7 +75,7 @@
 	      return libraries.map(function (lib) {
 	        return _react2.default.createElement(
 	          'a',
-	          { href: '/yubaba/examples/' + lib + '/' + link },
+	          { href: '/yubaba/examples/' + link + '/' + lib },
 	          lib + 'js ' + link
 	        );
 	      });
@@ -21428,4 +21428,3 @@
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=links.js.map

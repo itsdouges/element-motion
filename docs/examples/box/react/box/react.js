@@ -21037,7 +21037,7 @@
 	  return AnimateContainer;
 	}(_react2.default.Component);
 
-		exports.default = AnimateContainer;
+	exports.default = AnimateContainer;
 
 /***/ }),
 /* 172 */
@@ -25178,7 +25178,7 @@
 	    duration: options.duration || 500,
 	    easing: options.easing || animation.options.easing || 'ease-in-out'
 	  });
-		}
+	}
 
 /***/ }),
 /* 206 */
@@ -25394,7 +25394,7 @@
 	    resolve: resolve,
 	    reject: reject
 	  };
-		}
+	}
 
 /***/ }),
 /* 209 */
@@ -25464,7 +25464,7 @@
 	      transform: 'scale(' + (options.reverse ? 1 : scale) + ')'
 	    }]
 	  };
-		}
+	}
 
 /***/ }),
 /* 210 */
@@ -25502,7 +25502,7 @@
 	    top: initialSizeLocation.top + scrollTopDiff,
 	    left: initialSizeLocation.left + scrollLeftDiff
 	  });
-		}
+	}
 
 /***/ }),
 /* 211 */
@@ -25531,7 +25531,7 @@
 	    reverse: true,
 	    easing: 'ease-out'
 	  }), metadata));
-		}
+	}
 
 /***/ }),
 /* 212 */
@@ -25554,7 +25554,7 @@
 	      opacity: 0
 	    }]
 	  };
-		}
+	}
 
 /***/ }),
 /* 213 */
@@ -25614,7 +25614,7 @@
 	      }];
 	    }
 	  };
-		}
+	}
 
 /***/ }),
 /* 214 */
@@ -25657,7 +25657,7 @@
 	    // $FlowFixMe - This isn't in the new world yet.
 	    keyframes: options.reverse ? from : to
 	  };
-		}
+	}
 
 /***/ }),
 /* 215 */
@@ -25691,7 +25691,7 @@
 	      transform: 'translateY(0)'
 	    }]
 	  };
-		}
+	}
 
 /***/ }),
 /* 216 */
@@ -25730,7 +25730,7 @@
 	  };
 	};
 
-		exports.default = withTransition;
+	exports.default = withTransition;
 
 /***/ }),
 /* 217 */
@@ -25841,8 +25841,7 @@
 	  return Animate;
 	}(_react2.default.Component);
 
-		exports.default = Animate;
+	exports.default = Animate;
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=react.js.map

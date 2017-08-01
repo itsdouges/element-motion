@@ -21571,7 +21571,7 @@
 	  return App;
 	}(_react2.default.Component);
 
-		exports.default = App;
+	exports.default = App;
 
 /***/ }),
 /* 180 */
@@ -21601,7 +21601,7 @@
 	  return _react2.default.createElement('div', _extends({}, props, { className: 'box box-' + type + (className ? ' ' + className : '') }));
 	};
 
-		exports.default = Box;
+	exports.default = Box;
 
 /***/ }),
 /* 181 */
@@ -21648,7 +21648,7 @@
 	  );
 	};
 
-		exports.default = BoxWithContent;
+	exports.default = BoxWithContent;
 
 /***/ }),
 /* 182 */
@@ -21771,7 +21771,7 @@
 	  return AnimateContainer;
 	}(_react2.default.Component);
 
-		exports.default = AnimateContainer;
+	exports.default = AnimateContainer;
 
 /***/ }),
 /* 184 */
@@ -25912,7 +25912,7 @@
 	    duration: options.duration || 500,
 	    easing: options.easing || animation.options.easing || 'ease-in-out'
 	  });
-		}
+	}
 
 /***/ }),
 /* 218 */
@@ -26128,7 +26128,7 @@
 	    resolve: resolve,
 	    reject: reject
 	  };
-		}
+	}
 
 /***/ }),
 /* 221 */
@@ -26198,7 +26198,7 @@
 	      transform: 'scale(' + (options.reverse ? 1 : scale) + ')'
 	    }]
 	  };
-		}
+	}
 
 /***/ }),
 /* 222 */
@@ -26236,7 +26236,7 @@
 	    top: initialSizeLocation.top + scrollTopDiff,
 	    left: initialSizeLocation.left + scrollLeftDiff
 	  });
-		}
+	}
 
 /***/ }),
 /* 223 */
@@ -26265,7 +26265,7 @@
 	    reverse: true,
 	    easing: 'ease-out'
 	  }), metadata));
-		}
+	}
 
 /***/ }),
 /* 224 */
@@ -26288,7 +26288,7 @@
 	      opacity: 0
 	    }]
 	  };
-		}
+	}
 
 /***/ }),
 /* 225 */
@@ -26348,7 +26348,7 @@
 	      }];
 	    }
 	  };
-		}
+	}
 
 /***/ }),
 /* 226 */
@@ -26391,7 +26391,7 @@
 	    // $FlowFixMe - This isn't in the new world yet.
 	    keyframes: options.reverse ? from : to
 	  };
-		}
+	}
 
 /***/ }),
 /* 227 */
@@ -26425,7 +26425,7 @@
 	      transform: 'translateY(0)'
 	    }]
 	  };
-		}
+	}
 
 /***/ }),
 /* 228 */
@@ -26464,7 +26464,7 @@
 	  };
 	};
 
-		exports.default = withTransition;
+	exports.default = withTransition;
 
 /***/ }),
 /* 229 */
@@ -26575,8 +26575,7 @@
 	  return Animate;
 	}(_react2.default.Component);
 
-		exports.default = Animate;
+	exports.default = Animate;
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=react.js.map
