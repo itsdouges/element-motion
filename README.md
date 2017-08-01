@@ -7,12 +7,15 @@
   </div>
 </h1>
 <div align="center">
-  Yubaba is an page transition orchestration library that aims to make complex transitions easy.
-
   <a href="https://travis-ci.org/madou/yubaba"><img alt="Build Status" src="https://travis-ci.org/madou/yubaba.svg?branch=master"></a>
   <a href="https://codecov.io/gh/madou/yubaba"><img alt="codecov" src="https://codecov.io/gh/madou/yubaba/branch/master/graph/badge.svg"></a>
   <a href="https://david-dm.org/madou/yubaba"><img alt="Dependency Status" src="http://img.shields.io/david/madou/yubaba.svg?style=flat-squarer"></a>
   <a href="https://david-dm.org/madou/yubaba?type=dev"><img alt="devDependencies Status" src="https://david-dm.org/madou/yubaba/dev-status.svg"></a>
+</div>
+
+<div align="center">
+
+  Yubaba is an page transition orchestration library that aims to make complex transitions easy.
 </div>
 
 ## Motivation
