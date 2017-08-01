@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
+### Fixed
+- Swipe regression
+
+### Added
+- Examples folder
+
+### Updated
+- Readme with examples and some info
 
 ## [0.1.14][] - 2017-07-30
 ### Changed
