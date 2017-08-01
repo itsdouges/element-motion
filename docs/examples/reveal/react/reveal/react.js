@@ -54,11 +54,11 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	__webpack_require__(170);
-
 	__webpack_require__(175);
 
-	var _App = __webpack_require__(177);
+	__webpack_require__(177);
+
+	var _App = __webpack_require__(179);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -20827,51 +20827,8 @@
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ }),
-/* 170 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(171);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// Prepare cssTransformation
-	var transform;
-
-	var options = {}
-	options.transform = transform
-	// add the styles to the DOM
-	var update = __webpack_require__(173)(content, options);
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../css-loader/index.js!./normalize.css", function() {
-				var newContent = require("!!../css-loader/index.js!./normalize.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 171 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(172)(undefined);
-	// imports
-
-
-	// module
-	exports.push([module.id, "/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */\n\n/* Document\n   ========================================================================== */\n\n/**\n * 1. Correct the line height in all browsers.\n * 2. Prevent adjustments of font size after orientation changes in\n *    IE on Windows Phone and in iOS.\n */\n\nhtml {\n  line-height: 1.15; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/* Sections\n   ========================================================================== */\n\n/**\n * Remove the margin in all browsers (opinionated).\n */\n\nbody {\n  margin: 0;\n}\n\n/**\n * Add the correct display in IE 9-.\n */\n\narticle,\naside,\nfooter,\nheader,\nnav,\nsection {\n  display: block;\n}\n\n/**\n * Correct the font size and margin on `h1` elements within `section` and\n * `article` contexts in Chrome, Firefox, and Safari.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n * 1. Add the correct display in IE.\n */\n\nfigcaption,\nfigure,\nmain { /* 1 */\n  display: block;\n}\n\n/**\n * Add the correct margin in IE 8.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * 1. Add the correct box sizing in Firefox.\n * 2. Show the overflow in Edge and IE.\n */\n\nhr {\n  box-sizing: content-box; /* 1 */\n  height: 0; /* 1 */\n  overflow: visible; /* 2 */\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\npre {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * 1. Remove the gray background on active links in IE 10.\n * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.\n */\n\na {\n  background-color: transparent; /* 1 */\n  -webkit-text-decoration-skip: objects; /* 2 */\n}\n\n/**\n * 1. Remove the bottom border in Chrome 57- and Firefox 39-.\n * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n */\n\nabbr[title] {\n  border-bottom: none; /* 1 */\n  text-decoration: underline; /* 2 */\n  text-decoration: underline dotted; /* 2 */\n}\n\n/**\n * Prevent the duplicate application of `bolder` by the next rule in Safari 6.\n */\n\nb,\nstrong {\n  font-weight: inherit;\n}\n\n/**\n * Add the correct font weight in Chrome, Edge, and Safari.\n */\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\ncode,\nkbd,\nsamp {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/**\n * Add the correct font style in Android 4.3-.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Add the correct background and color in IE 9-.\n */\n\nmark {\n  background-color: #ff0;\n  color: #000;\n}\n\n/**\n * Add the correct font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` elements from affecting the line height in\n * all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n */\n\naudio,\nvideo {\n  display: inline-block;\n}\n\n/**\n * Add the correct display in iOS 4-7.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Remove the border on images inside links in IE 10-.\n */\n\nimg {\n  border-style: none;\n}\n\n/**\n * Hide the overflow in IE.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * 1. Change the font styles in all browsers (opinionated).\n * 2. Remove the margin in Firefox and Safari.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: sans-serif; /* 1 */\n  font-size: 100%; /* 1 */\n  line-height: 1.15; /* 1 */\n  margin: 0; /* 2 */\n}\n\n/**\n * Show the overflow in IE.\n * 1. Show the overflow in Edge.\n */\n\nbutton,\ninput { /* 1 */\n  overflow: visible;\n}\n\n/**\n * Remove the inheritance of text transform in Edge, Firefox, and IE.\n * 1. Remove the inheritance of text transform in Firefox.\n */\n\nbutton,\nselect { /* 1 */\n  text-transform: none;\n}\n\n/**\n * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`\n *    controls in Android 4.\n * 2. Correct the inability to style clickable types in iOS and Safari.\n */\n\nbutton,\nhtml [type=\"button\"], /* 1 */\n[type=\"reset\"],\n[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n}\n\n/**\n * Remove the inner border and padding in Firefox.\n */\n\nbutton::-moz-focus-inner,\n[type=\"button\"]::-moz-focus-inner,\n[type=\"reset\"]::-moz-focus-inner,\n[type=\"submit\"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\n\n/**\n * Restore the focus styles unset by the previous rule.\n */\n\nbutton:-moz-focusring,\n[type=\"button\"]:-moz-focusring,\n[type=\"reset\"]:-moz-focusring,\n[type=\"submit\"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\n\n/**\n * Correct the padding in Firefox.\n */\n\nfieldset {\n  padding: 0.35em 0.75em 0.625em;\n}\n\n/**\n * 1. Correct the text wrapping in Edge and IE.\n * 2. Correct the color inheritance from `fieldset` elements in IE.\n * 3. Remove the padding so developers are not caught out when they zero out\n *    `fieldset` elements in all browsers.\n */\n\nlegend {\n  box-sizing: border-box; /* 1 */\n  color: inherit; /* 2 */\n  display: table; /* 1 */\n  max-width: 100%; /* 1 */\n  padding: 0; /* 3 */\n  white-space: normal; /* 1 */\n}\n\n/**\n * 1. Add the correct display in IE 9-.\n * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.\n */\n\nprogress {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Remove the default vertical scrollbar in IE.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * 1. Add the correct box sizing in IE 10-.\n * 2. Remove the padding in IE 10-.\n */\n\n[type=\"checkbox\"],\n[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Correct the cursor style of increment and decrement buttons in Chrome.\n */\n\n[type=\"number\"]::-webkit-inner-spin-button,\n[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Correct the odd appearance in Chrome and Safari.\n * 2. Correct the outline style in Safari.\n */\n\n[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/**\n * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.\n */\n\n[type=\"search\"]::-webkit-search-cancel-button,\n[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * 1. Correct the inability to style clickable types in iOS and Safari.\n * 2. Change font properties to `inherit` in Safari.\n */\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/* Interactive\n   ========================================================================== */\n\n/*\n * Add the correct display in IE 9-.\n * 1. Add the correct display in Edge, IE, and Firefox.\n */\n\ndetails, /* 1 */\nmenu {\n  display: block;\n}\n\n/*\n * Add the correct display in all browsers.\n */\n\nsummary {\n  display: list-item;\n}\n\n/* Scripting\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n */\n\ncanvas {\n  display: inline-block;\n}\n\n/**\n * Add the correct display in IE.\n */\n\ntemplate {\n  display: none;\n}\n\n/* Hidden\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 10-.\n */\n\n[hidden] {\n  display: none;\n}\n", ""]);
-
-	// exports
-
-
-/***/ }),
+/* 170 */,
+/* 171 */,
 /* 172 */
 /***/ (function(module, exports) {
 
@@ -21428,8 +21385,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../node_modules/css-loader/index.js!./styles.css", function() {
-				var newContent = require("!!../../../node_modules/css-loader/index.js!./styles.css");
+			module.hot.accept("!!../css-loader/index.js!./normalize.css", function() {
+				var newContent = require("!!../css-loader/index.js!./normalize.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -21447,13 +21404,58 @@
 
 
 	// module
-	exports.push([module.id, ".container {\n  display: flex;\n  flex-wrap: wrap;\n  height: 100%;\n  justify-content: center;\n  align-items: center;\n  width: 100%;\n  margin: 200px 0;\n}\n\n.box {\n  background-color: #d8d8d8;\n}\n\n.box-small {\n  width: 100px;\n  height: 100px;\n}\n\n.box-big {\n  width: 100%;\n  height: 300px;\n}\n\n.box-highlighted {\n  cursor: pointer;\n  background: #4c76b2;\n  background-image: url('http://i.imgur.com/7vm4hc3.jpg');\n  background-size: cover;\n  background-position: 0 0;\n  background-size: 100% 150%;\n}\n\n.content-margin {\n  max-width: 800px;\n  min-height: 1000px;\n  width: 100%;\n  margin: 10em auto;\n  background: #d8d8d8;\n  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);\n}\n", ""]);
+	exports.push([module.id, "/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */\n\n/* Document\n   ========================================================================== */\n\n/**\n * 1. Correct the line height in all browsers.\n * 2. Prevent adjustments of font size after orientation changes in\n *    IE on Windows Phone and in iOS.\n */\n\nhtml {\n  line-height: 1.15; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/* Sections\n   ========================================================================== */\n\n/**\n * Remove the margin in all browsers (opinionated).\n */\n\nbody {\n  margin: 0;\n}\n\n/**\n * Add the correct display in IE 9-.\n */\n\narticle,\naside,\nfooter,\nheader,\nnav,\nsection {\n  display: block;\n}\n\n/**\n * Correct the font size and margin on `h1` elements within `section` and\n * `article` contexts in Chrome, Firefox, and Safari.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n * 1. Add the correct display in IE.\n */\n\nfigcaption,\nfigure,\nmain { /* 1 */\n  display: block;\n}\n\n/**\n * Add the correct margin in IE 8.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * 1. Add the correct box sizing in Firefox.\n * 2. Show the overflow in Edge and IE.\n */\n\nhr {\n  box-sizing: content-box; /* 1 */\n  height: 0; /* 1 */\n  overflow: visible; /* 2 */\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\npre {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * 1. Remove the gray background on active links in IE 10.\n * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.\n */\n\na {\n  background-color: transparent; /* 1 */\n  -webkit-text-decoration-skip: objects; /* 2 */\n}\n\n/**\n * 1. Remove the bottom border in Chrome 57- and Firefox 39-.\n * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n */\n\nabbr[title] {\n  border-bottom: none; /* 1 */\n  text-decoration: underline; /* 2 */\n  text-decoration: underline dotted; /* 2 */\n}\n\n/**\n * Prevent the duplicate application of `bolder` by the next rule in Safari 6.\n */\n\nb,\nstrong {\n  font-weight: inherit;\n}\n\n/**\n * Add the correct font weight in Chrome, Edge, and Safari.\n */\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\ncode,\nkbd,\nsamp {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/**\n * Add the correct font style in Android 4.3-.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Add the correct background and color in IE 9-.\n */\n\nmark {\n  background-color: #ff0;\n  color: #000;\n}\n\n/**\n * Add the correct font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` elements from affecting the line height in\n * all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n */\n\naudio,\nvideo {\n  display: inline-block;\n}\n\n/**\n * Add the correct display in iOS 4-7.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Remove the border on images inside links in IE 10-.\n */\n\nimg {\n  border-style: none;\n}\n\n/**\n * Hide the overflow in IE.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * 1. Change the font styles in all browsers (opinionated).\n * 2. Remove the margin in Firefox and Safari.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: sans-serif; /* 1 */\n  font-size: 100%; /* 1 */\n  line-height: 1.15; /* 1 */\n  margin: 0; /* 2 */\n}\n\n/**\n * Show the overflow in IE.\n * 1. Show the overflow in Edge.\n */\n\nbutton,\ninput { /* 1 */\n  overflow: visible;\n}\n\n/**\n * Remove the inheritance of text transform in Edge, Firefox, and IE.\n * 1. Remove the inheritance of text transform in Firefox.\n */\n\nbutton,\nselect { /* 1 */\n  text-transform: none;\n}\n\n/**\n * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`\n *    controls in Android 4.\n * 2. Correct the inability to style clickable types in iOS and Safari.\n */\n\nbutton,\nhtml [type=\"button\"], /* 1 */\n[type=\"reset\"],\n[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n}\n\n/**\n * Remove the inner border and padding in Firefox.\n */\n\nbutton::-moz-focus-inner,\n[type=\"button\"]::-moz-focus-inner,\n[type=\"reset\"]::-moz-focus-inner,\n[type=\"submit\"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\n\n/**\n * Restore the focus styles unset by the previous rule.\n */\n\nbutton:-moz-focusring,\n[type=\"button\"]:-moz-focusring,\n[type=\"reset\"]:-moz-focusring,\n[type=\"submit\"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\n\n/**\n * Correct the padding in Firefox.\n */\n\nfieldset {\n  padding: 0.35em 0.75em 0.625em;\n}\n\n/**\n * 1. Correct the text wrapping in Edge and IE.\n * 2. Correct the color inheritance from `fieldset` elements in IE.\n * 3. Remove the padding so developers are not caught out when they zero out\n *    `fieldset` elements in all browsers.\n */\n\nlegend {\n  box-sizing: border-box; /* 1 */\n  color: inherit; /* 2 */\n  display: table; /* 1 */\n  max-width: 100%; /* 1 */\n  padding: 0; /* 3 */\n  white-space: normal; /* 1 */\n}\n\n/**\n * 1. Add the correct display in IE 9-.\n * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.\n */\n\nprogress {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Remove the default vertical scrollbar in IE.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * 1. Add the correct box sizing in IE 10-.\n * 2. Remove the padding in IE 10-.\n */\n\n[type=\"checkbox\"],\n[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Correct the cursor style of increment and decrement buttons in Chrome.\n */\n\n[type=\"number\"]::-webkit-inner-spin-button,\n[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Correct the odd appearance in Chrome and Safari.\n * 2. Correct the outline style in Safari.\n */\n\n[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/**\n * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.\n */\n\n[type=\"search\"]::-webkit-search-cancel-button,\n[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * 1. Correct the inability to style clickable types in iOS and Safari.\n * 2. Change font properties to `inherit` in Safari.\n */\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/* Interactive\n   ========================================================================== */\n\n/*\n * Add the correct display in IE 9-.\n * 1. Add the correct display in Edge, IE, and Firefox.\n */\n\ndetails, /* 1 */\nmenu {\n  display: block;\n}\n\n/*\n * Add the correct display in all browsers.\n */\n\nsummary {\n  display: list-item;\n}\n\n/* Scripting\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n */\n\ncanvas {\n  display: inline-block;\n}\n\n/**\n * Add the correct display in IE.\n */\n\ntemplate {\n  display: none;\n}\n\n/* Hidden\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 10-.\n */\n\n[hidden] {\n  display: none;\n}\n", ""]);
 
 	// exports
 
 
 /***/ }),
 /* 177 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(178);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// Prepare cssTransformation
+	var transform;
+
+	var options = {}
+	options.transform = transform
+	// add the styles to the DOM
+	var update = __webpack_require__(173)(content, options);
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!./styles.css", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!./styles.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ }),
+/* 178 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(172)(undefined);
+	// imports
+
+
+	// module
+	exports.push([module.id, ".container {\n  display: flex;\n  flex-wrap: wrap;\n  height: 100%;\n  justify-content: center;\n  align-items: center;\n  width: 100%;\n  margin: 200px 0;\n}\n\n.box {\n  background-color: #d8d8d8;\n}\n\n.box-small {\n  width: 100px;\n  height: 100px;\n}\n\n.box-big {\n  width: 100%;\n  height: 300px;\n}\n\n.box-highlighted {\n  cursor: pointer;\n  background: #4c76b2;\n  background-image: url('http://i.imgur.com/7vm4hc3.jpg');\n  background-size: cover;\n  background-position: 0 0;\n  background-size: 100% 150%;\n}\n\n.content-margin {\n  max-width: 800px;\n  min-height: 1000px;\n  width: 100%;\n  margin: 10em auto;\n  background: #d8d8d8;\n  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);\n}\n", ""]);
+
+	// exports
+
+
+/***/ }),
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21468,15 +21470,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Box = __webpack_require__(178);
+	var _Box = __webpack_require__(180);
 
 	var _Box2 = _interopRequireDefault(_Box);
 
-	var _BoxWithContent = __webpack_require__(179);
+	var _BoxWithContent = __webpack_require__(181);
 
 	var _BoxWithContent2 = _interopRequireDefault(_BoxWithContent);
 
-	var _src = __webpack_require__(180);
+	var _src = __webpack_require__(182);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21572,7 +21574,7 @@
 		exports.default = App;
 
 /***/ }),
-/* 178 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21602,7 +21604,7 @@
 		exports.default = Box;
 
 /***/ }),
-/* 179 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21615,11 +21617,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Box = __webpack_require__(178);
+	var _Box = __webpack_require__(180);
 
 	var _Box2 = _interopRequireDefault(_Box);
 
-	var _src = __webpack_require__(180);
+	var _src = __webpack_require__(182);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21649,7 +21651,7 @@
 		exports.default = BoxWithContent;
 
 /***/ }),
-/* 180 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21659,7 +21661,7 @@
 	});
 	exports.withAnimation = exports.AnimateContainer = undefined;
 
-	var _AnimateContainer = __webpack_require__(181);
+	var _AnimateContainer = __webpack_require__(183);
 
 	Object.defineProperty(exports, 'AnimateContainer', {
 	  enumerable: true,
@@ -21668,7 +21670,7 @@
 	  }
 	});
 
-	var _withAnimation = __webpack_require__(226);
+	var _withAnimation = __webpack_require__(228);
 
 	Object.defineProperty(exports, 'withAnimation', {
 	  enumerable: true,
@@ -21677,7 +21679,7 @@
 	  }
 	});
 
-	var _Animate = __webpack_require__(227);
+	var _Animate = __webpack_require__(229);
 
 	var _Animate2 = _interopRequireDefault(_Animate);
 
@@ -21686,7 +21688,7 @@
 	exports.default = _Animate2.default;
 
 /***/ }),
-/* 181 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21699,11 +21701,11 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(182);
+	var _react = __webpack_require__(184);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _yubabaCore = __webpack_require__(212);
+	var _yubabaCore = __webpack_require__(214);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21772,16 +21774,16 @@
 		exports.default = AnimateContainer;
 
 /***/ }),
-/* 182 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(183);
+	module.exports = __webpack_require__(185);
 
 
 /***/ }),
-/* 183 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -21796,17 +21798,17 @@
 
 	'use strict';
 
-	var _assign = __webpack_require__(184);
+	var _assign = __webpack_require__(186);
 
-	var ReactBaseClasses = __webpack_require__(185);
-	var ReactChildren = __webpack_require__(194);
-	var ReactDOMFactories = __webpack_require__(202);
-	var ReactElement = __webpack_require__(196);
-	var ReactPropTypes = __webpack_require__(203);
-	var ReactVersion = __webpack_require__(208);
+	var ReactBaseClasses = __webpack_require__(187);
+	var ReactChildren = __webpack_require__(196);
+	var ReactDOMFactories = __webpack_require__(204);
+	var ReactElement = __webpack_require__(198);
+	var ReactPropTypes = __webpack_require__(205);
+	var ReactVersion = __webpack_require__(210);
 
-	var createReactClass = __webpack_require__(209);
-	var onlyChild = __webpack_require__(211);
+	var createReactClass = __webpack_require__(211);
+	var onlyChild = __webpack_require__(213);
 
 	var createElement = ReactElement.createElement;
 	var createFactory = ReactElement.createFactory;
@@ -21917,7 +21919,7 @@
 	module.exports = React;
 
 /***/ }),
-/* 184 */
+/* 186 */
 /***/ (function(module, exports) {
 
 	/*
@@ -22013,7 +22015,7 @@
 
 
 /***/ }),
-/* 185 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22028,15 +22030,15 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(186),
-	    _assign = __webpack_require__(184);
+	var _prodInvariant = __webpack_require__(188),
+	    _assign = __webpack_require__(186);
 
-	var ReactNoopUpdateQueue = __webpack_require__(187);
+	var ReactNoopUpdateQueue = __webpack_require__(189);
 
-	var canDefineProperty = __webpack_require__(190);
-	var emptyObject = __webpack_require__(191);
-	var invariant = __webpack_require__(192);
-	var lowPriorityWarning = __webpack_require__(193);
+	var canDefineProperty = __webpack_require__(192);
+	var emptyObject = __webpack_require__(193);
+	var invariant = __webpack_require__(194);
+	var lowPriorityWarning = __webpack_require__(195);
 
 	/**
 	 * Base class helpers for the updating state of a component.
@@ -22160,7 +22162,7 @@
 	};
 
 /***/ }),
-/* 186 */
+/* 188 */
 /***/ (function(module, exports) {
 
 	/**
@@ -22203,7 +22205,7 @@
 	module.exports = reactProdInvariant;
 
 /***/ }),
-/* 187 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22218,7 +22220,7 @@
 
 	'use strict';
 
-	var warning = __webpack_require__(188);
+	var warning = __webpack_require__(190);
 
 	function warnNoop(publicInstance, callerName) {
 	  if (false) {
@@ -22302,7 +22304,7 @@
 	module.exports = ReactNoopUpdateQueue;
 
 /***/ }),
-/* 188 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22317,7 +22319,7 @@
 
 	'use strict';
 
-	var emptyFunction = __webpack_require__(189);
+	var emptyFunction = __webpack_require__(191);
 
 	/**
 	 * Similar to invariant but only logs a warning if the condition is not met.
@@ -22371,7 +22373,7 @@
 	module.exports = warning;
 
 /***/ }),
-/* 189 */
+/* 191 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -22414,7 +22416,7 @@
 	module.exports = emptyFunction;
 
 /***/ }),
-/* 190 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22444,7 +22446,7 @@
 	module.exports = canDefineProperty;
 
 /***/ }),
-/* 191 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22468,7 +22470,7 @@
 	module.exports = emptyObject;
 
 /***/ }),
-/* 192 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22528,7 +22530,7 @@
 	module.exports = invariant;
 
 /***/ }),
-/* 193 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22597,7 +22599,7 @@
 	module.exports = lowPriorityWarning;
 
 /***/ }),
-/* 194 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22612,11 +22614,11 @@
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(195);
-	var ReactElement = __webpack_require__(196);
+	var PooledClass = __webpack_require__(197);
+	var ReactElement = __webpack_require__(198);
 
-	var emptyFunction = __webpack_require__(189);
-	var traverseAllChildren = __webpack_require__(199);
+	var emptyFunction = __webpack_require__(191);
+	var traverseAllChildren = __webpack_require__(201);
 
 	var twoArgumentPooler = PooledClass.twoArgumentPooler;
 	var fourArgumentPooler = PooledClass.fourArgumentPooler;
@@ -22792,7 +22794,7 @@
 	module.exports = ReactChildren;
 
 /***/ }),
-/* 195 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22808,9 +22810,9 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(186);
+	var _prodInvariant = __webpack_require__(188);
 
-	var invariant = __webpack_require__(192);
+	var invariant = __webpack_require__(194);
 
 	/**
 	 * Static poolers. Several custom versions for each potential number of
@@ -22908,7 +22910,7 @@
 	module.exports = PooledClass;
 
 /***/ }),
-/* 196 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22923,15 +22925,15 @@
 
 	'use strict';
 
-	var _assign = __webpack_require__(184);
+	var _assign = __webpack_require__(186);
 
-	var ReactCurrentOwner = __webpack_require__(197);
+	var ReactCurrentOwner = __webpack_require__(199);
 
-	var warning = __webpack_require__(188);
-	var canDefineProperty = __webpack_require__(190);
+	var warning = __webpack_require__(190);
+	var canDefineProperty = __webpack_require__(192);
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-	var REACT_ELEMENT_TYPE = __webpack_require__(198);
+	var REACT_ELEMENT_TYPE = __webpack_require__(200);
 
 	var RESERVED_PROPS = {
 	  key: true,
@@ -23253,7 +23255,7 @@
 	module.exports = ReactElement;
 
 /***/ }),
-/* 197 */
+/* 199 */
 /***/ (function(module, exports) {
 
 	/**
@@ -23286,7 +23288,7 @@
 	module.exports = ReactCurrentOwner;
 
 /***/ }),
-/* 198 */
+/* 200 */
 /***/ (function(module, exports) {
 
 	/**
@@ -23310,7 +23312,7 @@
 	module.exports = REACT_ELEMENT_TYPE;
 
 /***/ }),
-/* 199 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -23325,15 +23327,15 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(186);
+	var _prodInvariant = __webpack_require__(188);
 
-	var ReactCurrentOwner = __webpack_require__(197);
-	var REACT_ELEMENT_TYPE = __webpack_require__(198);
+	var ReactCurrentOwner = __webpack_require__(199);
+	var REACT_ELEMENT_TYPE = __webpack_require__(200);
 
-	var getIteratorFn = __webpack_require__(200);
-	var invariant = __webpack_require__(192);
-	var KeyEscapeUtils = __webpack_require__(201);
-	var warning = __webpack_require__(188);
+	var getIteratorFn = __webpack_require__(202);
+	var invariant = __webpack_require__(194);
+	var KeyEscapeUtils = __webpack_require__(203);
+	var warning = __webpack_require__(190);
 
 	var SEPARATOR = '.';
 	var SUBSEPARATOR = ':';
@@ -23490,7 +23492,7 @@
 	module.exports = traverseAllChildren;
 
 /***/ }),
-/* 200 */
+/* 202 */
 /***/ (function(module, exports) {
 
 	/**
@@ -23535,7 +23537,7 @@
 	module.exports = getIteratorFn;
 
 /***/ }),
-/* 201 */
+/* 203 */
 /***/ (function(module, exports) {
 
 	/**
@@ -23598,7 +23600,7 @@
 	module.exports = KeyEscapeUtils;
 
 /***/ }),
-/* 202 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -23613,7 +23615,7 @@
 
 	'use strict';
 
-	var ReactElement = __webpack_require__(196);
+	var ReactElement = __webpack_require__(198);
 
 	/**
 	 * Create a factory that creates HTML tag elements.
@@ -23771,7 +23773,7 @@
 	module.exports = ReactDOMFactories;
 
 /***/ }),
-/* 203 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -23786,15 +23788,15 @@
 
 	'use strict';
 
-	var _require = __webpack_require__(196),
+	var _require = __webpack_require__(198),
 	    isValidElement = _require.isValidElement;
 
-	var factory = __webpack_require__(204);
+	var factory = __webpack_require__(206);
 
 	module.exports = factory(isValidElement);
 
 /***/ }),
-/* 204 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -23812,7 +23814,7 @@
 	// Therefore we re-export development-only version with all the PropTypes checks here.
 	// However if one is migrating to the `prop-types` npm library, they will go through the
 	// `index.js` entry point, and it will branch depending on the environment.
-	var factory = __webpack_require__(205);
+	var factory = __webpack_require__(207);
 	module.exports = function(isValidElement) {
 	  // It is still allowed in 15.5.
 	  var throwOnDirectAccess = false;
@@ -23821,7 +23823,7 @@
 
 
 /***/ }),
-/* 205 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -23835,12 +23837,12 @@
 
 	'use strict';
 
-	var emptyFunction = __webpack_require__(189);
-	var invariant = __webpack_require__(192);
-	var warning = __webpack_require__(188);
+	var emptyFunction = __webpack_require__(191);
+	var invariant = __webpack_require__(194);
+	var warning = __webpack_require__(190);
 
-	var ReactPropTypesSecret = __webpack_require__(206);
-	var checkPropTypes = __webpack_require__(207);
+	var ReactPropTypesSecret = __webpack_require__(208);
+	var checkPropTypes = __webpack_require__(209);
 
 	module.exports = function(isValidElement, throwOnDirectAccess) {
 	  /* global Symbol */
@@ -24339,7 +24341,7 @@
 
 
 /***/ }),
-/* 206 */
+/* 208 */
 /***/ (function(module, exports) {
 
 	/**
@@ -24359,7 +24361,7 @@
 
 
 /***/ }),
-/* 207 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -24426,7 +24428,7 @@
 
 
 /***/ }),
-/* 208 */
+/* 210 */
 /***/ (function(module, exports) {
 
 	/**
@@ -24444,7 +24446,7 @@
 	module.exports = '15.6.1';
 
 /***/ }),
-/* 209 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -24459,19 +24461,19 @@
 
 	'use strict';
 
-	var _require = __webpack_require__(185),
+	var _require = __webpack_require__(187),
 	    Component = _require.Component;
 
-	var _require2 = __webpack_require__(196),
+	var _require2 = __webpack_require__(198),
 	    isValidElement = _require2.isValidElement;
 
-	var ReactNoopUpdateQueue = __webpack_require__(187);
-	var factory = __webpack_require__(210);
+	var ReactNoopUpdateQueue = __webpack_require__(189);
+	var factory = __webpack_require__(212);
 
 	module.exports = factory(Component, isValidElement, ReactNoopUpdateQueue);
 
 /***/ }),
-/* 210 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -24486,10 +24488,10 @@
 
 	'use strict';
 
-	var _assign = __webpack_require__(184);
+	var _assign = __webpack_require__(186);
 
-	var emptyObject = __webpack_require__(191);
-	var _invariant = __webpack_require__(192);
+	var emptyObject = __webpack_require__(193);
+	var _invariant = __webpack_require__(194);
 
 	if (false) {
 	  var warning = require('fbjs/lib/warning');
@@ -25349,7 +25351,7 @@
 
 
 /***/ }),
-/* 211 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -25363,11 +25365,11 @@
 	 */
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(186);
+	var _prodInvariant = __webpack_require__(188);
 
-	var ReactElement = __webpack_require__(196);
+	var ReactElement = __webpack_require__(198);
 
-	var invariant = __webpack_require__(192);
+	var invariant = __webpack_require__(194);
 
 	/**
 	 * Returns the first child in a collection of children and verifies that there
@@ -25391,7 +25393,7 @@
 	module.exports = onlyChild;
 
 /***/ }),
-/* 212 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25400,7 +25402,7 @@
 	  value: true
 	});
 
-	var _orchestrator = __webpack_require__(213);
+	var _orchestrator = __webpack_require__(215);
 
 	Object.defineProperty(exports, 'orchestrator', {
 	  enumerable: true,
@@ -25421,7 +25423,7 @@
 	  }
 	});
 
-	var _animations = __webpack_require__(214);
+	var _animations = __webpack_require__(216);
 
 	Object.defineProperty(exports, 'circleExpand', {
 	  enumerable: true,
@@ -25457,7 +25459,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 213 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25474,11 +25476,11 @@
 	exports.removeFromStore = removeFromStore;
 	exports.default = orchestrator;
 
-	var _animations = __webpack_require__(214);
+	var _animations = __webpack_require__(216);
 
 	var animationDefinitions = _interopRequireWildcard(_animations);
 
-	var _dom = __webpack_require__(216);
+	var _dom = __webpack_require__(218);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -25717,7 +25719,7 @@
 	}
 
 /***/ }),
-/* 214 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25733,35 +25735,35 @@
 	exports.reveal = reveal;
 	exports.swipe = swipe;
 
-	var _animator = __webpack_require__(215);
+	var _animator = __webpack_require__(217);
 
 	var _animator2 = _interopRequireDefault(_animator);
 
-	var _deferred = __webpack_require__(218);
+	var _deferred = __webpack_require__(220);
 
 	var _deferred2 = _interopRequireDefault(_deferred);
 
-	var _circleExpand = __webpack_require__(219);
+	var _circleExpand = __webpack_require__(221);
 
 	var _circleExpand2 = _interopRequireDefault(_circleExpand);
 
-	var _circleShrink = __webpack_require__(221);
+	var _circleShrink = __webpack_require__(223);
 
 	var _circleShrink2 = _interopRequireDefault(_circleShrink);
 
-	var _fadeout = __webpack_require__(222);
+	var _fadeout = __webpack_require__(224);
 
 	var _fadeout2 = _interopRequireDefault(_fadeout);
 
-	var _move = __webpack_require__(223);
+	var _move = __webpack_require__(225);
 
 	var _move2 = _interopRequireDefault(_move);
 
-	var _reveal = __webpack_require__(224);
+	var _reveal = __webpack_require__(226);
 
 	var _reveal2 = _interopRequireDefault(_reveal);
 
-	var _swipe = __webpack_require__(225);
+	var _swipe = __webpack_require__(227);
 
 	var _swipe2 = _interopRequireDefault(_swipe);
 
@@ -25811,7 +25813,7 @@
 	}
 
 /***/ }),
-/* 215 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25824,7 +25826,7 @@
 
 	exports.default = animator;
 
-	var _dom = __webpack_require__(216);
+	var _dom = __webpack_require__(218);
 
 	function getTargetElement(element, _ref) {
 	  var newElement = _ref.newElement,
@@ -25913,7 +25915,7 @@
 		}
 
 /***/ }),
-/* 216 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25931,7 +25933,7 @@
 	exports.buildScaleTransform = buildScaleTransform;
 	exports.createElement = createElement;
 
-	var _math = __webpack_require__(217);
+	var _math = __webpack_require__(219);
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
@@ -26077,7 +26079,7 @@
 	}
 
 /***/ }),
-/* 217 */
+/* 219 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -26103,7 +26105,7 @@
 	}
 
 /***/ }),
-/* 218 */
+/* 220 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -26129,7 +26131,7 @@
 		}
 
 /***/ }),
-/* 219 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26142,11 +26144,11 @@
 
 	exports.default = circleExpand;
 
-	var _math = __webpack_require__(217);
+	var _math = __webpack_require__(219);
 
-	var _dom = __webpack_require__(216);
+	var _dom = __webpack_require__(218);
 
-	var _location = __webpack_require__(220);
+	var _location = __webpack_require__(222);
 
 	var _location2 = _interopRequireDefault(_location);
 
@@ -26199,7 +26201,7 @@
 		}
 
 /***/ }),
-/* 220 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26212,7 +26214,7 @@
 
 	exports.default = calculateFromSizeLocation;
 
-	var _dom = __webpack_require__(216);
+	var _dom = __webpack_require__(218);
 
 	function calculateFromSizeLocation(node, metadata) {
 	  var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
@@ -26237,7 +26239,7 @@
 		}
 
 /***/ }),
-/* 221 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26250,7 +26252,7 @@
 
 	exports.default = circleShrink;
 
-	var _circleExpand = __webpack_require__(219);
+	var _circleExpand = __webpack_require__(221);
 
 	var _circleExpand2 = _interopRequireDefault(_circleExpand);
 
@@ -26266,7 +26268,7 @@
 		}
 
 /***/ }),
-/* 222 */
+/* 224 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -26289,7 +26291,7 @@
 		}
 
 /***/ }),
-/* 223 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26302,13 +26304,13 @@
 
 	exports.default = move;
 
-	var _dom = __webpack_require__(216);
+	var _dom = __webpack_require__(218);
 
-	var _location = __webpack_require__(220);
+	var _location = __webpack_require__(222);
 
 	var _location2 = _interopRequireDefault(_location);
 
-	var _math = __webpack_require__(217);
+	var _math = __webpack_require__(219);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26349,7 +26351,7 @@
 		}
 
 /***/ }),
-/* 224 */
+/* 226 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -26392,7 +26394,7 @@
 		}
 
 /***/ }),
-/* 225 */
+/* 227 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -26426,7 +26428,7 @@
 		}
 
 /***/ }),
-/* 226 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26435,11 +26437,11 @@
 	  value: true
 	});
 
-	var _react = __webpack_require__(182);
+	var _react = __webpack_require__(184);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Animate = __webpack_require__(227);
+	var _Animate = __webpack_require__(229);
 
 	var _Animate2 = _interopRequireDefault(_Animate);
 
@@ -26465,7 +26467,7 @@
 		exports.default = withTransition;
 
 /***/ }),
-/* 227 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26478,11 +26480,11 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(182);
+	var _react = __webpack_require__(184);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _yubabaCore = __webpack_require__(212);
+	var _yubabaCore = __webpack_require__(214);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

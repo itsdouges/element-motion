@@ -6,6 +6,7 @@ const PORT = '2222';
 const makeTestPage = (name) => ({
   entry: {
     [name]: `./examples/${name}`,
+    links: './examples/links',
   },
   noLib: true,
   path: `${__dirname}/../docs/examples/${name}`,
@@ -24,7 +25,9 @@ const makeTestPage = (name) => ({
     },
   },
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: `${name} | yubaba`,
+    }),
   ],
 });
 
