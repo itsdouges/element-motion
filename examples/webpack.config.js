@@ -9,7 +9,10 @@ const makeTestPage = (name) => ({
   },
   noLib: true,
   path: `${__dirname}/../docs/examples/${name}`,
-  publicPath: process.env.EXAMPLE ? '/' : `/examples/${name}/`,
+  // NOTE: Public path needs to be prefixed with /yubaba when building
+  // for github docs. When running locally though, we need to remove it.
+  // Need to think up a better solution in the long run.
+  publicPath: process.env.EXAMPLE ? '/' : `/yubaba/examples/${name}/`,
   filename: '[name].js',
   devServer: {
     publicPath: '/',
