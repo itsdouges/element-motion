@@ -13,11 +13,6 @@
   <a href="https://david-dm.org/madou/yubaba?type=dev"><img alt="devDependencies Status" src="https://david-dm.org/madou/yubaba/dev-status.svg"></a>
 </div>
 
-<div align="center">
-
-  Yubaba is an page transition orchestration library that aims to make complex transitions easy.
-</div>
-
 ## Motivation
 
 Animations are hard. Animations over page transitions are even harder. `CSSTransitionGroup` from React, and `ng-animate` from Angular.js are popular ways to have top level pages transition to each other. Simply add some css and off you go.
