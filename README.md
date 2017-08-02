@@ -48,39 +48,47 @@ The primary component for yubaba is `Animate`. Drop two anywhere in the componen
 Say we have our start component wrapped in an `Animate`:
 
 ```javascript
-<Animate
-  pair="my-page-transition"
-  animations={[{
-    animationName: 'move',
-    duration: 300,
-  }]}
->
-  <Photo // Pretend Photo is a real component
-    type="small"
-    // Assume this unmounts the component when
-    // called and mounts the end <Animate />
-    onClick={this.openDetails}
-  />
-</Animate>
+import Animate from 'react-yubaba';
+
+const List = (props) => (
+  <Animate
+    pair="my-page-transition"
+    animations={[{
+      animationName: 'move',
+      duration: 300,
+    }]}
+  >
+    <Photo // Pretend Photo is a real component
+      type="small"
+      // Assume this unmounts the component when
+      // called and mounts the end <Animate />
+      onClick={props.openDetails}
+    />
+  </Animate>
+);
 ```
 
 And our end component wrapped in an `Animate`:
 
 ```javascript
-<Animate
-  pair="my-page-transition"
-  animations={[{
-    animationName: 'move',
-    duration: 400,
-  }]}
->
-  <Photo // Pretend Photo is a real component
-    type="big"
-    // Assume this unmounts the component when
-    // called and mounts the start <Animate />
-    onClick={this.closeDetails}
-  />
-</Animate>
+import Animate from 'react-yubaba';
+
+const Page = (props) => (
+  <Animate
+    pair="my-page-transition"
+    animations={[{
+      animationName: 'move',
+      duration: 400,
+    }]}
+  >
+    <Photo // Pretend Photo is a real component
+      type="big"
+      // Assume this unmounts the component when
+      // called and mounts the start <Animate />
+      onClick={props.closeDetails}
+    />
+  </Animate>
+);
 ```
 
 When we click on the first component it will be unmounted, and the second component will be mounted. Yubaba will then orchestrate the animation from start component to the end component.
@@ -90,25 +98,29 @@ The same would happen when the second component is clicked, except would start a
 There is another component available called `AnimateContainer`. It should be used when you have content on the page that you want to show _after_ the animation has completed. Usage of this could look like:
 
 ```javascript
-<AnimateContainer pair="my-page-transition">
-  <Animate
-    pair="my-page-transition"
-    animations={[{
-      animationName: 'move',
-      duration: 400,
-    }]}
-  >
-    <Photo
-      type="big"
-      onClick={this.closeDetails}
-    />
-  </Animate>
+import Animate, { AnimateContainer } from 'react-yubaba';
 
-  <p>Some Great Content</p>
-</AnimateContainer>
+const Page = (props) => (
+  <AnimateContainer pair="my-page-transition">
+    <Animate
+      pair="my-page-transition"
+      animations={[{
+        animationName: 'move',
+        duration: 400,
+      }]}
+    >
+      <Photo
+        type="big"
+        onClick={props.closeDetails}
+      />
+    </Animate>
+
+    <p>Some Great Content</p>
+  </AnimateContainer>
+);
 ```
 
-The examples above this section have working implementations of `Animate` and `AnimateContainer`, have a look at their code for inspiration!
+The examples above this section have working implementations of `Animate` and `AnimateContainer`, have a [look at their code for inspiration!](https://github.com/madou/yubaba/blob/master/README.md#examples)
 
 ## API Docs
 
