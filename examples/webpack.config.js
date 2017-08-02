@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const buildConfig = require('../scripts/webpackFactory');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -5,7 +6,7 @@ const PORT = '2222';
 
 const makeTestPage = (name) => ({
   entry: {
-    [name]: `./examples/${name}`,
+    [name]: ['promise', 'web-animations-js', `./examples/${name}`],
     links: './examples/links',
   },
   noLib: true,
@@ -27,6 +28,9 @@ const makeTestPage = (name) => ({
   plugins: [
     new HtmlWebpackPlugin({
       title: `${name} | yubaba`,
+    }),
+    new webpack.ProvidePlugin({
+      Promise: 'promise',
     }),
   ],
 });

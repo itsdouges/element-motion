@@ -105,7 +105,7 @@ p {
   animation-name: wobble;
   animation-duration: 0.2s;
   animation-fill-mode: forwards;
-  opacity: 0 !important;
+  opacity: 0;
   animation-timing-function: ease-out;
 }
 
