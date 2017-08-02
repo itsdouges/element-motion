@@ -1,5 +1,3 @@
-
-
 <h1 align="center">
   <img src="https://github.com/madou/yubaba/blob/master/icon.png?raw=true" width="100px" height="100px" style="margin:0 auto;width:100px;height:100px;" />
   <div align="center">
@@ -23,29 +21,92 @@ Yubaba aims to solve these problems, as well as supporting all popular view libr
 
 ## Examples
 
-### Star Wars
-
-#### React [View](https://madou.github.io/yubaba/examples/starwars/react) | [Code](https://github.com/madou/yubaba/blob/master/examples/starwars/react)
-
-<div align="center">
-  <a href="https://madou.github.io/yubaba/examples/starwars/react"><img src="examples/starwars/example.gif?raw=true" style="margin:0 auto" /></a>
-</div>
-
 ### Box
 
 #### React [View](https://madou.github.io/yubaba/examples/box/react) | [Code](https://github.com/madou/yubaba/blob/master/examples/box/react)
 
-<div align="center">
-  <a  href="https://madou.github.io/yubaba/examples/box/react"><img src="examples/box/example.gif?raw=true" style="margin:0 auto" /></a>
-</div>
+<a href="https://madou.github.io/yubaba/examples/box/react"><img width="300px" src="examples/box/example.gif?raw=true" style="margin:0 auto" /></a>
 
 ### Reveal
 
 #### React [View](https://madou.github.io/yubaba/examples/reveal/react) | [Code](https://github.com/madou/yubaba/blob/master/examples/reveal/react)
 
-<div align="center">
-  <a href="https://madou.github.io/yubaba/examples/reveal/react"><img src="examples/reveal/example.gif?raw=true" style="margin:0 auto" /></a>
-</div>
+<a href="https://madou.github.io/yubaba/examples/reveal/react"><img width="300px" src="examples/reveal/example.gif?raw=true" style="margin:0 auto" /></a>
+
+### Star Wars
+
+#### React [View](https://madou.github.io/yubaba/examples/starwars/react) | [Code](https://github.com/madou/yubaba/blob/master/examples/starwars/react)
+
+<a href="https://madou.github.io/yubaba/examples/starwars/react"><img width="300px" src="examples/starwars/example.gif?raw=true" style="margin:0 auto" /></a>
+
+## Getting Started
+
+The primary component for yubaba is `Animate`. Drop two anywhere in the component tree, and when one of them unmounts the unmouted component will start its animation.
+
+Say we have our start component wrapped in an `Animate`:
+
+```javascript
+<Animate
+  pair="my-page-transition"
+  animations={[{
+    animationName: 'move',
+    duration: 300,
+  }]}
+>
+  <Photo // Pretend Photo is a real component
+    type="small"
+    // Assume this unmounts the component when
+    // called and mounts the end <Animate />
+    onClick={this.openDetails}
+  />
+</Animate>
+```
+
+And our end component wrapped in an `Animate`:
+
+```javascript
+<Animate
+  pair="my-page-transition"
+  animations={[{
+    animationName: 'move',
+    duration: 400,
+  }]}
+>
+  <Photo // Pretend Photo is a real component
+    type="big"
+    // Assume this unmounts the component when
+    // called and mounts the start <Animate />
+    onClick={this.closeDetails}
+  />
+</Animate>
+```
+
+When we click on the first component it will be unmounted, and the second component will be mounted. Yubaba will then orchestrate the animation from start component to the end component.
+
+The same would happen when the second component is clicked, except would start at the end component.
+
+There is another component available called `AnimateContainer`. It should be used when you have content on the page that you want to show _after_ the animation has completed. Usage of this could look like:
+
+```javascript
+<AnimateContainer pair="my-page-transition">
+  <Animate
+    pair="my-page-transition"
+    animations={[{
+      animationName: 'move',
+      duration: 400,
+    }]}
+  >
+    <Photo
+      type="big"
+      onClick={this.closeDetails}
+    />
+  </Animate>
+
+  <p>Some Great Content</p>
+</AnimateContainer>
+```
+
+The examples above this section have working implementations of `Animate` and `AnimateContainer`, have a look at their code for inspiration!
 
 ## API Docs
 
@@ -95,6 +156,7 @@ EXAMPLE=starwars/react npm run example
 | `docs-run` | Run a static server over the docs folder |
 | `test` | Test all packages |
 | `clean` | Removes all packages `node_modules` |
+| `example` | See above for information |
 
 ## Contributing
 
