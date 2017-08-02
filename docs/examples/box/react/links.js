@@ -83,9 +83,7 @@
 	  );
 	};
 
-	var rootEl = document.createElement('div');
-	document.body && document.body.appendChild(rootEl);
-	_reactDom2.default.render(_react2.default.createElement(Links, null), rootEl);
+	_reactDom2.default.render(_react2.default.createElement(Links, null), document.getElementById('links'));
 
 /***/ }),
 /* 1 */,

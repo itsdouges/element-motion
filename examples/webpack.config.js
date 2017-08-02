@@ -28,6 +28,7 @@ const makeTestPage = (name) => ({
   plugins: [
     new HtmlWebpackPlugin({
       title: `${name} | yubaba`,
+      template: './examples/index.html',
     }),
     new webpack.ProvidePlugin({
       Promise: 'promise',

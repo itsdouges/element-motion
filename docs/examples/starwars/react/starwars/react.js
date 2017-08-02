@@ -22293,10 +22293,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var rootEl = document.createElement('div');
-
-	document.body && document.body.appendChild(rootEl);
-	_reactDom2.default.render(_react2.default.createElement(_App2.default, null), rootEl);
+	_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('root'));
 
 /***/ }),
 /* 187 */

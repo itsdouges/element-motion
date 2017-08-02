@@ -7,6 +7,4 @@ import App from './App';
 
 import '../assets/styles.css';
 
-const rootEl = document.createElement('div');
-document.body && document.body.appendChild(rootEl);
-ReactDOM.render(<App />, rootEl);
+ReactDOM.render(<App />, document.getElementById('root'));

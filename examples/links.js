@@ -15,6 +15,4 @@ const Links = () => (
   </div>
 );
 
-const rootEl = document.createElement('div');
-document.body && document.body.appendChild(rootEl);
-ReactDOM.render(<Links />, rootEl);
+ReactDOM.render(<Links />, document.getElementById('links'));

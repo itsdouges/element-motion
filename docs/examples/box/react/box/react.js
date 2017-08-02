@@ -1087,9 +1087,7 @@
 	  return App;
 	}(_react2.default.Component);
 
-	var rootEl = document.createElement('div');
-	document.body.appendChild(rootEl);
-	_reactDom2.default.render(_react2.default.createElement(App, null), rootEl);
+	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
 
 /***/ }),
 /* 13 */
