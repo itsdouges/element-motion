@@ -37,7 +37,9 @@ Yubaba aims to solve these problems, as well as supporting all popular view libr
 
 #### React [View](https://madou.github.io/yubaba/examples/starwars/react) | [Code](https://github.com/madou/yubaba/blob/master/examples/starwars/react)
 
-<a href="https://madou.github.io/yubaba/examples/starwars/react"><img width="300px" src="examples/starwars/example.gif?raw=true" style="margin:0 auto" /></a>
+<a href="https://madou.github.io/yubaba/examples/starwars/react">
+  <img width="300px" src="examples/starwars/example.gif?raw=true" /><img height="150px" src="examples/starwars/example-mobile.gif?raw=true" />
+</a>
 
 ## Getting Started
 
