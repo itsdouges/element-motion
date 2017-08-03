@@ -90,7 +90,7 @@ type Node = {
 };
 
 function prepareAnimation (pairName, animation, fromNode, toNode) {
-  const { animationName: name, ...options } = animation;
+  const { animation: customAnim, animationName: name, ...options } = animation;
   const inflightName = buildInflightName(pairName, name);
 
   let toElement;
@@ -115,7 +115,11 @@ function prepareAnimation (pairName, animation, fromNode, toNode) {
     metadata = fromNode.metadata;
   }
 
-  return animationDefinitions[toCamelCase(name)](fromElement, {
+  const func = customAnim
+    ? (element, opts, mtdata) => animationDefinitions.animate(customAnim, element, opts, mtdata)
+    : animationDefinitions[toCamelCase(name)];
+
+  return func(fromElement, {
     ...options,
     onStart: (/* anim*/) => {
       process.env.NODE_ENV !== 'production' && console.log(`Starting ${inflightName} animation.`);
