@@ -26501,8 +26501,9 @@
 	}
 
 	function prepareAnimation(pairName, animation, fromNode, toNode) {
-	  var name = animation.animationName,
-	      options = _objectWithoutProperties(animation, ['animationName']);
+	  var customAnim = animation.animation,
+	      name = animation.animationName,
+	      options = _objectWithoutProperties(animation, ['animation', 'animationName']);
 
 	  var inflightName = buildInflightName(pairName, name);
 
@@ -26522,13 +26523,18 @@
 	  // } else
 	  if (REQUIRES_LAST_NODE_AS_FIRST.includes(name)) {
 	    fromElement = toNode.node;
+	    toElement = fromNode.node;
 	  } else {
 	    fromElement = fromNode.node;
 	    toElement = toNode.node;
 	    metadata = fromNode.metadata;
 	  }
 
-	  return animationDefinitions[toCamelCase(name)](fromElement, _extends({}, options, {
+	  var func = customAnim ? function (element, opts, mtdata) {
+	    return animationDefinitions.animate(customAnim, element, opts, mtdata);
+	  } : animationDefinitions[toCamelCase(name)];
+
+	  return func(fromElement, _extends({}, options, {
 	    onStart: function onStart() /* anim*/{
 	      ("production") !== 'production' && console.log('Starting ' + inflightName + ' animation.');
 	      // INFLIGHT_ANIMATIONS[inflightName] = anim;

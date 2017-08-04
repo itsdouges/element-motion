@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/yubaba/examples/box/react/";
+/******/ 	__webpack_require__.p = "/yubaba/examples/custom/react/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -995,6 +995,10 @@
 
 	var _src2 = _interopRequireDefault(_src);
 
+	var _spinners = __webpack_require__(230);
+
+	var _spinners2 = _interopRequireDefault(_spinners);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1045,38 +1049,28 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        this.state.isBig ?
-	        // Wrap with <Animate />
-	        _react2.default.createElement(
-	          _src2.default
-	          // Make sure both from and to components
-	          // have the same pair name!
-
-	          // Make sure both from and to components
-	          // have the same pair name!
-	          ,
-	          { pair: 'small-and-big',
+	        this.state.isBig ? _react2.default.createElement(
+	          _src2.default,
+	          {
+	            pair: 'small-and-big',
 	            animations: [{
-	              animationName: 'move',
+	              // Pass in custom animation definition
+	              animation: _spinners2.default,
 	              duration: 500
-	            }]
-	            // We want react to render unique instances of these
-	            // components, hence using "key".
-	            , key: 'big-box'
+	            }],
+	            key: 'big-box'
 	          },
 	          _react2.default.createElement('div', { role: 'presentation', onClick: this.toggle, style: bigBoxStyles })
-	        ) :
-	        // Wrap with <Animate />
-	        _react2.default.createElement(
+	        ) : _react2.default.createElement(
 	          _src2.default,
-	          { pair: 'small-and-big',
+	          {
+	            pair: 'small-and-big',
 	            animations: [{
-	              animationName: 'move',
+	              // Pass in custom animation definition
+	              animation: _spinners2.default,
 	              duration: 500
-	            }]
-	            // We want react to render unique instances of these
-	            // components, hence using "key".
-	            , key: 'small-box'
+	            }],
+	            key: 'small-box'
 	          },
 	          _react2.default.createElement('div', { role: 'presentation', onClick: this.toggle, style: boxStyles })
 	        )
@@ -26781,6 +26775,50 @@
 	}(_react2.default.Component);
 
 	exports.default = Animate;
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports.default = spinners;
+
+	var _location = __webpack_require__(222);
+
+	var _location2 = _interopRequireDefault(_location);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function spinners(fromElement, options, metadata) {
+	  var _calculateFromSizeLoc = (0, _location2.default)(fromElement, metadata),
+	      sizeLocation = _objectWithoutProperties(_calculateFromSizeLoc, []);
+
+	  return {
+	    name: 'spinners',
+	    options: _extends({
+	      cloneElement: true
+	    }, metadata),
+	    styles: _extends({}, sizeLocation, {
+	      margin: 0,
+	      position: 'absolute',
+	      zIndex: options.zIndex || 9999
+	    }),
+	    keyframes: [{
+	      transform: 'rotate(0deg)'
+	    }, {
+	      transform: 'rotate(359deg)'
+	    }]
+	  };
+	}
 
 /***/ })
 /******/ ]);

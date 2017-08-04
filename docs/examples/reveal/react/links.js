@@ -60,7 +60,7 @@
 
 	var libraries = ['react'];
 
-	var links = ['box', 'reveal', 'starwars'];
+	var links = ['box', 'reveal', 'starwars', 'custom'];
 
 	var Links = function Links() {
 	  return _react2.default.createElement(
