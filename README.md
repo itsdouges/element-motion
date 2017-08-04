@@ -41,6 +41,10 @@ Yubaba aims to solve these problems, as well as supporting all popular view libr
   <img width="300px" src="examples/starwars/example.gif?raw=true" /><img height="150px" src="examples/starwars/example-mobile.gif?raw=true" />
 </a>
 
+### Custom Animation
+
+#### React [View](https://madou.github.io/yubaba/examples/custom/react) | [Code](https://github.com/madou/yubaba/blob/master/examples/custom/react)
+
 ## Getting Started
 
 The primary component for yubaba is `Animate`. Drop two anywhere in the component tree, and when one of them unmounts the unmouted component will start its animation.
