@@ -77,6 +77,7 @@ const animation = [
 | prop | type | required | description |
 |-|-|-|-|
 | animationName | `string` | yes | The animation name. See below for the animation definitions. The name should be in `kebab-case`. |
+| animation | `Function` | no | The custom animation. This takes priority over `animationName`. [See `packages/core/src/animations/index.js` for the explict type definition.](https://github.com/madou/yubaba/blob/master/packages/core/src/animations/index.js#L16) |
 | duration | `number` | yes | In ms, the duration of the animation. |
 | fadeout | `number` | no | Fadeout the animation at the end of the animation. In ms. |
 | delay | `number` | no | Delays the animation in ms. |

@@ -13,7 +13,7 @@ import buildMove from './move';
 import buildReveal from './reveal';
 import buildSwipe from './swipe';
 
-type AnimationFunc = (element: HTMLElement, options: Object, metadata?: Metadata) => ({
+export type AnimationFunc = (element: HTMLElement, options: Object, metadata?: Metadata) => ({
   name: string,
   options: Object,
   styles: Styles,
