@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import './links.css';
 
 const libraries = ['react'];
-const links = ['box', 'reveal', 'starwars'];
+const links = ['box', 'reveal', 'starwars', 'custom'];
 
 const Links = () => (
   <div className="link-container">
