@@ -42,17 +42,13 @@ class App extends React.Component {
             </Animate>
         )
         : (
-          // Wrap with <Animate />
           <Animate
-            // Make sure both from and to components
-            // have the same pair name!
             pair="small-and-big"
             animations={[{
+              // Pass in custom animation definition
               animation: spinners,
               duration: 500,
             }]}
-            // We want react to render unique instances of these
-            // components, hence using "key".
             key="small-box"
           >
             <div role="presentation" onClick={this.toggle} style={boxStyles} />

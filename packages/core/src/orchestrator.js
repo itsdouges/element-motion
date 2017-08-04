@@ -1,5 +1,7 @@
 // @flow
 
+import type { AnimationFunc } from './animations';
+import type { Metadata } from './lib/location';
 import * as animationDefinitions from './animations';
 import { getElementSizeLocation } from '../../core/src/lib/dom';
 
@@ -67,6 +69,7 @@ export function removeFromStore (pairName: string, node: Element, withDelay: boo
 
 export type Animation = {
   animationName: 'move' | 'expand',
+  animation?: AnimationFunc,
 };
 
 type Options = {
@@ -77,16 +80,7 @@ type Options = {
 type Node = {
   node: HTMLElement,
   animations: Array<Animation>,
-  metadata?: {
-    location: {
-      left: number,
-      top: number,
-    },
-    size: {
-      width: number,
-      height: number,
-    },
-  },
+  metadata?: Metadata,
 };
 
 function prepareAnimation (pairName, animation, fromNode, toNode) {
@@ -109,6 +103,7 @@ function prepareAnimation (pairName, animation, fromNode, toNode) {
   // } else
   if (REQUIRES_LAST_NODE_AS_FIRST.includes(name)) {
     fromElement = toNode.node;
+    toElement = fromNode.node;
   } else {
     fromElement = fromNode.node;
     toElement = toNode.node;
