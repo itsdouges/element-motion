@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
+
+## [0.2.0][] - 2017-08-04
 ### Added
 - Ability to pass custom animations
 
@@ -48,7 +50,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial release
 
 
-[Unreleased]: https://github.com/madou/yubaba/compare/v0.1.15...HEAD
+[Unreleased]: https://github.com/madou/yubaba/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/madou/yubaba/compare/v0.1.15...v0.2.0
 [0.1.15]: https://github.com/madou/yubaba/compare/v0.1.14...v0.1.15
 [0.1.14]: https://github.com/madou/yubaba/compare/v0.1.13...v0.1.14
 [0.1.13]: https://github.com/madou/yubaba/compare/v0.1.12...v0.1.13
