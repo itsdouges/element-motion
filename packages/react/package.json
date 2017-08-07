@@ -1,6 +1,6 @@
 {
   "name": "react-yubaba",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Yubaba is an page transition orchestration library that aims to make complex transitions easy.",
   "main": "dist/react-yubaba.js",
   "repository": "madou/yubaba",
@@ -11,7 +11,7 @@
     "build": "webpack"
   },
   "dependencies": {
-    "yubaba-core": "^0.2.0"
+    "yubaba-core": "^0.2.1"
   },
   "peerDependencies": {
     "react": "0.13.x || 0.14.x || ^15.0.0-0 || 15.x"
