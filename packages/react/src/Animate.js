@@ -43,9 +43,9 @@ export default class Animate extends React.Component {
     });
   };
 
-  setDOMNode (node: HTMLElement) {
+  setDOMNode = (node: HTMLElement) => {
     this._node = node;
-  }
+  };
 
   initialise () {
     if (!this._node.firstElementChild) {
