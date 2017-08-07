@@ -57,8 +57,9 @@ function updateNodeData (pairName, { node, metadata }) {
 }
 
 export function removeFromStore (pairName: string, node: Element, withDelay: boolean = false) {
-  const remove = () => (NODE_STORE[pairName] = NODE_STORE[pairName]
-    .filter(({ node: nodeInStore }) => nodeInStore !== node));
+  const remove = () => {
+    NODE_STORE[pairName] = NODE_STORE[pairName].filter(({ node: nodeInStore }) => nodeInStore !== node);
+  };
 
   if (withDelay) {
     setTimeout(remove, REMOVE_DELAY);
@@ -116,7 +117,7 @@ function prepareAnimation (pairName, animation, fromNode, toNode) {
 
   return func(fromElement, {
     ...options,
-    onStart: (/* anim*/) => {
+    onStart: (/* anim */) => {
       process.env.NODE_ENV !== 'production' && console.log(`Starting ${inflightName} animation.`);
       // INFLIGHT_ANIMATIONS[inflightName] = anim;
     },
@@ -145,7 +146,9 @@ function animate (
 
   animationsStarters
     .reduce((promise, start) => promise.then(() => {
-      return start().then((result) => (results = results.concat(result)));
+      return start().then((result) => {
+        results = results.concat(result);
+      });
     }), Promise.resolve())
     .then(() => {
       process.env.NODE_ENV !== 'production' && console.log(`Finished animations for ${pairName}.`);

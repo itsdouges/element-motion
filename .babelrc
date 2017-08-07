@@ -3,10 +3,10 @@
     "react",
     ["env", {
       "modules": false,
+      "useBuiltIns": true,
       "targets": {
         "browsers": ["last 2 versions"]
-      },
-      "useBuiltIns": true
+      }
     }]
   ],
   "plugins": [
@@ -15,6 +15,14 @@
   ],
   "env": {
     "test": {
+      "presets": [
+        ["env", {
+          "useBuiltIns": true,
+          "targets": {
+            "browsers": ["last 2 versions"]
+          }
+        }]
+      ],
       "plugins": [
         "istanbul"
       ]
