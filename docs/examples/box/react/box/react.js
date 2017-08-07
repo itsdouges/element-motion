@@ -23603,6 +23603,8 @@ var Animate_Animate = function (_React$Component) {
       _this.setState({
         visible: visible
       });
+    }, _this.setDOMNode = function (node) {
+      _this._node = node;
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -23621,11 +23623,6 @@ var Animate_Animate = function (_React$Component) {
       if (this._node.firstElementChild) {
         __WEBPACK_IMPORTED_MODULE_0__orchestrator__["c"](this.props.pair, this._node.firstElementChild, true);
       }
-    }
-  }, {
-    key: 'setDOMNode',
-    value: function setDOMNode(node) {
-      this._node = node;
     }
   }, {
     key: 'initialise',
