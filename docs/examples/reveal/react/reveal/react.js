@@ -24177,6 +24177,11 @@ var Animate_Animate = function (_React$Component) {
       }
     }
   }, {
+    key: 'setDOMNode',
+    value: function setDOMNode(node) {
+      this._node = node;
+    }
+  }, {
     key: 'initialise',
     value: function initialise() {
       if (!this._node.firstElementChild) {
@@ -24192,8 +24197,6 @@ var Animate_Animate = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       var _props = this.props,
           pair = _props.pair,
           animations = _props.animations,
@@ -24203,9 +24206,7 @@ var Animate_Animate = function (_React$Component) {
       return Animate___WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         Animate__extends({}, props, {
-          ref: function ref(node) {
-            return _this2._node = node;
-          },
+          ref: this.setDOMNode,
           style: Animate__extends({}, style, { opacity: this.state.visible ? 1 : 0 })
         }),
         this.props.children
@@ -27264,7 +27265,7 @@ function removeFromStore(pairName, node) {
   var withDelay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
   var remove = function remove() {
-    return NODE_STORE[pairName] = NODE_STORE[pairName].filter(function (_ref3) {
+    NODE_STORE[pairName] = NODE_STORE[pairName].filter(function (_ref3) {
       var nodeInStore = _ref3.node;
       return nodeInStore !== node;
     });
@@ -27312,7 +27313,7 @@ function prepareAnimation(pairName, animation, fromNode, toNode) {
   } : __WEBPACK_IMPORTED_MODULE_0__animations__[toCamelCase(name)];
 
   return func(fromElement, _extends({}, options, {
-    onStart: function onStart() /* anim*/{
+    onStart: function onStart() /* anim */{
       "production" !== 'production' && console.log('Starting ' + inflightName + ' animation.');
       // INFLIGHT_ANIMATIONS[inflightName] = anim;
     }
@@ -27343,7 +27344,7 @@ function animate(pairName, fromNode, toNode) {
   animationsStarters.reduce(function (promise, start) {
     return promise.then(function () {
       return start().then(function (result) {
-        return results = results.concat(result);
+        results = results.concat(result);
       });
     });
   }, Promise.resolve()).then(function () {
