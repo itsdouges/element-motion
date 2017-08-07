@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
+### Changed
+- Use `precise` dist on travis ci
 
 ## [0.2.1][] - 2017-08-08
 ### Fixed
