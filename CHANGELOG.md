@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
+### Fixed
+- Library webpack setup
+
+### Changed
+- Webpack to v3
+- Generation of webpack configs to use `webpack-merge`
 
 ## [0.2.0][] - 2017-08-04
 ### Added

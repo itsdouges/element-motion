@@ -43,6 +43,10 @@ export default class Animate extends React.Component {
     });
   };
 
+  setDOMNode (node: HTMLElement) {
+    this._node = node;
+  }
+
   initialise () {
     if (!this._node.firstElementChild) {
       return;
@@ -61,7 +65,7 @@ export default class Animate extends React.Component {
     return (
       <div
         {...props}
-        ref={(node) => (this._node = node)}
+        ref={this.setDOMNode}
         style={{ ...style, opacity: this.state.visible ? 1 : 0 }}
       >
         {this.props.children}

@@ -4,6 +4,12 @@ module.exports = buildConfig({
   entry: {
     'react-yubaba': './src/index',
   },
+  output: {
+    path: `${__dirname}/dist`,
+    filename: '[name].js',
+    library: 'reactYubaba',
+    libraryTarget: 'umd',
+  },
   externals: {
     react: {
       commonjs: 'react',
@@ -18,8 +24,5 @@ module.exports = buildConfig({
       root: 'yubaba',
     },
   },
-  path: './dist',
-  filename: '[name].js',
-  library: 'reactYubaba',
   devtool: 'cheap-module-source-map',
 });
