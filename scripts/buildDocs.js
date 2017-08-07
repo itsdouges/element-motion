@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const subdirs = require('subdirs');
-const { make: makeConfig } = require('../examples/webpack.config');
+const makeConfig = require('../examples/buildWebpack');
 
 const filterDirs = (dir) => {
   const parts = dir.split('/');

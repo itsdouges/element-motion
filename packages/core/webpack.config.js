@@ -2,8 +2,11 @@ module.exports = require('../../scripts/webpackFactory')({
   entry: {
     'yubaba-core': './src/index',
   },
-  path: './dist',
-  filename: '[name].js',
-  library: 'yubaba',
+  output: {
+    path: `${__dirname}/dist`,
+    filename: '[name].js',
+    library: 'yubaba',
+    libraryTarget: 'umd',
+  },
   devtool: 'cheap-module-source-map',
 });
