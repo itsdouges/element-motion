@@ -18,6 +18,11 @@ module.exports = (params) => merge({
         exclude: /node_modules/,
       },
       {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.(png|jpg|jpeg|gif)$/,
         loader: 'file-loader',
         exclude: /node_moduels/,
