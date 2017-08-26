@@ -1,5 +1,5 @@
 // @flow
 
-import Animate from './Animate.vue';
+// import Animate from './Animate.vue';
 
-export default Animate;
+// export default Animate;
