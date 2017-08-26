@@ -1,7 +1,5 @@
 // @flow
 
-import Animate from './Animate';
+import Animate from './Animate.vue';
 
-export { default as AnimateContainer } from './AnimateContainer';
-export { default as withAnimation } from './withAnimation';
 export default Animate;

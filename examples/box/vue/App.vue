@@ -1,7 +1,7 @@
 <template>
   <div>
-    <small-box v-if="!showBig"></small-box>
-    <big-box v-if="showBig"></big-box>
+    <small-box :on-click="setBig" v-if="!showBig"></small-box>
+    <big-box :on-click="setBig" v-if="showBig"></big-box>
   </div>
 </template>
 
@@ -15,6 +15,11 @@ export default {
     return {
       showBig: false,
     };
+  },
+  methods: {
+    setBig() {
+      this.showBig = !this.showBig;
+    },
   },
   components: {
     BigBox,
