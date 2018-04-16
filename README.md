@@ -11,6 +11,10 @@
   <a href="https://david-dm.org/madou/yubaba?type=dev"><img alt="devDependencies Status" src="https://david-dm.org/madou/yubaba/dev-status.svg"></a>
 </div>
 
+## HEY YOU!
+
+We're currently rewriting yubaba to be react only, typescript, and beautiful. Come back soon for some fantastic news!
+
 ## Motivation
 
 Animations are hard. Animations over page transitions are even harder. `CSSTransitionGroup` from React, and `ng-animate` from Angular.js are popular ways to have top level pages transition to each other. Simply add some css and off you go.
@@ -54,13 +58,15 @@ Say we have our start component wrapped in an `Animate`:
 ```javascript
 import Animate from 'react-yubaba';
 
-const List = (props) => (
+const List = props => (
   <Animate
     pair="my-page-transition"
-    animations={[{
-      animationName: 'move',
-      duration: 300,
-    }]}
+    animations={[
+      {
+        animationName: 'move',
+        duration: 300,
+      },
+    ]}
   >
     <Photo // Pretend Photo is a real component
       type="small"
@@ -77,13 +83,15 @@ And our end component wrapped in an `Animate`:
 ```javascript
 import Animate from 'react-yubaba';
 
-const Page = (props) => (
+const Page = props => (
   <Animate
     pair="my-page-transition"
-    animations={[{
-      animationName: 'move',
-      duration: 400,
-    }]}
+    animations={[
+      {
+        animationName: 'move',
+        duration: 400,
+      },
+    ]}
   >
     <Photo // Pretend Photo is a real component
       type="big"
@@ -104,19 +112,18 @@ There is another component available called `AnimateContainer`. It should be use
 ```javascript
 import Animate, { AnimateContainer } from 'react-yubaba';
 
-const Page = (props) => (
+const Page = props => (
   <AnimateContainer pair="my-page-transition">
     <Animate
       pair="my-page-transition"
-      animations={[{
-        animationName: 'move',
-        duration: 400,
-      }]}
+      animations={[
+        {
+          animationName: 'move',
+          duration: 400,
+        },
+      ]}
     >
-      <Photo
-        type="big"
-        onClick={props.closeDetails}
-      />
+      <Photo type="big" onClick={props.closeDetails} />
     </Animate>
 
     <p>Some Great Content</p>
@@ -166,15 +173,15 @@ EXAMPLE=starwars/react npm run example
 
 ### NPM scripts of note
 
-| command | description |
-|-|-|
-| `react:tdd` | Run unit tests in watch for react lib |
-| `core:tdd` | Run unit tests in watch for core lib |
-| `docs` | Generate docs from the examples folder |
-| `docs-run` | Run a static server over the docs folder |
-| `test` | Test all packages |
-| `clean` | Removes all packages `node_modules` |
-| `example` | See above for information |
+| command     | description                              |
+| ----------- | ---------------------------------------- |
+| `react:tdd` | Run unit tests in watch for react lib    |
+| `core:tdd`  | Run unit tests in watch for core lib     |
+| `docs`      | Generate docs from the examples folder   |
+| `docs-run`  | Run a static server over the docs folder |
+| `test`      | Test all packages                        |
+| `clean`     | Removes all packages `node_modules`      |
+| `example`   | See above for information                |
 
 ## Contributing
 
