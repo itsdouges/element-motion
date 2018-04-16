@@ -5,6 +5,7 @@
   "author": "Michael Dougall",
   "license": "MIT",
   "scripts": {
+    "tdd": "jest --watch",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes && rm -rf packages/core/dist/ && rm -rf packages/react/dist/",
     "build": "lerna run build",
@@ -15,12 +16,10 @@
     "example": "webpack-dev-server --hot --inline --open --config ./examples/webpack.config.js",
     "core:dev": "lerna run start --scope *core",
     "core:tdd": "npm run core:unit -- -w",
-    "core:unit":
-      "NODE_ENV=test mocha \"./packages/core/src/**/*.spec.js\" --opts ./packages/core/test/mocha.opts",
+    "core:unit": "NODE_ENV=test mocha \"./packages/core/src/**/*.spec.js\" --opts ./packages/core/test/mocha.opts",
     "react:dev": "EXAMPLE=dark-side lerna run start --scope react*",
     "react:tdd": "npm run react:unit -- -w",
-    "react:unit":
-      "NODE_ENV=test mocha \"./packages/react/src/**/*.spec.js\" --opts ./packages/react/test/mocha.opts",
+    "react:unit": "NODE_ENV=test mocha \"./packages/react/src/**/*.spec.js\" --opts ./packages/react/test/mocha.opts",
     "codecov": "echo \"not implemented\"",
     "docs": "rm -rf ./docs && NODE_ENV=production node ./scripts/buildDocs.js",
     "docs-run": "cd docs && static-server",
@@ -28,8 +27,7 @@
     "core:publish": "cd packages/core && npm publish",
     "react:publish": "cd packages/react && npm publish",
     "preversion": "npm test",
-    "version":
-      "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && node ./scripts/deploy",
+    "version": "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && node ./scripts/deploy",
     "postversion": "git push && git push --tags",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -38,10 +36,20 @@
     "@storybook/addon-actions": "^3.4.1",
     "@storybook/addon-links": "^3.4.1",
     "@storybook/react": "4.0.0-alpha.2",
+    "@types/enzyme": "^3.1.9",
+    "@types/jest": "^22.2.3",
+    "@types/sinon": "^4.3.1",
     "@types/storybook__react": "^3.0.7",
+    "babel-core": "^6.26.0",
     "changelog-verify": "^1.0.4",
     "css-loader": "^0.28.4",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.3",
+    "jest": "^22.4.3",
     "lerna": "^2.10.1",
+    "sinon": "^4.5.0",
+    "ts-jest": "^22.4.3",
     "ts-loader": "^4.2.0",
     "tslint": "^5.9.1",
     "typescript": "^2.8.1",
@@ -50,5 +58,22 @@
     "webpack-dev-server": "^2.6.1",
     "webpack-merge": "^4.1.0"
   },
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ],
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "setupTestFrameworkScriptFile": "<rootDir>test/setup.js",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
 }
