@@ -4,5 +4,8 @@
   "repository": "madou/yubaba",
   "author": "Michael Dougall",
   "license": "MIT",
-  "scripts": {}
+  "scripts": {},
+  "devDependencies": {
+    "styled-components": "^3.2.5"
+  }
 }
