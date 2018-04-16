@@ -28,9 +28,15 @@
     "react:publish": "cd packages/react && npm publish",
     "preversion": "npm test",
     "version": "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && node ./scripts/deploy",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.1",
+    "@storybook/addon-links": "^3.4.1",
+    "@storybook/react": "4.0.0-alpha.2",
+    "@types/storybook__react": "^3.0.7",
     "autoprefixer": "^7.1.2",
     "babel": "^6.5.2",
     "babel-core": "^6.25.0",
@@ -62,7 +68,7 @@
     "inject-loader": "^2.0.1",
     "jsdom": "^11.1.0",
     "jsdom-global": "^3.0.2",
-    "lerna": "^2.0.0",
+    "lerna": "^2.10.1",
     "lodash": "^4.17.4",
     "lolex": "^1.4.0",
     "mocha": "^3.5.0",
@@ -70,16 +76,21 @@
     "open-browser-webpack-plugin": "^0.0.5",
     "postcss-loader": "^2.0.6",
     "promise": "^8.0.1",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
     "sinon": "^2.3.5",
     "sinon-chai": "^2.12.0",
     "style-loader": "^0.18.2",
     "subdirs": "^1.0.1",
+    "ts-loader": "^4.2.0",
+    "typescript": "^2.8.1",
     "version-changelog": "^2.1.0",
     "web-animations-js": "^2.3.1",
-    "webpack": "^3.4.1",
+    "webpack": "^4.5.0",
     "webpack-dev-server": "^2.6.1",
     "webpack-merge": "^4.1.0"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
