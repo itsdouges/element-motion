@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from 'enzyme';
+import { render, mount } from 'enzyme';
 import RefCollect from '../RefCollector';
 
 describe('<RefCollector />', () => {
@@ -59,5 +59,9 @@ describe('<RefCollector />', () => {
     expect(callback1).toBeCalledWith(element);
     expect(callback2).toBeCalledWith(element);
     expect(callback3).toBeCalledWith(element);
+  });
+
+  it('should callback when unmounting with react node', () => {
+    // TODO: Enzyme doesn't work with instances atm.
   });
 });

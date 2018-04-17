@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Baba /> when unmounting should throw if child was already set 1`] = `
+"
+        Two <Baba name=\\"my-animation\\" /> were unmounted in a row - the magic happens
+        when a Baba component is unmounted, then it's target is mounted. Watch out!
+      "
+`;
