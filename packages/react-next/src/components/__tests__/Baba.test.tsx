@@ -107,6 +107,26 @@ describe('<Baba />', () => {
   });
 
   describe('triggering animations', () => {
+    it('should pass through props to animation', async () => {
+      const wrapper = shallow(
+        <Baba name="my-animation">
+          <div />
+        </Baba>,
+        { disableLifecycleMethods: true }
+      );
+      const animation = jest.fn();
+      animation.mockResolvedValue({});
+      const data: Data[] = [{ action: Actions.animation, payload: animation }];
+      (childrenStore.get as jest.Mock).mockReturnValue({ data });
+
+      await wrapper.instance().componentDidMount();
+
+      expect(animation).toHaveBeenCalledWith({
+        fromTarget: {},
+        toTarget: {},
+      });
+    });
+
     it('should trigger animations on unmount', async () => {
       const wrapper = shallow(
         <Baba name="my-animation">

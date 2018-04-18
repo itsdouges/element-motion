@@ -100,11 +100,11 @@ export default class Baba extends React.PureComponent<Props> {
   }
 
   execute() {
-    const target = childrenStore.get(this.props.name);
-    if (target) {
-      const { data, reactNode, location, size, raw } = target;
+    const fromTarget = childrenStore.get(this.props.name);
+    if (fromTarget) {
+      const { data, ...target } = fromTarget;
 
-      const blocks = data.reduce<AnimationBlock[]>(
+      const blocks = fromTarget.data.reduce<AnimationBlock[]>(
         (arr, data) => {
           switch (data.action) {
             case 'animation': {
@@ -113,10 +113,11 @@ export default class Baba extends React.PureComponent<Props> {
               // Add to the last block in the array.
               arr[arr.length - 1].push(() =>
                 animate({
-                  reactNode,
-                  location,
-                  size,
-                  raw,
+                  fromTarget: target,
+                  toTarget: {
+                    reactNode: this.reactNode,
+                    ...getElementSizeLocation(this.element as HTMLElement),
+                  },
                 })
               );
 

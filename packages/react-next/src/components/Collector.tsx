@@ -15,7 +15,12 @@ export type SupplyReactNode = (reactNode: React.ReactNode) => void;
 export type SupplyData = (data: Data[]) => void;
 export type ChildrenSupplyRef = (getRef: SupplyRef) => React.ReactNode;
 
-export interface AnimationData extends GetElementSizeLocationReturnValue {
+export interface AnimationData {
+  fromTarget: TargetData;
+  toTarget: TargetData;
+}
+
+export interface TargetData extends GetElementSizeLocationReturnValue {
   reactNode: React.ReactNode;
 }
 
