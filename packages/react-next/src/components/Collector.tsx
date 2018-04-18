@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
-export type AnimationCallback = (data: AnimationData) => Promise<{}>;
+type AnimationCallback = (data: AnimationData) => Promise<{}>;
+type Data = AnimationCallback | {};
 type SupplyRef = (ref: HTMLElement | null) => void;
-type SupplyAnimations = (animations: AnimationCallback[]) => void;
+type SupplyReactNode = (reactNode: React.ReactNode) => void;
+type SupplyData = (data: Data[]) => void;
 type ChildrenSupplyRef = (getRef: SupplyRef) => React.ReactNode;
-type GetReactNode = (reactNode: React.ReactNode | null) => void;
 
 interface AnimationData extends GetElementSizeLocationReturnValue {
   reactNode: React.ReactNode;
@@ -13,28 +14,21 @@ interface AnimationData extends GetElementSizeLocationReturnValue {
 
 interface Props {
   children: ChildrenSupplyRef | React.ReactNode;
-  getRef?: SupplyRef;
-  getReactNode?: GetReactNode;
-  getAnimations?: SupplyAnimations;
-  animation?: AnimationCallback;
+  receiveRef?: SupplyRef;
+  receiveReactNode?: SupplyReactNode;
+  receiveData?: SupplyData;
+  data?: AnimationCallback | {};
 }
 
 interface Collect {
   ref: SupplyRef;
-  animations: SupplyAnimations;
+  data: SupplyData;
+  reactNode: SupplyReactNode;
 }
 
 const CollectContext = React.createContext<Collect>();
 
-export default class RefCollector extends React.Component<Props> {
-  reactNode: React.ReactNode;
-
-  componentWillUnmount() {
-    if (this.props.getReactNode) {
-      this.props.getReactNode(this.reactNode);
-    }
-  }
-
+export default class Collector extends React.Component<Props> {
   render() {
     if (typeof this.props.children !== 'function') {
       return (
@@ -42,20 +36,18 @@ export default class RefCollector extends React.Component<Props> {
           {collect => (
             <CollectContext.Provider
               value={{
-                ref: (ref: HTMLElement | null) => {
-                  this.props.getRef && this.props.getRef(ref);
+                ref: ref => {
+                  this.props.receiveRef && this.props.receiveRef(ref);
                   collect && collect.ref(ref);
                 },
-                animations: childAnimations => {
-                  if (childAnimations) {
-                    this.props.getAnimations && this.props.getAnimations(childAnimations);
-
-                    const animations = this.props.animation
-                      ? childAnimations.concat(this.props.animation)
-                      : childAnimations;
-
-                    collect && collect.animations(animations);
-                  }
+                data: childData => {
+                  const data = this.props.data ? [this.props.data].concat(childData) : childData;
+                  collect && collect.data(data);
+                  this.props.receiveData && this.props.receiveData(childData);
+                },
+                reactNode: node => {
+                  collect && collect.reactNode(node);
+                  this.props.receiveReactNode && this.props.receiveReactNode(node);
                 },
               }}
             >
@@ -74,16 +66,23 @@ export default class RefCollector extends React.Component<Props> {
             this.props.children((ref: HTMLElement) => {
               if (collect) {
                 collect.ref(ref);
-                const animations = this.props.animation ? [this.props.animation] : [];
-                collect.animations(animations);
               }
 
-              if (this.props.getRef) {
-                this.props.getRef(ref);
+              if (this.props.receiveRef) {
+                this.props.receiveRef(ref);
               }
             });
 
-          this.reactNode = children;
+          if (collect) {
+            const data = this.props.data ? [this.props.data] : [];
+            collect.data(data);
+            collect.reactNode(children);
+          }
+
+          if (this.props.receiveReactNode) {
+            this.props.receiveReactNode(children);
+          }
+
           return children;
         }}
       </CollectContext.Consumer>

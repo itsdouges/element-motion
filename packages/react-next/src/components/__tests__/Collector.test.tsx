@@ -9,7 +9,7 @@ describe('<Collectoror />', () => {
   it('should collect ref from direct child', () => {
     const callback = jest.fn();
 
-    render(<Collector getRef={callback}>{getRef => getRef(element)}</Collector>);
+    render(<Collector receiveRef={callback}>{getRef => getRef(element)}</Collector>);
 
     expect(callback).toBeCalledWith(element);
   });
@@ -18,7 +18,7 @@ describe('<Collectoror />', () => {
     const callback = jest.fn();
 
     render(
-      <Collector getRef={callback}>
+      <Collector receiveRef={callback}>
         <Collector>{supplyRef => supplyRef(element)}</Collector>
       </Collector>
     );
@@ -30,7 +30,7 @@ describe('<Collectoror />', () => {
     const callback = jest.fn();
 
     render(
-      <Collector getRef={callback}>
+      <Collector receiveRef={callback}>
         <Collector>
           <Collector>
             <Collector>
@@ -50,9 +50,9 @@ describe('<Collectoror />', () => {
     const callback3 = jest.fn();
 
     render(
-      <Collector getRef={callback1}>
-        <Collector getRef={callback2}>
-          <Collector getRef={callback3}>{supplyRef => supplyRef(element)}</Collector>
+      <Collector receiveRef={callback1}>
+        <Collector receiveRef={callback2}>
+          <Collector receiveRef={callback3}>{supplyRef => supplyRef(element)}</Collector>
         </Collector>
       </Collector>
     );
@@ -63,7 +63,24 @@ describe('<Collectoror />', () => {
   });
 
   it('should callback when unmounting with react node', () => {
-    // TODO: Enzyme + new context api don't work with mount atm.
+    const child = <div />;
+    const callback = jest.fn();
+
+    render(
+      <Collector receiveReactNode={callback}>
+        <Collector>
+          <Collector>
+            <Collector>
+              <Collector>
+                <Collector>{() => child}</Collector>
+              </Collector>
+            </Collector>
+          </Collector>
+        </Collector>
+      </Collector>
+    );
+
+    expect(callback).toBeCalledWith(child);
   });
 
   it('should collect animation from direct child', () => {
@@ -71,8 +88,8 @@ describe('<Collectoror />', () => {
     const callback = jest.fn();
 
     render(
-      <Collector getAnimations={callback}>
-        <Collector animation={animation}>{supplyRef => supplyRef(element)}</Collector>
+      <Collector receiveData={callback}>
+        <Collector data={animation}>{supplyRef => supplyRef(element)}</Collector>
       </Collector>
     );
 
@@ -80,16 +97,16 @@ describe('<Collectoror />', () => {
   });
 
   it('should collect animation from deeply nested child', () => {
-    const animation = {} as AnimationCallback;
+    const animation = () => Promise.resolve({});
     const callback = jest.fn();
 
     render(
-      <Collector getAnimations={callback}>
+      <Collector receiveData={callback}>
         <Collector>
           <Collector>
             <Collector>
               <Collector>
-                <Collector animation={animation}>{supplyRef => supplyRef(element)}</Collector>
+                <Collector data={animation}>{supplyRef => supplyRef(element)}</Collector>
               </Collector>
             </Collector>
           </Collector>
@@ -106,37 +123,39 @@ describe('<Collectoror />', () => {
     const animation3 = () => Promise.resolve({});
     const callback1 = jest.fn();
     const callback2 = jest.fn();
+    const callback3 = jest.fn();
 
     render(
-      <Collector>
-        <Collector getAnimations={callback2} animation={animation1}>
-          <Collector getAnimations={callback1} animation={animation2}>
-            <Collector animation={animation3}>{supplyRef => supplyRef(element)}</Collector>
+      <Collector receiveData={callback3}>
+        <Collector receiveData={callback2} data={animation1}>
+          <Collector receiveData={callback1} data={animation2}>
+            <Collector data={animation3}>{supplyRef => supplyRef(element)}</Collector>
           </Collector>
         </Collector>
       </Collector>
     );
 
     expect(callback1).toBeCalledWith([animation3]);
-    expect(callback2).toBeCalledWith([animation3, animation2]);
+    expect(callback2).toBeCalledWith([animation2, animation3]);
+    expect(callback3).toBeCalledWith([animation1, animation2, animation3]);
   });
 
   it('should collect all animations from each collector at the top', () => {
     const animation1 = () => Promise.resolve({});
-    const animation2 = () => Promise.resolve({});
+    const wait = {};
     const animation3 = () => Promise.resolve({});
     const callback = jest.fn();
 
     render(
-      <Collector getAnimations={callback}>
-        <Collector animation={animation1}>
-          <Collector animation={animation2}>
-            <Collector animation={animation3}>{supplyRef => supplyRef(element)}</Collector>
+      <Collector receiveData={callback}>
+        <Collector data={animation1}>
+          <Collector data={wait}>
+            <Collector data={animation3}>{supplyRef => supplyRef(element)}</Collector>
           </Collector>
         </Collector>
       </Collector>
     );
 
-    expect(callback).toBeCalledWith([animation3, animation2, animation1]);
+    expect(callback).toBeCalledWith([animation1, wait, animation3]);
   });
 });

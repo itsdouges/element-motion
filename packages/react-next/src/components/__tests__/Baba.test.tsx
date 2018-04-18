@@ -34,8 +34,8 @@ describe('<Baba />', () => {
       );
       const ref = {} as HTMLElement;
       const sizeLocation = { size: {}, location: {} };
-      const { getRef } = wrapper.find(Collector).props();
-      getRef(ref);
+      const { receiveRef } = wrapper.find(Collector).props();
+      receiveRef(ref);
       (dom.getElementSizeLocation as jest.Mock).mockReturnValueOnce(sizeLocation);
 
       wrapper.unmount();
@@ -52,8 +52,8 @@ describe('<Baba />', () => {
         </Baba>
       );
       const ref = {} as HTMLElement;
-      const { getRef } = wrapper.find(Collector).props();
-      getRef(ref);
+      const { receiveRef } = wrapper.find(Collector).props();
+      receiveRef(ref);
 
       wrapper.unmount();
 
@@ -69,8 +69,8 @@ describe('<Baba />', () => {
         </Baba>
       );
       const reactNode = { node: 'node' };
-      const { getReactNode } = wrapper.find(Collector).props();
-      getReactNode(reactNode);
+      const { receiveReactNode } = wrapper.find(Collector).props();
+      receiveReactNode(reactNode);
 
       wrapper.unmount();
 

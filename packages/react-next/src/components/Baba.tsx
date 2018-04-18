@@ -91,7 +91,7 @@ export default class Baba extends React.PureComponent<Props> {
 
   render() {
     return (
-      <Collector getReactNode={this.setReactNode} getRef={this.setRef}>
+      <Collector receiveReactNode={this.setReactNode} receiveRef={this.setRef}>
         {this.props.children}
       </Collector>
     );
