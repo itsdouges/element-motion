@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 import Baba from '../Baba';
-import RefCollector from '../RefCollector';
+import Collector from '../Collector';
 import * as childrenStore from '../../lib/childrenStore';
 import * as dom from '../../lib/dom';
 
@@ -34,7 +34,7 @@ describe('<Baba />', () => {
       );
       const ref = {} as HTMLElement;
       const sizeLocation = { size: {}, location: {} };
-      const { getRef } = wrapper.find(RefCollector).props();
+      const { getRef } = wrapper.find(Collector).props();
       getRef(ref);
       (dom.getElementSizeLocation as jest.Mock).mockReturnValueOnce(sizeLocation);
 
@@ -52,7 +52,7 @@ describe('<Baba />', () => {
         </Baba>
       );
       const ref = {} as HTMLElement;
-      const { getRef } = wrapper.find(RefCollector).props();
+      const { getRef } = wrapper.find(Collector).props();
       getRef(ref);
 
       wrapper.unmount();
@@ -69,7 +69,7 @@ describe('<Baba />', () => {
         </Baba>
       );
       const reactNode = { node: 'node' };
-      const { getReactNode } = wrapper.find(RefCollector).props();
+      const { getReactNode } = wrapper.find(Collector).props();
       getReactNode(reactNode);
 
       wrapper.unmount();
@@ -89,5 +89,7 @@ describe('<Baba />', () => {
 
       expect(() => wrapper.unmount()).toThrowErrorMatchingSnapshot();
     });
+
+    it('should collect all funcs', () => {});
   });
 });

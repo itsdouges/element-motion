@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RefCollector from './RefCollector';
+import Collector from './Collector';
 import { getElementSizeLocation } from '../lib/dom';
 import * as childrenStore from '../lib/childrenStore';
 
@@ -41,9 +41,11 @@ import * as childrenStore from '../lib/childrenStore';
   // move shrink a circle from viewport to over image2
   <Baba name="image1-to-image2">
     <CircleExpand duration={300} background="#3d7596">
-      <Move duration={150}>
-        {(ref) => <Image innerRef={ref} />}
-      </Move>
+      <WaitForChildren>
+        <Move duration={150}>
+          {(ref) => <Image innerRef={ref} />}
+        </Move>
+      </WaitForChildren>
     </CircleExpand>
   </Baba>
 */
@@ -89,9 +91,9 @@ export default class Baba extends React.PureComponent<Props> {
 
   render() {
     return (
-      <RefCollector getReactNode={this.setReactNode} getRef={this.setRef}>
+      <Collector getReactNode={this.setReactNode} getRef={this.setRef}>
         {this.props.children}
-      </RefCollector>
+      </Collector>
     );
   }
 }
