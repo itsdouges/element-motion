@@ -19,6 +19,15 @@ export default class Move extends React.Component<Props> {
   };
 
   render() {
-    return <Collecter data={this.animate}>{this.props.children}</Collecter>;
+    return (
+      <Collecter
+        data={{
+          action: 'animation',
+          payload: this.animate,
+        }}
+      >
+        {this.props.children}
+      </Collecter>
+    );
   }
 }

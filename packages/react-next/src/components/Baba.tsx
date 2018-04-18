@@ -9,6 +9,9 @@ import Collector, {
 import { getElementSizeLocation } from '../lib/dom';
 import * as childrenStore from '../lib/childrenStore';
 
+type StartAnimation = () => Promise<AnimationResult>;
+type AnimationBlock = StartAnimation[];
+
 /*
   v1 API
 
@@ -30,7 +33,7 @@ import * as childrenStore from '../lib/childrenStore';
     </Move>
   </Baba>
 
-  EXAMPLE TWO - Two animations.
+  EXAMPLE TWO - Two animations with a wait.
 
   // 1. move image1 over to image2
   // 2. AT THE SAME TIME circle expand to cover viewport
@@ -74,6 +77,14 @@ export default class Baba extends React.PureComponent<Props> {
       `);
     }
 
+    this.store();
+  }
+
+  componentDidMount() {
+    return this.execute();
+  }
+
+  store() {
     // Store position data so we can use it later.
     childrenStore.set(this.props.name, {
       ...getElementSizeLocation(this.element as HTMLElement),
@@ -88,47 +99,52 @@ export default class Baba extends React.PureComponent<Props> {
     }, 100);
   }
 
-  componentDidMount() {
+  execute() {
     const target = childrenStore.get(this.props.name);
     if (target) {
       const { data, reactNode, location, size, raw } = target;
 
-      type PromiseCb = () => Promise<AnimationResult>;
-
-      const blocks = data.reduce<PromiseCb[][]>(
+      const blocks = data.reduce<AnimationBlock[]>(
         (arr, data) => {
-          if (typeof data === 'function') {
-            const animate = data;
+          switch (data.action) {
+            case 'animation': {
+              const animate = data.payload;
 
-            // Add to the last block (array) in the array.
-            arr[arr.length - 1].push(() =>
-              animate({
-                reactNode,
-                location,
-                size,
-                raw,
-              })
-            );
+              // Add to the last block in the array.
+              arr[arr.length - 1].push(() =>
+                animate({
+                  reactNode,
+                  location,
+                  size,
+                  raw,
+                })
+              );
 
-            return arr;
+              return arr;
+            }
+
+            case 'wait': {
+              // Found a wait action, start a new block.
+              arr.push([]);
+              return arr;
+            }
+
+            default: {
+              return arr;
+            }
           }
-
-          if (typeof data !== 'function' && data.action === 'wait') {
-            // Found a wait action, start a new block (array)
-            arr.push([]);
-            return arr;
-          }
-
-          return arr;
         },
         [[]]
       );
 
-      blocks.reduce<Promise<AnimationResult>>(
-        (promise, block) => promise.then(() => Promise.all(block.map(start => start()))),
-        Promise.resolve({})
+      // Trigger each blocks animations, one block at a time.
+      return blocks.reduce<Promise<AnimationResult>>(
+        (promise, block) => promise.then(() => Promise.all(block.map(animate => animate()))),
+        Promise.resolve({} as AnimationResult)
       );
     }
+
+    return undefined;
   }
 
   setRef: SupplyRef = ref => {
