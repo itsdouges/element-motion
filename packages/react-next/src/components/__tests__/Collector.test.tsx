@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { render, mount } from 'enzyme';
 import Collector, { AnimationCallback } from '../Collector';
+import { timingSafeEqual } from 'crypto';
 
 describe('<Collectoror />', () => {
   const element = document.createElement('div');
@@ -76,5 +77,66 @@ describe('<Collectoror />', () => {
     );
 
     expect(callback).toBeCalledWith([animation]);
+  });
+
+  it('should collect animation from deeply nested child', () => {
+    const animation = {} as AnimationCallback;
+    const callback = jest.fn();
+
+    render(
+      <Collector getAnimations={callback}>
+        <Collector>
+          <Collector>
+            <Collector>
+              <Collector>
+                <Collector animation={animation}>{supplyRef => supplyRef(element)}</Collector>
+              </Collector>
+            </Collector>
+          </Collector>
+        </Collector>
+      </Collector>
+    );
+
+    expect(callback).toBeCalledWith([animation]);
+  });
+
+  it('should incrementally collect animations from children', () => {
+    const animation1 = () => Promise.resolve({});
+    const animation2 = () => Promise.resolve({});
+    const animation3 = () => Promise.resolve({});
+    const callback1 = jest.fn();
+    const callback2 = jest.fn();
+
+    render(
+      <Collector>
+        <Collector getAnimations={callback2} animation={animation1}>
+          <Collector getAnimations={callback1} animation={animation2}>
+            <Collector animation={animation3}>{supplyRef => supplyRef(element)}</Collector>
+          </Collector>
+        </Collector>
+      </Collector>
+    );
+
+    expect(callback1).toBeCalledWith([animation3]);
+    expect(callback2).toBeCalledWith([animation3, animation2]);
+  });
+
+  it('should collect all animations from each collector at the top', () => {
+    const animation1 = () => Promise.resolve({});
+    const animation2 = () => Promise.resolve({});
+    const animation3 = () => Promise.resolve({});
+    const callback = jest.fn();
+
+    render(
+      <Collector getAnimations={callback}>
+        <Collector animation={animation1}>
+          <Collector animation={animation2}>
+            <Collector animation={animation3}>{supplyRef => supplyRef(element)}</Collector>
+          </Collector>
+        </Collector>
+      </Collector>
+    );
+
+    expect(callback).toBeCalledWith([animation3, animation2, animation1]);
   });
 });

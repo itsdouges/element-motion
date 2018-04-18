@@ -37,7 +37,7 @@ export default class RefCollector extends React.Component<Props> {
 
   render() {
     if (typeof this.props.children !== 'function') {
-      return this.props.getRef ? (
+      return (
         <CollectContext.Consumer>
           {collect => (
             <CollectContext.Provider
@@ -63,8 +63,6 @@ export default class RefCollector extends React.Component<Props> {
             </CollectContext.Provider>
           )}
         </CollectContext.Consumer>
-      ) : (
-        this.props.children
       );
     }
 
@@ -74,8 +72,15 @@ export default class RefCollector extends React.Component<Props> {
           const children =
             typeof this.props.children === 'function' &&
             this.props.children((ref: HTMLElement) => {
-              collect && collect.ref(ref);
-              this.props.getRef && this.props.getRef(ref);
+              if (collect) {
+                collect.ref(ref);
+                const animations = this.props.animation ? [this.props.animation] : [];
+                collect.animations(animations);
+              }
+
+              if (this.props.getRef) {
+                this.props.getRef(ref);
+              }
             });
 
           this.reactNode = children;
