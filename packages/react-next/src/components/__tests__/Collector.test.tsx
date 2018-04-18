@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render, mount } from 'enzyme';
-import Collector, { AnimationCallback } from '../Collector';
+import Collector, { Action } from '../Collector';
 import { timingSafeEqual } from 'crypto';
 
 describe('<Collectoror />', () => {
@@ -84,7 +84,7 @@ describe('<Collectoror />', () => {
   });
 
   it('should collect animation from direct child', () => {
-    const animation = {} as AnimationCallback;
+    const animation = () => Promise.resolve({});
     const callback = jest.fn();
 
     render(
@@ -142,7 +142,8 @@ describe('<Collectoror />', () => {
 
   it('should collect all animations from each collector at the top', () => {
     const animation1 = () => Promise.resolve({});
-    const wait = {};
+    const action: Action = 'wait';
+    const wait = { action };
     const animation3 = () => Promise.resolve({});
     const callback = jest.fn();
 

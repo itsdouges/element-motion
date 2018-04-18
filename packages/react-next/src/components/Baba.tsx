@@ -1,5 +1,11 @@
 import * as React from 'react';
-import Collector from './Collector';
+import Collector, {
+  SupplyData,
+  SupplyReactNode,
+  SupplyRef,
+  Data,
+  AnimationResult,
+} from './Collector';
 import { getElementSizeLocation } from '../lib/dom';
 import * as childrenStore from '../lib/childrenStore';
 
@@ -41,11 +47,11 @@ import * as childrenStore from '../lib/childrenStore';
   // move shrink a circle from viewport to over image2
   <Baba name="image1-to-image2">
     <CircleExpand duration={300} background="#3d7596">
-      <WaitForChildren>
+      <Wait>
         <Move duration={150}>
           {(ref) => <Image innerRef={ref} />}
         </Move>
-      </WaitForChildren>
+      </Wait>
     </CircleExpand>
   </Baba>
 */
@@ -58,6 +64,7 @@ interface Props {
 export default class Baba extends React.PureComponent<Props> {
   element: HTMLElement | null;
   reactNode: React.ReactNode;
+  data: Data[];
 
   componentWillUnmount() {
     if (childrenStore.has(this.props.name)) {
@@ -72,26 +79,77 @@ export default class Baba extends React.PureComponent<Props> {
       ...getElementSizeLocation(this.element as HTMLElement),
       element: this.element as HTMLElement,
       reactNode: this.reactNode,
+      data: this.data,
     });
+
+    // If a target isn't found in 100ms, clear it out.
+    setTimeout(() => {
+      childrenStore.remove(this.props.name);
+    }, 100);
   }
 
   componentDidMount() {
     const target = childrenStore.get(this.props.name);
     if (target) {
+      const { data, reactNode, location, size, raw } = target;
+
+      type PromiseCb = () => Promise<AnimationResult>;
+
+      const blocks = data.reduce<PromiseCb[][]>(
+        (arr, data) => {
+          if (typeof data === 'function') {
+            const animate = data;
+
+            // Add to the last block (array) in the array.
+            arr[arr.length - 1].push(() =>
+              animate({
+                reactNode,
+                location,
+                size,
+                raw,
+              })
+            );
+
+            return arr;
+          }
+
+          if (typeof data !== 'function' && data.action === 'wait') {
+            // Found a wait action, start a new block (array)
+            arr.push([]);
+            return arr;
+          }
+
+          return arr;
+        },
+        [[]]
+      );
+
+      blocks.reduce<Promise<AnimationResult>>(
+        (promise, block) => promise.then(() => Promise.all(block.map(start => start()))),
+        Promise.resolve({})
+      );
     }
   }
 
-  setRef = (ref: HTMLElement | null) => {
+  setRef: SupplyRef = ref => {
     this.element = ref;
   };
 
-  setReactNode = (reactNode: React.ReactNode) => {
+  setReactNode: SupplyReactNode = reactNode => {
     this.reactNode = reactNode;
+  };
+
+  setData: SupplyData = data => {
+    this.data = data;
   };
 
   render() {
     return (
-      <Collector receiveReactNode={this.setReactNode} receiveRef={this.setRef}>
+      <Collector
+        receiveData={this.setData}
+        receiveReactNode={this.setReactNode}
+        receiveRef={this.setRef}
+      >
         {this.props.children}
       </Collector>
     );

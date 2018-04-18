@@ -1,26 +1,31 @@
 import * as React from 'react';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
-type AnimationCallback = (data: AnimationData) => Promise<{}>;
-type Data = AnimationCallback | {};
-type SupplyRef = (ref: HTMLElement | null) => void;
-type SupplyReactNode = (reactNode: React.ReactNode) => void;
-type SupplyData = (data: Data[]) => void;
-type ChildrenSupplyRef = (getRef: SupplyRef) => React.ReactNode;
+export type AnimationResult = {};
+export type AnimationCallback = (data: AnimationData) => Promise<AnimationResult>;
+export type Action = 'wait';
+export type Data = AnimationCallback | { action: Action };
+export type SupplyRef = (ref: HTMLElement | null) => void;
+export type SupplyReactNode = (reactNode: React.ReactNode) => void;
+export type SupplyData = (data: Data[]) => void;
+export type ChildrenSupplyRef = (getRef: SupplyRef) => React.ReactNode;
 
-interface AnimationData extends GetElementSizeLocationReturnValue {
+export interface AnimationData extends GetElementSizeLocationReturnValue {
   reactNode: React.ReactNode;
 }
 
-interface Props {
+export interface CommonProps {
   children: ChildrenSupplyRef | React.ReactNode;
+}
+
+export interface Props extends CommonProps {
   receiveRef?: SupplyRef;
   receiveReactNode?: SupplyReactNode;
   receiveData?: SupplyData;
-  data?: AnimationCallback | {};
+  data?: Data;
 }
 
-interface Collect {
+export interface Collect {
   ref: SupplyRef;
   data: SupplyData;
   reactNode: SupplyReactNode;
