@@ -7,6 +7,7 @@ import SimpleTween from '../SimpleTween';
 
 interface Props extends CommonProps {
   duration?: number;
+  delay?: number;
 }
 
 /**
@@ -136,6 +137,13 @@ export default class Move extends React.Component<Props> {
   };
 
   animate: AnimationCallback = () => {
+    if (this.props.delay) {
+      return new Promise(resolve => {
+        window.setTimeout(() => {
+          this.finishAnimation().then(resolve);
+        }, this.props.delay);
+      });
+    }
     return this.finishAnimation();
   };
 

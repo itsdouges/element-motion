@@ -162,4 +162,46 @@ storiesOf('BabaManager', module)
         </>
       )}
     </Toggler>
+  ))
+  .add('managed altogether', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <>
+          <NoMarginBody className="" />
+          <StickyButton onClick={toggle}>toggle</StickyButton>
+
+          {shown ? (
+            <BabaManager name="managed-altogether" key="c">
+              {props => (
+                <Container background="green" {...props}>
+                  <Baba name="managed-altogether" key="1">
+                    <Move>
+                      <Wait>
+                        <CircleShrink background="green">
+                          {({ ref, style }) => <BigRoot style={style} innerRef={ref} />}
+                        </CircleShrink>
+                      </Wait>
+                    </Move>
+                  </Baba>
+                </Container>
+              )}
+            </BabaManager>
+          ) : (
+            <BabaManager name="managed-altogether" key="b">
+              {props => (
+                <Container background="white" {...props}>
+                  <Baba name="managed-altogether" key="2">
+                    <Move delay={100}>
+                      <CircleExpand background="green">
+                        {({ ref, style }) => <Root style={style} innerRef={ref} />}
+                      </CircleExpand>
+                    </Move>
+                  </Baba>
+                </Container>
+              )}
+            </BabaManager>
+          )}
+        </>
+      )}
+    </Toggler>
   ));
