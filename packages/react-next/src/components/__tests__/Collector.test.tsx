@@ -166,4 +166,39 @@ describe('<Collector />', () => {
 
     expect(callback).toBeCalledWith([data1, wait, data2]);
   });
+
+  it('should use empty object for default style', () => {
+    const callback = jest.fn();
+
+    render(
+      <Collector>
+        <Collector>
+          <Collector>
+            <Collector>{({ style }) => callback(style)}</Collector>
+          </Collector>
+        </Collector>
+      </Collector>
+    );
+
+    expect(callback).toHaveBeenCalledWith({});
+  });
+
+  it('should merge all styles and pass to children function', () => {
+    const callback = jest.fn();
+
+    render(
+      <Collector style={{ margin: 0 }}>
+        <Collector>
+          <Collector style={{ opacity: 1 }}>
+            <Collector>{({ style }) => callback(style)}</Collector>
+          </Collector>
+        </Collector>
+      </Collector>
+    );
+
+    expect(callback).toHaveBeenCalledWith({
+      margin: 0,
+      opacity: 1,
+    });
+  });
 });

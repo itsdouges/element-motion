@@ -71,7 +71,10 @@ export default class Collector extends React.Component<Props> {
                   collect && collect.renderChildren(node);
                   this.props.receiveRenderChildren && this.props.receiveRenderChildren(node);
                 },
-                style: this.props.style || {},
+                style: {
+                  ...this.props.style,
+                  ...(collect ? collect.style : {}),
+                },
               }}
             >
               {this.props.children}
