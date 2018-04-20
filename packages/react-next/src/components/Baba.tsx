@@ -63,7 +63,6 @@ type AnimationBlock = StartAnimation[];
 interface Props {
   name: string;
   children: React.ReactNode;
-  onFinish?: () => {};
 }
 
 interface State {
@@ -103,10 +102,8 @@ export default class Baba extends React.PureComponent<Props, State> {
   }
 
   componentDidUpdate() {
-    if (this.hasStoredBefore) {
-      // This instance has stored before, and we've been updated. Let's store DOM data for later.
-      this.store();
-    }
+    // We've been updated. Let's store DOM data for later.
+    this.store();
   }
 
   delayedClear() {
@@ -183,10 +180,6 @@ export default class Baba extends React.PureComponent<Props, State> {
           // We don't need the previous children now. Now this instance is the new target!
           // Store DOM data for later so when another target is mounted, the data is there.
           this.store();
-
-          if (this.props.onFinish) {
-            this.props.onFinish();
-          }
         });
     }
 

@@ -10,6 +10,10 @@ describe('<Collector />', () => {
     payload: () => Promise.resolve({}),
   });
 
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('should collect ref from direct child', () => {
     const callback = jest.fn();
 

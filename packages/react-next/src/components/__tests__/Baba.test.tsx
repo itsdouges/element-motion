@@ -9,6 +9,10 @@ jest.mock('../../lib/childrenStore');
 jest.mock('../../lib/dom');
 
 describe('<Baba />', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   const shallowRender = () => {
     const wrapper = shallow(
       <Baba name="my-animation">
@@ -26,10 +30,6 @@ describe('<Baba />', () => {
   };
 
   describe('storing DOM data when mounting', () => {
-    afterEach(() => {
-      jest.resetAllMocks();
-    });
-
     it('should store data in named key', () => {
       const { mount } = shallowRender();
 
@@ -77,6 +77,31 @@ describe('<Baba />', () => {
       expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
         render,
       });
+    });
+
+    it('should show children immediately', () => {
+      const wrapper = shallow(
+        <Baba name="my-animation">
+          <div />
+        </Baba>
+      );
+
+      expect(wrapper.find(Collector).props().style).toEqual({ opacity: 1 });
+    });
+  });
+
+  describe('updated props', () => {
+    it('should update store', () => {
+      const wrapper = shallow(
+        <Baba name="my-animation">
+          <div />
+        </Baba>
+      );
+      (childrenStore.set as jest.Mock).mockReset();
+
+      wrapper.setProps({});
+
+      expect(childrenStore.set as jest.Mock).toHaveBeenCalled();
     });
   });
 
@@ -131,6 +156,40 @@ describe('<Baba />', () => {
       expect(animation).not.toHaveBeenCalled();
       await promise;
       expect(animation).toHaveBeenCalled();
+    });
+
+    it('should hide children when starting animating', () => {
+      const { wrapper, mount } = shallowRender();
+      const animation = jest.fn().mockResolvedValue({});
+      const data: Data[] = [{ action: Actions.animation, payload: animation }];
+      prepare(data);
+
+      mount();
+
+      expect(wrapper.find(Collector).props().style).toEqual({ opacity: 0 });
+    });
+
+    it('should show children when finished animating', async () => {
+      const { wrapper, mount } = shallowRender();
+      const animation = jest.fn().mockResolvedValue({});
+      const data: Data[] = [{ action: Actions.animation, payload: animation }];
+      prepare(data);
+
+      await mount();
+      wrapper.update();
+
+      expect(wrapper.find(Collector).props().style).toEqual({ opacity: 1 });
+    });
+
+    it('should store data so the next target can pick it up', async () => {
+      const { wrapper, mount } = shallowRender();
+      const animation = jest.fn().mockResolvedValue({});
+      const data: Data[] = [{ action: Actions.animation, payload: animation }];
+      prepare(data);
+
+      await mount();
+
+      expect(childrenStore.set as jest.Mock).toHaveBeenCalled();
     });
   });
 });
