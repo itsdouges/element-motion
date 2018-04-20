@@ -74,6 +74,7 @@ export default class Baba extends React.PureComponent<Props, State> {
     shown: false,
   };
 
+  unmounting: boolean = false;
   element: HTMLElement | null;
   renderChildren: ChildrenAsFunction;
   data: Data[];
@@ -98,6 +99,7 @@ export default class Baba extends React.PureComponent<Props, State> {
   }
 
   componentWillUnmount() {
+    this.unmounting = true;
     this.delayedClear();
   }
 
@@ -115,6 +117,10 @@ export default class Baba extends React.PureComponent<Props, State> {
   }
 
   store() {
+    if (this.unmounting) {
+      return;
+    }
+
     childrenStore.set(this.props.name, {
       ...getElementSizeLocation(this.element as HTMLElement),
       element: this.element as HTMLElement,
