@@ -1,8 +1,9 @@
 import * as React from 'react';
 import Collector, {
   SupplyData,
-  SupplyReactNode,
+  SupplyRenderChildren,
   SupplyRef,
+  ChildrenAsFunction,
   Data,
   AnimationResult,
 } from './Collector';
@@ -64,29 +65,45 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default class Baba extends React.PureComponent<Props> {
-  state = {
+interface State {
+  shown: boolean;
+}
+
+export default class Baba extends React.PureComponent<Props, State> {
+  state: State = {
     shown: false,
   };
 
   element: HTMLElement | null;
-  reactNode: React.ReactNode;
+  renderChildren: ChildrenAsFunction;
   data: Data[];
+  hasStoredBefore: boolean = false;
   cancelClear?: () => void;
 
-  componentWillUnmount() {
+  componentDidMount() {
     if (childrenStore.has(this.props.name)) {
-      throw new Error(`
-        Two <Baba name="${this.props.name}" /> were unmounted in a row - the magic happens
-        when a Baba component is unmounted, then it's target is mounted. Watch out!
-      `);
+      // A child has already been stored, so this is probably the matching pair.
+      // Lets execute!
+      this.execute();
+    } else {
+      // Ok nothing is there yet, show our children and store DOM data for later.
+      // We'll be waiting for another <Baba /> instance to mount.
+      this.setState({
+        shown: true,
+      });
+      this.store();
     }
-
-    this.store();
   }
 
-  componentDidMount() {
-    return this.execute();
+  componentWillUnmount() {
+    this.delayedClear();
+  }
+
+  componentDidUpdate() {
+    if (this.hasStoredBefore) {
+      // This instance has stored before, and we've been updated. Let's store DOM data for later.
+      this.store();
+    }
   }
 
   delayedClear() {
@@ -98,15 +115,14 @@ export default class Baba extends React.PureComponent<Props> {
   }
 
   store() {
-    // Store position data so we can use it later.
     childrenStore.set(this.props.name, {
       ...getElementSizeLocation(this.element as HTMLElement),
       element: this.element as HTMLElement,
-      reactNode: this.reactNode,
+      render: this.renderChildren,
       data: this.data,
     });
 
-    this.cancelClear = this.delayedClear();
+    this.hasStoredBefore = true;
   }
 
   execute() {
@@ -126,7 +142,7 @@ export default class Baba extends React.PureComponent<Props> {
                   caller: this,
                   fromTarget: target,
                   toTarget: {
-                    reactNode: this.reactNode,
+                    render: this.renderChildren,
                     ...getElementSizeLocation(this.element as HTMLElement),
                   },
                 })
@@ -150,35 +166,30 @@ export default class Baba extends React.PureComponent<Props> {
       );
 
       // Trigger each blocks animations, one block at a time.
-      return blocks
+      blocks
         .reduce<Promise<AnimationResult>>(
           (promise, block) => promise.then(() => Promise.all(block.map(animate => animate()))),
           Promise.resolve({} as AnimationResult)
         )
         .then(() => {
-          childrenStore.remove(this.props.name);
-
           // We're finished all the transitions! Show the child element.
           this.setState({
             shown: true,
           });
+
+          // We don't need the previous children now. Now this instance is the new target!
+          // Store DOM data for later so when another target is mounted, the data is there.
+          this.store();
         });
     }
-
-    // Nothing was found, show the child element.
-    this.setState({
-      shown: true,
-    });
-
-    return undefined;
   }
 
   setRef: SupplyRef = ref => {
     this.element = ref;
   };
 
-  setReactNode: SupplyReactNode = reactNode => {
-    this.reactNode = reactNode;
+  setReactNode: SupplyRenderChildren = renderChildren => {
+    this.renderChildren = renderChildren;
   };
 
   setData: SupplyData = data => {
@@ -189,7 +200,7 @@ export default class Baba extends React.PureComponent<Props> {
     return (
       <Collector
         receiveData={this.setData}
-        receiveReactNode={this.setReactNode}
+        receiveRenderChildren={this.setReactNode}
         receiveRef={this.setRef}
         style={{
           opacity: this.state.shown ? 1 : 0,

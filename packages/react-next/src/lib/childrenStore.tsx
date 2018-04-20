@@ -1,9 +1,9 @@
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
-import { Data } from '../components/Collector';
+import { Data, ChildrenAsFunction } from '../components/Collector';
 
 interface ChildrenData extends GetElementSizeLocationReturnValue {
   element: HTMLElement;
-  reactNode: React.ReactNode;
+  render: ChildrenAsFunction;
   data: Data[];
 }
 

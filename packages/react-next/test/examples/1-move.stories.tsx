@@ -108,26 +108,15 @@ storiesOf('move', module)
         <LongContainer>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
-            <Baba name="basic-move-1" key="2">
-              <Move>
-                {({ ref, style }) => (
-                  <>
-                    <Padding />
-                    <BigRightRoot style={style} innerRef={ref} />
-                  </>
-                )}
-              </Move>
-            </Baba>
+            <>
+              <Padding data-yolo />
+              <Baba name="basic-move-1" key="2">
+                <Move>{({ ref, style }) => <BigRightRoot style={style} innerRef={ref} />}</Move>
+              </Baba>
+            </>
           ) : (
             <Baba name="basic-move-1" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <>
-                    <Root style={style} innerRef={ref} />
-                    <Padding />
-                  </>
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
         </LongContainer>

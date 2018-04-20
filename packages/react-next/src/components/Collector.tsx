@@ -11,7 +11,7 @@ export type Data =
   | { action: Actions.animation; payload: AnimationCallback }
   | { action: Actions.wait };
 export type SupplyRef = (ref: HTMLElement | null) => void;
-export type SupplyReactNode = (reactNode: React.ReactNode) => void;
+export type SupplyRenderChildren = (reactNode: ChildrenAsFunction) => void;
 export type SupplyData = (data: Data[]) => void;
 export type ChildrenAsFunction = (props: { ref: SupplyRef; style: Style }) => React.ReactNode;
 
@@ -26,7 +26,7 @@ export interface Style {
 }
 
 export interface TargetData extends GetElementSizeLocationReturnValue {
-  reactNode: React.ReactNode;
+  render: ChildrenAsFunction;
 }
 
 export interface CommonProps {
@@ -35,7 +35,7 @@ export interface CommonProps {
 
 export interface Props extends CommonProps {
   receiveRef?: SupplyRef;
-  receiveReactNode?: SupplyReactNode;
+  receiveRenderChildren?: SupplyRenderChildren;
   receiveData?: SupplyData;
   data?: Data;
   style?: Style;
@@ -44,7 +44,7 @@ export interface Props extends CommonProps {
 export interface Collect {
   ref: SupplyRef;
   data: SupplyData;
-  reactNode: SupplyReactNode;
+  renderChildren: SupplyRenderChildren;
   style: Style;
 }
 
@@ -67,9 +67,9 @@ export default class Collector extends React.Component<Props> {
                   collect && collect.data(data);
                   this.props.receiveData && this.props.receiveData(childData);
                 },
-                reactNode: node => {
-                  collect && collect.reactNode(node);
-                  this.props.receiveReactNode && this.props.receiveReactNode(node);
+                renderChildren: node => {
+                  collect && collect.renderChildren(node);
+                  this.props.receiveRenderChildren && this.props.receiveRenderChildren(node);
                 },
                 style: this.props.style || {},
               }}
@@ -84,9 +84,18 @@ export default class Collector extends React.Component<Props> {
     return (
       <CollectContext.Consumer>
         {collect => {
-          const children =
-            typeof this.props.children === 'function' &&
-            this.props.children({
+          if (typeof this.props.children === 'function') {
+            if (collect) {
+              const data = this.props.data ? [this.props.data] : [];
+              collect.renderChildren(this.props.children);
+              collect.data(data);
+            }
+
+            if (this.props.receiveRenderChildren) {
+              this.props.receiveRenderChildren(this.props.children);
+            }
+
+            return this.props.children({
               ref: (ref: HTMLElement) => {
                 if (collect) {
                   collect.ref(ref);
@@ -98,18 +107,9 @@ export default class Collector extends React.Component<Props> {
               },
               style: collect ? collect.style : {},
             });
-
-          if (collect) {
-            const data = this.props.data ? [this.props.data] : [];
-            collect.data(data);
-            collect.reactNode(children);
           }
 
-          if (this.props.receiveReactNode) {
-            this.props.receiveReactNode(children);
-          }
-
-          return children;
+          throw new Error('Children is  guaranteed to be a function. Impossible condition.');
         }}
       </CollectContext.Consumer>
     );
