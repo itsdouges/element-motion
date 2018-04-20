@@ -10,6 +10,7 @@ import Collector, {
 } from './Collector';
 import { getElementSizeLocation } from '../lib/dom';
 import * as childrenStore from '../lib/childrenStore';
+import { InjectedProps, withBabaManagerContext } from './BabaManager';
 
 type StartAnimation = () => Promise<AnimationResult>;
 type AnimationBlock = StartAnimation[];
@@ -61,7 +62,7 @@ type AnimationBlock = StartAnimation[];
   </Baba>
 */
 
-interface Props extends CommonProps {
+export interface Props extends CommonProps, InjectedProps {
   name: string;
 }
 
@@ -69,7 +70,7 @@ interface State {
   shown: boolean;
 }
 
-export default class Baba extends React.PureComponent<Props, State> {
+class Baba extends React.PureComponent<Props, State> {
   state: State = {
     shown: false,
   };
@@ -93,6 +94,10 @@ export default class Baba extends React.PureComponent<Props, State> {
         shown: true,
       });
       this.store();
+
+      // If a BabaManager is a parent somewhere, notify them that
+      // we're finished getting ready.
+      this.props.context && this.props.context.onFinish();
     }
 
     return undefined;
@@ -126,7 +131,7 @@ export default class Baba extends React.PureComponent<Props, State> {
     }
 
     // If there is only a Baba target and no animations, data
-    // will be undefined, which means there are no animations to prepare.
+    // will be undefined, which means there are no animations to store.
     if (this.data) {
       childrenStore.set(this.props.name, {
         ...getElementSizeLocation(this.element as HTMLElement),
@@ -194,6 +199,10 @@ export default class Baba extends React.PureComponent<Props, State> {
           // We don't need the previous children now. Now this instance is the new target!
           // Store DOM data for later so when another target is mounted, the data is there.
           this.store();
+
+          // If a BabaManager is a parent somewhere, notify them that
+          // we're finished animating.
+          this.props.context && this.props.context.onFinish();
         });
     }
 
@@ -227,3 +236,5 @@ export default class Baba extends React.PureComponent<Props, State> {
     );
   }
 }
+
+export default withBabaManagerContext(Baba);

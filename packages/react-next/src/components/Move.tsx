@@ -2,6 +2,7 @@ import * as React from 'react';
 import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
 import Collecter, { CommonProps, AnimationCallback, Data, Actions } from './Collector';
 import * as math from '../lib/math';
+import noop from '../lib/noop';
 import SimpleTween from './SimpleTween';
 
 interface Props extends CommonProps {
@@ -21,7 +22,9 @@ export default class Move extends React.Component<Props> {
     duration: 300,
   };
 
-  noop = () => {};
+  prepare = () => {};
+
+  abort = () => {};
 
   animate: AnimationCallback = data => {
     return new Promise(resolve => {
@@ -51,6 +54,7 @@ export default class Move extends React.Component<Props> {
               ...from,
               transform: noTransform,
               opacity: 1,
+              zIndex: 20000,
             }}
             to={{
               transform: `translate3d(${fromEndXOffset}px, ${fromEndYOffset}px, 0) scale3d(${math.percentageDifference(
@@ -69,7 +73,7 @@ export default class Move extends React.Component<Props> {
             }}
           >
             {data.fromTarget.render({
-              ref: this.noop,
+              ref: noop,
               style: {
                 // Elminate any margins so they don't affect the transition.
                 margin: 0,
@@ -82,7 +86,7 @@ export default class Move extends React.Component<Props> {
             from={{
               ...data.toTarget.location,
               ...from,
-              opacity: 0,
+              zIndex: 19999,
               transform: `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
                 data.fromTarget.size.width,
                 data.toTarget.size.width
@@ -93,14 +97,13 @@ export default class Move extends React.Component<Props> {
             }}
             to={{
               transform: noTransform,
-              opacity: 1,
             }}
             // TODO: Add a TweenManager or something so we receive one
             // hook to tell us all tweens are finished.
             onFinish={() => {}}
           >
             {data.toTarget.render({
-              ref: this.noop,
+              ref: noop,
               style: {
                 // Elminate any margins so they don't affect the transition.
                 margin: 0,

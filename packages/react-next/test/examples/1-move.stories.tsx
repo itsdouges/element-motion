@@ -42,6 +42,10 @@ const Circle = RightRoot.extend`
   background-color: blue;
 `;
 
+const Rectangle = RightRoot.extend`
+  width: 200px;
+`;
+
 storiesOf('Move', module)
   .add('square to square', () => (
     <Toggler>
@@ -91,6 +95,24 @@ storiesOf('Move', module)
           ) : (
             <Baba name="square-to-big-square" key="2">
               <Move>{({ ref, style }) => <BigRightRoot style={style} innerRef={ref} />}</Move>
+            </Baba>
+          )}
+        </>
+      )}
+    </Toggler>
+  ))
+  .add('square to rectangle', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <>
+          <StickyButton onClick={toggle}>toggle</StickyButton>
+          {!shown ? (
+            <Baba name="square-to-rectangle" key="1">
+              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
+            </Baba>
+          ) : (
+            <Baba name="square-to-rectangle" key="2">
+              <Move>{({ ref, style }) => <Rectangle margin style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
         </>

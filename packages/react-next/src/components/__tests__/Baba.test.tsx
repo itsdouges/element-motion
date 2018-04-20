@@ -1,17 +1,30 @@
 import * as React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import Baba from '../Baba';
 import Collector, { Actions, Data } from '../Collector';
 import * as childrenStore from '../../lib/childrenStore';
 import * as dom from '../../lib/dom';
+import * as BabaManager from '../BabaManager';
 
 jest.mock('../../lib/childrenStore');
 jest.mock('../../lib/dom');
+jest.mock('../BabaManager', () => ({
+  withBabaManagerContext: component => component,
+}));
 
 describe('<Baba />', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
+
+  const stubAllReceivers = (wrapper: ShallowWrapper) => {
+    const collector = wrapper.find(Collector);
+    const { receiveData, receiveRef, receiveRenderChildren } = collector.props();
+
+    receiveData([]);
+    receiveRef(document.createElement('div'));
+    receiveRenderChildren(() => <div />);
+  };
 
   const shallowRender = () => {
     const wrapper = shallow(
@@ -22,6 +35,8 @@ describe('<Baba />', () => {
         disableLifecycleMethods: true,
       }
     );
+
+    stubAllReceivers(wrapper);
 
     return {
       wrapper,
@@ -97,6 +112,7 @@ describe('<Baba />', () => {
           <div />
         </Baba>
       );
+      stubAllReceivers(wrapper);
       (childrenStore.set as jest.Mock).mockReset();
 
       wrapper.setProps({});
@@ -107,7 +123,9 @@ describe('<Baba />', () => {
 
   describe('cleanup', () => {
     it('should clear out child store if pair isnt found in time', () => {
-      const { wrapper } = shallowRender();
+      const { wrapper, mount } = shallowRender();
+      stubAllReceivers(wrapper);
+      mount();
       jest.useFakeTimers();
 
       wrapper.unmount();
@@ -132,11 +150,7 @@ describe('<Baba />', () => {
 
       await mount();
 
-      expect(animation).toHaveBeenCalledWith({
-        caller: wrapper.instance(),
-        fromTarget: {},
-        toTarget: {},
-      });
+      expect(animation.mock.calls[0][0].caller).toEqual(wrapper.instance());
     });
 
     it('should wait until animation has finished if a wait was found', async () => {
@@ -181,11 +195,12 @@ describe('<Baba />', () => {
       expect(wrapper.find(Collector).props().style).toEqual({ opacity: 1 });
     });
 
-    it('should store data so the next target can pick it up', async () => {
+    it('should store data after finishing so the next target can pick it up', async () => {
       const { wrapper, mount } = shallowRender();
       const animation = jest.fn().mockResolvedValue({});
       const data: Data[] = [{ action: Actions.animation, payload: animation }];
       prepare(data);
+      stubAllReceivers(wrapper);
 
       await mount();
 

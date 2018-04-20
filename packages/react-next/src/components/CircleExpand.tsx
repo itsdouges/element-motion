@@ -11,8 +11,11 @@ interface Props extends CommonProps {
 }
 
 /**
- * CircleExpand will animate a circle from the start target through
- * to cover the entire window, and then fade out.
+ * CircleExpand will animate a circle from the entire window
+ * to cover end target, and then fade out.
+ *
+ * Generally you will use CircleExpand and CircleShrink together
+ * to seamlessly transition the background between pages.
  *
  * @export
  * @class CircleExpand
@@ -60,7 +63,7 @@ export default class CircleExpand extends React.Component<Props> {
               borderRadius: '50%',
               position: 'absolute',
               background: this.props.background,
-              zIndex: 9997,
+              zIndex: 10000,
               transition: `transform ease-in ${duration}ms, opacity ease-in ${duration / 10}ms`,
               transform: 'scale(1)',
               opacity: 0,
