@@ -60,3 +60,17 @@ export function getElementSizeLocation(
     },
   };
 }
+
+export function calculateElementCenterInViewport(sizeLocation: GetElementSizeLocationReturnValue) {
+  return {
+    top: sizeLocation.location.top + Math.ceil(sizeLocation.size.width / 2),
+    left: sizeLocation.location.left - Math.ceil(sizeLocation.size.height / 2),
+  };
+}
+
+export function calculateWindowCentre() {
+  return {
+    left: Math.ceil(window.innerWidth / 2),
+    top: Math.ceil(window.innerHeight / 2),
+  };
+}

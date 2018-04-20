@@ -8,6 +8,14 @@ interface Props extends CommonProps {
   duration?: number;
 }
 
+/**
+ * Move will animate the fromNode to the toNode while transitioning
+ * between the two nodes for a seamless transition.
+ *
+ * @export
+ * @class Move
+ * @extends {React.Component<Props>}
+ */
 export default class Move extends React.Component<Props> {
   static defaultProps = {
     duration: 300,
@@ -15,9 +23,6 @@ export default class Move extends React.Component<Props> {
 
   noop = () => {};
 
-  // This animation will transition the from node to the to node
-  // and the to node to the to node, with a fade in between so we
-  // get a nice seamless transition.
   animate: AnimationCallback = data => {
     return new Promise(resolve => {
       const fromEndXOffset = data.toTarget.location.left - data.fromTarget.location.left;

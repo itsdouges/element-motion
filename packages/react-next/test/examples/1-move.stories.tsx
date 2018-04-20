@@ -3,6 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Baba, { Move } from '../../src';
 import Toggler from '../Toggler';
+import StickyButton from '../StickyButton';
 
 interface RootProps {
   margin?: boolean;
@@ -28,17 +29,6 @@ const BigRightRoot = RightRoot.extend`
   height: 400px;
 `;
 
-const StickyButton = styled.button`
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-  font-size: 20px;
-  border-radius: 4px;
-  background-color: #ccc;
-  border: 2px solid grey;
-  padding: 8px;
-`;
-
 const LongContainer = styled.div`
   height: 2000px;
 `;
@@ -52,7 +42,7 @@ const Circle = RightRoot.extend`
   background-color: blue;
 `;
 
-storiesOf('move', module)
+storiesOf('Move', module)
   .add('square to square', () => (
     <Toggler>
       {({ shown, toggle }) => (

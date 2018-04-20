@@ -5,6 +5,7 @@ import Collector, {
   SupplyRef,
   ChildrenAsFunction,
   Data,
+  CommonProps,
   AnimationResult,
 } from './Collector';
 import { getElementSizeLocation } from '../lib/dom';
@@ -60,9 +61,8 @@ type AnimationBlock = StartAnimation[];
   </Baba>
 */
 
-interface Props {
+interface Props extends CommonProps {
   name: string;
-  children: React.ReactNode;
 }
 
 interface State {
@@ -109,11 +109,15 @@ export default class Baba extends React.PureComponent<Props, State> {
   }
 
   delayedClear() {
-    const id = setTimeout(() => {
-      childrenStore.remove(this.props.name);
-    }, 50);
+    if (this.hasStoredBefore) {
+      const id = setTimeout(() => {
+        childrenStore.remove(this.props.name);
+      }, 50);
 
-    return () => clearTimeout(id);
+      return () => clearTimeout(id);
+    }
+
+    return () => {};
   }
 
   store() {
@@ -121,14 +125,18 @@ export default class Baba extends React.PureComponent<Props, State> {
       return;
     }
 
-    childrenStore.set(this.props.name, {
-      ...getElementSizeLocation(this.element as HTMLElement),
-      element: this.element as HTMLElement,
-      render: this.renderChildren,
-      data: this.data,
-    });
+    // If there is only a Baba target and no animations, data
+    // will be undefined, which means there are no animations to prepare.
+    if (this.data) {
+      childrenStore.set(this.props.name, {
+        ...getElementSizeLocation(this.element as HTMLElement),
+        element: this.element as HTMLElement,
+        render: this.renderChildren,
+        data: this.data,
+      });
 
-    this.hasStoredBefore = true;
+      this.hasStoredBefore = true;
+    }
   }
 
   execute() {
