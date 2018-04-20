@@ -63,6 +63,7 @@ type AnimationBlock = StartAnimation[];
 interface Props {
   name: string;
   children: React.ReactNode;
+  onFinish?: () => {};
 }
 
 interface State {
@@ -84,7 +85,7 @@ export default class Baba extends React.PureComponent<Props, State> {
     if (childrenStore.has(this.props.name)) {
       // A child has already been stored, so this is probably the matching pair.
       // Lets execute!
-      this.execute();
+      return this.execute();
     } else {
       // Ok nothing is there yet, show our children and store DOM data for later.
       // We'll be waiting for another <Baba /> instance to mount.
@@ -93,6 +94,8 @@ export default class Baba extends React.PureComponent<Props, State> {
       });
       this.store();
     }
+
+    return undefined;
   }
 
   componentWillUnmount() {
@@ -166,7 +169,7 @@ export default class Baba extends React.PureComponent<Props, State> {
       );
 
       // Trigger each blocks animations, one block at a time.
-      blocks
+      return blocks
         .reduce<Promise<AnimationResult>>(
           (promise, block) => promise.then(() => Promise.all(block.map(animate => animate()))),
           Promise.resolve({} as AnimationResult)
@@ -180,8 +183,14 @@ export default class Baba extends React.PureComponent<Props, State> {
           // We don't need the previous children now. Now this instance is the new target!
           // Store DOM data for later so when another target is mounted, the data is there.
           this.store();
+
+          if (this.props.onFinish) {
+            this.props.onFinish();
+          }
         });
     }
+
+    return undefined;
   }
 
   setRef: SupplyRef = ref => {

@@ -9,36 +9,44 @@ jest.mock('../../lib/childrenStore');
 jest.mock('../../lib/dom');
 
 describe('<Baba />', () => {
-  describe('when unmounting', () => {
+  const shallowRender = () => {
+    const wrapper = shallow(
+      <Baba name="my-animation">
+        <div />
+      </Baba>,
+      {
+        disableLifecycleMethods: true,
+      }
+    );
+
+    return {
+      wrapper,
+      mount: () => wrapper.instance().componentDidMount(),
+    };
+  };
+
+  describe('storing DOM data when mounting', () => {
     afterEach(() => {
       jest.resetAllMocks();
     });
 
     it('should store data in named key', () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>
-      );
+      const { mount } = shallowRender();
 
-      wrapper.unmount();
+      mount();
 
       expect((childrenStore.set as jest.Mock).mock.calls[0][0]).toEqual('my-animation');
     });
 
     it('should store position data', () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>
-      );
+      const { mount, wrapper } = shallowRender();
       const ref = {} as HTMLElement;
       const sizeLocation = { size: {}, location: {} };
       const { receiveRef } = wrapper.find(Collector).props();
       receiveRef(ref);
       (dom.getElementSizeLocation as jest.Mock).mockReturnValueOnce(sizeLocation);
 
-      wrapper.unmount();
+      mount();
 
       expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
         ...sizeLocation,
@@ -46,16 +54,12 @@ describe('<Baba />', () => {
     });
 
     it('should store ref', () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>
-      );
+      const { wrapper, mount } = shallowRender();
       const ref = {} as HTMLElement;
       const { receiveRef } = wrapper.find(Collector).props();
       receiveRef(ref);
 
-      wrapper.unmount();
+      mount();
 
       expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
         element: ref,
@@ -63,39 +67,22 @@ describe('<Baba />', () => {
     });
 
     it('should store react node', () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>
-      );
-      const reactNode = { node: 'node' };
-      const { receiveReactNode } = wrapper.find(Collector).props();
-      receiveReactNode(reactNode);
+      const { wrapper, mount } = shallowRender();
+      const render = () => <div />;
+      const { receiveRenderChildren } = wrapper.find(Collector).props();
+      receiveRenderChildren(render);
 
-      wrapper.unmount();
+      mount();
 
       expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
-        reactNode: reactNode,
+        render,
       });
     });
+  });
 
-    it('should throw if child was already set', () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>
-      );
-      (childrenStore.has as jest.Mock).mockReturnValue(true);
-
-      expect(() => wrapper.unmount()).toThrowErrorMatchingSnapshot();
-    });
-
+  describe('cleanup', () => {
     it('should clear out child store if pair isnt found in time', () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>
-      );
+      const { wrapper } = shallowRender();
       jest.useFakeTimers();
 
       wrapper.unmount();
@@ -107,61 +94,38 @@ describe('<Baba />', () => {
   });
 
   describe('triggering animations', () => {
-    it('should pass through props to animation', async () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>,
-        { disableLifecycleMethods: true }
-      );
-      const animation = jest.fn();
-      animation.mockResolvedValue({});
-      const data: Data[] = [{ action: Actions.animation, payload: animation }];
+    const prepare = (data: Data[]) => {
+      (childrenStore.has as jest.Mock).mockReturnValue(true);
       (childrenStore.get as jest.Mock).mockReturnValue({ data });
+    };
 
-      await wrapper.instance().componentDidMount();
+    it('should pass through data to animation', async () => {
+      const { wrapper, mount } = shallowRender();
+      const animation = jest.fn().mockResolvedValue({});
+      const data: Data[] = [{ action: Actions.animation, payload: animation }];
+      prepare(data);
+
+      await mount();
 
       expect(animation).toHaveBeenCalledWith({
+        caller: wrapper.instance(),
         fromTarget: {},
         toTarget: {},
       });
     });
 
-    it('should trigger animations on unmount', async () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>,
-        { disableLifecycleMethods: true }
-      );
-      const animation = jest.fn();
-      animation.mockResolvedValue({});
-      const data: Data[] = [{ action: Actions.animation, payload: animation }];
-      (childrenStore.get as jest.Mock).mockReturnValue({ data });
-
-      await wrapper.instance().componentDidMount();
-
-      expect(animation).toHaveBeenCalled();
-    });
-
     it('should wait until animation has finished if a wait was found', async () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>,
-        { disableLifecycleMethods: true }
-      );
+      const { wrapper, mount } = shallowRender();
       const longAnimation = () => Promise.resolve({});
-      const animation = jest.fn();
-      animation.mockResolvedValue({});
+      const animation = jest.fn().mockResolvedValue({});
       const data: Data[] = [
         { action: Actions.animation, payload: longAnimation },
         { action: Actions.wait },
         { action: Actions.animation, payload: animation },
       ];
-      (childrenStore.get as jest.Mock).mockReturnValue({ data });
+      prepare(data);
 
-      const promise = wrapper.instance().componentDidMount();
+      const promise = mount();
 
       await longAnimation();
       expect(animation).not.toHaveBeenCalled();
