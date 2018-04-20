@@ -13,11 +13,16 @@ export type Data =
 export type SupplyRef = (ref: HTMLElement | null) => void;
 export type SupplyReactNode = (reactNode: React.ReactNode) => void;
 export type SupplyData = (data: Data[]) => void;
-export type ChildrenSupplyRef = (getRef: SupplyRef) => React.ReactNode;
+export type ChildrenAsFunction = (props: { ref: SupplyRef; style: Style }) => React.ReactNode;
 
 export interface AnimationData {
+  caller: React.Component;
   fromTarget: TargetData;
   toTarget: TargetData;
+}
+
+export interface Style {
+  [key: string]: string | number | undefined;
 }
 
 export interface TargetData extends GetElementSizeLocationReturnValue {
@@ -25,7 +30,7 @@ export interface TargetData extends GetElementSizeLocationReturnValue {
 }
 
 export interface CommonProps {
-  children: ChildrenSupplyRef | React.ReactNode;
+  children: ChildrenAsFunction | React.ReactNode;
 }
 
 export interface Props extends CommonProps {
@@ -33,12 +38,14 @@ export interface Props extends CommonProps {
   receiveReactNode?: SupplyReactNode;
   receiveData?: SupplyData;
   data?: Data;
+  style?: Style;
 }
 
 export interface Collect {
   ref: SupplyRef;
   data: SupplyData;
   reactNode: SupplyReactNode;
+  style: Style;
 }
 
 const CollectContext = React.createContext<Collect>();
@@ -64,6 +71,7 @@ export default class Collector extends React.Component<Props> {
                   collect && collect.reactNode(node);
                   this.props.receiveReactNode && this.props.receiveReactNode(node);
                 },
+                style: this.props.style || {},
               }}
             >
               {this.props.children}
@@ -78,14 +86,17 @@ export default class Collector extends React.Component<Props> {
         {collect => {
           const children =
             typeof this.props.children === 'function' &&
-            this.props.children((ref: HTMLElement) => {
-              if (collect) {
-                collect.ref(ref);
-              }
+            this.props.children({
+              ref: (ref: HTMLElement) => {
+                if (collect) {
+                  collect.ref(ref);
+                }
 
-              if (this.props.receiveRef) {
-                this.props.receiveRef(ref);
-              }
+                if (this.props.receiveRef) {
+                  this.props.receiveRef(ref);
+                }
+              },
+              style: collect ? collect.style : {},
             });
 
           if (collect) {

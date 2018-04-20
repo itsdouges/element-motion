@@ -13,8 +13,7 @@
     "test": "jest",
     "codecov": "echo \"not implemented\"",
     "preversion": "npm test",
-    "version":
-      "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && node ./scripts/deploy",
+    "version": "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && node ./scripts/deploy",
     "postversion": "git push && git push --tags",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -26,6 +25,7 @@
     "@types/enzyme": "^3.1.9",
     "@types/jest": "^22.2.3",
     "@types/react": "^16.3.11",
+    "@types/react-dom": "^16.0.5",
     "@types/sinon": "^4.3.1",
     "@types/storybook__react": "^3.0.7",
     "babel-core": "^6.26.0",
@@ -46,13 +46,22 @@
     "webpack-dev-server": "^2.6.1",
     "webpack-merge": "^4.1.0"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
     "setupTestFrameworkScriptFile": "<rootDir>test/setup.js",
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }

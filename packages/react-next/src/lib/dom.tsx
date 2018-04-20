@@ -41,16 +41,8 @@ export function getElementSizeLocation(
 ): GetElementSizeLocationReturnValue {
   const rect = element.getBoundingClientRect();
   const { scrollLeft, scrollTop } = getDocumentScroll();
-  let topOffset = 0;
-  let leftOffset = 0;
-
-  if (options.useOffsetSize) {
-    // If we're calculating from offset size, we need to calcuate the difference between
-    // offset/bounding height/width and remove it from bounding left/top.
-
-    topOffset = (rect.height - element.offsetHeight) / 2;
-    leftOffset = (rect.width - element.offsetWidth) / 2;
-  }
+  const topOffset = (rect.height - element.offsetHeight) / 2;
+  const leftOffset = (rect.width - element.offsetWidth) / 2;
 
   return {
     size: {

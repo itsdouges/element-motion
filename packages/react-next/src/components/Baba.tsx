@@ -65,9 +65,14 @@ interface Props {
 }
 
 export default class Baba extends React.PureComponent<Props> {
+  state = {
+    shown: false,
+  };
+
   element: HTMLElement | null;
   reactNode: React.ReactNode;
   data: Data[];
+  cancelClear?: () => void;
 
   componentWillUnmount() {
     if (childrenStore.has(this.props.name)) {
@@ -84,6 +89,14 @@ export default class Baba extends React.PureComponent<Props> {
     return this.execute();
   }
 
+  delayedClear() {
+    const id = setTimeout(() => {
+      childrenStore.remove(this.props.name);
+    }, 50);
+
+    return () => clearTimeout(id);
+  }
+
   store() {
     // Store position data so we can use it later.
     childrenStore.set(this.props.name, {
@@ -93,10 +106,7 @@ export default class Baba extends React.PureComponent<Props> {
       data: this.data,
     });
 
-    // If a target isn't found in 100ms, clear it out.
-    setTimeout(() => {
-      childrenStore.remove(this.props.name);
-    }, 100);
+    this.cancelClear = this.delayedClear();
   }
 
   execute() {
@@ -113,6 +123,7 @@ export default class Baba extends React.PureComponent<Props> {
               // Add to the last block in the array.
               arr[arr.length - 1].push(() =>
                 animate({
+                  caller: this,
                   fromTarget: target,
                   toTarget: {
                     reactNode: this.reactNode,
@@ -139,11 +150,25 @@ export default class Baba extends React.PureComponent<Props> {
       );
 
       // Trigger each blocks animations, one block at a time.
-      return blocks.reduce<Promise<AnimationResult>>(
-        (promise, block) => promise.then(() => Promise.all(block.map(animate => animate()))),
-        Promise.resolve({} as AnimationResult)
-      );
+      return blocks
+        .reduce<Promise<AnimationResult>>(
+          (promise, block) => promise.then(() => Promise.all(block.map(animate => animate()))),
+          Promise.resolve({} as AnimationResult)
+        )
+        .then(() => {
+          childrenStore.remove(this.props.name);
+
+          // We're finished all the transitions! Show the child element.
+          this.setState({
+            shown: true,
+          });
+        });
     }
+
+    // Nothing was found, show the child element.
+    this.setState({
+      shown: true,
+    });
 
     return undefined;
   }
@@ -166,6 +191,9 @@ export default class Baba extends React.PureComponent<Props> {
         receiveData={this.setData}
         receiveReactNode={this.setReactNode}
         receiveRef={this.setRef}
+        style={{
+          opacity: this.state.shown ? 1 : 0,
+        }}
       >
         {this.props.children}
       </Collector>
