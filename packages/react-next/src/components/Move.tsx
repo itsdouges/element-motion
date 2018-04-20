@@ -22,7 +22,9 @@ export default class Move extends React.Component<Props> {
     duration: 300,
   };
 
-  prepare = () => {};
+  prepare = () => {
+    return Promise.resolve();
+  };
 
   abort = () => {};
 
@@ -119,7 +121,11 @@ export default class Move extends React.Component<Props> {
   render() {
     const data: Data = {
       action: Actions.animation,
-      payload: this.animate,
+      payload: {
+        animate: this.animate,
+        abort: this.abort,
+        prepare: this.prepare,
+      },
     };
 
     return <Collecter data={data}>{this.props.children}</Collecter>;

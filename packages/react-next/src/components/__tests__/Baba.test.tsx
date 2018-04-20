@@ -26,6 +26,15 @@ describe('<Baba />', () => {
     receiveRenderChildren(() => <div />);
   };
 
+  const createAnimationPayload = (animate: any): Data => ({
+    action: Actions.animation,
+    payload: {
+      animate,
+      prepare: () => Promise.resolve(),
+      abort: () => {},
+    },
+  });
+
   const shallowRender = () => {
     const wrapper = shallow(
       <Baba name="my-animation">
@@ -145,7 +154,7 @@ describe('<Baba />', () => {
     it('should pass through data to animation', async () => {
       const { wrapper, mount } = shallowRender();
       const animation = jest.fn().mockResolvedValue({});
-      const data: Data[] = [{ action: Actions.animation, payload: animation }];
+      const data: Data[] = [createAnimationPayload(animation)];
       prepare(data);
 
       await mount();
@@ -158,9 +167,9 @@ describe('<Baba />', () => {
       const longAnimation = () => Promise.resolve({});
       const animation = jest.fn().mockResolvedValue({});
       const data: Data[] = [
-        { action: Actions.animation, payload: longAnimation },
+        createAnimationPayload(longAnimation),
         { action: Actions.wait },
-        { action: Actions.animation, payload: animation },
+        createAnimationPayload(animation),
       ];
       prepare(data);
 
@@ -175,7 +184,7 @@ describe('<Baba />', () => {
     it('should hide children when starting animating', () => {
       const { wrapper, mount } = shallowRender();
       const animation = jest.fn().mockResolvedValue({});
-      const data: Data[] = [{ action: Actions.animation, payload: animation }];
+      const data: Data[] = [createAnimationPayload(animation)];
       prepare(data);
 
       mount();
@@ -186,7 +195,7 @@ describe('<Baba />', () => {
     it('should show children when finished animating', async () => {
       const { wrapper, mount } = shallowRender();
       const animation = jest.fn().mockResolvedValue({});
-      const data: Data[] = [{ action: Actions.animation, payload: animation }];
+      const data: Data[] = [createAnimationPayload(animation)];
       prepare(data);
 
       await mount();
@@ -198,7 +207,7 @@ describe('<Baba />', () => {
     it('should store data after finishing so the next target can pick it up', async () => {
       const { wrapper, mount } = shallowRender();
       const animation = jest.fn().mockResolvedValue({});
-      const data: Data[] = [{ action: Actions.animation, payload: animation }];
+      const data: Data[] = [createAnimationPayload(animation)];
       prepare(data);
       stubAllReceivers(wrapper);
 

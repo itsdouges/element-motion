@@ -6,13 +6,12 @@ import Collector, {
   ChildrenAsFunction,
   Data,
   CommonProps,
-  AnimationResult,
 } from './Collector';
 import { getElementSizeLocation } from '../lib/dom';
 import * as childrenStore from '../lib/childrenStore';
 import { InjectedProps, withBabaManagerContext } from './BabaManager';
 
-type StartAnimation = () => Promise<AnimationResult>;
+type StartAnimation = () => Promise<any>;
 type AnimationBlock = StartAnimation[];
 
 /*
@@ -153,7 +152,7 @@ class Baba extends React.PureComponent<Props, State> {
         (arr, data) => {
           switch (data.action) {
             case 'animation': {
-              const animate = data.payload;
+              const { animate } = data.payload;
 
               // Add to the last block in the array.
               arr[arr.length - 1].push(() =>
@@ -184,26 +183,34 @@ class Baba extends React.PureComponent<Props, State> {
         [[]]
       );
 
+      // Run through all the data and execute all prepare funcs.
+      // Wait for them to finish.
+      const prepare = fromTarget.data.map(
+        data => (data.action === 'animation' ? data.payload.prepare() : Promise.resolve())
+      );
+
       // Trigger each blocks animations, one block at a time.
-      return blocks
-        .reduce<Promise<AnimationResult>>(
-          (promise, block) => promise.then(() => Promise.all(block.map(animate => animate()))),
-          Promise.resolve({} as AnimationResult)
-        )
-        .then(() => {
-          // We're finished all the transitions! Show the child element.
-          this.setState({
-            shown: true,
+      return Promise.all(prepare).then(() => {
+        return blocks
+          .reduce<Promise<any>>(
+            (promise, block) => promise.then(() => Promise.all(block.map(animate => animate()))),
+            Promise.resolve()
+          )
+          .then(() => {
+            // We're finished all the transitions! Show the child element.
+            this.setState({
+              shown: true,
+            });
+
+            // We don't need the previous children now. Now this instance is the new target!
+            // Store DOM data for later so when another target is mounted, the data is there.
+            this.store();
+
+            // If a BabaManager is a parent somewhere, notify them that
+            // we're finished animating.
+            this.props.context && this.props.context.onFinish();
           });
-
-          // We don't need the previous children now. Now this instance is the new target!
-          // Store DOM data for later so when another target is mounted, the data is there.
-          this.store();
-
-          // If a BabaManager is a parent somewhere, notify them that
-          // we're finished animating.
-          this.props.context && this.props.context.onFinish();
-        });
+      });
     }
 
     return undefined;

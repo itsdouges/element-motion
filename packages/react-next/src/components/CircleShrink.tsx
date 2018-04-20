@@ -26,6 +26,12 @@ export default class CircleShrink extends React.Component<Props> {
     duration: 500,
   };
 
+  prepare = () => {
+    return Promise.resolve();
+  };
+
+  abort = () => {};
+
   animate: AnimationCallback = data => {
     return new Promise(resolve => {
       window.requestAnimationFrame(() => {
@@ -83,7 +89,11 @@ export default class CircleShrink extends React.Component<Props> {
   render() {
     const data: Data = {
       action: Actions.animation,
-      payload: this.animate,
+      payload: {
+        animate: this.animate,
+        abort: this.abort,
+        prepare: this.prepare,
+      },
     };
 
     return <Collecter data={data}>{this.props.children}</Collecter>;

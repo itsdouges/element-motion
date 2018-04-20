@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
-export type AnimationResult = {};
-export type AnimationCallback = (data: AnimationData) => Promise<AnimationResult>;
+export type AnimationCallback = (data: AnimationData) => Promise<void>;
 export enum Actions {
   animation = 'animation',
   wait = 'wait',
 }
 export type Data =
-  | { action: Actions.animation; payload: AnimationCallback }
+  | {
+      action: Actions.animation;
+      payload: {
+        animate: AnimationCallback;
+        abort: () => void;
+        prepare: () => Promise<any>;
+      };
+    }
   | { action: Actions.wait };
 export type SupplyRef = (ref: HTMLElement | null) => void;
 export type SupplyRenderChildren = (reactNode: ChildrenAsFunction) => void;
