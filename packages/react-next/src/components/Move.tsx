@@ -63,7 +63,13 @@ export default class Move extends React.Component<Props> {
               resolve();
             }}
           >
-            {data.fromTarget.render({ ref: this.noop, style: {} })}
+            {data.fromTarget.render({
+              ref: this.noop,
+              style: {
+                // Elminate any margins so they don't affect the transition.
+                margin: 0,
+              },
+            })}
           </SimpleTween>
 
           <SimpleTween
@@ -88,7 +94,13 @@ export default class Move extends React.Component<Props> {
             // hook to tell us all tweens are finished.
             onFinish={() => {}}
           >
-            {data.toTarget.render({ ref: this.noop, style: {} })}
+            {data.toTarget.render({
+              ref: this.noop,
+              style: {
+                // Elminate any margins so they don't affect the transition.
+                margin: 0,
+              },
+            })}
           </SimpleTween>
         </>,
         elementToMountChildren
