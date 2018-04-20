@@ -18,38 +18,36 @@ interface Props extends CommonProps {
  * @extends {React.Component<Props>}
  */
 export default class Move extends React.Component<Props> {
+  finishAnimation: () => Promise<any>;
+
   static defaultProps = {
     duration: 300,
   };
 
-  prepare = () => {
-    return Promise.resolve();
-  };
+  prepare: AnimationCallback = data => {
+    const fromEndXOffset = data.toTarget.location.left - data.fromTarget.location.left;
+    const fromEndYOffset = data.toTarget.location.top - data.fromTarget.location.top;
+    const toStartXOffset = data.fromTarget.location.left - data.toTarget.location.left;
+    const toStartYOffset = data.fromTarget.location.top - data.toTarget.location.top;
+    const elementToMountChildren = document.createElement('div');
+    const duration = this.props.duration as number;
+    const noTransform = 'translate3d(0, 0, 0) scale3d(1, 1, 1)';
+    document.body.appendChild(elementToMountChildren);
 
-  abort = () => {};
+    const from = {
+      transition: `transform ${duration}ms, opacity ${duration / 2}ms`,
+      position: 'absolute',
+      transformOrigin: '0 0',
+    };
 
-  animate: AnimationCallback = data => {
-    return new Promise(resolve => {
-      const fromEndXOffset = data.toTarget.location.left - data.fromTarget.location.left;
-      const fromEndYOffset = data.toTarget.location.top - data.fromTarget.location.top;
-      const toStartXOffset = data.fromTarget.location.left - data.toTarget.location.left;
-      const toStartYOffset = data.fromTarget.location.top - data.toTarget.location.top;
-      const elementToMountChildren = document.createElement('div');
-      const duration = this.props.duration as number;
-      const noTransform = 'translate3d(0, 0, 0) scale3d(1, 1, 1)';
-      document.body.appendChild(elementToMountChildren);
-
-      const from = {
-        transition: `transform ${duration}ms, opacity ${duration / 2}ms`,
-        position: 'absolute',
-        transformOrigin: '0 0',
-      };
-
+    const render = (start: boolean, finished = () => {}) =>
       // This will preserve react context.
       unstable_renderSubtreeIntoContainer(
         data.caller,
         <>
           <SimpleTween
+            key="1"
+            start={start}
             duration={this.props.duration as number}
             from={{
               ...data.fromTarget.location,
@@ -68,11 +66,7 @@ export default class Move extends React.Component<Props> {
               )}, 1)`,
               opacity: 0,
             }}
-            onFinish={() => {
-              unmountComponentAtNode(elementToMountChildren);
-              document.body.removeChild(elementToMountChildren);
-              resolve();
-            }}
+            onFinish={() => {}}
           >
             {data.fromTarget.render({
               ref: noop,
@@ -84,6 +78,8 @@ export default class Move extends React.Component<Props> {
           </SimpleTween>
 
           <SimpleTween
+            key="2"
+            start={start}
             duration={this.props.duration as number}
             from={{
               ...data.toTarget.location,
@@ -100,9 +96,7 @@ export default class Move extends React.Component<Props> {
             to={{
               transform: noTransform,
             }}
-            // TODO: Add a TweenManager or something so we receive one
-            // hook to tell us all tweens are finished.
-            onFinish={() => {}}
+            onFinish={finished}
           >
             {data.toTarget.render({
               ref: noop,
@@ -115,7 +109,26 @@ export default class Move extends React.Component<Props> {
         </>,
         elementToMountChildren
       );
-    });
+
+    render(false);
+
+    this.finishAnimation = () => {
+      return new Promise(resolve => {
+        render(true, () => {
+          document.body.removeChild(elementToMountChildren);
+          unmountComponentAtNode(elementToMountChildren);
+          resolve();
+        });
+      });
+    };
+
+    return Promise.resolve();
+  };
+
+  abort = () => {};
+
+  animate: AnimationCallback = () => {
+    return this.finishAnimation();
   };
 
   render() {

@@ -9,6 +9,7 @@ interface Props {
   from: Style;
   to: Style;
   onFinish: () => void;
+  start?: boolean;
 }
 
 interface State {
@@ -16,11 +17,35 @@ interface State {
 }
 
 export default class SimpleTween extends React.Component<Props, State> {
+  started: boolean = false;
+
+  static defaultProps = {
+    start: true,
+  };
+
   state: State = {
     state: 'from',
   };
 
   componentDidMount() {
+    if (this.props.start) {
+      this.start();
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.start) {
+      this.start();
+    }
+  }
+
+  start = () => {
+    if (this.started) {
+      return;
+    }
+
+    this.started = true;
+
     window.setTimeout(() => {
       this.setState({
         state: 'to',
@@ -28,7 +53,7 @@ export default class SimpleTween extends React.Component<Props, State> {
 
       window.setTimeout(this.props.onFinish, this.props.duration);
     }, 14);
-  }
+  };
 
   render() {
     const { from, to } = this.props;
