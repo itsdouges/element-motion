@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
-export type AnimationCallback = (data: AnimationData) => Promise<void>;
+export type AnimationCallback = (data: AnimationData) => Promise<any>;
 export enum Actions {
   animation = 'animation',
   wait = 'wait',
@@ -11,8 +11,8 @@ export type Data =
       action: Actions.animation;
       payload: {
         animate: AnimationCallback;
+        prepare: AnimationCallback;
         abort: () => void;
-        prepare: () => Promise<any>;
       };
     }
   | { action: Actions.wait };

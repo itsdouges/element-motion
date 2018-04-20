@@ -7,7 +7,11 @@ describe('<Collector />', () => {
   const element = document.createElement('div');
   const createData = (): Data => ({
     action: Actions.animation,
-    payload: () => Promise.resolve({}),
+    payload: {
+      animate: () => Promise.resolve(),
+      prepare: () => Promise.resolve(),
+      abort: () => {},
+    },
   });
 
   afterEach(() => {

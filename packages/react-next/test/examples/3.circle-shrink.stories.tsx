@@ -31,7 +31,7 @@ const NoMarginBody = styled(BodyClassName)`
   margin: 0;
 `;
 
-storiesOf('CircleShrink', module).add('from square', () => (
+storiesOf('CircleShrink', module).add('to square', () => (
   <Toggler>
     {({ shown, toggle }) => (
       <>

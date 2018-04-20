@@ -6,6 +6,7 @@ import Collector, {
   ChildrenAsFunction,
   Data,
   CommonProps,
+  Actions,
 } from './Collector';
 import { getElementSizeLocation } from '../lib/dom';
 import * as childrenStore from '../lib/childrenStore';
@@ -148,28 +149,40 @@ class Baba extends React.PureComponent<Props, State> {
     if (fromTarget) {
       const { data, ...target } = fromTarget;
 
-      const blocks = fromTarget.data.reduce<AnimationBlock[]>(
+      const actions = fromTarget.data.map(data => {
+        if (data.action === Actions.animation) {
+          const animationData = {
+            caller: this,
+            fromTarget: target,
+            toTarget: {
+              render: this.renderChildren,
+              ...getElementSizeLocation(this.element as HTMLElement),
+            },
+          };
+
+          return {
+            action: Actions.animation,
+            payload: {
+              animate: () => data.payload.animate(animationData),
+              prepare: () => data.payload.prepare(animationData),
+              abort: data.payload.abort,
+            },
+          };
+        }
+
+        return data;
+      });
+
+      const blocks = actions.reduce<AnimationBlock[]>(
         (arr, data) => {
           switch (data.action) {
-            case 'animation': {
-              const { animate } = data.payload;
-
+            case Actions.animation: {
               // Add to the last block in the array.
-              arr[arr.length - 1].push(() =>
-                animate({
-                  caller: this,
-                  fromTarget: target,
-                  toTarget: {
-                    render: this.renderChildren,
-                    ...getElementSizeLocation(this.element as HTMLElement),
-                  },
-                })
-              );
-
+              arr[arr.length - 1].push(data.payload.animate);
               return arr;
             }
 
-            case 'wait': {
+            case Actions.wait: {
               // Found a wait action, start a new block.
               arr.push([]);
               return arr;
@@ -185,12 +198,12 @@ class Baba extends React.PureComponent<Props, State> {
 
       // Run through all the data and execute all prepare funcs.
       // Wait for them to finish.
-      const prepare = fromTarget.data.map(
-        data => (data.action === 'animation' ? data.payload.prepare() : Promise.resolve())
+      const preparationPromises = actions.map(
+        data => (data.action === Actions.animation ? data.payload.prepare() : Promise.resolve())
       );
 
       // Trigger each blocks animations, one block at a time.
-      return Promise.all(prepare).then(() => {
+      return Promise.all(preparationPromises).then(() => {
         return blocks
           .reduce<Promise<any>>(
             (promise, block) => promise.then(() => Promise.all(block.map(animate => animate()))),
