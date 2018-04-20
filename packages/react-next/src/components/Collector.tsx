@@ -13,6 +13,7 @@ export type Data =
         animate: AnimationCallback;
         prepare: AnimationCallback;
         abort: () => void;
+        cleanup: () => void;
       };
     }
   | { action: Actions.wait };
@@ -114,7 +115,7 @@ export default class Collector extends React.Component<Props> {
                   this.props.receiveRef(ref);
                 }
               },
-              style: collect ? collect.style : {},
+              style: collect ? { ...this.props.style, ...collect.style } : this.props.style || {},
             });
           }
 

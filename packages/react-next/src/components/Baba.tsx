@@ -12,8 +12,15 @@ import { getElementSizeLocation } from '../lib/dom';
 import * as childrenStore from '../lib/childrenStore';
 import { InjectedProps, withBabaManagerContext } from './BabaManager';
 
-type StartAnimation = () => Promise<any>;
-type AnimationBlock = StartAnimation[];
+type PromiseFunc = () => Promise<any>;
+type Func = () => void;
+interface MappedAnimation {
+  animate: PromiseFunc;
+  prepare: PromiseFunc;
+  abort: Func;
+  cleanup: Func;
+}
+type AnimationBlock = MappedAnimation[];
 
 /*
   v1 API
@@ -166,6 +173,7 @@ class Baba extends React.PureComponent<Props, State> {
               animate: () => data.payload.animate(animationData),
               prepare: () => data.payload.prepare(animationData),
               abort: data.payload.abort,
+              cleanup: data.payload.cleanup,
             },
           };
         }
@@ -178,7 +186,7 @@ class Baba extends React.PureComponent<Props, State> {
           switch (data.action) {
             case Actions.animation: {
               // Add to the last block in the array.
-              arr[arr.length - 1].push(data.payload.animate);
+              arr[arr.length - 1].push(data.payload);
               return arr;
             }
 
@@ -206,7 +214,21 @@ class Baba extends React.PureComponent<Props, State> {
       return Promise.all(preparationPromises).then(() => {
         return blocks
           .reduce<Promise<any>>(
-            (promise, block) => promise.then(() => Promise.all(block.map(animate => animate()))),
+            (promise, block) =>
+              promise.then(() =>
+                Promise.all(
+                  block.map(anim =>
+                    anim.animate().then(() => {
+                      if (this.props.context) {
+                        // There is <BabaManager />, so we consider this to be managed.
+                        // We will cleanup everything at the very end.
+                      } else {
+                        anim.cleanup();
+                      }
+                    })
+                  )
+                )
+              ),
             Promise.resolve()
           )
           .then(() => {
@@ -222,6 +244,12 @@ class Baba extends React.PureComponent<Props, State> {
             // If a BabaManager is a parent somewhere, notify them that
             // we're finished animating.
             this.props.context && this.props.context.onFinish();
+
+            if (this.props.context) {
+              // There is <BabaManager />, so we consider this to be managed.
+              // We will cleanup now.
+              blocks.forEach(block => block.forEach(anim => anim.cleanup()));
+            }
           });
       });
     }

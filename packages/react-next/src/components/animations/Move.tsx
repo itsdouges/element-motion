@@ -19,6 +19,7 @@ interface Props extends CommonProps {
  */
 export default class Move extends React.Component<Props> {
   finishAnimation: () => Promise<any>;
+  finishCleanup: () => void;
 
   static defaultProps = {
     duration: 300,
@@ -85,6 +86,7 @@ export default class Move extends React.Component<Props> {
               ...data.toTarget.location,
               ...from,
               zIndex: 19999,
+              opacity: 0,
               transform: `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
                 data.fromTarget.size.width,
                 data.toTarget.size.width
@@ -94,6 +96,7 @@ export default class Move extends React.Component<Props> {
               )}, 1)`,
             }}
             to={{
+              opacity: 1,
               transform: noTransform,
             }}
             onFinish={finished}
@@ -112,13 +115,14 @@ export default class Move extends React.Component<Props> {
 
     render(false);
 
+    this.finishCleanup = () => {
+      document.body.removeChild(elementToMountChildren);
+      unmountComponentAtNode(elementToMountChildren);
+    };
+
     this.finishAnimation = () => {
       return new Promise(resolve => {
-        render(true, () => {
-          document.body.removeChild(elementToMountChildren);
-          unmountComponentAtNode(elementToMountChildren);
-          resolve();
-        });
+        render(true, resolve);
       });
     };
 
@@ -126,6 +130,10 @@ export default class Move extends React.Component<Props> {
   };
 
   abort = () => {};
+
+  cleanup = () => {
+    this.finishCleanup();
+  };
 
   animate: AnimationCallback = () => {
     return this.finishAnimation();
@@ -138,6 +146,7 @@ export default class Move extends React.Component<Props> {
         animate: this.animate,
         abort: this.abort,
         prepare: this.prepare,
+        cleanup: this.cleanup,
       },
     };
 

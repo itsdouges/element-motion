@@ -32,6 +32,7 @@ describe('<Baba />', () => {
       animate,
       prepare: () => Promise.resolve(),
       abort: () => {},
+      cleanup: () => {},
     },
   });
 

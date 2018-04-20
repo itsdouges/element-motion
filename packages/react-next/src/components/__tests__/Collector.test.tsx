@@ -11,6 +11,7 @@ describe('<Collector />', () => {
       animate: () => Promise.resolve(),
       prepare: () => Promise.resolve(),
       abort: () => {},
+      cleanup: () => {},
     },
   });
 
@@ -202,6 +203,16 @@ describe('<Collector />', () => {
 
     expect(callback).toHaveBeenCalledWith({
       margin: 0,
+      opacity: 1,
+    });
+  });
+
+  it('should pass style on immediate collector', () => {
+    const callback = jest.fn();
+
+    render(<Collector style={{ opacity: 1 }}>{({ style }) => callback(style)}</Collector>);
+
+    expect(callback).toHaveBeenCalledWith({
       opacity: 1,
     });
   });

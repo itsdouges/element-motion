@@ -32,6 +32,8 @@ export default class CircleExpand extends React.Component<Props> {
 
   abort = () => {};
 
+  cleanup = () => {};
+
   animate: AnimationCallback = data => {
     return new Promise(resolve => {
       window.requestAnimationFrame(() => {
@@ -97,6 +99,7 @@ export default class CircleExpand extends React.Component<Props> {
         animate: this.animate,
         abort: this.abort,
         prepare: this.prepare,
+        cleanup: this.cleanup,
       },
     };
 
