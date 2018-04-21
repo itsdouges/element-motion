@@ -69,7 +69,7 @@ storiesOf('BabaManager', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
 
           {!shown ? (
-            <BabaManager name="managed-move-and-expand" key="c">
+            <BabaManager key="c">
               {props => (
                 <Container background="white" {...props}>
                   <Baba name="managed-move-and-expand" key="1">
@@ -81,7 +81,7 @@ storiesOf('BabaManager', module)
               )}
             </BabaManager>
           ) : (
-            <BabaManager name="managed-move-and-expand" key="b">
+            <BabaManager key="b">
               {props => (
                 <Container background="green" {...props}>
                   <Baba name="managed-move-and-expand" key="2">
@@ -133,7 +133,7 @@ storiesOf('BabaManager', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
 
           {!shown ? (
-            <BabaManager name="managed-move-then-shrink" key="c">
+            <BabaManager key="c">
               {props => (
                 <Container background="green" {...props}>
                   <Baba name="managed-move-then-shrink" key="1">
@@ -149,7 +149,7 @@ storiesOf('BabaManager', module)
               )}
             </BabaManager>
           ) : (
-            <BabaManager name="managed-move-then-shrink" key="b">
+            <BabaManager key="b">
               {props => (
                 <Container background="white" {...props}>
                   <Baba name="managed-move-then-shrink" key="2">
@@ -171,7 +171,7 @@ storiesOf('BabaManager', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
 
           {shown ? (
-            <BabaManager name="managed-altogether" key="c">
+            <BabaManager key="c">
               {props => (
                 <Container background="green" {...props}>
                   <Baba name="managed-altogether" key="1">
@@ -187,7 +187,7 @@ storiesOf('BabaManager', module)
               )}
             </BabaManager>
           ) : (
-            <BabaManager name="managed-altogether" key="b">
+            <BabaManager key="b">
               {props => (
                 <Container background="white" {...props}>
                   <Baba name="managed-altogether" key="2">

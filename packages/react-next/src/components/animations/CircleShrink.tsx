@@ -24,13 +24,13 @@ interface Props extends CommonProps {
 export default class CircleShrink extends React.Component<Props> {
   finishAnimation: () => Promise<any>;
   finishCleanup: () => void;
+  renderAnimation: (start: boolean, finish?: () => void) => void;
 
   static defaultProps = {
     duration: 500,
   };
 
   prepare: AnimationCallback = data => {
-    console.log('hi');
     return new Promise(resolve => {
       window.requestAnimationFrame(() => {
         const duration = this.props.duration as number;
@@ -51,7 +51,7 @@ export default class CircleShrink extends React.Component<Props> {
         const elementToMountChildren = document.createElement('div');
         document.body.appendChild(elementToMountChildren);
 
-        const render = (start: boolean, finish: () => void = () => {}) => {
+        this.renderAnimation = (start: boolean, finish: () => void = () => {}) => {
           unstable_renderSubtreeIntoContainer(
             data.caller,
             <SimpleTween
@@ -80,21 +80,16 @@ export default class CircleShrink extends React.Component<Props> {
           );
         };
 
-        render(false);
-        resolve();
-
-        this.finishAnimation = () => {
-          return new Promise(resolve => {
-            render(true, () => {
-              resolve();
-            });
-          });
-        };
+        this.renderAnimation(false);
 
         this.finishCleanup = () => {
+          this.renderAnimation(true);
+
           unmountComponentAtNode(elementToMountChildren);
           document.body.removeChild(elementToMountChildren);
         };
+
+        resolve();
       });
     });
   };
@@ -106,7 +101,11 @@ export default class CircleShrink extends React.Component<Props> {
   };
 
   animate: AnimationCallback = () => {
-    return this.finishAnimation();
+    return new Promise(resolve => {
+      this.renderAnimation(true, () => {
+        resolve();
+      });
+    });
   };
 
   render() {

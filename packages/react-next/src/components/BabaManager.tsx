@@ -3,7 +3,6 @@ import { Style } from './Collector';
 
 interface Props {
   children: (props: { style: Style }) => React.ReactNode;
-  name: string;
 }
 
 interface State {
