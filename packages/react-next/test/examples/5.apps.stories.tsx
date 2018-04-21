@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
-import Baba, { Move, BabaManager } from '../../src';
+import Baba, { Move, BabaManager, CircleShrink, CircleExpand, Wait, Collector } from '../../src';
 
 const Root = styled.div`
   width: 100px;
@@ -61,7 +61,7 @@ const NoMarginBody = styled(BodyClassName)`
   margin: 0;
 `;
 
-class MultipleTargets extends React.Component {
+class MultipleTargets extends React.Component<{ expand?: boolean; shrink?: boolean }> {
   state = {
     shown: undefined,
   };
@@ -72,16 +72,31 @@ class MultipleTargets extends React.Component {
     });
   };
 
+  getKey() {
+    return [
+      'multiple-targets',
+      'move',
+      this.props.expand && 'expand',
+      this.props.shrink && 'shrink',
+    ]
+      .filter(Boolean)
+      .join('-');
+  }
+
   renderItems() {
+    const Expand = this.props.expand ? CircleExpand : Collector;
+
     const items = Array(8)
       .fill(undefined)
       .map((_, index) => (
-        <Baba name={`multiple-targets-${index}`} key={index}>
-          <Move delay={100}>
-            {({ ref, style }) => (
-              <Root onClick={() => this.select(index)} style={style} innerRef={ref} />
-            )}
-          </Move>
+        <Baba name={`${this.getKey()}-${index}`} key={index}>
+          <Expand background="green">
+            <Move delay={this.props.expand ? 100 : 0}>
+              {({ ref, style }) => (
+                <Root onClick={() => this.select(index)} style={style} innerRef={ref} />
+              )}
+            </Move>
+          </Expand>
         </Baba>
       ));
 
@@ -98,16 +113,23 @@ class MultipleTargets extends React.Component {
   }
 
   renderDetails(index?: number) {
+    const Shrink = this.props.shrink ? CircleShrink : Collector;
+    const WaitFor = this.props.shrink ? Wait : Collector;
+
     return (
       <BabaManager key="c">
         {props => (
-          <Container background="white" {...props}>
+          <Container background={this.props.expand ? 'purple' : 'white'} {...props}>
             <NoMarginBody className="" />
-            <Baba name={`multiple-targets-${index}`}>
+            <Baba name={`${this.getKey()}-${index}`}>
               <Move>
-                {({ ref, style }) => (
-                  <BigRoot onClick={() => this.select()} style={style} innerRef={ref} />
-                )}
+                <WaitFor>
+                  <Shrink background="purple">
+                    {({ ref, style }) => (
+                      <BigRoot onClick={() => this.select()} style={style} innerRef={ref} />
+                    )}
+                  </Shrink>
+                </WaitFor>
               </Move>
             </Baba>
           </Container>
@@ -123,4 +145,7 @@ class MultipleTargets extends React.Component {
   }
 }
 
-storiesOf('AppExamples', module).add('simple multiple items', () => <MultipleTargets />);
+storiesOf('AppExamples', module)
+  .add('move', () => <MultipleTargets />)
+  .add('expand, move', () => <MultipleTargets expand />)
+  .add('expand, move, shrink', () => <MultipleTargets expand shrink />);
