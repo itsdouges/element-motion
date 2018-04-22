@@ -14,6 +14,13 @@ const Root = styled.div`
   justify-content: center;
 `;
 
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
+
 const BlueRoot = Root.extend`
   background: blue;
 `;
@@ -24,15 +31,19 @@ storiesOf('CircleExpand', module).add('from square', () => (
       <>
         <StickyButton onClick={toggle}>toggle</StickyButton>
         {!shown ? (
-          <Baba name="circle-expand-square" key="1">
-            <CircleExpand background="blue">
-              {({ ref, style }) => <Root style={style} innerRef={ref} />}
-            </CircleExpand>
-          </Baba>
+          <Container>
+            <Baba name="circle-expand-square" key="1">
+              <CircleExpand background="blue">
+                {({ ref, style }) => <Root style={style} innerRef={ref} />}
+              </CircleExpand>
+            </Baba>
+          </Container>
         ) : (
-          <Baba name="circle-expand-square" key="2">
-            {({ ref, style }) => <BlueRoot style={style} innerRef={ref} />}
-          </Baba>
+          <Container>
+            <Baba name="circle-expand-square" key="2">
+              {({ ref, style }) => <BlueRoot style={style} innerRef={ref} />}
+            </Baba>
+          </Container>
         )}
       </>
     )}

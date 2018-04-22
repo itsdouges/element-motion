@@ -61,7 +61,11 @@ const NoMarginBody = styled(BodyClassName)`
   margin: 0;
 `;
 
-class MultipleTargets extends React.Component<{ expand?: boolean; shrink?: boolean }> {
+class MultipleTargets extends React.Component<{
+  expand?: boolean;
+  shrink?: boolean;
+  wait?: boolean;
+}> {
   state = {
     shown: undefined,
   };
@@ -78,6 +82,7 @@ class MultipleTargets extends React.Component<{ expand?: boolean; shrink?: boole
       'move',
       this.props.expand && 'expand',
       this.props.shrink && 'shrink',
+      this.props.wait && 'wait',
     ]
       .filter(Boolean)
       .join('-');
@@ -114,7 +119,7 @@ class MultipleTargets extends React.Component<{ expand?: boolean; shrink?: boole
 
   renderDetails(index?: number) {
     const Shrink = this.props.shrink ? CircleShrink : Collector;
-    const WaitFor = this.props.shrink ? Wait : Collector;
+    const WaitFor = this.props.wait ? Wait : Collector;
 
     return (
       <BabaManager key="c">
@@ -145,7 +150,8 @@ class MultipleTargets extends React.Component<{ expand?: boolean; shrink?: boole
   }
 }
 
-storiesOf('AppExamples', module)
+storiesOf('GoogleMusic', module)
   .add('move', () => <MultipleTargets />)
-  .add('expand, move', () => <MultipleTargets expand />)
-  .add('expand, move, shrink', () => <MultipleTargets expand shrink />);
+  .add('move expand', () => <MultipleTargets expand />)
+  .add('move expand shrink', () => <MultipleTargets expand shrink />)
+  .add('move expand shrink wait', () => <MultipleTargets expand shrink wait />);
