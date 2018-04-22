@@ -3,7 +3,7 @@ import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'rea
 import Collecter, { CommonProps, AnimationCallback, Data, Actions } from '../Collector';
 import { calculateHypotenuse } from '../../lib/math';
 import { calculateWindowCentre, calculateElementCenterInViewport } from '../../lib/dom';
-import SimpleTween from '../SimpleTween';
+import SimpleKeyframe from '../SimpleKeyframe';
 
 interface Props extends CommonProps {
   background: string;
@@ -23,14 +23,15 @@ interface Props extends CommonProps {
  */
 export default class CircleShrink extends React.Component<Props> {
   finishAnimation: () => Promise<any>;
+  renderAnimation: (at?: number) => Promise<any>;
+  finishAfterAnimate: () => Promise<any>;
   finishCleanup: () => void;
-  renderAnimation: (start: boolean, finish?: () => void) => void;
 
   static defaultProps = {
     duration: 500,
   };
 
-  prepare: AnimationCallback = data => {
+  beforeAnimate: AnimationCallback = data => {
     return new Promise(resolve => {
       window.requestAnimationFrame(() => {
         const duration = this.props.duration as number;
@@ -51,47 +52,61 @@ export default class CircleShrink extends React.Component<Props> {
         const elementToMountChildren = document.createElement('div');
         document.body.appendChild(elementToMountChildren);
 
-        this.renderAnimation = (start: boolean, finish: () => void = () => {}) => {
-          unstable_renderSubtreeIntoContainer(
-            data.caller,
-            <SimpleTween
-              duration={duration}
-              start={start}
-              from={{
-                left:
-                  data.toTarget.location.left - (toTargetHypotenuse - data.toTarget.size.width) / 2,
-                top:
-                  data.toTarget.location.top - (toTargetHypotenuse - data.toTarget.size.height) / 2,
-                width: toTargetHypotenuse,
-                height: toTargetHypotenuse,
-                borderRadius: '50%',
-                position: 'absolute',
-                background: this.props.background,
-                zIndex: 10000,
-                transition: `transform ease-out ${duration}ms`,
-                transform: `scale(${scale})`,
-              }}
-              to={{
-                transform: 'scale(1)',
-              }}
-              onFinish={finish}
-            />,
-            elementToMountChildren
-          );
+        this.renderAnimation = (at?: number) => {
+          return new Promise(resolve => {
+            console.log('rendering');
+            unstable_renderSubtreeIntoContainer(
+              data.caller,
+              <SimpleKeyframe
+                at={at}
+                style={{
+                  left:
+                    data.toTarget.location.left -
+                    (toTargetHypotenuse - data.toTarget.size.width) / 2,
+                  top:
+                    data.toTarget.location.top -
+                    (toTargetHypotenuse - data.toTarget.size.height) / 2,
+                  width: toTargetHypotenuse,
+                  height: toTargetHypotenuse,
+                  borderRadius: '50%',
+                  position: 'absolute',
+                  background: this.props.background,
+                  zIndex: 10000,
+                  transition: `transform ease-out ${duration}ms, opacity ease-out ${duration}ms`,
+                  transform: `scale(${scale})`,
+                }}
+                keyframes={[
+                  {
+                    transform: 'scale(1)',
+                  },
+                  {
+                    transform: 'scale(1)',
+                    opacity: 0,
+                  },
+                ]}
+                onFinish={resolve}
+              />,
+              elementToMountChildren
+            );
+          });
         };
 
-        this.renderAnimation(false);
+        this.renderAnimation();
+
+        resolve();
 
         this.finishCleanup = () => {
-          this.renderAnimation(true);
-
           unmountComponentAtNode(elementToMountChildren);
           document.body.removeChild(elementToMountChildren);
         };
 
-        resolve();
+        this.finishAfterAnimate = () => this.renderAnimation(1);
       });
     });
+  };
+
+  afterAnimate: AnimationCallback = () => {
+    return this.finishAfterAnimate();
   };
 
   abort = () => {};
@@ -101,11 +116,7 @@ export default class CircleShrink extends React.Component<Props> {
   };
 
   animate: AnimationCallback = () => {
-    return new Promise(resolve => {
-      this.renderAnimation(true, () => {
-        resolve();
-      });
-    });
+    return this.renderAnimation(0);
   };
 
   render() {
@@ -114,7 +125,8 @@ export default class CircleShrink extends React.Component<Props> {
       payload: {
         animate: this.animate,
         abort: this.abort,
-        prepare: this.prepare,
+        beforeAnimate: this.beforeAnimate,
+        afterAnimate: this.afterAnimate,
         cleanup: this.cleanup,
       },
     };

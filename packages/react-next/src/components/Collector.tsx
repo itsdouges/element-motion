@@ -11,8 +11,9 @@ export type Data =
       action: Actions.animation;
       payload: {
         animate: AnimationCallback;
-        prepare: AnimationCallback;
-        abort: () => void;
+        beforeAnimate?: AnimationCallback;
+        afterAnimate?: AnimationCallback;
+        abort?: () => void;
         cleanup: () => void;
       };
     }

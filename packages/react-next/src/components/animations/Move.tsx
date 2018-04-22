@@ -153,7 +153,7 @@ export default class Move extends React.Component<Props> {
       payload: {
         animate: this.animate,
         abort: this.abort,
-        prepare: this.prepare,
+        beforeAnimate: this.prepare,
         cleanup: this.cleanup,
       },
     };

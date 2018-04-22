@@ -3,7 +3,7 @@ import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'rea
 import Collecter, { CommonProps, AnimationCallback, Data, Actions } from '../Collector';
 import { calculateHypotenuse } from '../../lib/math';
 import { calculateWindowCentre, calculateElementCenterInViewport } from '../../lib/dom';
-import SimpleTween from '../SimpleTween';
+import SimpleKeyframe from '../SimpleKeyframe';
 
 interface Props extends CommonProps {
   background: string;
@@ -26,13 +26,22 @@ export default class CircleExpand extends React.Component<Props> {
     duration: 500,
   };
 
+  renderAnimation: (at: number) => Promise<void>;
+  finishCleanup: () => void;
+
   prepare = () => {
     return Promise.resolve();
   };
 
   abort = () => {};
 
-  cleanup = () => {};
+  cleanup = () => {
+    this.finishCleanup();
+  };
+
+  afterAnimate = () => {
+    return this.renderAnimation(1);
+  };
 
   animate: AnimationCallback = data => {
     return new Promise(resolve => {
@@ -55,39 +64,51 @@ export default class CircleExpand extends React.Component<Props> {
         const elementToMountChildren = document.createElement('div');
         document.body.appendChild(elementToMountChildren);
 
-        unstable_renderSubtreeIntoContainer(
-          data.caller,
-          <SimpleTween
-            duration={duration}
-            from={{
-              left:
-                data.fromTarget.location.left -
-                (fromTargetHypotenuse - data.fromTarget.size.width) / 2,
-              top:
-                data.fromTarget.location.top -
-                (fromTargetHypotenuse - data.fromTarget.size.height) / 2,
-              width: fromTargetHypotenuse,
-              height: fromTargetHypotenuse,
-              borderRadius: '50%',
-              position: 'absolute',
-              background: this.props.background,
-              zIndex: 10000,
-              transition: `transform ease-in ${duration}ms, opacity ease-in ${duration / 10}ms`,
-              transform: 'scale(1)',
-              opacity: 0,
-            }}
-            to={{
-              opacity: 1,
-              transform: `scale(${scale})`,
-            }}
-            onFinish={() => {
-              unmountComponentAtNode(elementToMountChildren);
-              document.body.removeChild(elementToMountChildren);
-              resolve();
-            }}
-          />,
-          elementToMountChildren
-        );
+        this.renderAnimation = (at: number) => {
+          return new Promise(resolve => {
+            unstable_renderSubtreeIntoContainer(
+              data.caller,
+              <SimpleKeyframe
+                style={{
+                  left:
+                    data.fromTarget.location.left -
+                    (fromTargetHypotenuse - data.fromTarget.size.width) / 2,
+                  top:
+                    data.fromTarget.location.top -
+                    (fromTargetHypotenuse - data.fromTarget.size.height) / 2,
+                  width: fromTargetHypotenuse,
+                  height: fromTargetHypotenuse,
+                  borderRadius: '50%',
+                  position: 'absolute',
+                  background: this.props.background,
+                  zIndex: 10000,
+                  transition: `transform ease-in ${duration}ms, opacity ease-in ${duration / 2}ms`,
+                  transform: 'scale(1)',
+                  opacity: 1,
+                }}
+                keyframes={[
+                  {
+                    transform: `scale(${scale})`,
+                  },
+                  {
+                    transform: `scale(${scale})`,
+                    opacity: 0,
+                  },
+                ]}
+                at={at}
+                onFinish={resolve}
+              />,
+              elementToMountChildren
+            );
+          });
+        };
+
+        this.finishCleanup = () => {
+          unmountComponentAtNode(elementToMountChildren);
+          document.body.removeChild(elementToMountChildren);
+        };
+
+        this.renderAnimation(0).then(resolve);
       });
     });
   };
@@ -98,8 +119,9 @@ export default class CircleExpand extends React.Component<Props> {
       payload: {
         animate: this.animate,
         abort: this.abort,
-        prepare: this.prepare,
+        beforeAnimate: this.prepare,
         cleanup: this.cleanup,
+        afterAnimate: this.afterAnimate,
       },
     };
 

@@ -16,7 +16,8 @@ type PromiseFunc = () => Promise<any>;
 type Func = () => void;
 interface MappedAnimation {
   animate: PromiseFunc;
-  prepare: PromiseFunc;
+  beforeAnimate: PromiseFunc;
+  afterAnimate: PromiseFunc;
   abort: Func;
   cleanup: Func;
 }
@@ -170,10 +171,17 @@ class Baba extends React.PureComponent<Props, State> {
           return {
             action: Actions.animation,
             payload: {
+              beforeAnimate: () =>
+                data.payload.beforeAnimate
+                  ? data.payload.beforeAnimate(animationData)
+                  : Promise.resolve(),
               animate: () => data.payload.animate(animationData),
-              prepare: () => data.payload.prepare(animationData),
-              abort: data.payload.abort,
-              cleanup: data.payload.cleanup,
+              afterAnimate: () =>
+                data.payload.afterAnimate
+                  ? data.payload.afterAnimate(animationData)
+                  : Promise.resolve(),
+              abort: () => data.payload.abort && data.payload.abort(),
+              cleanup: () => data.payload.cleanup && data.payload.cleanup(),
             },
           };
         }
@@ -204,31 +212,16 @@ class Baba extends React.PureComponent<Props, State> {
         [[]]
       );
 
-      // Run through all the data and execute all prepare funcs.
-      // Wait for them to finish.
-      const preparationPromises = actions.map(
-        data => (data.action === Actions.animation ? data.payload.prepare() : Promise.resolve())
+      const beforeAnimatePromises = actions.map(
+        data =>
+          data.action === Actions.animation ? data.payload.beforeAnimate() : Promise.resolve()
       );
 
-      // Trigger each blocks animations, one block at a time.
-      return Promise.all(preparationPromises).then(() => {
+      return Promise.all(beforeAnimatePromises).then(() => {
+        // Trigger each blocks animations, one block at a time.
         return blocks
           .reduce<Promise<any>>(
-            (promise, block) =>
-              promise.then(() =>
-                Promise.all(
-                  block.map(anim =>
-                    anim.animate().then(() => {
-                      if (this.props.context) {
-                        // There is <BabaManager />, so we consider this to be managed.
-                        // We will cleanup everything at the very end.
-                      } else {
-                        anim.cleanup();
-                      }
-                    })
-                  )
-                )
-              ),
+            (promise, block) => promise.then(() => Promise.all(block.map(anim => anim.animate()))),
             Promise.resolve()
           )
           .then(() => {
@@ -245,12 +238,14 @@ class Baba extends React.PureComponent<Props, State> {
             // we're finished animating.
             this.props.context && this.props.context.onFinish();
 
-            if (this.props.context) {
-              // There is <BabaManager />, so we consider this to be managed.
-              // We will cleanup now.
-              blocks.forEach(block => block.forEach(anim => anim.cleanup()));
-            }
-          });
+            // Run through all after animates.
+            return blocks.reduce<Promise<any>>(
+              (promise, block) =>
+                promise.then(() => Promise.all(block.map(anim => anim.afterAnimate()))),
+              Promise.resolve()
+            );
+          })
+          .then(() => blocks.forEach(block => block.forEach(anim => anim.cleanup())));
       });
     }
 
