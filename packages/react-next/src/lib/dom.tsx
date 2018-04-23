@@ -74,3 +74,19 @@ export function calculateWindowCentre() {
     top: Math.ceil(window.innerHeight / 2),
   };
 }
+
+export function recalculateLocationFromScroll(
+  sizeLocation: GetElementSizeLocationReturnValue
+): GetElementSizeLocationReturnValue {
+  const { scrollTop, scrollLeft } = getDocumentScroll();
+  const scrollTopDiff = scrollTop - sizeLocation.raw.scrollTop;
+  const scrollLeftDiff = scrollLeft - sizeLocation.raw.scrollLeft;
+
+  return {
+    ...sizeLocation,
+    location: {
+      top: sizeLocation.location.top + scrollTopDiff,
+      left: sizeLocation.location.left + scrollLeftDiff,
+    },
+  };
+}

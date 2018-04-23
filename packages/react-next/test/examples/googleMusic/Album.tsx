@@ -1,13 +1,15 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import StarIcon from '@material-ui/icons/StarBorder';
+import Baba, { Move, CircleExpand, Collector } from '../../../src';
 import { Album as AlbumData } from './data';
+import { IconButton } from 'material-ui';
 
 interface Props extends AlbumData {
   emphasis?: boolean;
   onClick?: () => void;
-  innerRef?: any;
-  style?: any;
+  baba: string;
+  expand?: boolean;
 }
 
 interface RootProps {
@@ -17,10 +19,9 @@ interface RootProps {
 
 const Root = styled.div`
   position: relative;
-  width: ${(props: RootProps) => (props.emphasis ? '100%' : '200px')};
-  height: ${(props: RootProps) => (props.emphasis ? '100%' : '266px')};
+  width: ${(props: RootProps) => (props.emphasis ? '100%' : '250px')};
+  height: ${(props: RootProps) => (props.emphasis ? '100%' : '332px')};
   flex-shrink: 0;
-  cursor: pointer;
   grid-column: ${(props: RootProps) => (props.emphasis ? 'span 2' : '')};
   grid-row: ${(props: RootProps) => (props.emphasis ? 'span 2' : '')};
   background: ${(props: RootProps) => props.color || ''};
@@ -31,15 +32,19 @@ const BackgroundImage = styled.img`
   top: 0;
   left: 0;
   right: 0;
+  cursor: pointer;
   width: 100%;
   bottom: ${(props: RootProps) => (props.emphasis ? '130px' : '70px')};
 `;
 
 const Text = styled.div`
   display: grid;
-  grid-template:
-    'title star' auto
-    'context star' auto;
+  grid-template: ${(props: RootProps) =>
+    props.emphasis
+      ? `'title star' auto
+    'context star' auto`
+      : `'title star' auto
+    `};
   box-sizing: border-box;
   position: absolute;
   bottom: 0;
@@ -57,6 +62,9 @@ const Title = styled.div`
   grid-area: title;
   font-weight: 400;
   letter-spacing: 0.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const Subtitle = styled.div`
@@ -84,28 +92,43 @@ const Album: React.StatelessComponent<Props> = ({
   emphasis,
   albumArt,
   color,
-  name,
   artist,
   onClick,
-  style,
-  innerRef,
-}) => (
-  <Root emphasis={emphasis} color={color} onClick={onClick} style={style} innerRef={innerRef}>
-    <BackgroundImage src={albumArt} />
-    <Text>
-      <Title emphasis={emphasis}>
-        {name}
+  name,
+  baba,
+  expand,
+}) => {
+  const Expand = expand ? CircleExpand : Collector;
 
-        <Subtitle>{artist}</Subtitle>
-      </Title>
+  return (
+    <Root emphasis={emphasis} color={color}>
+      <Baba name={baba}>
+        <Expand background={color}>
+          <Move delay={expand ? 100 : 0}>
+            {({ ref, style }) => (
+              <BackgroundImage onClick={onClick} src={albumArt} style={style} innerRef={ref} />
+            )}
+          </Move>
+        </Expand>
+      </Baba>
 
-      <StarContainer emphasis={emphasis}>
-        <StarIcon />
-      </StarContainer>
+      <Text emphasis={emphasis}>
+        <Title emphasis={emphasis}>
+          {name}
 
-      {emphasis && <Context>Recently added</Context>}
-    </Text>
-  </Root>
-);
+          <Subtitle>{artist}</Subtitle>
+        </Title>
+
+        <StarContainer emphasis={emphasis}>
+          <IconButton color="inherit" aria-label="Menu">
+            <StarIcon />
+          </IconButton>
+        </StarContainer>
+
+        {emphasis && <Context>Recently added</Context>}
+      </Text>
+    </Root>
+  );
+};
 
 export default Album;

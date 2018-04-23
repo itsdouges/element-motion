@@ -101,6 +101,7 @@ class Baba extends React.PureComponent<Props, State> {
       this.setState({
         shown: true,
       });
+
       this.store();
 
       // If a BabaManager is a parent somewhere, notify them that
@@ -141,14 +142,20 @@ class Baba extends React.PureComponent<Props, State> {
     // If there is only a Baba target and no animations, data
     // will be undefined, which means there are no animations to store.
     if (this.data) {
-      childrenStore.set(this.props.name, {
-        ...getElementSizeLocation(this.element as HTMLElement),
-        element: this.element as HTMLElement,
-        render: this.renderChildren,
-        data: this.data,
-      });
+      // If we don't delay the sizes returned can be 0 for elements
+      // that need the their parents widths and heights to know their sizes.
+      window.setTimeout(() => {
+        requestAnimationFrame(() => {
+          childrenStore.set(this.props.name, {
+            ...getElementSizeLocation(this.element as HTMLElement),
+            element: this.element as HTMLElement,
+            render: this.renderChildren,
+            data: this.data,
+          });
 
-      this.hasStoredBefore = true;
+          this.hasStoredBefore = true;
+        });
+      }, 14);
     }
   }
 

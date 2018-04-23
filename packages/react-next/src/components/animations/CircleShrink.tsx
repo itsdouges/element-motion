@@ -54,7 +54,6 @@ export default class CircleShrink extends React.Component<Props> {
 
         this.renderAnimation = (at?: number) => {
           return new Promise(resolve => {
-            console.log('rendering');
             unstable_renderSubtreeIntoContainer(
               data.caller,
               <SimpleKeyframe

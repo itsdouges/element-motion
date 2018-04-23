@@ -2,6 +2,7 @@ import * as React from 'react';
 import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
 import Collecter, { CommonProps, AnimationCallback, Data, Actions } from '../Collector';
 import * as math from '../../lib/math';
+import { recalculateLocationFromScroll } from '../../lib/dom';
 import noop from '../../lib/noop';
 import SimpleTween from '../SimpleTween';
 
@@ -27,10 +28,11 @@ export default class Move extends React.Component<Props> {
   };
 
   prepare: AnimationCallback = data => {
-    const fromEndXOffset = data.toTarget.location.left - data.fromTarget.location.left;
-    const fromEndYOffset = data.toTarget.location.top - data.fromTarget.location.top;
-    const toStartXOffset = data.fromTarget.location.left - data.toTarget.location.left;
-    const toStartYOffset = data.fromTarget.location.top - data.toTarget.location.top;
+    const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
+    const fromEndXOffset = data.toTarget.location.left - fromTargetSizeLocation.location.left;
+    const fromEndYOffset = data.toTarget.location.top - fromTargetSizeLocation.location.top;
+    const toStartXOffset = fromTargetSizeLocation.location.left - data.toTarget.location.left;
+    const toStartYOffset = fromTargetSizeLocation.location.top - data.toTarget.location.top;
     const elementToMountChildren = document.createElement('div');
     const duration = this.props.duration as number;
     const noTransform = 'translate3d(0, 0, 0) scale3d(1, 1, 1)';
@@ -52,7 +54,7 @@ export default class Move extends React.Component<Props> {
             start={start}
             duration={this.props.duration as number}
             from={{
-              ...data.fromTarget.location,
+              ...fromTargetSizeLocation.location,
               ...from,
               transform: noTransform,
               opacity: 1,
@@ -61,10 +63,10 @@ export default class Move extends React.Component<Props> {
             to={{
               transform: `translate3d(${fromEndXOffset}px, ${fromEndYOffset}px, 0) scale3d(${math.percentageDifference(
                 data.toTarget.size.width,
-                data.fromTarget.size.width
+                fromTargetSizeLocation.size.width
               )}, ${math.percentageDifference(
                 data.toTarget.size.height,
-                data.fromTarget.size.height
+                fromTargetSizeLocation.size.height
               )}, 1)`,
               opacity: 0,
             }}
@@ -75,6 +77,8 @@ export default class Move extends React.Component<Props> {
               style: {
                 // Elminate any margins so they don't affect the transition.
                 margin: 0,
+                height: `${fromTargetSizeLocation.size.height}px`,
+                width: `${fromTargetSizeLocation.size.width}px`,
               },
             })}
           </SimpleTween>
@@ -89,10 +93,10 @@ export default class Move extends React.Component<Props> {
               zIndex: 19999,
               opacity: 0,
               transform: `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
-                data.fromTarget.size.width,
+                fromTargetSizeLocation.size.width,
                 data.toTarget.size.width
               )}, ${math.percentageDifference(
-                data.fromTarget.size.height,
+                fromTargetSizeLocation.size.height,
                 data.toTarget.size.height
               )}, 1)`,
             }}
@@ -107,6 +111,8 @@ export default class Move extends React.Component<Props> {
               style: {
                 // Elminate any margins so they don't affect the transition.
                 margin: 0,
+                height: `${data.toTarget.size.height}px`,
+                width: `${data.toTarget.size.width}px`,
               },
             })}
           </SimpleTween>

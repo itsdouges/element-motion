@@ -10,6 +10,7 @@ interface RootProps {
 }
 
 const Root = styled.div`
+  position: relative;
   width: 100px;
   height: 100px;
   background: green;
@@ -29,6 +30,10 @@ const BigRightRoot = RightRoot.extend`
   height: 400px;
 `;
 
+const MediumContainer = styled.div`
+  height: 500px;
+`;
+
 const LongContainer = styled.div`
   height: 2000px;
 `;
@@ -44,6 +49,19 @@ const Circle = RightRoot.extend`
 
 const Rectangle = RightRoot.extend`
   width: 200px;
+`;
+
+const SquareContainer = styled.div`
+  width: 150px;
+  height: 150px;
+  position: relative;
+`;
+
+const FillSpace = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: red;
 `;
 
 storiesOf('Move', module)
@@ -171,6 +189,55 @@ storiesOf('Move', module)
             <>
               <Padding data-yolo />
               <Baba name="square-to-offscreen-big-square-with-margin" key="2">
+                <Move>
+                  {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
+                </Move>
+              </Baba>
+            </>
+          )}
+        </>
+      )}
+    </Toggler>
+  ))
+  .add('indescriminate size to square', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <>
+          <StickyButton onClick={toggle}>toggle</StickyButton>
+          {shown ? (
+            <SquareContainer>
+              <Baba name="indescriminate-size-to-square" key="1">
+                <Move>{({ ref, style }) => <FillSpace style={style} innerRef={ref} />}</Move>
+              </Baba>
+            </SquareContainer>
+          ) : (
+            <>
+              <Baba name="indescriminate-size-to-square" key="2">
+                <Move>
+                  {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
+                </Move>
+              </Baba>
+            </>
+          )}
+        </>
+      )}
+    </Toggler>
+  ))
+  .add('long scroll to no scroll', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <>
+          <StickyButton onClick={toggle}>toggle</StickyButton>
+          {!shown ? (
+            <LongContainer>
+              <MediumContainer />
+              <Baba name="indescriminate-size-to-square" key="1">
+                <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
+              </Baba>
+            </LongContainer>
+          ) : (
+            <>
+              <Baba name="indescriminate-size-to-square" key="2">
                 <Move>
                   {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
                 </Move>

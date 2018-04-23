@@ -10,9 +10,9 @@ const BigContainer = styled.div`
 `;
 
 storiesOf('GoogleMusic/Components/Album', module)
-  .add('small', () => <Album {...data[0]} emphasis={false} />)
+  .add('small', () => <Album {...data[0]} baba="" emphasis={false} />)
   .add('large', () => (
     <BigContainer>
-      <Album emphasis {...data[0]} />
+      <Album emphasis baba="" {...data[0]} />
     </BigContainer>
   ));

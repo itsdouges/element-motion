@@ -14,7 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreVert from '@material-ui/icons/MoreVert';
 import Album from './googleMusic/Album';
-import Baba, { Move, BabaManager, CircleShrink, CircleExpand, Wait, Collector } from '../../src';
+import Baba, { Move, BabaManager, CircleShrink, Wait, Collector } from '../../src';
 import data from './googleMusic/data';
 
 const BigRoot = styled.div`
@@ -96,18 +96,14 @@ class MultipleTargets extends React.Component<{
   }
 
   renderItems() {
-    const Expand = this.props.expand ? CircleExpand : Collector;
-
     const items = data.map((data, index) => (
-      <Baba name={`${this.getKey()}-${index}`} key={index}>
-        <Expand background={data.color}>
-          <Move delay={this.props.expand ? 100 : 0}>
-            {({ ref, style }) => (
-              <Album onClick={() => this.select(index)} style={style} innerRef={ref} {...data} />
-            )}
-          </Move>
-        </Expand>
-      </Baba>
+      <Album
+        expand={this.props.expand}
+        baba={`${this.getKey()}-${index}`}
+        onClick={() => this.select(index)}
+        key={index}
+        {...data}
+      />
     ));
 
     return (
@@ -151,7 +147,7 @@ class MultipleTargets extends React.Component<{
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <AppBar position="fixed" style={{ zIndex: 40000 }}>
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton color="inherit" aria-label="Menu" style={{ marginRight: '10px' }}>
               <MenuIcon />

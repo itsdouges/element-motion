@@ -33,7 +33,7 @@ storiesOf('CircleExpand', module).add('from square', () => (
         {!shown ? (
           <Container>
             <Baba name="circle-expand-square" key="1">
-              <CircleExpand background="blue">
+              <CircleExpand background="green">
                 {({ ref, style }) => <Root style={style} innerRef={ref} />}
               </CircleExpand>
             </Baba>
