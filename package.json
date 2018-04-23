@@ -13,10 +13,13 @@
     "test": "jest",
     "codecov": "echo \"not implemented\"",
     "preversion": "npm test",
-    "version": "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && node ./scripts/deploy",
+    "version":
+      "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && node ./scripts/deploy",
     "postversion": "git push && git push --tags",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "fix-duplicates":
+      "yarn-tools fix-duplicates yarn.lock > fixed-yarn.lock && rm yarn.lock && mv fixed-yarn.lock yarn.lock && yarn install"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.1",
@@ -46,24 +49,16 @@
     "version-changelog": "^2.1.0",
     "webpack": "^4.5.0",
     "webpack-dev-server": "^2.6.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "yarn-tools": "^0.4.0"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
     "setupTestFrameworkScriptFile": "<rootDir>test/setup.js",
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
   }
 }

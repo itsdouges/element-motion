@@ -13,6 +13,12 @@ module.exports = {
         include: path.resolve(__dirname, '../packages'),
         exclude: ['node_modules'],
       },
+      {
+        test: /\.(jpg|gif|png)$/,
+        loader: 'file-loader',
+        include: path.resolve(__dirname, '../packages'),
+        exclude: ['node_modules'],
+      },
     ],
   },
 };

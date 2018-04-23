@@ -6,6 +6,8 @@
   "license": "MIT",
   "scripts": {},
   "devDependencies": {
+    "@material-ui/icons": "^1.0.0-beta.42",
+    "material-ui": "^1.0.0-beta.42",
     "styled-components": "^3.2.5"
   }
 }
