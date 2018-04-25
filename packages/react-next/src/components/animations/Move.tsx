@@ -3,8 +3,9 @@ import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'rea
 import Collecter, { CommonProps, AnimationCallback, Data, Actions } from '../Collector';
 import * as math from '../../lib/math';
 import { recalculateLocationFromScroll } from '../../lib/dom';
-import noop from '../../lib/noop';
 import SimpleTween from '../SimpleTween';
+
+const noop = () => {};
 
 interface Props extends CommonProps {
   duration?: number;
