@@ -16,44 +16,77 @@ const Root = styled.div`
 `;
 
 interface BackgroundProps {
-  background: string;
+  background?: string;
 }
 
 const Container = styled.div`
   display: flex;
+  background: ${(props: BackgroundProps) => props.background || ''};
   align-items: center;
   justify-content: center;
-  background: ${(props: BackgroundProps) => props.background};
-  height: 100vh;
+  flex-direction: column;
+  min-height: 100vh;
 `;
 
 const NoMarginBody = styled(BodyClassName)`
   margin: 0;
 `;
 
-storiesOf('CircleShrink', module).add('to square', () => (
-  <Toggler>
-    {({ shown, toggle }) => (
-      <div>
-        <NoMarginBody className="" />
+const Padding = styled.div`
+  height: 500px;
+  flex-shrink: 0;
+`;
 
-        <StickyButton onClick={toggle}>toggle</StickyButton>
-        {!shown ? (
-          <Container background="green">
-            <Baba name="circle-shrink-square" key="1">
-              <CircleShrink background="green">
-                {({ ref, style }) => <div style={style} ref={ref} />}
-              </CircleShrink>
-            </Baba>
-          </Container>
-        ) : (
-          <Container background="white">
-            <Baba name="circle-shrink-square" key="2">
-              {({ ref, style }) => <Root style={style} innerRef={ref} />}
-            </Baba>
-          </Container>
-        )}
-      </div>
-    )}
-  </Toggler>
-));
+storiesOf('CircleShrink', module)
+  .add('to square', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <NoMarginBody className="" />
+
+          <StickyButton onClick={toggle}>toggle</StickyButton>
+          {!shown ? (
+            <Container background="green">
+              <Baba name="circle-shrink-square" key="1">
+                <CircleShrink background="green">
+                  {({ ref, style }) => <div style={style} ref={ref} />}
+                </CircleShrink>
+              </Baba>
+            </Container>
+          ) : (
+            <Container background="white">
+              <Baba name="circle-shrink-square" key="2">
+                {({ ref, style }) => <Root style={style} innerRef={ref} />}
+              </Baba>
+            </Container>
+          )}
+        </div>
+      )}
+    </Toggler>
+  ))
+  .add('to page with different scroll', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <StickyButton onClick={toggle}>toggle</StickyButton>
+          {!shown ? (
+            <Container background="green">
+              <Padding />
+              <Baba name="page-with-different-scroll-shrink" key="1">
+                <CircleShrink background="green">
+                  {({ ref, style }) => <Root style={style} innerRef={ref} />}
+                </CircleShrink>
+              </Baba>
+              <Padding />
+            </Container>
+          ) : (
+            <Container>
+              <Baba name="page-with-different-scroll-shrink" key="2">
+                {({ ref, style }) => <Root style={style} innerRef={ref} />}
+              </Baba>
+            </Container>
+          )}
+        </div>
+      )}
+    </Toggler>
+  ));

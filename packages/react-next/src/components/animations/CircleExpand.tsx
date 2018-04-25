@@ -2,7 +2,11 @@ import * as React from 'react';
 import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
 import Collecter, { CommonProps, AnimationCallback, Data, Actions } from '../Collector';
 import { calculateHypotenuse } from '../../lib/math';
-import { calculateWindowCentre, calculateElementCenterInViewport } from '../../lib/dom';
+import {
+  calculateWindowCentre,
+  calculateElementCenterInViewport,
+  recalculateLocationFromScroll,
+} from '../../lib/dom';
 import SimpleKeyframe from '../SimpleKeyframe';
 
 interface Props extends CommonProps {
@@ -44,12 +48,19 @@ export default class CircleExpand extends React.Component<Props> {
   };
 
   animate: AnimationCallback = data => {
+    // Scroll could have changed between unmount and this prepare step, let's recalculate
+    // just in case.
+    const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
+
     return new Promise(resolve => {
       window.requestAnimationFrame(() => {
         const duration = this.props.duration as number;
-        const minSize = Math.min(data.fromTarget.size.width, data.fromTarget.size.height);
-        const fromTargetHypotenuse = calculateHypotenuse(data.fromTarget.size);
-        const fromTargetCenterInViewport = calculateElementCenterInViewport(data.fromTarget);
+        const minSize = Math.min(
+          fromTargetSizeLocation.size.width,
+          fromTargetSizeLocation.size.height
+        );
+        const fromTargetHypotenuse = calculateHypotenuse(fromTargetSizeLocation.size);
+        const fromTargetCenterInViewport = calculateElementCenterInViewport(fromTargetSizeLocation);
         const viewportCenter = calculateWindowCentre();
         const windowHypotenuse = calculateHypotenuse({
           width: window.innerWidth,
@@ -71,11 +82,11 @@ export default class CircleExpand extends React.Component<Props> {
               <SimpleKeyframe
                 style={{
                   left:
-                    data.fromTarget.location.left -
-                    (fromTargetHypotenuse - data.fromTarget.size.width) / 2,
+                    fromTargetSizeLocation.location.left -
+                    (fromTargetHypotenuse - fromTargetSizeLocation.size.width) / 2,
                   top:
-                    data.fromTarget.location.top -
-                    (fromTargetHypotenuse - data.fromTarget.size.height) / 2,
+                    fromTargetSizeLocation.location.top -
+                    (fromTargetHypotenuse - fromTargetSizeLocation.size.height) / 2,
                   width: fromTargetHypotenuse,
                   height: fromTargetHypotenuse,
                   borderRadius: '50%',

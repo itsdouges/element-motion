@@ -29,6 +29,8 @@ export default class Move extends React.Component<Props> {
   };
 
   prepare: AnimationCallback = data => {
+    // Scroll could have changed between unmount and this prepare step, let's recalculate
+    // just in case.
     const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
     const fromEndXOffset = data.toTarget.location.left - fromTargetSizeLocation.location.left;
     const fromEndYOffset = data.toTarget.location.top - fromTargetSizeLocation.location.top;

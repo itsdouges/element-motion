@@ -4,6 +4,10 @@ import { storiesOf } from '@storybook/react';
 import Baba, { Move } from '../../src';
 import Toggler from '../Toggler';
 import StickyButton from '../StickyButton';
+import createScrollStore from '../RestoreScrollOnMount';
+import ScrollTopOnMount from '../ScrollTopOnMount';
+
+const RestoreScrollOnMount = createScrollStore();
 
 interface RootProps {
   margin?: boolean;
@@ -223,13 +227,14 @@ storiesOf('Move', module)
       )}
     </Toggler>
   ))
-  .add('long scroll to no scroll', () => (
+  .add('long page that saves scroll position', () => (
     <Toggler>
       {({ shown, toggle }) => (
         <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <LongContainer>
+              <RestoreScrollOnMount />
               <MediumContainer />
               <Baba name="long-scroll-to-no-scroll" key="1">
                 <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
@@ -237,6 +242,7 @@ storiesOf('Move', module)
             </LongContainer>
           ) : (
             <div>
+              <ScrollTopOnMount />
               <Baba name="long-scroll-to-no-scroll" key="2">
                 <Move>
                   {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}

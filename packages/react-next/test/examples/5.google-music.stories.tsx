@@ -16,6 +16,10 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import Album from './googleMusic/Album';
 import Baba, { Move, BabaManager, CircleShrink, Wait, Collector } from '../../src';
 import data from './googleMusic/data';
+import createScrollStore from '../RestoreScrollOnMount';
+import ScrollTopOnMount from '../ScrollTopOnMount';
+
+const RestoreScrollOnMount = createScrollStore();
 
 const BigRoot = styled.div`
   width: 500px;
@@ -110,6 +114,7 @@ class MultipleTargets extends React.Component<{
       <BabaManager key="b">
         {props => (
           <Container background="#212121" {...props}>
+            <RestoreScrollOnMount />
             <NoMarginBody className="" />
             <ItemList>{items}</ItemList>
           </Container>
@@ -127,6 +132,8 @@ class MultipleTargets extends React.Component<{
         {props => (
           <Container background={this.props.expand ? 'purple' : 'white'} {...props}>
             <NoMarginBody className="" />
+            <ScrollTopOnMount />
+
             <Baba name={`${this.getKey()}-${index}`}>
               <Move>
                 <WaitFor>
