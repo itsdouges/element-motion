@@ -34,7 +34,7 @@ const NoMarginBody = styled(BodyClassName)`
 storiesOf('CircleShrink', module).add('to square', () => (
   <Toggler>
     {({ shown, toggle }) => (
-      <>
+      <div>
         <NoMarginBody className="" />
 
         <StickyButton onClick={toggle}>toggle</StickyButton>
@@ -53,7 +53,7 @@ storiesOf('CircleShrink', module).add('to square', () => (
             </Baba>
           </Container>
         )}
-      </>
+      </div>
     )}
   </Toggler>
 ));

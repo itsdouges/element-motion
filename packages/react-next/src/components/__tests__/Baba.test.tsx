@@ -54,24 +54,24 @@ describe('<Baba />', () => {
     };
   };
 
-  describe('storing DOM data when mounting', () => {
+  describe('storing DOM data when unmounting', () => {
     it('should store data in named key', () => {
-      const { mount } = shallowRender();
+      const { wrapper } = shallowRender();
 
-      mount();
+      wrapper.unmount();
 
       expect((childrenStore.set as jest.Mock).mock.calls[0][0]).toEqual('my-animation');
     });
 
     it('should store position data', () => {
-      const { mount, wrapper } = shallowRender();
+      const { wrapper } = shallowRender();
       const ref = {} as HTMLElement;
       const sizeLocation = { size: {}, location: {} };
       const { receiveRef } = wrapper.find(Collector).props();
       receiveRef(ref);
       (dom.getElementSizeLocation as jest.Mock).mockReturnValueOnce(sizeLocation);
 
-      mount();
+      wrapper.unmount();
 
       expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
         ...sizeLocation,
@@ -79,12 +79,12 @@ describe('<Baba />', () => {
     });
 
     it('should store ref', () => {
-      const { wrapper, mount } = shallowRender();
+      const { wrapper } = shallowRender();
       const ref = {} as HTMLElement;
       const { receiveRef } = wrapper.find(Collector).props();
       receiveRef(ref);
 
-      mount();
+      wrapper.unmount();
 
       expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
         element: ref,
@@ -92,12 +92,12 @@ describe('<Baba />', () => {
     });
 
     it('should store react node', () => {
-      const { wrapper, mount } = shallowRender();
+      const { wrapper } = shallowRender();
       const render = () => <div />;
       const { receiveRenderChildren } = wrapper.find(Collector).props();
       receiveRenderChildren(render);
 
-      mount();
+      wrapper.unmount();
 
       expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
         render,
@@ -115,24 +115,8 @@ describe('<Baba />', () => {
     });
   });
 
-  describe('updated props', () => {
-    it('should update store', () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>
-      );
-      stubAllReceivers(wrapper);
-      (childrenStore.set as jest.Mock).mockReset();
-
-      wrapper.setProps({});
-
-      expect(childrenStore.set as jest.Mock).toHaveBeenCalled();
-    });
-  });
-
   describe('cleanup', () => {
-    it('should clear out child store if pair isnt found in time', () => {
+    it('should clear out child store if a match isnt found in time', () => {
       const { wrapper, mount } = shallowRender();
       stubAllReceivers(wrapper);
       mount();

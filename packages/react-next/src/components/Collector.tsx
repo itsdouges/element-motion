@@ -120,7 +120,7 @@ export default class Collector extends React.Component<Props> {
             });
           }
 
-          throw new Error('Children is  guaranteed to be a function. Impossible condition.');
+          throw new Error('Children is guaranteed to be a function. Impossible condition.');
         }}
       </CollectContext.Consumer>
     );

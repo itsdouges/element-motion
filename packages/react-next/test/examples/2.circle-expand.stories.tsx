@@ -28,7 +28,7 @@ const BlueRoot = Root.extend`
 storiesOf('CircleExpand', module).add('from square', () => (
   <Toggler>
     {({ shown, toggle }) => (
-      <>
+      <div>
         <StickyButton onClick={toggle}>toggle</StickyButton>
         {!shown ? (
           <Container>
@@ -45,7 +45,7 @@ storiesOf('CircleExpand', module).add('from square', () => (
             </Baba>
           </Container>
         )}
-      </>
+      </div>
     )}
   </Toggler>
 ));

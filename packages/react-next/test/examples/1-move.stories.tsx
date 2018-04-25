@@ -68,7 +68,7 @@ storiesOf('Move', module)
   .add('square to square', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-square" key="1">
@@ -79,14 +79,14 @@ storiesOf('Move', module)
               <Move>{({ ref, style }) => <RightRoot style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ))
   .add('square to square with margin', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-square-margin" key="1">
@@ -97,14 +97,14 @@ storiesOf('Move', module)
               <Move>{({ ref, style }) => <RightRoot style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ))
   .add('square to big square', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-big-square" key="1">
@@ -115,14 +115,14 @@ storiesOf('Move', module)
               <Move>{({ ref, style }) => <BigRightRoot style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ))
   .add('square to rectangle', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-rectangle" key="1">
@@ -133,14 +133,14 @@ storiesOf('Move', module)
               <Move>{({ ref, style }) => <Rectangle margin style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ))
   .add('square to circle', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-circle" key="1">
@@ -151,7 +151,7 @@ storiesOf('Move', module)
               <Move>{({ ref, style }) => <Circle style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ))
@@ -161,12 +161,12 @@ storiesOf('Move', module)
         <LongContainer>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
-            <>
-              <Padding data-yolo />
+            <div>
+              <Padding data-big />
               <Baba name="offscreen-big-square-to-small-square" key="2">
                 <Move>{({ ref, style }) => <BigRightRoot style={style} innerRef={ref} />}</Move>
               </Baba>
-            </>
+            </div>
           ) : (
             <Baba name="offscreen-big-square-to-small-square" key="1">
               <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
@@ -179,30 +179,30 @@ storiesOf('Move', module)
   .add('square to offscreen big square with margin', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-offscreen-big-square-with-margin" key="1">
               <Move>{({ ref, style }) => <Root margin style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
-            <>
+            <div>
               <Padding data-yolo />
               <Baba name="square-to-offscreen-big-square-with-margin" key="2">
                 <Move>
                   {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
                 </Move>
               </Baba>
-            </>
+            </div>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ))
   .add('indescriminate size to square', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {shown ? (
             <SquareContainer>
@@ -211,40 +211,40 @@ storiesOf('Move', module)
               </Baba>
             </SquareContainer>
           ) : (
-            <>
+            <div>
               <Baba name="indescriminate-size-to-square" key="2">
                 <Move>
                   {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
                 </Move>
               </Baba>
-            </>
+            </div>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ))
   .add('long scroll to no scroll', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <LongContainer>
               <MediumContainer />
-              <Baba name="indescriminate-size-to-square" key="1">
+              <Baba name="long-scroll-to-no-scroll" key="1">
                 <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
               </Baba>
             </LongContainer>
           ) : (
-            <>
-              <Baba name="indescriminate-size-to-square" key="2">
+            <div>
+              <Baba name="long-scroll-to-no-scroll" key="2">
                 <Move>
                   {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
                 </Move>
               </Baba>
-            </>
+            </div>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ));

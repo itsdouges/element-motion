@@ -23,53 +23,6 @@ interface MappedAnimation {
 }
 type AnimationBlock = MappedAnimation[];
 
-/*
-  v1 API
-
-  EXAMPLE ONE - Single move animation.
-
-  Pass ref all the way up to Baba, collecting configuration up.
-
-  // This would move image1 over to image2 when this unmounts.
-  <Baba name="image1-to-image2">
-    <Move duration={300}>
-      {(ref) => <Image innerRef={ref} />}
-    </Move>
-  </Baba>
-
-  // This would move image2 over to image1 when this unmounts.
-  <Baba name="image1-to-image2">
-    <Move duration={150}>
-      {(ref) => <Image innerRef={ref} />}
-    </Move>
-  </Baba>
-
-  EXAMPLE TWO - Two animations with a wait.
-
-  // 1. move image1 over to image2
-  // 2. AT THE SAME TIME circle expand to cover viewport
-  <Baba name="image1-to-image2">
-    <CircleExpand duration={300} background="#3d7596">
-      <Move duration={150}>
-        {(ref) => <Image innerRef={ref} />}
-      </Move>
-    </CircleExpand>
-  </Baba>
-
-  // 1. move image1 over to image2
-  // 2. WAIT until other transitions are finished, then
-  // move shrink a circle from viewport to over image2
-  <Baba name="image1-to-image2">
-    <CircleExpand duration={300} background="#3d7596">
-      <Wait>
-        <Move duration={150}>
-          {(ref) => <Image innerRef={ref} />}
-        </Move>
-      </Wait>
-    </CircleExpand>
-  </Baba>
-*/
-
 export interface Props extends CommonProps, InjectedProps {
   name: string;
 }
@@ -87,7 +40,6 @@ class Baba extends React.PureComponent<Props, State> {
   element: HTMLElement | null;
   renderChildren: ChildrenAsFunction;
   data: Data[];
-  hasStoredBefore: boolean = false;
   cancelClear?: () => void;
 
   componentDidMount() {
@@ -102,8 +54,6 @@ class Baba extends React.PureComponent<Props, State> {
         shown: true,
       });
 
-      this.store();
-
       // If a BabaManager is a parent somewhere, notify them that
       // we're finished getting ready.
       this.props.context && this.props.context.onFinish();
@@ -113,25 +63,17 @@ class Baba extends React.PureComponent<Props, State> {
   }
 
   componentWillUnmount() {
+    this.store();
     this.unmounting = true;
     this.delayedClear();
   }
 
-  componentDidUpdate() {
-    // We've been updated. Let's store DOM data for later.
-    this.store();
-  }
-
   delayedClear() {
-    if (this.hasStoredBefore) {
-      const id = setTimeout(() => {
-        childrenStore.remove(this.props.name);
-      }, 50);
+    const id = setTimeout(() => {
+      childrenStore.remove(this.props.name);
+    }, 50);
 
-      return () => clearTimeout(id);
-    }
-
-    return () => {};
+    return () => clearTimeout(id);
   }
 
   store() {
@@ -139,23 +81,18 @@ class Baba extends React.PureComponent<Props, State> {
       return;
     }
 
-    // If there is only a Baba target and no animations, data
+    // If there is only a Baba target and no animation data
     // will be undefined, which means there are no animations to store.
     if (this.data) {
-      // If we don't delay the sizes returned can be 0 for elements
-      // that need the their parents widths and heights to know their sizes.
-      window.setTimeout(() => {
-        requestAnimationFrame(() => {
-          childrenStore.set(this.props.name, {
-            ...getElementSizeLocation(this.element as HTMLElement),
-            element: this.element as HTMLElement,
-            render: this.renderChildren,
-            data: this.data,
-          });
-
-          this.hasStoredBefore = true;
-        });
-      }, 14);
+      // NOTE: Currently in react 16.3 if the parent being unmounted is a Fragment
+      // there is a chance for sibling elements to be removed from the DOM first
+      // resulting in inaccurate calculations of location. Watch out!
+      childrenStore.set(this.props.name, {
+        ...getElementSizeLocation(this.element as HTMLElement),
+        element: this.element as HTMLElement,
+        render: this.renderChildren,
+        data: this.data,
+      });
     }
   }
 

@@ -38,7 +38,7 @@ storiesOf('Combined', module)
   .add('move expand', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <NoMarginBody className="" />
           <StickyButton onClick={toggle}>toggle</StickyButton>
 
@@ -65,14 +65,14 @@ storiesOf('Combined', module)
               )}
             </BabaManager>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ))
   .add('move shrink', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <NoMarginBody className="" />
           <StickyButton onClick={toggle}>toggle</StickyButton>
 
@@ -103,14 +103,14 @@ storiesOf('Combined', module)
               )}
             </BabaManager>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ))
   .add('move expand shrink', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <>
+        <div>
           <NoMarginBody className="" />
           <StickyButton onClick={toggle}>toggle</StickyButton>
 
@@ -145,7 +145,7 @@ storiesOf('Combined', module)
               )}
             </BabaManager>
           )}
-        </>
+        </div>
       )}
     </Toggler>
   ));
