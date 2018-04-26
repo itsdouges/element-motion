@@ -89,9 +89,13 @@ const Actions = styled.div`
   right: 12px;
 `;
 
+const SongNumber = styled.span`
+  margin-right: 20px;
+`;
+
 const Page = styled(Card)`
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 `;
 
 export default class AlbumDetails extends React.Component<Props> {
@@ -159,7 +163,7 @@ export default class AlbumDetails extends React.Component<Props> {
               {songs.map((song, index) => (
                 <TableRow>
                   <TableCell>
-                    {index} {song.name}
+                    <SongNumber>{index + 1}</SongNumber> {song.name}
                   </TableCell>
                   <TableCell>{artist}</TableCell>
                   <TableCell numeric>{song.time}</TableCell>
