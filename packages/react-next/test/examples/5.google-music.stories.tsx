@@ -13,40 +13,37 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreVert from '@material-ui/icons/MoreVert';
+import BackIcon from '@material-ui/icons/ArrowBack';
 import Album from './googleMusic/Album';
-import Baba, { Move, BabaManager, CircleShrink, Wait, Collector } from '../../src';
+import { BabaManager } from '../../src';
 import data from './googleMusic/data';
 import createScrollStore from '../RestoreScrollOnMount';
 import ScrollTopOnMount from '../ScrollTopOnMount';
+import AlbumDetails from './googleMusic/AlbumDetails';
 
 const RestoreScrollOnMount = createScrollStore();
-
-const BigRoot = styled.div`
-  width: 500px;
-  height: 300px;
-  background: blue;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  :after {
-    content: 'click me';
-    color: white;
-  }
-`;
 
 interface BackgroundProps {
   background: string;
 }
 
 const Container = styled.div`
-  padding: 186px 0 120px;
+  padding-top: 66px;
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: ${(props: BackgroundProps) => props.background};
+`;
+
+const DetailsContainer = Container.extend`
+  z-index: 1111;
+  position: absolute;
+  top: 0;
+  min-height: 100vh;
+  left: 0;
+  right: 0;
 `;
 
 const ItemList = styled.div`
@@ -59,6 +56,19 @@ const ItemList = styled.div`
 const NoMarginBody = styled(BodyClassName)`
   margin: 0;
   background: #212121;
+`;
+
+const FixedBg = styled.div`
+  position: fixed;
+  background: ${(props: BackgroundProps) => props.background};
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position-y: -110px;
+  background-repeat: no-repeat;
 `;
 
 const theme = createMuiTheme({
@@ -124,28 +134,46 @@ class MultipleTargets extends React.Component<{
   }
 
   renderDetails(index?: number) {
-    const Shrink = this.props.shrink ? CircleShrink : Collector;
-    const WaitFor = this.props.wait ? Wait : Collector;
+    const hero = index && data[index].heroBg;
 
     return (
       <BabaManager key="c">
         {props => (
-          <Container background={this.props.expand ? 'purple' : 'white'} {...props}>
+          <DetailsContainer background="" {...props}>
+            <FixedBg
+              background={this.props.expand && hero ? `url(${hero})` : data[index || 0].color}
+            />
+            <AppBar position="fixed" style={{ background: 'transparent', boxShadow: 'none' }}>
+              <Toolbar>
+                <IconButton
+                  color="inherit"
+                  aria-label="Menu"
+                  style={{ marginRight: '10px' }}
+                  onClick={() => this.select()}
+                >
+                  <BackIcon />
+                </IconButton>
+
+                <IconButton color="inherit" aria-label="Menu" style={{ marginLeft: 'auto' }}>
+                  <SearchIcon />
+                </IconButton>
+
+                <IconButton color="inherit" aria-label="Menu">
+                  <MoreVert />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+
             <NoMarginBody className="" />
             <ScrollTopOnMount />
 
-            <Baba name={`${this.getKey()}-${index}`}>
-              <Move>
-                <WaitFor>
-                  <Shrink background="purple">
-                    {({ ref, style }) => (
-                      <BigRoot onClick={() => this.select()} style={style} innerRef={ref} />
-                    )}
-                  </Shrink>
-                </WaitFor>
-              </Move>
-            </Baba>
-          </Container>
+            <AlbumDetails
+              baba={`${this.getKey()}-${index}`}
+              shrink={!!this.props.shrink}
+              wait={!!this.props.wait}
+              {...data[index || 0]}
+            />
+          </DetailsContainer>
         )}
       </BabaManager>
     );

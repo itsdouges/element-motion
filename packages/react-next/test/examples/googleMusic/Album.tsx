@@ -50,7 +50,7 @@ const Text = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  color: white;
+  color: #ffffffde;
   padding: 12px;
   font-family: Roboto, sans-serif;
   height: 25%;
