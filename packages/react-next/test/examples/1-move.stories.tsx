@@ -13,11 +13,10 @@ interface RootProps {
   margin?: boolean;
 }
 
-const Root = styled.div`
+const Root = styled.img`
   position: relative;
-  width: 100px;
-  height: 100px;
-  background: green;
+  width: 105px;
+  height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,13 +24,12 @@ const Root = styled.div`
 `;
 
 const RightRoot = Root.extend`
-  background-color: red;
   float: right;
 `;
 
 const BigRightRoot = RightRoot.extend`
-  width: 400px;
-  height: 400px;
+  width: 315px;
+  height: 480px;
 `;
 
 const MediumContainer = styled.div`
@@ -48,7 +46,6 @@ const Padding = styled.div`
 
 const Circle = RightRoot.extend`
   border-radius: 50%;
-  background-color: blue;
 `;
 
 const Rectangle = RightRoot.extend`
@@ -56,19 +53,18 @@ const Rectangle = RightRoot.extend`
 `;
 
 const SquareContainer = styled.div`
-  width: 150px;
-  height: 150px;
+  width: 105px;
+  height: 160px;
   position: relative;
 `;
 
-const FillSpace = styled.div`
+const FillSpace = styled.img`
   position: absolute;
   height: 100%;
   width: 100%;
-  background: red;
 `;
 
-storiesOf('Move', module)
+storiesOf('Animations/Move', module)
   .add('square to square', () => (
     <Toggler>
       {({ shown, toggle }) => (
@@ -76,11 +72,19 @@ storiesOf('Move', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-square" key="1">
-              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
             </Baba>
           ) : (
             <Baba name="square-to-square" key="2">
-              <Move>{({ ref, style }) => <RightRoot style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <RightRoot src={require('./images/female.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
             </Baba>
           )}
         </div>
@@ -94,11 +98,24 @@ storiesOf('Move', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-square-margin" key="1">
-              <Move>{({ ref, style }) => <Root margin style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <Root
+                    src={require('./images/guess-who.png')}
+                    margin
+                    style={style}
+                    innerRef={ref}
+                  />
+                )}
+              </Move>
             </Baba>
           ) : (
             <Baba name="square-to-square-margin" key="2">
-              <Move>{({ ref, style }) => <RightRoot style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <RightRoot src={require('./images/male.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
             </Baba>
           )}
         </div>
@@ -112,11 +129,19 @@ storiesOf('Move', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-big-square" key="1">
-              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
             </Baba>
           ) : (
             <Baba name="square-to-big-square" key="2">
-              <Move>{({ ref, style }) => <BigRightRoot style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <BigRightRoot src={require('./images/female.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
             </Baba>
           )}
         </div>
@@ -130,11 +155,24 @@ storiesOf('Move', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-rectangle" key="1">
-              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
             </Baba>
           ) : (
             <Baba name="square-to-rectangle" key="2">
-              <Move>{({ ref, style }) => <Rectangle margin style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <Rectangle
+                    src={require('./images/male.png')}
+                    margin
+                    style={style}
+                    innerRef={ref}
+                  />
+                )}
+              </Move>
             </Baba>
           )}
         </div>
@@ -148,11 +186,19 @@ storiesOf('Move', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-circle" key="1">
-              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
             </Baba>
           ) : (
             <Baba name="square-to-circle" key="2">
-              <Move>{({ ref, style }) => <Circle style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <Circle src={require('./images/female.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
             </Baba>
           )}
         </div>
@@ -168,12 +214,24 @@ storiesOf('Move', module)
             <div>
               <Padding data-big />
               <Baba name="offscreen-big-square-to-small-square" key="2">
-                <Move>{({ ref, style }) => <BigRightRoot style={style} innerRef={ref} />}</Move>
+                <Move>
+                  {({ ref, style }) => (
+                    <BigRightRoot
+                      src={require('./images/guess-who.png')}
+                      style={style}
+                      innerRef={ref}
+                    />
+                  )}
+                </Move>
               </Baba>
             </div>
           ) : (
             <Baba name="offscreen-big-square-to-small-square" key="1">
-              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <Root src={require('./images/female2.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
             </Baba>
           )}
         </LongContainer>
@@ -187,14 +245,30 @@ storiesOf('Move', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-offscreen-big-square-with-margin" key="1">
-              <Move>{({ ref, style }) => <Root margin style={style} innerRef={ref} />}</Move>
+              <Move>
+                {({ ref, style }) => (
+                  <Root
+                    src={require('./images/guess-who.png')}
+                    margin
+                    style={style}
+                    innerRef={ref}
+                  />
+                )}
+              </Move>
             </Baba>
           ) : (
             <div>
               <Padding data-yolo />
               <Baba name="square-to-offscreen-big-square-with-margin" key="2">
                 <Move>
-                  {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
+                  {({ ref, style }) => (
+                    <BigRightRoot
+                      src={require('./images/female.png')}
+                      margin
+                      style={style}
+                      innerRef={ref}
+                    />
+                  )}
                 </Move>
               </Baba>
             </div>
@@ -208,17 +282,32 @@ storiesOf('Move', module)
       {({ shown, toggle }) => (
         <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
-          {shown ? (
+          {!shown ? (
             <SquareContainer>
               <Baba name="indescriminate-size-to-square" key="1">
-                <Move>{({ ref, style }) => <FillSpace style={style} innerRef={ref} />}</Move>
+                <Move>
+                  {({ ref, style }) => (
+                    <FillSpace
+                      src={require('./images/guess-who.png')}
+                      style={style}
+                      innerRef={ref}
+                    />
+                  )}
+                </Move>
               </Baba>
             </SquareContainer>
           ) : (
             <div>
               <Baba name="indescriminate-size-to-square" key="2">
                 <Move>
-                  {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
+                  {({ ref, style }) => (
+                    <BigRightRoot
+                      src={require('./images/male.png')}
+                      margin
+                      style={style}
+                      innerRef={ref}
+                    />
+                  )}
                 </Move>
               </Baba>
             </div>
@@ -237,7 +326,11 @@ storiesOf('Move', module)
               <RestoreScrollOnMount />
               <MediumContainer />
               <Baba name="long-scroll-to-no-scroll" key="1">
-                <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
+                <Move>
+                  {({ ref, style }) => (
+                    <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
+                  )}
+                </Move>
               </Baba>
             </LongContainer>
           ) : (
@@ -245,7 +338,14 @@ storiesOf('Move', module)
               <ScrollTopOnMount />
               <Baba name="long-scroll-to-no-scroll" key="2">
                 <Move>
-                  {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
+                  {({ ref, style }) => (
+                    <BigRightRoot
+                      src={require('./images/female2.png')}
+                      margin
+                      style={style}
+                      innerRef={ref}
+                    />
+                  )}
                 </Move>
               </Baba>
             </div>

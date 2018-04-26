@@ -179,7 +179,7 @@ class MultipleTargets extends React.Component<{
   }
 }
 
-storiesOf('GoogleMusic', module)
+storiesOf('Examples/GoogleMusic', module)
   .add('move', () => <MultipleTargets />)
   .add('move expand', () => <MultipleTargets expand />)
   .add('move expand shrink', () => <MultipleTargets expand shrink />)

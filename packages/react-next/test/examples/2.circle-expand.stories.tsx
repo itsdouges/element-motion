@@ -8,7 +8,7 @@ import StickyButton from '../StickyButton';
 const Root = styled.div`
   width: 100px;
   height: 100px;
-  background: green;
+  background: #db6f59;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,11 +29,7 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
-const BlueRoot = Root.extend`
-  background: blue;
-`;
-
-storiesOf('CircleExpand', module)
+storiesOf('Animations/CircleExpand', module)
   .add('from square', () => (
     <Toggler>
       {({ shown, toggle }) => (
@@ -42,7 +38,7 @@ storiesOf('CircleExpand', module)
           {!shown ? (
             <Container>
               <Baba name="circle-expand-square" key="1">
-                <CircleExpand background="green">
+                <CircleExpand background="#db6f59">
                   {({ ref, style }) => <Root style={style} innerRef={ref} />}
                 </CircleExpand>
               </Baba>
@@ -50,7 +46,7 @@ storiesOf('CircleExpand', module)
           ) : (
             <Container>
               <Baba name="circle-expand-square" key="2">
-                {({ ref, style }) => <BlueRoot style={style} innerRef={ref} />}
+                {({ ref, style }) => <div style={style} ref={ref} />}
               </Baba>
             </Container>
           )}
@@ -69,7 +65,7 @@ storiesOf('CircleExpand', module)
               <Padding />
 
               <Baba name="page-with-different-scroll" key="1">
-                <CircleExpand background="green">
+                <CircleExpand background="#db6f59">
                   {({ ref, style }) => <Root style={style} innerRef={ref} />}
                 </CircleExpand>
               </Baba>
@@ -80,7 +76,7 @@ storiesOf('CircleExpand', module)
             // Note the key. Without it things remove from DOM before we expect.
             <Container key="22">
               <Baba name="page-with-different-scroll" key="2">
-                {({ ref, style }) => <BlueRoot style={style} innerRef={ref} />}
+                {({ ref, style }) => <div style={style} ref={ref} />}
               </Baba>
             </Container>
           )}

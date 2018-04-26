@@ -6,16 +6,15 @@ import Baba, { Move, BabaManager, CircleShrink, CircleExpand, Wait } from '../..
 import Toggler from '../Toggler';
 import StickyButton from '../StickyButton';
 
-const Root = styled.div`
-  width: 100px;
-  height: 100px;
-  background: blue;
+const Root = styled.img`
+  width: 120px;
+  height: 160px;
+  box-sizing: border-box;
 `;
 
-const BigRoot = styled.div`
-  width: 400px;
-  height: 300px;
-  background: blue;
+const BigRoot = styled.img`
+  width: 360px;
+  height: 480px;
 `;
 
 interface BackgroundProps {
@@ -32,9 +31,10 @@ const Container = styled.div`
 
 const NoMarginBody = styled(BodyClassName)`
   margin: 0;
+  background-color: #db6f59;
 `;
 
-storiesOf('Combined', module)
+storiesOf('Examples/GuessWho', module)
   .add('move expand', () => (
     <Toggler>
       {({ shown, toggle }) => (
@@ -45,10 +45,18 @@ storiesOf('Combined', module)
           {!shown ? (
             <BabaManager key="c">
               {props => (
-                <Container background="white" {...props}>
+                <Container background="#db6f59" {...props}>
                   <Baba name="managed-move-and-expand" key="1">
-                    <CircleExpand background="green">
-                      <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
+                    <CircleExpand background="#fcce2e">
+                      <Move>
+                        {({ ref, style }) => (
+                          <Root
+                            src={require('./images/guess-who.png')}
+                            style={style}
+                            innerRef={ref}
+                          />
+                        )}
+                      </Move>
                     </CircleExpand>
                   </Baba>
                 </Container>
@@ -57,9 +65,11 @@ storiesOf('Combined', module)
           ) : (
             <BabaManager key="b">
               {props => (
-                <Container background="green" {...props}>
+                <Container background="#37a7e0" {...props}>
                   <Baba name="managed-move-and-expand" key="2">
-                    {({ ref, style }) => <BigRoot style={style} innerRef={ref} />}
+                    {({ ref, style }) => (
+                      <BigRoot src={require('./images/female2.png')} style={style} innerRef={ref} />
+                    )}
                   </Baba>
                 </Container>
               )}
@@ -79,12 +89,18 @@ storiesOf('Combined', module)
           {!shown ? (
             <BabaManager key="c">
               {props => (
-                <Container background="green" {...props}>
+                <Container background="#37a7e0" {...props}>
                   <Baba name="managed-move-then-shrink" key="1">
                     <Move>
                       <Wait>
-                        <CircleShrink background="green">
-                          {({ ref, style }) => <BigRoot style={style} innerRef={ref} />}
+                        <CircleShrink background="#fcce2e">
+                          {({ ref, style }) => (
+                            <BigRoot
+                              src={require('./images/guess-who.png')}
+                              style={style}
+                              innerRef={ref}
+                            />
+                          )}
                         </CircleShrink>
                       </Wait>
                     </Move>
@@ -93,15 +109,13 @@ storiesOf('Combined', module)
               )}
             </BabaManager>
           ) : (
-            <BabaManager key="b">
-              {props => (
-                <Container background="white" {...props}>
-                  <Baba name="managed-move-then-shrink" key="2">
-                    {({ ref, style }) => <Root style={style} innerRef={ref} />}
-                  </Baba>
-                </Container>
-              )}
-            </BabaManager>
+            <Container background="#db6f59">
+              <Baba name="managed-move-then-shrink" key="2">
+                {({ ref, style }) => (
+                  <Root src={require('./images/female.png')} style={style} innerRef={ref} />
+                )}
+              </Baba>
+            </Container>
           )}
         </div>
       )}
@@ -117,12 +131,18 @@ storiesOf('Combined', module)
           {shown ? (
             <BabaManager key="c">
               {props => (
-                <Container background="green" {...props}>
+                <Container background="#37a7e0" {...props}>
                   <Baba name="managed-altogether" key="1">
                     <Move>
                       <Wait>
-                        <CircleShrink background="green">
-                          {({ ref, style }) => <BigRoot style={style} innerRef={ref} />}
+                        <CircleShrink background="#37a7e0">
+                          {({ ref, style }) => (
+                            <BigRoot
+                              src={require('./images/female2.png')}
+                              style={style}
+                              innerRef={ref}
+                            />
+                          )}
                         </CircleShrink>
                       </Wait>
                     </Move>
@@ -133,11 +153,17 @@ storiesOf('Combined', module)
           ) : (
             <BabaManager key="b">
               {props => (
-                <Container background="white" {...props}>
+                <Container background="#db6f59" {...props}>
                   <Baba name="managed-altogether" key="2">
                     <Move delay={100}>
-                      <CircleExpand background="green">
-                        {({ ref, style }) => <Root style={style} innerRef={ref} />}
+                      <CircleExpand background="#fcce2e">
+                        {({ ref, style }) => (
+                          <Root
+                            src={require('./images/guess-who.png')}
+                            style={style}
+                            innerRef={ref}
+                          />
+                        )}
                       </CircleExpand>
                     </Move>
                   </Baba>

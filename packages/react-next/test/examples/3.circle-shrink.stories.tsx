@@ -9,7 +9,7 @@ import StickyButton from '../StickyButton';
 const Root = styled.div`
   width: 100px;
   height: 100px;
-  background: green;
+  background: #fcce2e;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,7 +37,7 @@ const Padding = styled.div`
   flex-shrink: 0;
 `;
 
-storiesOf('CircleShrink', module)
+storiesOf('Animations/CircleShrink', module)
   .add('to square', () => (
     <Toggler>
       {({ shown, toggle }) => (
@@ -46,9 +46,9 @@ storiesOf('CircleShrink', module)
 
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
-            <Container background="green">
+            <Container background="#fcce2e">
               <Baba name="circle-shrink-square" key="1">
-                <CircleShrink background="green">
+                <CircleShrink background="#fcce2e">
                   {({ ref, style }) => <div style={style} ref={ref} />}
                 </CircleShrink>
               </Baba>
@@ -68,12 +68,14 @@ storiesOf('CircleShrink', module)
     <Toggler>
       {({ shown, toggle }) => (
         <div>
+          <NoMarginBody className="" />
+
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
-            <Container background="green">
+            <Container background="#fcce2e">
               <Padding />
               <Baba name="page-with-different-scroll-shrink" key="1">
-                <CircleShrink background="green">
+                <CircleShrink background="#fcce2e">
                   {({ ref, style }) => <Root style={style} innerRef={ref} />}
                 </CircleShrink>
               </Baba>

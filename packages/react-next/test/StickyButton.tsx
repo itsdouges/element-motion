@@ -9,6 +9,7 @@ const StickyButton = styled.button`
   background-color: #ccc;
   border: 2px solid grey;
   padding: 8px;
+  z-index: 999;
 `;
 
 export default StickyButton;
