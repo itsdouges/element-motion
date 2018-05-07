@@ -1,5 +1,0 @@
---require ../../../test/setup ./test/setup
---reporter spec
---ui bdd
---compilers js:babel-core/register
---recursive

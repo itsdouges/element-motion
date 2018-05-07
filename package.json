@@ -17,7 +17,7 @@
       "version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md && node ./scripts/deploy",
     "postversion": "git push && git push --tags",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook --output-dir docs",
     "fix-duplicates":
       "yarn-tools fix-duplicates yarn.lock > fixed-yarn.lock && rm yarn.lock && mv fixed-yarn.lock yarn.lock && yarn install"
   },
