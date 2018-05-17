@@ -26,23 +26,24 @@ describe('<Baba />', () => {
     receiveRenderChildren(() => <div />);
   };
 
-  const createAnimationPayload = (animate: any): Data => ({
+  const buildAnimPayload = (animate: any): Data => ({
     action: Actions.animation,
     payload: {
+      beforeAnimate: () => Promise.resolve(),
       animate,
-      prepare: () => Promise.resolve(),
+      afterAnimate: () => Promise.resolve(),
       abort: () => {},
       cleanup: () => {},
     },
   });
 
-  const shallowRender = () => {
+  const shallowRender = (props = {}, disableLifecycleMethods = true) => {
     const wrapper = shallow(
-      <Baba name="my-animation">
+      <Baba name="my-animation" {...props}>
         <div />
       </Baba>,
       {
-        disableLifecycleMethods: true,
+        disableLifecycleMethods,
       }
     );
 
@@ -54,64 +55,129 @@ describe('<Baba />', () => {
     };
   };
 
-  describe('storing DOM data when unmounting', () => {
-    it('should store data in named key', () => {
-      const { wrapper } = shallowRender();
+  const shallowRenderWithLifecycle = (props = {}) => shallowRender(props, false);
 
-      wrapper.unmount();
+  describe('storing DOM data for later', () => {
+    describe('via "in" prop', () => {
+      it('should store data in named key', () => {
+        const { wrapper } = shallowRenderWithLifecycle({ in: true });
 
-      expect((childrenStore.set as jest.Mock).mock.calls[0][0]).toEqual('my-animation');
-    });
+        wrapper.setProps({ in: false });
 
-    it('should store position data', () => {
-      const { wrapper } = shallowRender();
-      const ref = {} as HTMLElement;
-      const sizeLocation = { size: {}, location: {} };
-      const { receiveRef } = wrapper.find(Collector).props();
-      receiveRef(ref);
-      (dom.getElementSizeLocation as jest.Mock).mockReturnValueOnce(sizeLocation);
+        expect((childrenStore.set as jest.Mock).mock.calls[0][0]).toEqual('my-animation');
+      });
 
-      wrapper.unmount();
+      it('should store position data', () => {
+        const { wrapper } = shallowRenderWithLifecycle({ in: true });
+        const ref = {} as HTMLElement;
+        const sizeLocation = { size: {}, location: {} };
+        const { receiveRef } = wrapper.find(Collector).props();
+        receiveRef(ref);
+        (dom.getElementSizeLocation as jest.Mock).mockReturnValueOnce(sizeLocation);
 
-      expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
-        ...sizeLocation,
+        wrapper.setProps({ in: false });
+
+        expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
+          ...sizeLocation,
+        });
+      });
+
+      it('should store ref', () => {
+        const { wrapper } = shallowRenderWithLifecycle({ in: true });
+        const ref = {} as HTMLElement;
+        const { receiveRef } = wrapper.find(Collector).props();
+        receiveRef(ref);
+
+        wrapper.setProps({ in: false });
+
+        expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
+          element: ref,
+        });
+      });
+
+      it('should store react node', () => {
+        const { wrapper } = shallowRenderWithLifecycle({ in: true });
+        const render = () => <div />;
+        const { receiveRenderChildren } = wrapper.find(Collector).props();
+        receiveRenderChildren(render);
+
+        wrapper.setProps({ in: false });
+
+        expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
+          render,
+        });
+      });
+
+      it('should show children immediately', () => {
+        const wrapper = shallow(
+          <Baba name="my-animation" in>
+            <div />
+          </Baba>
+        );
+
+        expect(wrapper.find(Collector).props().style).toEqual({ opacity: 1 });
       });
     });
 
-    it('should store ref', () => {
-      const { wrapper } = shallowRender();
-      const ref = {} as HTMLElement;
-      const { receiveRef } = wrapper.find(Collector).props();
-      receiveRef(ref);
+    describe('when unmounting', () => {
+      it('should store data in named key', () => {
+        const { wrapper } = shallowRender();
 
-      wrapper.unmount();
+        wrapper.unmount();
 
-      expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
-        element: ref,
+        expect((childrenStore.set as jest.Mock).mock.calls[0][0]).toEqual('my-animation');
       });
-    });
 
-    it('should store react node', () => {
-      const { wrapper } = shallowRender();
-      const render = () => <div />;
-      const { receiveRenderChildren } = wrapper.find(Collector).props();
-      receiveRenderChildren(render);
+      it('should store position data', () => {
+        const { wrapper } = shallowRender();
+        const ref = {} as HTMLElement;
+        const sizeLocation = { size: {}, location: {} };
+        const { receiveRef } = wrapper.find(Collector).props();
+        receiveRef(ref);
+        (dom.getElementSizeLocation as jest.Mock).mockReturnValueOnce(sizeLocation);
 
-      wrapper.unmount();
+        wrapper.unmount();
 
-      expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
-        render,
+        expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
+          ...sizeLocation,
+        });
       });
-    });
 
-    it('should show children immediately', () => {
-      const wrapper = shallow(
-        <Baba name="my-animation">
-          <div />
-        </Baba>
-      );
+      it('should store ref', () => {
+        const { wrapper } = shallowRender();
+        const ref = {} as HTMLElement;
+        const { receiveRef } = wrapper.find(Collector).props();
+        receiveRef(ref);
 
-      expect(wrapper.find(Collector).props().style).toEqual({ opacity: 1 });
+        wrapper.unmount();
+
+        expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
+          element: ref,
+        });
+      });
+
+      it('should store react node', () => {
+        const { wrapper } = shallowRender();
+        const render = () => <div />;
+        const { receiveRenderChildren } = wrapper.find(Collector).props();
+        receiveRenderChildren(render);
+
+        wrapper.unmount();
+
+        expect((childrenStore.set as jest.Mock).mock.calls[0][1]).toMatchObject({
+          render,
+        });
+      });
+
+      it('should show children immediately', () => {
+        const wrapper = shallow(
+          <Baba name="my-animation">
+            <div />
+          </Baba>
+        );
+
+        expect(wrapper.find(Collector).props().style).toEqual({ opacity: 1 });
+      });
     });
   });
 
@@ -136,69 +202,157 @@ describe('<Baba />', () => {
       (childrenStore.get as jest.Mock).mockReturnValue({ data });
     };
 
-    it('should pass through data to animation', async () => {
-      const { wrapper, mount } = shallowRender();
-      const animation = jest.fn().mockResolvedValue({});
-      const data: Data[] = [createAnimationPayload(animation)];
-      prepare(data);
+    describe('when "in" prop changes to true', () => {
+      it('should pass through data to animation', done => {
+        const onFinish = () => {
+          expect(animation.mock.calls[0][0].caller).toEqual(wrapper.instance());
+          done();
+        };
 
-      await mount();
+        const { wrapper } = shallowRenderWithLifecycle({ in: false, onFinish });
+        const animation = jest.fn().mockResolvedValue({});
+        const data: Data[] = [buildAnimPayload(animation)];
+        prepare(data);
 
-      expect(animation.mock.calls[0][0].caller).toEqual(wrapper.instance());
+        wrapper.setProps({ in: true });
+      });
+
+      it('should wait until animation has finished if a wait was found', async done => {
+        const onFinish = () => {
+          done();
+          expect(animation).toHaveBeenCalled();
+        };
+        const { wrapper } = shallowRenderWithLifecycle({ in: false, onFinish });
+        const longAnimation = () => Promise.resolve({});
+        const animation = jest.fn().mockResolvedValue({});
+        const data: Data[] = [
+          buildAnimPayload(longAnimation),
+          { action: Actions.wait },
+          buildAnimPayload(animation),
+        ];
+        prepare(data);
+
+        wrapper.setProps({ in: true });
+
+        await longAnimation();
+        expect(animation).not.toHaveBeenCalled();
+      });
+
+      it('should hide children when starting animating', () => {
+        const { wrapper } = shallowRenderWithLifecycle({ in: false });
+        const animation = jest.fn().mockResolvedValue({});
+        const data: Data[] = [buildAnimPayload(animation)];
+        prepare(data);
+
+        wrapper.setProps({ in: true });
+
+        expect(wrapper.find(Collector).props().style).toEqual({ opacity: 0 });
+      });
+
+      it('should show children when finished animating', async done => {
+        const onFinish = () => {
+          wrapper.update();
+          expect(wrapper.find(Collector).props().style).toEqual({ opacity: 1 });
+          done();
+        };
+        const { wrapper } = shallowRenderWithLifecycle({ in: false, onFinish });
+        const animation = jest.fn().mockResolvedValue({});
+        const data: Data[] = [buildAnimPayload(animation)];
+        prepare(data);
+
+        wrapper.setProps({ in: true });
+      });
+
+      it('should store data after finishing so the next target can pick it up', async done => {
+        const onFinish = () => {
+          expect(childrenStore.set as jest.Mock).toHaveBeenCalled();
+          done();
+        };
+        const { wrapper } = shallowRenderWithLifecycle({ in: false, onFinish });
+        const animation = jest.fn().mockResolvedValue({});
+        const data: Data[] = [buildAnimPayload(animation)];
+        prepare(data);
+        stubAllReceivers(wrapper);
+
+        wrapper.setProps({ in: true });
+      });
     });
 
-    it('should wait until animation has finished if a wait was found', async () => {
-      const { wrapper, mount } = shallowRender();
-      const longAnimation = () => Promise.resolve({});
-      const animation = jest.fn().mockResolvedValue({});
-      const data: Data[] = [
-        createAnimationPayload(longAnimation),
-        { action: Actions.wait },
-        createAnimationPayload(animation),
-      ];
-      prepare(data);
+    describe('when mounting', () => {
+      it('should pass through data to animation', done => {
+        const onFinish = () => {
+          expect(animation.mock.calls[0][0].caller).toEqual(wrapper.instance());
+          done();
+        };
+        const { wrapper, mount } = shallowRender({ onFinish });
+        const animation = jest.fn().mockResolvedValue({});
+        const data: Data[] = [buildAnimPayload(animation)];
+        prepare(data);
 
-      const promise = mount();
+        mount();
+      });
 
-      await longAnimation();
-      expect(animation).not.toHaveBeenCalled();
-      await promise;
-      expect(animation).toHaveBeenCalled();
-    });
+      it('should wait until animation has finished if a wait was found', async done => {
+        const onFinish = () => {
+          expect(animation).toHaveBeenCalled();
+          done();
+        };
+        const { wrapper, mount } = shallowRender({ onFinish });
+        const longAnimation = () => Promise.resolve({});
+        const animation = jest.fn().mockResolvedValue({});
+        const data: Data[] = [
+          buildAnimPayload(longAnimation),
+          { action: Actions.wait },
+          buildAnimPayload(animation),
+        ];
+        prepare(data);
 
-    it('should hide children when starting animating', () => {
-      const { wrapper, mount } = shallowRender();
-      const animation = jest.fn().mockResolvedValue({});
-      const data: Data[] = [createAnimationPayload(animation)];
-      prepare(data);
+        mount();
 
-      mount();
+        await longAnimation();
+        expect(animation).not.toHaveBeenCalled();
+      });
 
-      expect(wrapper.find(Collector).props().style).toEqual({ opacity: 0 });
-    });
+      it('should hide children when starting animating', () => {
+        const { wrapper, mount } = shallowRender();
+        const animation = jest.fn().mockResolvedValue({});
+        const data: Data[] = [buildAnimPayload(animation)];
+        prepare(data);
 
-    it('should show children when finished animating', async () => {
-      const { wrapper, mount } = shallowRender();
-      const animation = jest.fn().mockResolvedValue({});
-      const data: Data[] = [createAnimationPayload(animation)];
-      prepare(data);
+        mount();
 
-      await mount();
-      wrapper.update();
+        expect(wrapper.find(Collector).props().style).toEqual({ opacity: 0 });
+      });
 
-      expect(wrapper.find(Collector).props().style).toEqual({ opacity: 1 });
-    });
+      it('should show children when finished animating', () => {
+        const onFinish = () => {
+          wrapper.update();
 
-    it('should store data after finishing so the next target can pick it up', async () => {
-      const { wrapper, mount } = shallowRender();
-      const animation = jest.fn().mockResolvedValue({});
-      const data: Data[] = [createAnimationPayload(animation)];
-      prepare(data);
-      stubAllReceivers(wrapper);
+          expect(wrapper.find(Collector).props().style).toEqual({ opacity: 1 });
+        };
+        const { wrapper, mount } = shallowRender({ onFinish });
+        const animation = jest.fn().mockResolvedValue({});
+        const data: Data[] = [buildAnimPayload(animation)];
+        prepare(data);
 
-      await mount();
+        mount();
+      });
 
-      expect(childrenStore.set as jest.Mock).toHaveBeenCalled();
+      it('should store data after finishing so the next target can pick it up', done => {
+        const onFinish = () => {
+          expect(childrenStore.set as jest.Mock).toHaveBeenCalled();
+          done();
+        };
+
+        const { wrapper, mount } = shallowRender({ onFinish });
+        const animation = jest.fn().mockResolvedValue({});
+        const data: Data[] = [buildAnimPayload(animation)];
+        prepare(data);
+        stubAllReceivers(wrapper);
+
+        mount();
+        (childrenStore.set as jest.Mock).mockReset();
+      });
     });
   });
 });

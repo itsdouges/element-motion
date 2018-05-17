@@ -353,4 +353,144 @@ storiesOf('Animations/Move', module)
         </div>
       )}
     </Toggler>
+  ))
+  .add('one element never unmounting', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <StickyButton onClick={toggle}>toggle</StickyButton>
+          {!shown && (
+            <Baba name="one-already-mounted" key="1">
+              <Move>
+                {({ ref, style }) => (
+                  <Root
+                    src={require('./images/guess-who.png')}
+                    style={{ ...style, float: 'left' }}
+                    innerRef={ref}
+                  />
+                )}
+              </Move>
+            </Baba>
+          )}
+
+          <Baba name="one-already-mounted" key="2" in={shown}>
+            <Move>
+              {({ ref, style }) => (
+                <RightRoot
+                  src={require('./images/female.png')}
+                  style={{
+                    ...style,
+                  }}
+                  innerRef={ref}
+                />
+              )}
+            </Move>
+          </Baba>
+        </div>
+      )}
+    </Toggler>
+  ))
+  .add('one element never unmounting reversed', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <StickyButton onClick={toggle}>toggle</StickyButton>
+          {shown && (
+            <Baba name="one-already-mounted-reversed" key="1">
+              <Move>
+                {({ ref, style }) => (
+                  <Root
+                    src={require('./images/guess-who.png')}
+                    style={{ ...style, float: 'left' }}
+                    innerRef={ref}
+                  />
+                )}
+              </Move>
+            </Baba>
+          )}
+
+          <Baba name="one-already-mounted-reversed" key="2" in={!shown}>
+            <Move>
+              {({ ref, style }) => (
+                <RightRoot
+                  src={require('./images/female.png')}
+                  style={{
+                    ...style,
+                  }}
+                  innerRef={ref}
+                />
+              )}
+            </Move>
+          </Baba>
+        </div>
+      )}
+    </Toggler>
+  ))
+  .add('both elements never unmounting', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Baba name="both-already-mounted" key="1" in={!shown}>
+            <Move>
+              {({ ref, style }) => (
+                <Root
+                  src={require('./images/guess-who.png')}
+                  style={{ ...style, float: 'left' }}
+                  innerRef={ref}
+                />
+              )}
+            </Move>
+          </Baba>
+
+          <Baba name="both-already-mounted" key="2" in={shown}>
+            <Move>
+              {({ ref, style }) => (
+                <RightRoot
+                  src={require('./images/female.png')}
+                  style={{
+                    ...style,
+                  }}
+                  innerRef={ref}
+                />
+              )}
+            </Move>
+          </Baba>
+        </div>
+      )}
+    </Toggler>
+  ))
+  .add('both elements never unmounting reversed', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Baba name="both-already-mounted-reversed" key="1" in={shown}>
+            <Move>
+              {({ ref, style }) => (
+                <Root
+                  src={require('./images/guess-who.png')}
+                  style={{ ...style, float: 'left' }}
+                  innerRef={ref}
+                />
+              )}
+            </Move>
+          </Baba>
+
+          <Baba name="both-already-mounted-reversed" key="2" in={!shown}>
+            <Move>
+              {({ ref, style }) => (
+                <RightRoot
+                  src={require('./images/female.png')}
+                  style={{
+                    ...style,
+                  }}
+                  innerRef={ref}
+                />
+              )}
+            </Move>
+          </Baba>
+        </div>
+      )}
+    </Toggler>
   ));

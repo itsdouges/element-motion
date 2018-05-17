@@ -18,10 +18,12 @@ export type Data =
       };
     }
   | { action: Actions.wait };
-export type SupplyRef = (ref: HTMLElement | null) => void;
-export type SupplyRenderChildren = (reactNode: ChildrenAsFunction) => void;
-export type SupplyData = (data: Data[]) => void;
-export type ChildrenAsFunction = (props: { ref: SupplyRef; style: Style }) => React.ReactNode;
+export type SupplyRefHandler = (ref: HTMLElement | null) => void;
+export type SupplyRenderChildrenHandler = (reactNode: ChildrenAsFunction) => void;
+export type SupplyDataHandler = (data: Data[]) => void;
+export type ChildrenAsFunction = (
+  props: { ref: SupplyRefHandler; style: Style }
+) => React.ReactNode;
 
 export interface AnimationData {
   caller: React.Component;
@@ -42,17 +44,17 @@ export interface CommonProps {
 }
 
 export interface Props extends CommonProps {
-  receiveRef?: SupplyRef;
-  receiveRenderChildren?: SupplyRenderChildren;
-  receiveData?: SupplyData;
+  receiveRef?: SupplyRefHandler;
+  receiveRenderChildren?: SupplyRenderChildrenHandler;
+  receiveData?: SupplyDataHandler;
   data?: Data;
   style?: Style;
 }
 
 export interface Collect {
-  ref: SupplyRef;
-  data: SupplyData;
-  renderChildren: SupplyRenderChildren;
+  ref: SupplyRefHandler;
+  data: SupplyDataHandler;
+  renderChildren: SupplyRenderChildrenHandler;
   style: Style;
 }
 

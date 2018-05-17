@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Collector, {
-  SupplyData,
-  SupplyRenderChildren,
-  SupplyRef,
+  SupplyDataHandler,
+  SupplyRenderChildrenHandler,
+  SupplyRefHandler,
   ChildrenAsFunction,
   Data,
   CommonProps,
@@ -25,6 +25,16 @@ type AnimationBlock = MappedAnimation[];
 
 export interface Props extends CommonProps, InjectedProps {
   name: string;
+
+  /**
+   * Only use `in` if your component is expected to persist through the entire lifecyle of the app.
+   */
+  in?: boolean;
+
+  /**
+   * Callback called when all animations have finished and been cleaned up.
+   */
+  onFinish?: () => void;
 }
 
 interface State {
@@ -43,40 +53,81 @@ class Baba extends React.PureComponent<Props, State> {
   cancelClear?: () => void;
 
   componentDidMount() {
-    if (childrenStore.has(this.props.name)) {
+    if (this.props.in === undefined && childrenStore.has(this.props.name)) {
       // A child has already been stored, so this is probably the matching pair.
-      // Lets execute!
-      return this.execute();
-    } else {
-      // Ok nothing is there yet, show our children and store DOM data for later.
-      // We'll be waiting for another <Baba /> instance to mount.
-      this.setState({
-        shown: true,
-      });
-
-      // If a BabaManager is a parent somewhere, notify them that
-      // we're finished getting ready.
-      this.props.context && this.props.context.onFinish();
+      this.executeAnimations();
+      return;
     }
 
-    return undefined;
+    if (this.props.in === undefined || this.props.in) {
+      // Ok nothing is there yet, show ourself and store DOM data for later.
+      // We'll be waiting for another Baba to mount.
+      this.showSelfAndNotifyManager();
+    }
+
+    if (this.props.in) {
+      // Store data so it can be used later. This works around the problem of the "in" prop not having data when it needs.
+      this.storeDOMData();
+    }
   }
 
   componentWillUnmount() {
-    this.store();
+    this.storeDOMData();
+    this.delayedClearDOMData();
     this.unmounting = true;
-    this.delayedClear();
   }
 
-  delayedClear() {
-    const id = setTimeout(() => {
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.in === prevProps.in) {
+      // Nothing to do, abort.
+      return;
+    }
+
+    if (
+      process.env.NODE_ENV === 'development' &&
+      (this.props.in === undefined || prevProps.in === undefined)
+    ) {
+      console.warn(
+        `You're switching between controlled and uncontrolled, don't do this. Either always keep "in" as true or false, or never set it.`
+      );
+    }
+
+    if (this.props.in) {
+      if (childrenStore.has(this.props.name)) {
+        this.executeAnimations();
+        return;
+      }
+
+      // Store data so it can be used later. This works around the problem of the "in" prop not having data when it needs.
+      this.storeDOMData();
+      this.showSelfAndNotifyManager();
+    }
+
+    this.setState({
+      shown: false,
+    });
+
+    this.storeDOMData();
+    this.delayedClearDOMData();
+  }
+
+  showSelfAndNotifyManager() {
+    this.setState({
+      shown: true,
+    });
+
+    // If a BabaManager is a parent up the tree context will be available.
+    // Notify them that we're finished getting ready.
+    this.props.context && this.props.context.onFinish();
+  }
+
+  delayedClearDOMData() {
+    setTimeout(() => {
       childrenStore.remove(this.props.name);
     }, 50);
-
-    return () => clearTimeout(id);
   }
 
-  store() {
+  storeDOMData() {
     if (this.unmounting) {
       return;
     }
@@ -96,7 +147,7 @@ class Baba extends React.PureComponent<Props, State> {
     }
   }
 
-  execute() {
+  executeAnimations() {
     const fromTarget = childrenStore.get(this.props.name);
     if (fromTarget) {
       const { data, ...target } = fromTarget;
@@ -174,9 +225,9 @@ class Baba extends React.PureComponent<Props, State> {
               shown: true,
             });
 
-            // We don't need the previous children now. Now this instance is the new target!
-            // Store DOM data for later so when another target is mounted, the data is there.
-            this.store();
+            // Store data so it can be used later.
+            // This primarily works around the problem of the "in" prop not having data when it needs.
+            this.storeDOMData();
 
             // If a BabaManager is a parent somewhere, notify them that
             // we're finished animating.
@@ -189,22 +240,23 @@ class Baba extends React.PureComponent<Props, State> {
               Promise.resolve()
             );
           })
-          .then(() => blocks.forEach(block => block.forEach(anim => anim.cleanup())));
+          .then(() => blocks.forEach(block => block.forEach(anim => anim.cleanup())))
+          .then(() => this.props.onFinish && this.props.onFinish());
       });
     }
 
     return undefined;
   }
 
-  setRef: SupplyRef = ref => {
+  setRef: SupplyRefHandler = ref => {
     this.element = ref;
   };
 
-  setReactNode: SupplyRenderChildren = renderChildren => {
+  setReactNode: SupplyRenderChildrenHandler = renderChildren => {
     this.renderChildren = renderChildren;
   };
 
-  setData: SupplyData = data => {
+  setData: SupplyDataHandler = data => {
     this.data = data;
   };
 
