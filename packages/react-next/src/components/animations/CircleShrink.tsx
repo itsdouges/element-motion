@@ -108,7 +108,7 @@ export default class CircleShrink extends React.Component<Props> {
     return this.finishAfterAnimate();
   };
 
-  abort = () => {};
+  abort = () => this.finishCleanup();
 
   cleanup = () => {
     this.finishCleanup();

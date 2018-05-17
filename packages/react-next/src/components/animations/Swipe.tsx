@@ -38,12 +38,12 @@ export default class Swipe extends React.Component<Props> {
         document.body.appendChild(elementToMountChildren);
 
         this.renderAnimation = (at?: number) => {
-            const directionMap = {
-                left: '100%, 0, 0',
-                right: '-100%, 0, 0',
-                down: '0, -100%, 0',
-                up: '0, 100%, 0',
-            };
+          const directionMap = {
+            left: '100%, 0, 0',
+            right: '-100%, 0, 0',
+            down: '0, -100%, 0',
+            up: '0, 100%, 0',
+          };
 
           return new Promise(resolve => {
             unstable_renderSubtreeIntoContainer(
@@ -51,14 +51,14 @@ export default class Swipe extends React.Component<Props> {
               <SimpleKeyframe
                 at={at}
                 style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: this.props.background,
-                    transform: `translate3d(${directionMap[this.props.direction]})`,
-                    transition: `transform ease-out ${duration}ms, opacity ease-in-out ${duration}ms`,
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: this.props.background,
+                  transform: `translate3d(${directionMap[this.props.direction]})`,
+                  transition: `transform ease-out ${duration}ms, opacity ease-in-out ${duration}ms`,
                 }}
                 keyframes={[
                   {
@@ -67,7 +67,7 @@ export default class Swipe extends React.Component<Props> {
                   {
                     transform: 'translate3d(0, 0, 0)',
                     opacity: 0,
-                  }
+                  },
                 ]}
                 onFinish={resolve}
               />,
@@ -94,7 +94,7 @@ export default class Swipe extends React.Component<Props> {
     return this.finishAfterAnimate();
   };
 
-  abort = () => {};
+  abort = () => this.finishCleanup();
 
   cleanup = () => {
     this.finishCleanup();

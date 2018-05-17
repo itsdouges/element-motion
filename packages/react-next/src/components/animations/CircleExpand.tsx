@@ -37,7 +37,7 @@ export default class CircleExpand extends React.Component<Props> {
     return Promise.resolve();
   };
 
-  abort = () => {};
+  abort = () => this.finishCleanup();
 
   cleanup = () => {
     this.finishCleanup();

@@ -46,11 +46,12 @@ class Baba extends React.PureComponent<Props, State> {
     shown: false,
   };
 
+  animating: boolean = false;
   unmounting: boolean = false;
   element: HTMLElement | null;
   renderChildren: ChildrenAsFunction;
+  abortAnimations = () => {};
   data: Data[];
-  cancelClear?: () => void;
 
   componentDidMount() {
     if (this.props.in === undefined && childrenStore.has(this.props.name)) {
@@ -74,12 +75,13 @@ class Baba extends React.PureComponent<Props, State> {
   componentWillUnmount() {
     this.storeDOMData();
     this.delayedClearDOMData();
+    this.abortAnimations();
     this.unmounting = true;
   }
 
   componentDidUpdate(prevProps: Props) {
     if (this.props.in === prevProps.in) {
-      // Nothing to do, abort.
+      // Nothing to do, return early.
       return;
     }
 
@@ -109,6 +111,7 @@ class Baba extends React.PureComponent<Props, State> {
 
     this.storeDOMData();
     this.delayedClearDOMData();
+    this.abortAnimations();
   }
 
   showSelfAndNotifyManager() {
@@ -151,6 +154,7 @@ class Baba extends React.PureComponent<Props, State> {
     const fromTarget = childrenStore.get(this.props.name);
     if (fromTarget) {
       const { data, ...target } = fromTarget;
+      this.animating = true;
 
       const actions = fromTarget.data.map(data => {
         if (data.action === Actions.animation) {
@@ -207,6 +211,13 @@ class Baba extends React.PureComponent<Props, State> {
         [[]]
       );
 
+      this.abortAnimations = () => {
+        if (this.animating) {
+          this.animating = false;
+          blocks.forEach(block => block.forEach(anim => anim.abort()));
+        }
+      };
+
       const beforeAnimatePromises = actions.map(
         data =>
           data.action === Actions.animation ? data.payload.beforeAnimate() : Promise.resolve()
@@ -232,6 +243,8 @@ class Baba extends React.PureComponent<Props, State> {
             // If a BabaManager is a parent somewhere, notify them that
             // we're finished animating.
             this.props.context && this.props.context.onFinish();
+
+            this.animating = false;
 
             // Run through all after animates.
             return blocks.reduce<Promise<any>>(

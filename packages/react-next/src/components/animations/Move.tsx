@@ -23,6 +23,7 @@ interface Props extends CommonProps {
 export default class Move extends React.Component<Props> {
   finishAnimation: () => Promise<any>;
   finishCleanup: () => void;
+  realAbort: () => void;
 
   static defaultProps = {
     duration: 300,
@@ -139,7 +140,9 @@ export default class Move extends React.Component<Props> {
     return Promise.resolve();
   };
 
-  abort = () => {};
+  abort = () => {
+    this.finishCleanup();
+  };
 
   cleanup = () => {
     this.finishCleanup();

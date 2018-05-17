@@ -493,4 +493,28 @@ storiesOf('Animations/Move', module)
         </div>
       )}
     </Toggler>
+  ))
+  .add('aborting', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <StickyButton onClick={toggle}>{!shown ? 'toggle' : 'abort'}</StickyButton>
+          {!shown ? (
+            <Baba name="aborting" key="1">
+              <Move duration={5000}>
+                {({ ref, style }) => (
+                  <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
+            </Baba>
+          ) : (
+            <Baba name="aborting" key="2">
+              {({ ref, style }) => (
+                <RightRoot src={require('./images/female.png')} style={style} innerRef={ref} />
+              )}
+            </Baba>
+          )}
+        </div>
+      )}
+    </Toggler>
   ));
