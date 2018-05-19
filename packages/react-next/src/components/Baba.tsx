@@ -244,8 +244,6 @@ class Baba extends React.PureComponent<Props, State> {
             // we're finished animating.
             this.props.context && this.props.context.onFinish();
 
-            this.animating = false;
-
             // Run through all after animates.
             return blocks.reduce<Promise<any>>(
               (promise, block) =>
@@ -254,7 +252,12 @@ class Baba extends React.PureComponent<Props, State> {
             );
           })
           .then(() => blocks.forEach(block => block.forEach(anim => anim.cleanup())))
-          .then(() => this.props.onFinish && this.props.onFinish());
+          .then(() => {
+            // Animations can still "animate" away when finishing. So we're truly not finished animating
+            // until the cleanup step has finished.
+            this.animating = false;
+            this.props.onFinish && this.props.onFinish();
+          });
       });
     }
 
