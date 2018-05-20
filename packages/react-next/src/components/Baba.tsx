@@ -89,9 +89,8 @@ class Baba extends React.PureComponent<Props, State> {
       process.env.NODE_ENV === 'development' &&
       (this.props.in === undefined || prevProps.in === undefined)
     ) {
-      console.warn(
-        `You're switching between controlled and uncontrolled, don't do this. Either always keep "in" as true or false, or never set it.`
-      );
+      console.warn(`yubaba
+You're switching between controlled and uncontrolled, don't do this. Either always set the "in" prop as true or false, or keep as undefined.`);
     }
 
     if (this.props.in) {
@@ -121,7 +120,7 @@ class Baba extends React.PureComponent<Props, State> {
 
     // If a BabaManager is a parent up the tree context will be available.
     // Notify them that we're finished getting ready.
-    this.props.context && this.props.context.onFinish();
+    this.props.context && this.props.context.onFinish({ name: this.props.name });
   }
 
   delayedClearDOMData() {
@@ -138,11 +137,19 @@ class Baba extends React.PureComponent<Props, State> {
     // If there is only a Baba target and no animation data
     // will be undefined, which means there are no animations to store.
     if (this.data) {
+      const DOMData = getElementSizeLocation(this.element as HTMLElement);
+
+      if (process.env.NODE_ENV === 'development' && DOMData.size.height === 0) {
+        console.warn(`yubaba
+Your target child had a height of zero when capturing it's DOM data. This may affect the animation.
+If it's an image, try and have the image loaded before mounting, or set a static height.`);
+      }
+
       // NOTE: Currently in react 16.3 if the parent being unmounted is a Fragment
       // there is a chance for sibling elements to be removed from the DOM first
       // resulting in inaccurate calculations of location. Watch out!
       childrenStore.set(this.props.name, {
-        ...getElementSizeLocation(this.element as HTMLElement),
+        ...DOMData,
         element: this.element as HTMLElement,
         render: this.renderChildren,
         data: this.data,
@@ -150,7 +157,7 @@ class Baba extends React.PureComponent<Props, State> {
     }
   }
 
-  executeAnimations() {
+  executeAnimations = () => {
     const fromTarget = childrenStore.get(this.props.name);
     if (fromTarget) {
       const { data, ...target } = fromTarget;
@@ -223,7 +230,7 @@ class Baba extends React.PureComponent<Props, State> {
           data.action === Actions.animation ? data.payload.beforeAnimate() : Promise.resolve()
       );
 
-      return Promise.all(beforeAnimatePromises).then(() => {
+      Promise.all(beforeAnimatePromises).then(() => {
         // Trigger each blocks animations, one block at a time.
         return blocks
           .reduce<Promise<any>>(
@@ -242,7 +249,7 @@ class Baba extends React.PureComponent<Props, State> {
 
             // If a BabaManager is a parent somewhere, notify them that
             // we're finished animating.
-            this.props.context && this.props.context.onFinish();
+            this.props.context && this.props.context.onFinish({ name: this.props.name });
 
             // Run through all after animates.
             return blocks.reduce<Promise<any>>(
@@ -260,9 +267,7 @@ class Baba extends React.PureComponent<Props, State> {
           });
       });
     }
-
-    return undefined;
-  }
+  };
 
   setRef: SupplyRefHandler = ref => {
     this.element = ref;

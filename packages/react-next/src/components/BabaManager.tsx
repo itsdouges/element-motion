@@ -3,6 +3,7 @@ import { Style } from './Collector';
 
 interface Props {
   children: (props: { style: Style }) => React.ReactNode;
+  name?: string;
 }
 
 interface State {
@@ -13,8 +14,10 @@ export interface InjectedProps {
   context?: BabaManagerContext;
 }
 
+type OnFinishHandler = (opts: { name: string }) => void;
+
 export interface BabaManagerContext {
-  onFinish: () => void;
+  onFinish: OnFinishHandler;
 }
 
 export const BabaContext = React.createContext<BabaManagerContext>();
@@ -26,7 +29,11 @@ export default class BabaManager extends React.Component<Props, State> {
     },
   };
 
-  onFinish = () => {
+  onFinish: OnFinishHandler = opts => {
+    if (this.props.name && opts.name !== this.props.name) {
+      return;
+    }
+
     this.setState({
       style: {
         opacity: 1,

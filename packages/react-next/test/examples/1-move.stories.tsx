@@ -401,7 +401,7 @@ storiesOf('Animations/Move', module)
                 {({ ref, style }) => (
                   <Root
                     src={require('./images/guess-who.png')}
-                    style={{ ...style, float: 'left' }}
+                    style={{ ...style, position: 'fixed', top: 0, left: 0 }}
                     innerRef={ref}
                   />
                 )}
@@ -409,19 +409,19 @@ storiesOf('Animations/Move', module)
             </Baba>
           )}
 
-          <Baba name="one-already-mounted-reversed" key="2" in={!shown}>
-            <Move>
-              {({ ref, style }) => (
-                <RightRoot
-                  src={require('./images/female.png')}
-                  style={{
-                    ...style,
-                  }}
-                  innerRef={ref}
-                />
-              )}
-            </Move>
-          </Baba>
+          <LongContainer>
+            <br />
+            <br />
+            <br />
+            <br />
+            <Baba name="one-already-mounted-reversed" key="2" in={!shown}>
+              <Move>
+                {({ ref, style }) => (
+                  <RightRoot src={require('./images/female.png')} style={style} innerRef={ref} />
+                )}
+              </Move>
+            </Baba>
+          </LongContainer>
         </div>
       )}
     </Toggler>

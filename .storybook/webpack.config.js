@@ -14,7 +14,7 @@ module.exports = {
         exclude: ['node_modules'],
       },
       {
-        test: /\.(jpg|gif|png|jpeg)$/,
+        test: /\.(jpg|gif|png|jpeg|webp)$/,
         loader: 'file-loader',
         include: path.resolve(__dirname, '../packages'),
         exclude: ['node_modules'],
