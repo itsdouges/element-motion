@@ -4,17 +4,18 @@ import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
 import Baba, { Move, BabaManager, CircleShrink, CircleExpand, Wait } from '../../src';
 import Toggler from '../Toggler';
-import StickyButton from '../StickyButton';
 
-const Root = styled.img`
+const Person = styled.img`
   width: 120px;
   height: 160px;
   box-sizing: border-box;
+  cursor: pointer;
 `;
 
-const BigRoot = styled.img`
+const BigPerson = styled.img`
   width: 360px;
   height: 480px;
+  cursor: pointer;
 `;
 
 interface BackgroundProps {
@@ -35,28 +36,153 @@ const NoMarginBody = styled(BodyClassName)`
 `;
 
 storiesOf('Examples/GuessWho', module)
-  .add('move expand', () => (
+  .add('move', () => (
     <Toggler>
       {({ shown, toggle }) => (
         <div>
           <NoMarginBody className="" />
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+
+          {!shown ? (
+            <Container background="#db6f59">
+              <Baba name="guess-move" key="1">
+                <Move>
+                  {({ ref, style }) => (
+                    <Person
+                      onClick={toggle}
+                      src={require('./images/guess-who.png')}
+                      style={style}
+                      innerRef={ref}
+                    />
+                  )}
+                </Move>
+              </Baba>
+            </Container>
+          ) : (
+            <Container background="#37a7e0">
+              <Baba name="guess-move" key="2">
+                {({ ref, style }) => (
+                  <BigPerson
+                    onClick={toggle}
+                    src={require('./images/female2.png')}
+                    style={style}
+                    innerRef={ref}
+                  />
+                )}
+              </Baba>
+            </Container>
+          )}
+        </div>
+      )}
+    </Toggler>
+  ))
+  .add('expand and move', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <NoMarginBody className="" />
+
+          {!shown ? (
+            <Container background="#db6f59">
+              <Baba name="guess-expand-and-move" key="1">
+                <CircleExpand background="#fcce2e">
+                  <Move>
+                    {({ ref, style }) => (
+                      <Person
+                        onClick={toggle}
+                        src={require('./images/guess-who.png')}
+                        style={style}
+                        innerRef={ref}
+                      />
+                    )}
+                  </Move>
+                </CircleExpand>
+              </Baba>
+            </Container>
+          ) : (
+            <Container background="#37a7e0">
+              <Baba name="guess-expand-and-move" key="2">
+                {({ ref, style }) => (
+                  <BigPerson
+                    onClick={toggle}
+                    src={require('./images/female2.png')}
+                    style={style}
+                    innerRef={ref}
+                  />
+                )}
+              </Baba>
+            </Container>
+          )}
+        </div>
+      )}
+    </Toggler>
+  ))
+  .add('expand then move', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <NoMarginBody className="" />
+
+          {!shown ? (
+            <Container background="#db6f59">
+              <Baba name="guess-expand-then-move" key="1">
+                <CircleExpand background="#fcce2e">
+                  <Wait>
+                    <Move>
+                      {({ ref, style }) => (
+                        <Person
+                          onClick={toggle}
+                          src={require('./images/guess-who.png')}
+                          style={style}
+                          innerRef={ref}
+                        />
+                      )}
+                    </Move>
+                  </Wait>
+                </CircleExpand>
+              </Baba>
+            </Container>
+          ) : (
+            <Container background="#37a7e0">
+              <Baba name="guess-expand-then-move" key="2">
+                {({ ref, style }) => (
+                  <BigPerson
+                    onClick={toggle}
+                    src={require('./images/female2.png')}
+                    style={style}
+                    innerRef={ref}
+                  />
+                )}
+              </Baba>
+            </Container>
+          )}
+        </div>
+      )}
+    </Toggler>
+  ))
+  .add('managed expand then move', () => (
+    <Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <NoMarginBody className="" />
 
           {!shown ? (
             <BabaManager key="c">
               {props => (
                 <Container background="#db6f59" {...props}>
-                  <Baba name="managed-move-and-expand" key="1">
+                  <Baba name="managed-guess-move-expand" key="1">
                     <CircleExpand background="#fcce2e">
-                      <Move>
-                        {({ ref, style }) => (
-                          <Root
-                            src={require('./images/guess-who.png')}
-                            style={style}
-                            innerRef={ref}
-                          />
-                        )}
-                      </Move>
+                      <Wait>
+                        <Move>
+                          {({ ref, style }) => (
+                            <Person
+                              onClick={toggle}
+                              src={require('./images/guess-who.png')}
+                              style={style}
+                              innerRef={ref}
+                            />
+                          )}
+                        </Move>
+                      </Wait>
                     </CircleExpand>
                   </Baba>
                 </Container>
@@ -66,9 +192,14 @@ storiesOf('Examples/GuessWho', module)
             <BabaManager key="b">
               {props => (
                 <Container background="#37a7e0" {...props}>
-                  <Baba name="managed-move-and-expand" key="2">
+                  <Baba name="managed-guess-move-expand" key="2">
                     {({ ref, style }) => (
-                      <BigRoot src={require('./images/female2.png')} style={style} innerRef={ref} />
+                      <BigPerson
+                        onClick={toggle}
+                        src={require('./images/female2.png')}
+                        style={style}
+                        innerRef={ref}
+                      />
                     )}
                   </Baba>
                 </Container>
@@ -79,54 +210,11 @@ storiesOf('Examples/GuessWho', module)
       )}
     </Toggler>
   ))
-  .add('move shrink', () => (
+  .add('managed move then expand + reverse', () => (
     <Toggler>
       {({ shown, toggle }) => (
         <div>
           <NoMarginBody className="" />
-          <StickyButton onClick={toggle}>toggle</StickyButton>
-
-          {!shown ? (
-            <BabaManager key="c">
-              {props => (
-                <Container background="#37a7e0" {...props}>
-                  <Baba name="managed-move-then-shrink" key="1">
-                    <Move>
-                      <Wait>
-                        <CircleShrink background="#fcce2e">
-                          {({ ref, style }) => (
-                            <BigRoot
-                              src={require('./images/guess-who.png')}
-                              style={style}
-                              innerRef={ref}
-                            />
-                          )}
-                        </CircleShrink>
-                      </Wait>
-                    </Move>
-                  </Baba>
-                </Container>
-              )}
-            </BabaManager>
-          ) : (
-            <Container background="#db6f59">
-              <Baba name="managed-move-then-shrink" key="2">
-                {({ ref, style }) => (
-                  <Root src={require('./images/female.png')} style={style} innerRef={ref} />
-                )}
-              </Baba>
-            </Container>
-          )}
-        </div>
-      )}
-    </Toggler>
-  ))
-  .add('move expand shrink', () => (
-    <Toggler>
-      {({ shown, toggle }) => (
-        <div>
-          <NoMarginBody className="" />
-          <StickyButton onClick={toggle}>toggle</StickyButton>
 
           {shown ? (
             <BabaManager key="c">
@@ -137,7 +225,8 @@ storiesOf('Examples/GuessWho', module)
                       <Wait>
                         <CircleShrink background="#37a7e0">
                           {({ ref, style }) => (
-                            <BigRoot
+                            <BigPerson
+                              onClick={toggle}
                               src={require('./images/female2.png')}
                               style={style}
                               innerRef={ref}
@@ -155,17 +244,20 @@ storiesOf('Examples/GuessWho', module)
               {props => (
                 <Container background="#db6f59" {...props}>
                   <Baba name="managed-altogether" key="2">
-                    <Move delay={100}>
-                      <CircleExpand background="#fcce2e">
-                        {({ ref, style }) => (
-                          <Root
-                            src={require('./images/guess-who.png')}
-                            style={style}
-                            innerRef={ref}
-                          />
-                        )}
-                      </CircleExpand>
-                    </Move>
+                    <CircleExpand background="#fcce2e">
+                      <Wait>
+                        <Move>
+                          {({ ref, style }) => (
+                            <Person
+                              onClick={toggle}
+                              src={require('./images/guess-who.png')}
+                              style={style}
+                              innerRef={ref}
+                            />
+                          )}
+                        </Move>
+                      </Wait>
+                    </CircleExpand>
                   </Baba>
                 </Container>
               )}
