@@ -10,6 +10,7 @@ const noop = () => {};
 interface Props extends CommonProps {
   duration?: number;
   delay?: number;
+  zIndex?: number;
 }
 
 /**
@@ -62,7 +63,7 @@ export default class Move extends React.Component<Props> {
               ...from,
               transform: noTransform,
               opacity: 1,
-              zIndex: 20000,
+              zIndex: this.props.zIndex || 20000,
             }}
             to={{
               transform: `translate3d(${fromEndXOffset}px, ${fromEndYOffset}px, 0) scale3d(${math.percentageDifference(
@@ -94,7 +95,10 @@ export default class Move extends React.Component<Props> {
             from={{
               ...data.toTarget.location,
               ...from,
-              zIndex: 19999,
+              // NOTE: We want to minimize the background bleeding through into the animation.
+              // Make the "end" element appear very quickly minimizes this.
+              transition: `transform ${duration}ms, opacity 10ms`,
+              zIndex: this.props.zIndex ? this.props.zIndex - 1 : 19999,
               opacity: 0,
               transform: `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
                 fromTargetSizeLocation.size.width,

@@ -273,12 +273,12 @@ const ImagePage: React.StatelessComponent<ImageProps> = ({ src, title, onClick }
                 src={require('./images/4.png')}
                 title="Washington Capitals - Wikipedia 1"
                 from="en.wikipedia.org"
-              />{' '}
+              />
               <Image
                 src={require('./images/4.png')}
                 title="Washington Capitals - Wikipedia 2"
                 from="en.wikipedia.org"
-              />{' '}
+              />
               <Image
                 src={require('./images/4.png')}
                 title="Washington Capitals - Wikipedia 3"
@@ -290,12 +290,12 @@ const ImagePage: React.StatelessComponent<ImageProps> = ({ src, title, onClick }
                 src={require('./images/4.png')}
                 title="Washington Capitals - Wikipedia 4"
                 from="en.wikipedia.org"
-              />{' '}
+              />
               <Image
                 src={require('./images/4.png')}
                 title="Washington Capitals - Wikipedia 5"
                 from="en.wikipedia.org"
-              />{' '}
+              />
               <Image
                 src={require('./images/4.png')}
                 title="Washington Capitals - Wikipedia 6"
@@ -344,16 +344,19 @@ storiesOf('Examples/GoogleSearch', module).add('image search', () => (
               src={require('./images/1.png')}
               title="Official Washington Capitals Website | NHL.com"
               from="nhl.com"
+              onClick={toggle}
             />
             <Image
               src={require('./images/3.jpeg')}
               title="Washington Capitals: 2017 Season Preview, Predictions"
               from="puckprose.com"
+              onClick={toggle}
             />
             <Image
               src={require('./images/6.jpeg')}
               title="The Washington Capitals are up to their old tricks again ..."
               from="nhl.nbcsports.com"
+              onClick={toggle}
             />
           </Column>
           <Column>
@@ -368,11 +371,13 @@ storiesOf('Examples/GoogleSearch', module).add('image search', () => (
               src={require('./images/5.png')}
               title="Washington Capitals - Home | Facebook"
               from="facebook.com"
+              onClick={toggle}
             />
             <Image
               src={require('./images/2.jpeg')}
               title="Capitals Announce 2017-18 Preseason Schedule"
               from="nhl.com"
+              onClick={toggle}
             />
           </Column>
         </Images>

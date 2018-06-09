@@ -1,4 +1,3 @@
-
 import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
@@ -26,32 +25,31 @@ const Container = styled.div`
 
 const makeStory = (direction: string) => (
   <Toggler>
-      {({ shown, toggle }) => (
-        <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
-          {!shown ? (
-            <Container>
-              <Baba name={`swipe-${direction}`} key="1">
-                <Swipe background="#db6f59" direction={direction as any}>
-                  {({ ref, style }) => <Root style={style} innerRef={ref} />}
-                </Swipe>
-              </Baba>
-            </Container>
-          ) : (
-            <Container>
-              <Baba name={`swipe-${direction}`} key="2">
-                {({ ref, style }) => <div style={style} ref={ref} />}
-              </Baba>
-            </Container>
-          )}
-        </div>
-      )}
-    </Toggler>
+    {({ shown, toggle }) => (
+      <div>
+        <StickyButton onClick={toggle}>toggle</StickyButton>
+        {!shown ? (
+          <Container>
+            <Baba name={`swipe-${direction}`} key="1">
+              <Swipe background="#db6f59" direction={direction as any}>
+                {({ ref, style }) => <Root style={style} innerRef={ref} />}
+              </Swipe>
+            </Baba>
+          </Container>
+        ) : (
+          <Container>
+            <Baba name={`swipe-${direction}`} key="2">
+              {({ ref, style }) => <div style={style} ref={ref} />}
+            </Baba>
+          </Container>
+        )}
+      </div>
+    )}
+  </Toggler>
 );
 
 storiesOf('Animations/Swipe', module)
   .add('up', () => makeStory('up'))
   .add('down', () => makeStory('down'))
   .add('left', () => makeStory('left'))
-  .add('right', () => makeStory('right'))
- 
+  .add('right', () => makeStory('right'));

@@ -40,7 +40,7 @@ export interface TargetData extends GetElementSizeLocationReturnValue {
 }
 
 export interface CommonProps {
-  children: ChildrenAsFunction | React.ReactNode;
+  children: ChildrenAsFunction | React.ReactElement<Props>;
 }
 
 export interface Props extends CommonProps {

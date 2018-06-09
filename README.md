@@ -1,5 +1,5 @@
 <div align="center">
-  <br /><br /><br /><br />
+  <br />
   <img src="https://github.com/madou/yubaba/blob/master/icon.png?raw=true" width="256px" height="256px" align="center" />
 </div>
 

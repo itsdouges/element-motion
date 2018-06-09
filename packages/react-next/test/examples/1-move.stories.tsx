@@ -373,7 +373,7 @@ storiesOf('Animations/Move', module)
             </Baba>
           )}
 
-          <Baba name="one-already-mounted" key="2" in={shown}>
+          <Baba name="one-already-mounted" key="2" in={!!shown}>
             <Move>
               {({ ref, style }) => (
                 <RightRoot
@@ -443,7 +443,7 @@ storiesOf('Animations/Move', module)
             </Move>
           </Baba>
 
-          <Baba name="both-already-mounted" key="2" in={shown}>
+          <Baba name="both-already-mounted" key="2" in={!!shown}>
             <Move>
               {({ ref, style }) => (
                 <RightRoot
@@ -465,7 +465,7 @@ storiesOf('Animations/Move', module)
       {({ shown, toggle }) => (
         <div>
           <StickyButton onClick={toggle}>toggle</StickyButton>
-          <Baba name="both-already-mounted-reversed" key="1" in={shown}>
+          <Baba name="both-already-mounted-reversed" key="1" in={!!shown}>
             <Move>
               {({ ref, style }) => (
                 <Root
