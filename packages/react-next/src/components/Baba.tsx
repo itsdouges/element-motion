@@ -41,7 +41,43 @@ interface State {
   shown: boolean;
 }
 
-class Baba extends React.PureComponent<Props, State> {
+/**
+ * ## Baba
+ *
+ * This is the primary component in `yubaba`.
+ * When rendering it will be given all of the animation data from its children.
+ * When unmounting or flipping the prop `in` from `true` to `false`,
+ * it will execute all the animations `bottom to top` below it if a matching `<Baba />` pair is found within 50ms.
+ *
+ * Usage
+ *
+ * ```
+ * render() {
+ *  const { shown } = this.state;
+ *
+ *  return (
+ *    <>
+ *      {shown && <Baba name="my-anim">
+ *        <CircleExpand>
+ *          <Wait>
+ *            <Move>
+ *              {({ ref, style }) => <div ref={ref} style={style}>starting point</div>}
+ *            </Move>
+ *          </Wait>
+ *        </CircleExpand>
+ *      </Baba>}
+ *
+ *      {shown || <Baba name="my-anim">
+ *        <Move>
+ *          {({ ref, style }) => <div ref={ref} style={style}>ending point</div>}
+ *        </Move>
+ *      </Baba>}
+ *    </>
+ *  );
+ * }
+ * ```
+ */
+export class Baba extends React.PureComponent<Props, State> {
   state: State = {
     shown: false,
   };
@@ -297,4 +333,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
   }
 }
 
+/**
+ * @hidden
+ */
 export default withBabaManagerContext(Baba);

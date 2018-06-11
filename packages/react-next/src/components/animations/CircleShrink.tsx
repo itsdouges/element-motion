@@ -11,15 +11,13 @@ interface Props extends CommonProps {
 }
 
 /**
+ * ## CircleShrink
+ *
  * CircleShrink will animate a circle from the entire window
  * to cover end target, and then fade out.
  *
  * Generally you will use CircleShrink and CircleExpand together
  * to seamlessly transition the background between pages.
- *
- * @export
- * @class CircleShrink
- * @extends {React.Component<Props>}
  */
 export default class CircleShrink extends React.Component<Props> {
   finishAnimation: () => Promise<any>;

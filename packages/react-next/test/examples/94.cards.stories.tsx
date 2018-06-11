@@ -13,6 +13,7 @@ const Container = styled.div`
   position: relative;
   background-color: #fbfbfb;
   box-sizing: border-box;
+  font-family: Roboto, sans-serif;
 
   * {
     box-sizing: border-box;
@@ -59,7 +60,7 @@ const CardContent = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
+  right: 8px;
   bottom: 0;
   display: flex;
   align-items: center;
@@ -105,6 +106,9 @@ const BackgroundContainer = styled.div`
   left: 0;
   right: 0;
   background-color: #3c71ca;
+  background-image: url('https://cdn.vox-cdn.com/thumbor/vQ3jAr1UBy_9fC4Fhz2Ao6tFBTw=/0x0:3000x2000/1820x1213/filters:focal(1883x395:2363x875):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/60002177/OvechkinWins_Getty_Ringer.0.jpg');
+  background-size: cover;
+  background-position: top center;
   z-index: 0;
 `;
 
@@ -122,7 +126,7 @@ const ImageContainer = styled.div`
   margin: 0 16px;
   width: 125px;
   height: 100px;
-  background-color: #ccc;
+  background-color: #f1f1f1;
   flex-shrink: 0;
 `;
 
@@ -144,50 +148,63 @@ const Title = styled.div`
   font-family: Roboto, sans-serif;
   margin: 16px;
   text-align: center;
+  text-transform: uppercase;
+`;
+
+const ChampionsText = styled.div`
+  position: absolute;
+  top: 400px;
+  left: 0;
+  right: 0;
+  text-transform: uppercase;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  font-size: 200px;
+  width: 100%;
+  overflow: hidden;
+  flex-wrap: wrap;
+  padding: 20px;
+  pointer-events: none;
+  font-weight: bold;
 `;
 
 const cards = [
   {
     name: 'Alexander Ovechkin',
-    image:
-      'https://assets3.sportsnet.ca/wp-content/uploads/2018/06/ovechkin-lifts-stanley-cup-1024x576.jpg',
+    image: require('./images/players/ovechkin.jpg'),
   },
   {
     name: 'T.J Oshie',
-    image:
-      'https://storage.googleapis.com/afs-prod/media/media:ad9273c82ed54801ba46fef9e4c3e939/800.jpeg',
+    image: require('./images/players/oshie.jpeg'),
   },
   {
     name: 'Braden Holtby',
-    image:
-      'http://starsandsticks.com/files/2015/06/braden-holtby-nhl-stanley-cup-playoffs-new-york-rangers-washington-capitals.jpg',
+    image: require('./images/players/holtby.jpg'),
   },
   {
     name: 'Nathan Walker',
-    image: 'https://d3p157427w54jq.cloudfront.net/uploads/2018/06/walker-caps-636x397.jpg',
+    image: require('./images/players/walker.jpg'),
   },
   {
     name: 'Nicklas Backstrom',
-    image:
-      'https://media.gettyimages.com/photos/alex-ovechkin-of-the-washington-capitals-and-teammate-nicklas-lift-picture-id969525996?k=6&m=969525996&s=612x612&w=0&h=HyHCIx89QPrKaYmf3tfDpvB4zGZ4R4RE_68iW6u2nZk=',
+    image: require('./images/players/backstrom.jpg'),
   },
   {
     name: 'Evgeny Kuznetsov',
-    image: 'https://assets1.sportsnet.ca/wp-content/uploads/2017/04/evgeny-kuznetsov.jpg',
+    image: require('./images/players/kuznetsov.jpg'),
   },
   {
     name: 'Devante Smith-Pelly',
-    image:
-      'https://www.washingtonpost.com/resizer/fZPwycjXbmghcdhuV0qCL_KQVxU=/480x0/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/VAKU43HZ444WHEC3NK5ZI2UJDE.jpg',
+    image: require('./images/players/pelly.jpg'),
   },
   {
     name: 'Lars Eller',
-    image:
-      'https://postmediamontrealgazette2.files.wordpress.com/2018/06/969467722.jpg?quality=80&strip=all&w=840&h=630&crop=1',
+    image: require('./images/players/eller.jpg'),
   },
   {
     name: 'John Carlson',
-    image: 'http://capitalsoutsider.com/wp-content/uploads/2015/11/caps-241-610x400.jpg',
+    image: require('./images/players/carlson.jpg'),
   },
 ];
 
@@ -238,7 +255,7 @@ storiesOf('Examples/Cards', module).add('list to content', () => (
                     <IconButton
                       color="default"
                       aria-label="Menu"
-                      style={{ top: 0, left: 0, position: 'absolute', ...props.style }}
+                      style={{ top: 5, left: 5, position: 'absolute', ...props.style }}
                       onClick={toggle}
                     >
                       <BackIcon color="inherit" />
@@ -271,6 +288,10 @@ storiesOf('Examples/Cards', module).add('list to content', () => (
         <BackgroundContainer>
           <Background />
         </BackgroundContainer>
+
+        <ChampionsText>
+          {'Stanley Cup Champs'.split('').map(char => <span>{char}</span>)}
+        </ChampionsText>
       </Container>
     )}
   </Toggler>

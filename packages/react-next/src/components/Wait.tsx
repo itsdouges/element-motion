@@ -2,12 +2,9 @@ import * as React from 'react';
 import Collecter, { CommonProps, Actions, Data } from './Collector';
 
 /**
- * Wait is used to pause a parent animation until all parent
- * animations have completed.
+ * ## Wait
  *
- * @export
- * @class Wait
- * @extends {React.Component<CommonProps>}
+ * Wait is used to pause the execution of all parent animations until all children animations have completed.
  */
 export default class Wait extends React.Component<CommonProps> {
   data: Data = {

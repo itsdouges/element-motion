@@ -12,7 +12,7 @@
 [![Dependencies](https://img.shields.io/david/madou/yubaba.svg?style=flat-squarer)](https://david-dm.org/madou/yubaba)
 [![Dev Dependencies](https://david-dm.org/madou/yubaba/dev-status.svg)](https://david-dm.org/madou/yubaba?type=dev)
 
-[![Example](./test/images/example-music.gif)](https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleMusic&selectedStory=move%20expand%20shrink%20wait&full=0&addons=0&stories=1&panelRight=0)
+[![Example](https://github.com/madou/yubaba/raw/master/test/images/example-music.gif)](https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleMusic&selectedStory=move%20expand%20shrink%20wait&full=0&addons=0&stories=1&panelRight=0)
 
 ## Installation
 
@@ -47,7 +47,7 @@ Let's use `yubaba` to have them seamlessly transition to each other.
 import Baba, { Move } from 'yubaba';
 ```
 
-[![Example](./test/images/move.gif)](https://madou.github.io/yubaba)
+[![Example](https://github.com/madou/yubaba/raw/master/test/images/move.gif)](https://madou.github.io/yubaba)
 
 * The component switching happens immediately as usual,
   hence why the background color changes immediately from red to blue.
@@ -63,7 +63,7 @@ Let's introduce another animation, `CircleExpand`.
 import Baba, { Move, CircleExpand } from 'yubaba';
 ```
 
-[![Example](./test/images/expand-and-move.gif)](https://madou.github.io/yubaba)
+[![Example](https://github.com/madou/yubaba/raw/master/test/images/expand-and-move.gif)](https://madou.github.io/yubaba)
 
 ### Circle expand _then_ move
 
@@ -76,7 +76,7 @@ Lets introduce an animation helper `Wait` to do just that.
 import Baba, { Move, CircleExpand, Wait } from 'yubaba';
 ```
 
-[![Example](./test/images/expand-then-move.gif)](https://madou.github.io/yubaba)
+[![Example](https://github.com/madou/yubaba/raw/master/test/images/expand-then-move.gif)](https://madou.github.io/yubaba)
 
 ### Circle expand _then_ move _then_ show contents
 
@@ -93,7 +93,7 @@ import Baba, { Move, CircleExpand, Wait, BabaManager } from 'yubaba';
   we want to stay hidden until the animations have finished
 * Remember this is all just CSS - we could also add a `transition` to said components to fade them in.
 
-[![Example](./test/images/managed-expand-then-move.gif)](https://madou.github.io/yubaba)
+[![Example](https://github.com/madou/yubaba/raw/master/test/images/managed-expand-then-move.gif)](https://madou.github.io/yubaba)
 
 ### Putting it altogether
 
@@ -105,20 +105,12 @@ Let's introduce `CircleShrink` and have our two-way transition happening.
 import Baba, { Move, CircleExpand, Wait, BabaManager, CircleShrink } from 'yubaba';
 ```
 
-[![Example](./test/images/altogether.gif)](https://madou.github.io/yubaba)
+[![Example](https://github.com/madou/yubaba/raw/master/test/images/altogether.gif)](https://madou.github.io/yubaba)
 
 ## Other Examples
 
 There are many examples in our [storybook](https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleSearch&selectedStory=search%20bar&full=0&addons=0&stories=1&panelRight=0), top picks would include the Google Music and Mobile Google Image Search examples.
 
-## Built-in Animations
-
-Section coming soon.
-
 ### Make your own
-
-Section coming soon.
-
-## API Docs
 
 Section coming soon.

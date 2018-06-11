@@ -19,7 +19,9 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook --output-dir docs",
     "fix-duplicates":
-      "yarn-tools fix-duplicates yarn.lock > fixed-yarn.lock && rm yarn.lock && mv fixed-yarn.lock yarn.lock && yarn install"
+      "yarn-tools fix-duplicates yarn.lock > fixed-yarn.lock && rm yarn.lock && mv fixed-yarn.lock yarn.lock && yarn install",
+    "build-docs":
+      "npx typedoc --out docz/ packages/react-next/src/index.tsx --mode file --exclude packages/react-next/src/lib --exclude packages/react-next/src/components/SimpleKeyframe.tsx --exclude packages/react-next/src/components/SimpleTween.tsx --theme minimal --hideGenerator --readme README.md"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.1",

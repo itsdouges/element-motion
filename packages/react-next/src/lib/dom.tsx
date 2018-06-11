@@ -1,3 +1,6 @@
+/**
+ * @hidden
+ */
 export function getDocumentScroll() {
   const scrollTop =
     document.documentElement && document.documentElement.scrollTop
@@ -19,6 +22,9 @@ interface GetElementSizeLocationOptions {
   useOffsetSize?: boolean;
 }
 
+/**
+ * @hidden
+ */
 export interface GetElementSizeLocationReturnValue {
   size: {
     width: number;
@@ -35,6 +41,9 @@ export interface GetElementSizeLocationReturnValue {
   };
 }
 
+/**
+ * @hidden
+ */
 export function getElementSizeLocation(
   element: HTMLElement,
   options: GetElementSizeLocationOptions = {}
@@ -61,6 +70,9 @@ export function getElementSizeLocation(
   };
 }
 
+/**
+ * @hidden
+ */
 export function calculateElementCenterInViewport(sizeLocation: GetElementSizeLocationReturnValue) {
   return {
     top: sizeLocation.location.top + Math.ceil(sizeLocation.size.width / 2),
@@ -68,6 +80,9 @@ export function calculateElementCenterInViewport(sizeLocation: GetElementSizeLoc
   };
 }
 
+/**
+ * @hidden
+ */
 export function calculateWindowCentre() {
   return {
     left: Math.ceil(window.innerWidth / 2),
@@ -75,6 +90,9 @@ export function calculateWindowCentre() {
   };
 }
 
+/**
+ * @hidden
+ */
 export function recalculateLocationFromScroll(
   sizeLocation: GetElementSizeLocationReturnValue
 ): GetElementSizeLocationReturnValue {

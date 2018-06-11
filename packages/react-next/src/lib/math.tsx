@@ -3,6 +3,9 @@ interface Dimensions {
   height: number;
 }
 
+/**
+ * @hidden
+ */
 export function calculateHypotenuse({ width, height }: Dimensions) {
   const x2 = width ** 2;
   const y2 = height ** 2;
@@ -11,6 +14,9 @@ export function calculateHypotenuse({ width, height }: Dimensions) {
   return Math.ceil(hypotenuse);
 }
 
+/**
+ * @hidden
+ */
 export function percentageDifference(from: number, to: number) {
   return from / to;
 }

@@ -1,11 +1,22 @@
 import * as React from 'react';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
+/**
+ * @hidden
+ */
 export type AnimationCallback = (data: AnimationData) => Promise<any>;
+
+/**
+ * @hidden
+ */
 export enum Actions {
   animation = 'animation',
   wait = 'wait',
 }
+
+/**
+ * @hidden
+ */
 export type Data =
   | {
       action: Actions.animation;
@@ -18,31 +29,62 @@ export type Data =
       };
     }
   | { action: Actions.wait };
+
+/**
+ * @hidden
+ */
 export type SupplyRefHandler = (ref: HTMLElement | null) => void;
+
+/**
+ * @hidden
+ */
 export type SupplyRenderChildrenHandler = (reactNode: ChildrenAsFunction) => void;
+
+/**
+ * @hidden
+ */
 export type SupplyDataHandler = (data: Data[]) => void;
+
+/**
+ * @hidden
+ */
 export type ChildrenAsFunction = (
   props: { ref: SupplyRefHandler; style: Style }
 ) => React.ReactNode;
 
+/**
+ * @hidden
+ */
 export interface AnimationData {
   caller: React.Component;
   fromTarget: TargetData;
   toTarget: TargetData;
 }
 
+/**
+ * @hidden
+ */
 export interface Style {
   [key: string]: string | number | undefined;
 }
 
+/**
+ * @hidden
+ */
 export interface TargetData extends GetElementSizeLocationReturnValue {
   render: ChildrenAsFunction;
 }
 
+/**
+ * @hidden
+ */
 export interface CommonProps {
   children: ChildrenAsFunction | React.ReactElement<Props>;
 }
 
+/**
+ * @hidden
+ */
 export interface Props extends CommonProps {
   receiveRef?: SupplyRefHandler;
   receiveRenderChildren?: SupplyRenderChildrenHandler;
@@ -51,6 +93,9 @@ export interface Props extends CommonProps {
   style?: Style;
 }
 
+/**
+ * @hidden
+ */
 export interface Collect {
   ref: SupplyRefHandler;
   data: SupplyDataHandler;
@@ -60,6 +105,14 @@ export interface Collect {
 
 const CollectContext = React.createContext<Collect>();
 
+/**
+ * ## Collector
+ *
+ * Used as the glue for all `yubaba` components.
+ * It is purely an internal component which will collect and pass all props up to the parent `<Baba />` component.
+ *
+ * For example usage look inside `Baba.tsx` or any component in the `animations` folder.
+ */
 export default class Collector extends React.Component<Props> {
   render() {
     if (typeof this.props.children !== 'function') {

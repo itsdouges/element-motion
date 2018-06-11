@@ -11,6 +11,9 @@ interface Props {
   at?: number;
 }
 
+/**
+ * @hidden
+ */
 export default class SimpleKeyframe extends React.Component<Props> {
   state = {
     started: false,

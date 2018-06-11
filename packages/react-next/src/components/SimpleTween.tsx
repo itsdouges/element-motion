@@ -16,6 +16,9 @@ interface State {
   state: 'from' | 'to';
 }
 
+/**
+ * @hidden
+ */
 export default class SimpleTween extends React.Component<Props, State> {
   started: boolean = false;
 

@@ -14,12 +14,10 @@ interface Props extends CommonProps {
 }
 
 /**
+ * ## Move
+ *
  * Move will animate the fromNode to the toNode while transitioning
  * between the two nodes for a seamless transition.
- *
- * @export
- * @class Move
- * @extends {React.Component<Props>}
  */
 export default class Move extends React.Component<Props> {
   finishAnimation: () => Promise<any>;
