@@ -49,7 +49,7 @@ import Baba, { Move } from 'yubaba';
 
 [![Example](https://github.com/madou/yubaba/raw/master/test/images/move.gif)](https://madou.github.io/yubaba)
 
-* The component switching happens immediately as usual,
+- The component switching happens immediately as usual,
   hence why the background color changes immediately from red to blue.
   We'll improve this in a few steps.
 
@@ -88,10 +88,10 @@ Let's introduce an animation helper `BabaManager` to do just that.
 import Baba, { Move, CircleExpand, Wait, BabaManager } from 'yubaba';
 ```
 
-* The background now doesn't change immediately thanks to the `BabaManager`
-* The `BabaManager` will provider style props which we can then pass to one or more components
+- The background now doesn't change immediately thanks to the `BabaManager`
+- The `BabaManager` will provider style props which we can then pass to one or more components
   we want to stay hidden until the animations have finished
-* Remember this is all just CSS - we could also add a `transition` to said components to fade them in.
+- Remember this is all just CSS - we could also add a `transition` to said components to fade them in.
 
 [![Example](https://github.com/madou/yubaba/raw/master/test/images/managed-expand-then-move.gif)](https://madou.github.io/yubaba)
 
@@ -111,6 +111,10 @@ import Baba, { Move, CircleExpand, Wait, BabaManager, CircleShrink } from 'yubab
 
 There are many examples in our [storybook](https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleSearch&selectedStory=search%20bar&full=0&addons=0&stories=1&panelRight=0), top picks would include the Google Music and Mobile Google Image Search examples.
 
-### Make your own
+## Make your own
 
-Section coming soon.
+Tutorial coming soon, refer to [src/components/animations](https://github.com/madou/yubaba/tree/master/packages/react-next/src/components/animations) for example implementations for now.
+
+## API
+
+[See typedoc.](https://madou.github.io/yubaba/typedoc/)
