@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
-import Baba, { Collector, CommonProps, Actions, BabaManager } from '../../src';
+import Baba, { Collector, CollectorChildrenProps, CollectorActions, BabaManager } from '../../src';
 import Toggler from '../Toggler';
 import StickyButton from '../StickyButton';
 
@@ -13,13 +13,13 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
-const Noop: React.StatelessComponent<CommonProps & { duration: number }> = ({
+const Noop: React.StatelessComponent<CollectorChildrenProps & { duration: number }> = ({
   children,
   duration,
 }) => (
   <Collector
     data={{
-      action: Actions.animation,
+      action: CollectorActions.animation,
       payload: {
         abort: () => {},
         cleanup: () => {},

@@ -1,9 +1,15 @@
 import * as React from 'react';
 
+/**
+ * @hidden
+ */
 interface Style {
   [key: string]: string | number | undefined;
 }
 
+/**
+ * @hidden
+ */
 interface Props {
   style: Style;
   keyframes: Style[];

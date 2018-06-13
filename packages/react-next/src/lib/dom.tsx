@@ -18,6 +18,9 @@ export function getDocumentScroll() {
   };
 }
 
+/**
+ * @hidden
+ */
 interface GetElementSizeLocationOptions {
   useOffsetSize?: boolean;
 }

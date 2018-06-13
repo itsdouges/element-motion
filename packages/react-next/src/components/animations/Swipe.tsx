@@ -1,9 +1,14 @@
 import * as React from 'react';
 import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
-import Collecter, { CommonProps, AnimationCallback, Data, Actions } from '../Collector';
+import Collecter, {
+  CollectorChildrenProps,
+  AnimationCallback,
+  CollectorData,
+  CollectorActions,
+} from '../Collector';
 import SimpleKeyframe from '../SimpleKeyframe';
 
-interface Props extends CommonProps {
+export interface SwipeProps extends CollectorChildrenProps {
   background: string;
   direction: 'left' | 'right' | 'up' | 'down';
   duration?: number;
@@ -14,7 +19,7 @@ interface Props extends CommonProps {
  *
  * Swipe will animate a block swiping over the viewport.
  */
-export default class Swipe extends React.Component<Props> {
+export default class Swipe extends React.Component<SwipeProps> {
   finishAnimation: () => Promise<any>;
   renderAnimation: (at?: number) => Promise<any>;
   finishAfterAnimate: () => Promise<any>;
@@ -99,8 +104,8 @@ export default class Swipe extends React.Component<Props> {
   };
 
   render() {
-    const data: Data = {
-      action: Actions.animation,
+    const data: CollectorData = {
+      action: CollectorActions.animation,
       payload: {
         animate: this.animate,
         abort: this.abort,

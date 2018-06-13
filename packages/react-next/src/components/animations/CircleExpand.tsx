@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
-import Collecter, { CommonProps, AnimationCallback, Data, Actions } from '../Collector';
+import Collecter, {
+  CollectorChildrenProps,
+  AnimationCallback,
+  CollectorData,
+  CollectorActions,
+} from '../Collector';
 import { calculateHypotenuse } from '../../lib/math';
 import {
   calculateWindowCentre,
@@ -9,7 +14,7 @@ import {
 } from '../../lib/dom';
 import SimpleKeyframe from '../SimpleKeyframe';
 
-interface Props extends CommonProps {
+export interface CircleExpandProps extends CollectorChildrenProps {
   background: string;
   duration?: number;
 }
@@ -23,7 +28,7 @@ interface Props extends CommonProps {
  * Generally you will use CircleExpand and CircleShrink together
  * to seamlessly transition the background between pages.
  */
-export default class CircleExpand extends React.Component<Props> {
+export default class CircleExpand extends React.Component<CircleExpandProps> {
   static defaultProps = {
     duration: 500,
   };
@@ -123,8 +128,8 @@ export default class CircleExpand extends React.Component<Props> {
   };
 
   render() {
-    const data: Data = {
-      action: Actions.animation,
+    const data: CollectorData = {
+      action: CollectorActions.animation,
       payload: {
         animate: this.animate,
         abort: this.abort,

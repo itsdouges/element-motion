@@ -1,12 +1,18 @@
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
-import { Data, ChildrenAsFunction } from '../components/Collector';
+import { CollectorData, CollectorChildrenAsFunction } from '../components/Collector';
 
+/**
+ * @hidden
+ */
 interface ChildrenData extends GetElementSizeLocationReturnValue {
   element: HTMLElement;
-  render: ChildrenAsFunction;
-  data: Data[];
+  render: CollectorChildrenAsFunction;
+  data: CollectorData[];
 }
 
+/**
+ * @hidden
+ */
 const children = new Map<string, ChildrenData>();
 
 /**

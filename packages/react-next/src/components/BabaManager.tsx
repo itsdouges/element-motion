@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { Style } from './Collector';
+import { InlineStyles } from './Collector';
 
-interface Props {
-  children: (props: { style: Style }) => React.ReactNode;
+export interface BabaManangerProps {
+  children: (props: { style: InlineStyles }) => React.ReactNode;
   name?: string;
 }
 
+/**
+ * @hidden
+ */
 interface State {
-  style: Style;
+  style: InlineStyles;
 }
 
 /**
@@ -17,6 +20,9 @@ export interface InjectedProps {
   context?: BabaManagerContext;
 }
 
+/**
+ * @hidden
+ */
 type OnFinishHandler = (opts: { name: string }) => void;
 
 /**
@@ -34,24 +40,28 @@ export const BabaContext = React.createContext<BabaManagerContext>();
 /**
  * ## BabaManager
  *
- * Used to hide contents before an animation is complete from a child `<Baba />` component.
- * If there is more than one child `<Baba />` you can use an optional `name` prop which should match the appropriate `<Baba />`.
+ * Used to hide contents before an animation is complete triggered from a child `<Baba />` component.
+ * If there is more than one child `<Baba />` you can use an optional `name` prop which should match the appropriate `<Baba />` component.
  *
- * Usage:
+ * If it is the initial mount it will immediately be shown.
+ *
+ * ### Usage
  *
  * ```
+ * const MyApp = () => (
  * <BabaManager name="my-anim">
- *  {(props) => (
- *    <div {...props}>
- *      <Baba name="my-anim">
- *        {(props) => <div {...props} />}
- *      </Baba>
- *    </div>
- *  )}
- * </BabaManager>
+ *    {(props) => (
+ *      <div {...props}>
+ *        <Baba name="my-anim">
+ *          {(props) => <div {...props} />}
+ *        </Baba>
+ *      </div>
+ *    )}
+ *   </BabaManager>
+ * );
  * ```
  */
-export default class BabaManager extends React.Component<Props, State> {
+export default class BabaManager extends React.Component<BabaManangerProps, State> {
   state: State = {
     style: {
       opacity: 0,

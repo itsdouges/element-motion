@@ -1,0 +1,8 @@
+{
+  "search.useIgnoreFiles": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/docs/**": true
+  }
+}

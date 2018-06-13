@@ -3,17 +3,28 @@ import Collector, {
   SupplyDataHandler,
   SupplyRenderChildrenHandler,
   SupplyRefHandler,
-  ChildrenAsFunction,
-  Data,
-  CommonProps,
-  Actions,
+  CollectorChildrenAsFunction,
+  CollectorData,
+  CollectorChildrenProps,
+  CollectorActions,
 } from './Collector';
 import { getElementSizeLocation } from '../lib/dom';
 import * as childrenStore from '../lib/childrenStore';
 import { InjectedProps, withBabaManagerContext } from './BabaManager';
 
+/**
+ * @hidden
+ */
 type PromiseFunc = () => Promise<any>;
+
+/**
+ * @hidden
+ */
 type Func = () => void;
+
+/**
+ * @hidden
+ */
 interface MappedAnimation {
   animate: PromiseFunc;
   beforeAnimate: PromiseFunc;
@@ -21,9 +32,13 @@ interface MappedAnimation {
   abort: Func;
   cleanup: Func;
 }
+
+/**
+ * @hidden
+ */
 type AnimationBlock = MappedAnimation[];
 
-export interface Props extends CommonProps, InjectedProps {
+export interface BabaProps extends CollectorChildrenProps, InjectedProps {
   name: string;
 
   /**
@@ -37,6 +52,9 @@ export interface Props extends CommonProps, InjectedProps {
   onFinish?: () => void;
 }
 
+/**
+ * @hidden
+ */
 interface State {
   shown: boolean;
 }
@@ -49,35 +67,29 @@ interface State {
  * When unmounting or flipping the prop `in` from `true` to `false`,
  * it will execute all the animations `bottom to top` below it if a matching `<Baba />` pair is found within 50ms.
  *
- * Usage
+ * ### Usage
  *
  * ```
- * render() {
- *  const { shown } = this.state;
+ * import Baba, { Move } from 'yubaba';
  *
- *  return (
- *    <>
- *      {shown && <Baba name="my-anim">
- *        <CircleExpand>
- *          <Wait>
- *            <Move>
- *              {({ ref, style }) => <div ref={ref} style={style}>starting point</div>}
- *            </Move>
- *          </Wait>
- *        </CircleExpand>
- *      </Baba>}
+ * const MyApp = ({ shown, show }) => (
+ *  <React.Fragment>
+ *    {shown || <Baba name="my-anim">
+ *      <Move>
+ *        {({ ref, style }) => <div onClick={() => show(false)} ref={ref} style={style}>starting point</div>}
+ *      </Move>
+ *    </Baba>}
  *
- *      {shown || <Baba name="my-anim">
- *        <Move>
- *          {({ ref, style }) => <div ref={ref} style={style}>ending point</div>}
- *        </Move>
- *      </Baba>}
- *    </>
- *  );
- * }
+ *    {shown && <Baba name="my-anim">
+ *      <Move>
+ *        {({ ref, style }) => <div onClick={() => show(true)} ref={ref} style={style}>ending point</div>}
+ *      </Move>
+ *    </Baba>}
+ *  </React.Fragment>
+ * );
  * ```
  */
-export class Baba extends React.PureComponent<Props, State> {
+export class Baba extends React.PureComponent<BabaProps, State> {
   state: State = {
     shown: false,
   };
@@ -85,9 +97,9 @@ export class Baba extends React.PureComponent<Props, State> {
   animating: boolean = false;
   unmounting: boolean = false;
   element: HTMLElement | null;
-  renderChildren: ChildrenAsFunction;
+  renderChildren: CollectorChildrenAsFunction;
   abortAnimations = () => {};
-  data: Data[];
+  data: CollectorData[];
 
   componentDidMount() {
     if (this.props.in === undefined && childrenStore.has(this.props.name)) {
@@ -115,7 +127,7 @@ export class Baba extends React.PureComponent<Props, State> {
     this.unmounting = true;
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: BabaProps) {
     if (this.props.in === prevProps.in) {
       // Nothing to do, return early.
       return;
@@ -200,7 +212,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
       this.animating = true;
 
       const actions = fromTarget.data.map(data => {
-        if (data.action === Actions.animation) {
+        if (data.action === CollectorActions.animation) {
           const animationData = {
             caller: this,
             fromTarget: target,
@@ -211,7 +223,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
           };
 
           return {
-            action: Actions.animation,
+            action: CollectorActions.animation,
             payload: {
               beforeAnimate: () =>
                 data.payload.beforeAnimate
@@ -234,13 +246,13 @@ If it's an image, try and have the image loaded before mounting, or set a static
       const blocks = actions.reduce<AnimationBlock[]>(
         (arr, data) => {
           switch (data.action) {
-            case Actions.animation: {
+            case CollectorActions.animation: {
               // Add to the last block in the array.
               arr[arr.length - 1].push(data.payload);
               return arr;
             }
 
-            case Actions.wait: {
+            case CollectorActions.wait: {
               // Found a wait action, start a new block.
               arr.push([]);
               return arr;
@@ -263,7 +275,9 @@ If it's an image, try and have the image loaded before mounting, or set a static
 
       const beforeAnimatePromises = actions.map(
         data =>
-          data.action === Actions.animation ? data.payload.beforeAnimate() : Promise.resolve()
+          data.action === CollectorActions.animation
+            ? data.payload.beforeAnimate()
+            : Promise.resolve()
       );
 
       Promise.all(beforeAnimatePromises).then(() => {

@@ -6,50 +6,42 @@ import { GetElementSizeLocationReturnValue } from '../lib/dom';
  */
 export type AnimationCallback = (data: AnimationData) => Promise<any>;
 
-/**
- * @hidden
- */
-export enum Actions {
+export enum CollectorActions {
   animation = 'animation',
   wait = 'wait',
 }
 
-/**
- * @hidden
- */
-export type Data =
-  | {
-      action: Actions.animation;
-      payload: {
-        animate: AnimationCallback;
-        beforeAnimate?: AnimationCallback;
-        afterAnimate?: AnimationCallback;
-        abort?: () => void;
-        cleanup: () => void;
-      };
-    }
-  | { action: Actions.wait };
+export interface WaitAction {
+  action: CollectorActions.wait;
+}
 
-/**
- * @hidden
- */
+export interface AnimationAction {
+  action: CollectorActions.animation;
+  payload: {
+    animate: AnimationCallback;
+    beforeAnimate?: AnimationCallback;
+    afterAnimate?: AnimationCallback;
+    abort?: () => void;
+    cleanup: () => void;
+  };
+}
+
+export type CollectorData = AnimationAction | WaitAction;
+
 export type SupplyRefHandler = (ref: HTMLElement | null) => void;
 
 /**
  * @hidden
  */
-export type SupplyRenderChildrenHandler = (reactNode: ChildrenAsFunction) => void;
+export type SupplyRenderChildrenHandler = (reactNode: CollectorChildrenAsFunction) => void;
 
 /**
  * @hidden
  */
-export type SupplyDataHandler = (data: Data[]) => void;
+export type SupplyDataHandler = (data: CollectorData[]) => void;
 
-/**
- * @hidden
- */
-export type ChildrenAsFunction = (
-  props: { ref: SupplyRefHandler; style: Style }
+export type CollectorChildrenAsFunction = (
+  props: { ref: SupplyRefHandler; style: InlineStyles }
 ) => React.ReactNode;
 
 /**
@@ -61,10 +53,7 @@ export interface AnimationData {
   toTarget: TargetData;
 }
 
-/**
- * @hidden
- */
-export interface Style {
+export interface InlineStyles {
   [key: string]: string | number | undefined;
 }
 
@@ -72,25 +61,24 @@ export interface Style {
  * @hidden
  */
 export interface TargetData extends GetElementSizeLocationReturnValue {
-  render: ChildrenAsFunction;
+  render: CollectorChildrenAsFunction;
+}
+
+export interface CollectorChildrenProps {
+  children: CollectorChildrenAsFunction | React.ReactElement<CollectorProps>;
 }
 
 /**
- * @hidden
+ * ## CollectorProps
+ *
+ * Props for the Collector which will eventually be passed to the parent `<Baba />`.
  */
-export interface CommonProps {
-  children: ChildrenAsFunction | React.ReactElement<Props>;
-}
-
-/**
- * @hidden
- */
-export interface Props extends CommonProps {
+export interface CollectorProps extends CollectorChildrenProps {
   receiveRef?: SupplyRefHandler;
   receiveRenderChildren?: SupplyRenderChildrenHandler;
   receiveData?: SupplyDataHandler;
-  data?: Data;
-  style?: Style;
+  data?: CollectorData;
+  style?: InlineStyles;
 }
 
 /**
@@ -100,9 +88,12 @@ export interface Collect {
   ref: SupplyRefHandler;
   data: SupplyDataHandler;
   renderChildren: SupplyRenderChildrenHandler;
-  style: Style;
+  style: InlineStyles;
 }
 
+/**
+ * @hidden
+ */
 const CollectContext = React.createContext<Collect>();
 
 /**
@@ -111,9 +102,33 @@ const CollectContext = React.createContext<Collect>();
  * Used as the glue for all `yubaba` components.
  * It is purely an internal component which will collect and pass all props up to the parent `<Baba />` component.
  *
+ * ### Usage
+ *
+ * ```
+ *  const Noop = ({
+ *    children,
+ *    duration,
+ *  }) => (
+ *    <Collector
+ *      data={{
+ *        action: 'animation',
+ *        payload: {
+ *          abort: () => {},
+ *          cleanup: () => {},
+ *          afterAnimate: () => Promise.resolve(),
+ *          animate: () => new Promise(resolve => setTimeout(resolve, duration)),
+ *          beforeAnimate: () => Promise.resolve(),
+ *        },
+ *      }}
+ *    >
+ *      {children}
+ *    </Collector>
+ *  );
+ * ```
+ *
  * For example usage look inside `Baba.tsx` or any component in the `animations` folder.
  */
-export default class Collector extends React.Component<Props> {
+export default class Collector extends React.Component<CollectorProps> {
   render() {
     if (typeof this.props.children !== 'function') {
       return (

@@ -1,9 +1,15 @@
 import * as React from 'react';
 
+/**
+ * @hidden
+ */
 interface Style {
   [key: string]: string | number | undefined;
 }
 
+/**
+ * @hidden
+ */
 interface Props {
   duration: number;
   from: Style;
@@ -12,6 +18,9 @@ interface Props {
   start?: boolean;
 }
 
+/**
+ * @hidden
+ */
 interface State {
   state: 'from' | 'to';
 }

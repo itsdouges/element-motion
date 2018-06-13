@@ -1,13 +1,21 @@
 import * as React from 'react';
 import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
-import Collecter, { CommonProps, AnimationCallback, Data, Actions } from '../Collector';
+import Collecter, {
+  CollectorChildrenProps,
+  AnimationCallback,
+  CollectorData,
+  CollectorActions,
+} from '../Collector';
 import * as math from '../../lib/math';
 import { recalculateLocationFromScroll } from '../../lib/dom';
 import SimpleTween from '../SimpleTween';
 
+/**
+ * @hidden
+ */
 const noop = () => {};
 
-interface Props extends CommonProps {
+export interface MoveProps extends CollectorChildrenProps {
   duration?: number;
   delay?: number;
   zIndex?: number;
@@ -19,7 +27,7 @@ interface Props extends CommonProps {
  * Move will animate the fromNode to the toNode while transitioning
  * between the two nodes for a seamless transition.
  */
-export default class Move extends React.Component<Props> {
+export default class Move extends React.Component<MoveProps> {
   finishAnimation: () => Promise<any>;
   finishCleanup: () => void;
   realAbort: () => void;
@@ -162,8 +170,8 @@ export default class Move extends React.Component<Props> {
   };
 
   render() {
-    const data: Data = {
-      action: Actions.animation,
+    const data: CollectorData = {
+      action: CollectorActions.animation,
       payload: {
         animate: this.animate,
         abort: this.abort,
