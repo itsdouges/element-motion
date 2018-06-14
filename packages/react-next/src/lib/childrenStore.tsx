@@ -4,7 +4,7 @@ import { CollectorData, CollectorChildrenAsFunction } from '../components/Collec
 /**
  * @hidden
  */
-interface ChildrenData extends GetElementSizeLocationReturnValue {
+export interface ChildrenData extends GetElementSizeLocationReturnValue {
   element: HTMLElement;
   render: CollectorChildrenAsFunction;
   data: CollectorData[];

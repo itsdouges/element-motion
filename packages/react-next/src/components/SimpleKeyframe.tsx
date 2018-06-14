@@ -3,14 +3,14 @@ import * as React from 'react';
 /**
  * @hidden
  */
-interface Style {
+export interface Style {
   [key: string]: string | number | undefined;
 }
 
 /**
  * @hidden
  */
-interface Props {
+export interface Props {
   style: Style;
   keyframes: Style[];
   onFinish: () => void;

@@ -9,7 +9,7 @@ export interface BabaManangerProps {
 /**
  * @hidden
  */
-interface State {
+export interface State {
   style: InlineStyles;
 }
 
@@ -23,7 +23,7 @@ export interface InjectedProps {
 /**
  * @hidden
  */
-type OnFinishHandler = (opts: { name: string }) => void;
+export type OnFinishHandler = (opts: { name: string }) => void;
 
 /**
  * @hidden

@@ -3,14 +3,14 @@ import * as React from 'react';
 /**
  * @hidden
  */
-interface Style {
+export interface Style {
   [key: string]: string | number | undefined;
 }
 
 /**
  * @hidden
  */
-interface Props {
+export interface Props {
   duration: number;
   from: Style;
   to: Style;
@@ -21,7 +21,7 @@ interface Props {
 /**
  * @hidden
  */
-interface State {
+export interface State {
   state: 'from' | 'to';
 }
 

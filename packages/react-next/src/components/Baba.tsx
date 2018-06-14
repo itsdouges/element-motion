@@ -15,17 +15,17 @@ import { InjectedProps, withBabaManagerContext } from './BabaManager';
 /**
  * @hidden
  */
-type PromiseFunc = () => Promise<any>;
+export type PromiseFunc = () => Promise<any>;
 
 /**
  * @hidden
  */
-type Func = () => void;
+export type Func = () => void;
 
 /**
  * @hidden
  */
-interface MappedAnimation {
+export interface MappedAnimation {
   animate: PromiseFunc;
   beforeAnimate: PromiseFunc;
   afterAnimate: PromiseFunc;
@@ -36,7 +36,7 @@ interface MappedAnimation {
 /**
  * @hidden
  */
-type AnimationBlock = MappedAnimation[];
+export type AnimationBlock = MappedAnimation[];
 
 export interface BabaProps extends CollectorChildrenProps, InjectedProps {
   name: string;
@@ -55,7 +55,7 @@ export interface BabaProps extends CollectorChildrenProps, InjectedProps {
 /**
  * @hidden
  */
-interface State {
+export interface State {
   shown: boolean;
 }
 

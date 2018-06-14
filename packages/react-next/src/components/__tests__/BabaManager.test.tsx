@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
-import BabaManager, { InjectedProps, BabaContext } from '../BabaManager';
+import BabaManager from '../BabaManager';
 
 describe('<BabaManager />', () => {
   it('should hide child initially', () => {

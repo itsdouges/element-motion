@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import Baba from '../Baba';
-import Collector, { Actions, Data } from '../Collector';
+import Collector, { CollectorActions, CollectorData } from '../Collector';
 import * as childrenStore from '../../lib/childrenStore';
 import * as dom from '../../lib/dom';
 import * as BabaManager from '../BabaManager';
@@ -26,8 +26,8 @@ describe('<Baba />', () => {
     receiveRenderChildren(() => <div />);
   };
 
-  const buildAnimPayload = (animate: any): Data => ({
-    action: Actions.animation,
+  const buildAnimPayload = (animate: any): CollectorData => ({
+    action: CollectorActions.animation,
     payload: {
       beforeAnimate: () => Promise.resolve(),
       animate,
@@ -197,7 +197,7 @@ describe('<Baba />', () => {
   });
 
   describe('triggering animations', () => {
-    const prepare = (data: Data[]) => {
+    const prepare = (data: CollectorData[]) => {
       (childrenStore.has as jest.Mock).mockReturnValue(true);
       (childrenStore.get as jest.Mock).mockReturnValue({ data });
     };
@@ -211,7 +211,7 @@ describe('<Baba />', () => {
 
         const { wrapper } = shallowRenderWithLifecycle({ in: false, onFinish });
         const animation = jest.fn().mockResolvedValue({});
-        const data: Data[] = [buildAnimPayload(animation)];
+        const data: CollectorData[] = [buildAnimPayload(animation)];
         prepare(data);
 
         wrapper.setProps({ in: true });
@@ -225,9 +225,9 @@ describe('<Baba />', () => {
         const { wrapper } = shallowRenderWithLifecycle({ in: false, onFinish });
         const longAnimation = () => Promise.resolve({});
         const animation = jest.fn().mockResolvedValue({});
-        const data: Data[] = [
+        const data: CollectorData[] = [
           buildAnimPayload(longAnimation),
-          { action: Actions.wait },
+          { action: CollectorActions.wait },
           buildAnimPayload(animation),
         ];
         prepare(data);
@@ -241,7 +241,7 @@ describe('<Baba />', () => {
       it('should hide children when starting animating', () => {
         const { wrapper } = shallowRenderWithLifecycle({ in: false });
         const animation = jest.fn().mockResolvedValue({});
-        const data: Data[] = [buildAnimPayload(animation)];
+        const data: CollectorData[] = [buildAnimPayload(animation)];
         prepare(data);
 
         wrapper.setProps({ in: true });
@@ -257,7 +257,7 @@ describe('<Baba />', () => {
         };
         const { wrapper } = shallowRenderWithLifecycle({ in: false, onFinish });
         const animation = jest.fn().mockResolvedValue({});
-        const data: Data[] = [buildAnimPayload(animation)];
+        const data: CollectorData[] = [buildAnimPayload(animation)];
         prepare(data);
 
         wrapper.setProps({ in: true });
@@ -270,7 +270,7 @@ describe('<Baba />', () => {
         };
         const { wrapper } = shallowRenderWithLifecycle({ in: false, onFinish });
         const animation = jest.fn().mockResolvedValue({});
-        const data: Data[] = [buildAnimPayload(animation)];
+        const data: CollectorData[] = [buildAnimPayload(animation)];
         prepare(data);
         stubAllReceivers(wrapper);
 
@@ -286,7 +286,7 @@ describe('<Baba />', () => {
         };
         const { wrapper, mount } = shallowRender({ onFinish });
         const animation = jest.fn().mockResolvedValue({});
-        const data: Data[] = [buildAnimPayload(animation)];
+        const data: CollectorData[] = [buildAnimPayload(animation)];
         prepare(data);
 
         mount();
@@ -300,9 +300,9 @@ describe('<Baba />', () => {
         const { wrapper, mount } = shallowRender({ onFinish });
         const longAnimation = () => Promise.resolve({});
         const animation = jest.fn().mockResolvedValue({});
-        const data: Data[] = [
+        const data: CollectorData[] = [
           buildAnimPayload(longAnimation),
-          { action: Actions.wait },
+          { action: CollectorActions.wait },
           buildAnimPayload(animation),
         ];
         prepare(data);
@@ -316,7 +316,7 @@ describe('<Baba />', () => {
       it('should hide children when starting animating', () => {
         const { wrapper, mount } = shallowRender();
         const animation = jest.fn().mockResolvedValue({});
-        const data: Data[] = [buildAnimPayload(animation)];
+        const data: CollectorData[] = [buildAnimPayload(animation)];
         prepare(data);
 
         mount();
@@ -332,7 +332,7 @@ describe('<Baba />', () => {
         };
         const { wrapper, mount } = shallowRender({ onFinish });
         const animation = jest.fn().mockResolvedValue({});
-        const data: Data[] = [buildAnimPayload(animation)];
+        const data: CollectorData[] = [buildAnimPayload(animation)];
         prepare(data);
 
         mount();
@@ -346,7 +346,7 @@ describe('<Baba />', () => {
 
         const { wrapper, mount } = shallowRender({ onFinish });
         const animation = jest.fn().mockResolvedValue({});
-        const data: Data[] = [buildAnimPayload(animation)];
+        const data: CollectorData[] = [buildAnimPayload(animation)];
         prepare(data);
         stubAllReceivers(wrapper);
 

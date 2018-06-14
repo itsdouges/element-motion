@@ -21,7 +21,7 @@ export function getDocumentScroll() {
 /**
  * @hidden
  */
-interface GetElementSizeLocationOptions {
+export interface GetElementSizeLocationOptions {
   useOffsetSize?: boolean;
 }
 
