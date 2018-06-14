@@ -1,7 +1,7 @@
 {
   "lerna": "2.0.0",
   "npmClient": "yarn",
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1-beta.1",
   "command": {
     "publish": {
       "message": "chore(release): publish %s",
