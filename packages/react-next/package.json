@@ -7,7 +7,7 @@
   "main": "commonjs/index.js",
   "module": "es2015/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc && tsc -p ./tsconfig.next.json && cp package.json dist/package.json"
+    "build": "rm -rf dist && tsc -p ./tsconfig.commonjs.json && tsc -p ./tsconfig.es2015.json && cp package.json dist/package.json"
   },
   "dependencies": {
     "react": "^16.4.1",
