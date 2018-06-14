@@ -8,7 +8,7 @@
 ✨ Element to element animation orchestrator for React.js
 
 [![Build Status](https://travis-ci.org/madou/yubaba.svg?branch=master)](https://travis-ci.org/madou/yubaba)
-[![Codecov](https://codecov.io/gh/madou/yubaba/branch/v1/graph/badge.svg)](https://codecov.io/gh/madou/yubaba)
+[![npm](https://img.shields.io/npm/v/yubaba.svg)](https://www.npmjs.com/package/yubaba)
 [![Dependencies](https://img.shields.io/david/madou/yubaba.svg?style=flat-squarer)](https://david-dm.org/madou/yubaba)
 [![Dev Dependencies](https://david-dm.org/madou/yubaba/dev-status.svg)](https://david-dm.org/madou/yubaba?type=dev)
 
