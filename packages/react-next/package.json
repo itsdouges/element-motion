@@ -1,6 +1,6 @@
 {
   "name": "yubaba",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1",
   "repository": "madou/yubaba",
   "author": "Michael Dougall",
   "license": "MIT",
@@ -17,8 +17,8 @@
     "@material-ui/icons": "^1.0.0-beta.42",
     "material-ui": "^1.0.0-beta.42",
     "polished": "^1.9.2",
-    "styled-components": "^3.2.5",
     "react": "^16.4.x",
-    "react-dom": "^16.4.x"
+    "react-dom": "^16.4.x",
+    "styled-components": "^3.2.5"
   }
 }
