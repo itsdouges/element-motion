@@ -4,19 +4,21 @@
   "repository": "madou/yubaba",
   "author": "Michael Dougall",
   "license": "MIT",
-  "main": "commonjs/index.js",
-  "module": "es2015/index.js",
+  "main": "dist/commonjs/packages/react-next/src/index.js",
+  "module": "dist/es2015/packages/react-next/src/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.commonjs.json && tsc -p ./tsconfig.es2015.json && cp package.json dist/package.json"
+    "build": "rm -rf dist && tsc -p ./tsconfig.commonjs.json && tsc -p ./tsconfig.es2015.json && cp package.json dist/package.json && cp ../../README.md dist/README.md"
   },
-  "dependencies": {
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+  "peerDependencies": {
+    "react": "^16.4.x",
+    "react-dom": "^16.4.x"
   },
   "devDependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",
     "material-ui": "^1.0.0-beta.42",
     "polished": "^1.9.2",
-    "styled-components": "^3.2.5"
+    "styled-components": "^3.2.5",
+    "react": "^16.4.x",
+    "react-dom": "^16.4.x"
   }
 }
