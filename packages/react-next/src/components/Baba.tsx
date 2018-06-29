@@ -65,7 +65,7 @@ export interface State {
  * This is the primary component in `yubaba`.
  * When rendering it will be given all of the animation data from its children.
  * When unmounting or flipping the prop `in` from `true` to `false`,
- * it will execute all the animations `bottom to top` below it if a matching `<Baba />` pair is found within 50ms.
+ * it will execute all the animations `top to bottom` below it if a matching `<Baba />` pair is found within 50ms.
  *
  * ### Usage
  *

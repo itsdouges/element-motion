@@ -990,75 +990,101 @@ img { max-width: 100%; }
 			<h1 id="yubaba">yubaba</h1>
 			<p>✨ Element to element animation orchestrator for React.js</p>
 			<p><a href="https://travis-ci.org/madou/yubaba"><img src="https://travis-ci.org/madou/yubaba.svg?branch=master" alt="Build Status"></a>
-				<a href="https://codecov.io/gh/madou/yubaba"><img src="https://codecov.io/gh/madou/yubaba/branch/v1/graph/badge.svg" alt="Codecov"></a>
+				<a href="https://www.npmjs.com/package/yubaba"><img src="https://img.shields.io/npm/v/yubaba.svg" alt="npm"></a>
 				<a href="https://david-dm.org/madou/yubaba"><img src="https://img.shields.io/david/madou/yubaba.svg?style=flat-squarer" alt="Dependencies"></a>
 			<a href="https://david-dm.org/madou/yubaba?type=dev"><img src="https://david-dm.org/madou/yubaba/dev-status.svg" alt="Dev Dependencies"></a></p>
 			<p><a href="https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleMusic&amp;selectedStory=move%20expand%20shrink%20wait&amp;full=0&amp;addons=0&amp;stories=1&amp;panelRight=0"><img src="https://github.com/madou/yubaba/raw/master/test/images/example-music.gif" alt="Example"></a></p>
 			<h2 id="installation">Installation</h2>
-			<pre><code class="lang-bash">yarn add yubaba
+			<pre><code class="lang-bash">npm install yubaba --save
 </code></pre>
 			<h2 id="motivation">Motivation</h2>
 			<p>Beautiful page transitions are becoming more common on the web but we&#39;re still at apoint where we need to write a lot of boilerplate to make it happen,
 			and worse yet different parts of our apps needing to know about each other to make it all work.</p>
 			<p>What if we could keep writing our apps as we do today,
 				have no leaky abstractions,
-			and have beautiful transitions easily?</p>
-			<h2 id="examples">Examples</h2>
-			<p><code>yubaba</code>&#39;s purpose is orchestration,
-				and that is the key.
-				Orchestrating when animations should execute,
-			and when content should be displayed, are the bread and butter of <code>yubaba</code>.</p>
-			<p>These examples will build up from each other to eventually leave you with a fully fledged page transition.</p>
-			<h3 id="move">Move</h3>
-			<p>Ok so we have two disjointed components on two different pages.
-			Let&#39;s use <code>yubaba</code> to have them seamlessly transition to each other.</p>
-			<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> Baba, { Move } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+				and have beautiful transitions easily?
+			Orchestrating when animations should execute and when content should be displayed is what <code>yubaba</code> does best.</p>
+			<h2 id="usage">Usage</h2>
+			<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> Baba, { Move, BabaManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  state = {
+    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>,
+  };
+
+  toggle = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">this</span>.setState(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> ({ <span class="hljs-attr">show</span>: !prev.show }));
+
+  render() {
+    <span class="hljs-keyword">return</span> (
+      &lt;Root&gt;
+        {this.state.show || (
+          &lt;Baba name="finn-attack"&gt;
+            &lt;Move&gt;
+              {({ ref, style }) =&gt; &lt;FinnStart onClick={this.toggle} style={style} innerRef={ref} /&gt;}
+            &lt;/Move&gt;
+          &lt;/Baba&gt;
+        )}
+
+        {this.state.show &amp;&amp; (
+          &lt;React.Fragment&gt;
+            &lt;Baba name="finn-attack"&gt;
+              &lt;Move&gt;
+                {({ ref, style }) =&gt; &lt;FinnEnd onClick={this.toggle} style={style} innerRef={ref} /&gt;}
+              &lt;/Move&gt;
+            &lt;/Baba&gt;
+
+            &lt;Sword /&gt;
+          &lt;/React.Fragment&gt;
+        )}
+      &lt;/Root&gt;
+    );
+  }
+}
 </code></pre>
-			<p><a href="https://madou.github.io/yubaba"><img src="https://github.com/madou/yubaba/raw/master/test/images/move.gif" alt="Example"></a></p>
-			<ul>
-				<li>The component switching happens immediately as usual,
-					hence why the background color changes immediately from red to blue.
-				We&#39;ll improve this in a few steps.</li>
-			</ul>
-			<h3 id="circle-expand-and-move">Circle expand <em>and</em> move</h3>
-			<p>Ok so they can move to each other, cool.
-				But it&#39;s not looking as sweet as it could be!
-			Let&#39;s introduce another animation, <code>CircleExpand</code>.</p>
-			<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> Baba, { Move, CircleExpand } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
-</code></pre>
-			<p><a href="https://madou.github.io/yubaba"><img src="https://github.com/madou/yubaba/raw/master/test/images/expand-and-move.gif" alt="Example"></a></p>
-			<h3 id="circle-expand-then-move">Circle expand <em>then</em> move</h3>
-			<p>OK so it&#39;s all looking sweet,
-				but I think it&#39;d look even sweeter if the <code>Move</code> happened after the <code>CircleExpand</code>,
-				don&#39;t you?
-			Lets introduce an animation helper <code>Wait</code> to do just that.</p>
-			<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> Baba, { Move, CircleExpand, Wait } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
-</code></pre>
-			<p><a href="https://madou.github.io/yubaba"><img src="https://github.com/madou/yubaba/raw/master/test/images/expand-then-move.gif" alt="Example"></a></p>
-			<h3 id="circle-expand-then-move-then-show-contents">Circle expand <em>then</em> move <em>then</em> show contents</h3>
-			<p>Ok so there&#39;s one more finishing touch that would really seal the deal,
-				and that&#39;s not showing the new page contents until after all animations have finished.
-			Let&#39;s introduce an animation helper <code>BabaManager</code> to do just that.</p>
-			<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> Baba, { Move, CircleExpand, Wait, BabaManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
-</code></pre>
-			<ul>
-				<li>The background now doesn&#39;t change immediately thanks to the <code>BabaManager</code></li>
-				<li>The <code>BabaManager</code> will provider style props which we can then pass to one or more components
-				we want to stay hidden until the animations have finished</li>
-				<li>Remember this is all just CSS - we could also add a <code>transition</code> to said components to fade them in.</li>
-			</ul>
-			<p><a href="https://madou.github.io/yubaba"><img src="https://github.com/madou/yubaba/raw/master/test/images/managed-expand-then-move.gif" alt="Example"></a></p>
-			<h3 id="putting-it-altogether">Putting it altogether</h3>
-			<p>Ok so we have an awesome animation in one direction,
-				but we can have our cake and eat it too!
-			Let&#39;s introduce <code>CircleShrink</code> and have our two-way transition happening.</p>
-			<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> Baba, { Move, CircleExpand, Wait, BabaManager, CircleShrink } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
-</code></pre>
-			<p><a href="https://madou.github.io/yubaba"><img src="https://github.com/madou/yubaba/raw/master/test/images/altogether.gif" alt="Example"></a></p>
+			<h2 id="example">Example</h2>
+			<p>These examples will build up from each other to leave you with a <em>awesome</em> transition that was really easy to make.
+			Click on the gif&#39;s to see each steps codesandbox.</p>
+			<p>So we have two disjointed components that are toggled when clicked (click on Finn!).
+			How could we have them transition nicely to each other?</p>
+			<p><a href="https://codesandbox.io/s/jvw344oll3"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-0.gif?raw=true" alt="Intro to Yubaba 0/4"></a></p>
+			<h3 id="introducing-baba-and-move-">Introducing <code>&lt;Baba /&gt;</code> and <code>&lt;Move /&gt;</code></h3>
+			<p>Let&#39;s use the <code>Baba</code> and <code>Move</code> components to have them seamlessly transition to each other.
+				<code>Baba</code> is the brains of <code>yubaba</code>,
+				it does all of the orchestration.
+				<code>Move</code> does just that,
+			it moves the paired children to each other.</p>
+			<p><a href="https://codesandbox.io/s/x3v5ywk5ro"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-1.gif?raw=true" alt="Intro to Yubaba 1/4"></a></p>
+			<p>Okay so that looks cool,
+				but Finn&#39;s sword is shown immediately!
+			Is there anything we can do to make it show after all animations have finished?</p>
+			<h3 id="introducing-babamanager-">Introducing <code>&lt;BabaManager /&gt;</code></h3>
+			<p>Let&#39;s bring in a component <code>BabaManager</code> which will be used to delay showing Finn&#39;s sword.
+			You can imagine this as content in a page around the connecting element (connecting element meaning the element that is transitioning between pages) that should be shown <em>after</em> all animations have finished.</p>
+			<p><a href="https://codesandbox.io/s/oo6905z0k9"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-2.gif?raw=true" alt="Intro to Yubaba 2/4"></a></p>
+			<p>Cool,
+				now we&#39;re making progress.
+				I think we can do better though,
+			what if Finn could really sell his preparation that he&#39;s about to attack?</p>
+			<h3 id="introducing-circleexpand-">Introducing <code>&lt;CircleExpand /&gt;</code></h3>
+			<p>Let&#39;s bring in a component <code>CircleExpand</code> which will expand to fit the viewport,
+			for Finn it will give him some <em>oomph</em> to really sell the attack.</p>
+			<p><a href="https://codesandbox.io/s/6xp1jk4xjw"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-3.gif?raw=true" alt="Intro to Yubaba 3/4"></a></p>
+			<p>Really cool!
+				But both the <code>CircleExpand</code> and <code>Move</code> happening at the same time looks kind of weird,
+			what if we could delay <code>Move</code> until after <code>CircleExpand</code> had finished animating?</p>
+			<h3 id="introducing-wait-">Introducing <code>&lt;Wait /&gt;</code></h3>
+			<p>Let&#39;s bring in a component <code>Wait</code> which will delay the next animation from happening until after the previous one has finished!</p>
+			<p><a href="https://codesandbox.io/s/llv7pkv9y9"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-4.gif?raw=true" alt="Intro to Yubaba 4/4"></a></p>
+			<p>And there you have it,
+			a masta-peece!</p>
 			<h2 id="other-examples">Other Examples</h2>
-			<p>There are many examples in our <a href="https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleSearch&amp;selectedStory=search%20bar&amp;full=0&amp;addons=0&amp;stories=1&amp;panelRight=0">storybook</a>, top picks would include the Google Music and Mobile Google Image Search examples.</p>
-			<h3 id="make-your-own">Make your own</h3>
-			<p>Section coming soon.</p>
+			<p>There are many examples in our <a href="https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleSearch&amp;selectedStory=search%20bar&amp;full=0&amp;addons=0&amp;stories=1&amp;panelRight=0">storybook</a>,
+			top picks would include the Google Music and Mobile Google Image Search examples.</p>
+			<h2 id="make-your-own">Make your own</h2>
+			<p>Tutorial coming soon,
+			refer to <a href="https://github.com/madou/yubaba/tree/master/packages/react-next/src/components/animations">src/components/animations</a> for example implementations for now.</p>
+			<h2 id="api">API</h2>
+			<p><a href="https://madou.github.io/yubaba/typedoc/">See typedoc.</a></p>
 		</div>
 		<div style="position:relative;"><a name="typedoc-main-index" class="tsd-anchor"></a></div>
 		<section class="tsd-panel-group tsd-index-group">
@@ -1119,7 +1145,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Collector<wbr>Children<wbr>AsFunction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/734d7a6/packages/react-next/src/components/Collector.tsx#L43">components/Collector.tsx:43</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/e7059f2/packages/react-next/src/components/Collector.tsx#L43">components/Collector.tsx:43</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1158,7 +1184,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Collector<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="interfaces/animationaction.html" class="tsd-signature-type">AnimationAction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/waitaction.html" class="tsd-signature-type">WaitAction</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/734d7a6/packages/react-next/src/components/Collector.tsx#L29">components/Collector.tsx:29</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/e7059f2/packages/react-next/src/components/Collector.tsx#L29">components/Collector.tsx:29</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1168,7 +1194,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Supply<wbr>Ref<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/734d7a6/packages/react-next/src/components/Collector.tsx#L31">components/Collector.tsx:31</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/e7059f2/packages/react-next/src/components/Collector.tsx#L31">components/Collector.tsx:31</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">

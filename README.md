@@ -17,7 +17,7 @@
 ## Installation
 
 ```bash
-yarn add yubaba
+npm install yubaba --save
 ```
 
 ## Motivation
@@ -28,93 +28,156 @@ and worse yet different parts of our apps needing to know about each other to ma
 What if we could keep writing our apps as we do today,
 have no leaky abstractions,
 and have beautiful transitions easily?
+Orchestrating when animations should execute and when content should be displayed is what `yubaba` does best.
 
-## Examples
-
-`yubaba`'s purpose is orchestration,
-and that is the key.
-Orchestrating when animations should execute,
-and when content should be displayed, are the bread and butter of `yubaba`.
-
-These examples will build up from each other to eventually leave you with a fully fledged page transition.
-
-### Move
-
-Ok so we have two disjointed components on two different pages.
-Let's use `yubaba` to have them seamlessly transition to each other.
+## Usage
 
 ```javascript
-import Baba, { Move } from 'yubaba';
+import Baba, { Move, BabaManager } from 'yubaba';
+
+class App extends React.Component {
+  state = {
+    show: false,
+  };
+
+  toggle = () => this.setState(prev => ({ show: !prev.show }));
+
+  render() {
+    return (
+      <Root>
+        {this.state.show || (
+          <Baba name="finn-attack">
+            <Move>
+              {({ ref, style }) => <FinnStart onClick={this.toggle} style={style} innerRef={ref} />}
+            </Move>
+          </Baba>
+        )}
+
+        {this.state.show && (
+          <React.Fragment>
+            <Baba name="finn-attack">
+              <Move>
+                {({ ref, style }) => <FinnEnd onClick={this.toggle} style={style} innerRef={ref} />}
+              </Move>
+            </Baba>
+
+            <Sword />
+          </React.Fragment>
+        )}
+      </Root>
+    );
+  }
+}
 ```
 
-[![Example](https://github.com/madou/yubaba/raw/master/test/images/move.gif)](https://madou.github.io/yubaba)
+## Example
 
-- The component switching happens immediately as usual,
-  hence why the background color changes immediately from red to blue.
-  We'll improve this in a few steps.
+These examples will build up from each other to leave you with a _awesome_ transition that was really easy to make.
+Click on the gif's to see each steps codesandbox.
 
-### Circle expand _and_ move
+So we have two disjointed components that are toggled when clicked (click on Finn!).
+How could we have them transition nicely to each other?
 
-Ok so they can move to each other, cool.
-But it's not looking as sweet as it could be!
-Let's introduce another animation, `CircleExpand`.
+[![Intro to Yubaba 0/4](https://github.com/madou/yubaba/blob/master/test/images/finn-0.gif?raw=true)](https://codesandbox.io/s/jvw344oll3)
 
-```javascript
-import Baba, { Move, CircleExpand } from 'yubaba';
-```
+### Introducing `<Baba />` and `<Move />`
 
-[![Example](https://github.com/madou/yubaba/raw/master/test/images/expand-and-move.gif)](https://madou.github.io/yubaba)
+Let's use the `Baba` and `Move` components to have them seamlessly transition to each other.
+`Baba` is the brains of `yubaba`,
+it does all of the orchestration.
+`Move` does just that,
+it moves the paired children to each other.
 
-### Circle expand _then_ move
+[![Intro to Yubaba 1/4](https://github.com/madou/yubaba/blob/master/test/images/finn-1.gif?raw=true)](https://codesandbox.io/s/x3v5ywk5ro)
 
-OK so it's all looking sweet,
-but I think it'd look even sweeter if the `Move` happened after the `CircleExpand`,
-don't you?
-Lets introduce an animation helper `Wait` to do just that.
+Okay so that looks cool,
+but Finn's sword is shown immediately!
+Is there anything we can do to make it show after all animations have finished?
 
-```javascript
-import Baba, { Move, CircleExpand, Wait } from 'yubaba';
-```
+### Introducing `<BabaManager />`
 
-[![Example](https://github.com/madou/yubaba/raw/master/test/images/expand-then-move.gif)](https://madou.github.io/yubaba)
+Let's bring in a component `BabaManager` which will be used to delay showing Finn's sword.
+You can imagine this as content in a page around the connecting element (connecting element meaning the element that is transitioning between pages) that should be shown _after_ all animations have finished.
 
-### Circle expand _then_ move _then_ show contents
+[![Intro to Yubaba 2/4](https://github.com/madou/yubaba/blob/master/test/images/finn-2.gif?raw=true)](https://codesandbox.io/s/oo6905z0k9)
 
-Ok so there's one more finishing touch that would really seal the deal,
-and that's not showing the new page contents until after all animations have finished.
-Let's introduce an animation helper `BabaManager` to do just that.
+Cool,
+now we're making progress.
+I think we can do better though,
+what if Finn could really sell his preparation that he's about to attack?
 
-```javascript
-import Baba, { Move, CircleExpand, Wait, BabaManager } from 'yubaba';
-```
+### Introducing `<CircleExpand />`
 
-- The background now doesn't change immediately thanks to the `BabaManager`
-- The `BabaManager` will provider style props which we can then pass to one or more components
-  we want to stay hidden until the animations have finished
-- Remember this is all just CSS - we could also add a `transition` to said components to fade them in.
+Let's bring in a component `CircleExpand` which will expand to fit the viewport,
+for Finn it will give him some _oomph_ to really sell the attack.
 
-[![Example](https://github.com/madou/yubaba/raw/master/test/images/managed-expand-then-move.gif)](https://madou.github.io/yubaba)
+[![Intro to Yubaba 3/4](https://github.com/madou/yubaba/blob/master/test/images/finn-3.gif?raw=true)](https://codesandbox.io/s/6xp1jk4xjw)
 
-### Putting it altogether
+Really cool!
+But both the `CircleExpand` and `Move` happening at the same time looks kind of weird,
+what if we could delay `Move` until after `CircleExpand` had finished animating?
 
-Ok so we have an awesome animation in one direction,
-but we can have our cake and eat it too!
-Let's introduce `CircleShrink` and have our two-way transition happening.
+### Introducing `<Wait />`
 
-```javascript
-import Baba, { Move, CircleExpand, Wait, BabaManager, CircleShrink } from 'yubaba';
-```
+Let's bring in a component `Wait` which will delay the next animation from happening until after the previous one has finished!
 
-[![Example](https://github.com/madou/yubaba/raw/master/test/images/altogether.gif)](https://madou.github.io/yubaba)
+[![Intro to Yubaba 4/4](https://github.com/madou/yubaba/blob/master/test/images/finn-4.gif?raw=true)](https://codesandbox.io/s/llv7pkv9y9)
+
+And there you have it,
+a masta-peece!
 
 ## Other Examples
 
-There are many examples in our [storybook](https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleSearch&selectedStory=search%20bar&full=0&addons=0&stories=1&panelRight=0), top picks would include the Google Music and Mobile Google Image Search examples.
+There are many examples in our [storybook](https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleSearch&selectedStory=search%20bar&full=0&addons=0&stories=1&panelRight=0),
+top picks would include the Google Music and Mobile Google Image Search examples.
 
-## Make your own
+## Make your own animations
 
-Tutorial coming soon, refer to [src/components/animations](https://github.com/madou/yubaba/tree/master/packages/react-next/src/components/animations) for example implementations for now.
+Tutorial coming soon,
+refer to [src/components/animations](https://github.com/madou/yubaba/tree/master/packages/react-next/src/components/animations) for example implementations for now.
 
-## API
+## Components
+
+Click through on the component names to see their api docs and prop definitions.
+
+### [Baba](https://madou.github.io/yubaba/typedoc/classes/baba.html)
+
+This is the primary component in yubaba. When rendering it will be given all of the animation data from its children. When unmounting or flipping the prop in from true to false, it will execute all the animations top to bottom below it if a matching <Baba /> pair is found within 50ms.
+
+### [BabaManager](https://madou.github.io/yubaba/typedoc/classes/babamanager.html)
+
+Used to hide contents before an animation is complete triggered from a child <Baba /> component. If there is more than one child <Baba /> you can use an optional name prop which should match the appropriate <Baba /> component.
+
+If it is the initial mount it will immediately be shown.
+
+### [CircleExpand](https://madou.github.io/yubaba/typedoc/classes/circleexpand.html)
+
+CircleExpand will animate a circle from the entire window to cover end target, and then fade out.
+
+Generally you will use CircleExpand and CircleShrink together to seamlessly transition the background between pages.
+
+### [CircleShrink](https://madou.github.io/yubaba/typedoc/classes/circleshrink.html)
+
+CircleShrink will animate a circle from the entire window to cover end target, and then fade out.
+
+Generally you will use CircleShrink and CircleExpand together to seamlessly transition the background between pages.
+
+### [Move](https://madou.github.io/yubaba/typedoc/classes/move.html)
+
+Move will animate the fromNode to the toNode while transitioning between the two nodes for a seamless transition.
+
+### [Swipe](https://madou.github.io/yubaba/typedoc/classes/swipe.html)
+
+Swipe will animate a block swiping over the viewport.
+
+### [Wait](https://madou.github.io/yubaba/typedoc/classes/wait.html)
+
+Wait is used to pause the execution of all parent animations until all children animations have completed.
+
+### [Collector](https://madou.github.io/yubaba/typedoc/classes/collector.html)
+
+Used as the glue for all yubaba components. It is purely an internal component which will collect and pass all props up to the parent <Baba /> component.
+
+## API Reference
 
 [See typedoc.](https://madou.github.io/yubaba/typedoc/)
