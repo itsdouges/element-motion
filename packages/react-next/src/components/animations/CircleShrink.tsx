@@ -11,7 +11,14 @@ import { calculateWindowCentre, calculateElementCenterInViewport } from '../../l
 import SimpleKeyframe from '../SimpleKeyframe';
 
 export interface CircleShrinkProps extends CollectorChildrenProps {
+  /**
+   * Background, same usage as usual css.
+   */
   background: string;
+
+  /**
+   * How long the animation should take over {duration}ms.
+   */
   duration?: number;
 }
 

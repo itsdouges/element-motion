@@ -2,7 +2,15 @@ import * as React from 'react';
 import { InlineStyles } from './Collector';
 
 export interface BabaManangerProps {
+  /**
+   * Children as function which passes down style,
+   * add this to the elements you want to hide until all child animations have finished.
+   */
   children: (props: { style: InlineStyles }) => React.ReactNode;
+
+  /**
+   * Optional name to target a specific child `<Baba />`.
+   */
   name?: string;
 }
 

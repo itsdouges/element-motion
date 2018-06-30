@@ -39,9 +39,13 @@ export interface MappedAnimation {
 export type AnimationBlock = MappedAnimation[];
 
 export interface BabaProps extends CollectorChildrenProps, InjectedProps {
+  /**
+   * Name of the yubaba animation, this should match the target yubaba.
+   */
   name: string;
 
   /**
+   * Used alternatively to the implicit animation triggering via unmounting/mounting of Baba components.
    * Only use `in` if your component is expected to persist through the entire lifecyle of the app.
    */
   in?: boolean;

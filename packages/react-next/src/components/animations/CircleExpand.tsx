@@ -15,7 +15,14 @@ import {
 import SimpleKeyframe from '../SimpleKeyframe';
 
 export interface CircleExpandProps extends CollectorChildrenProps {
+  /**
+   * Background, same usage as usual css.
+   */
   background: string;
+
+  /**
+   * How long the animation should take over {duration}ms.
+   */
   duration?: number;
 }
 

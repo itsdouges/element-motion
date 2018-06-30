@@ -9,8 +9,19 @@ import Collecter, {
 import SimpleKeyframe from '../SimpleKeyframe';
 
 export interface SwipeProps extends CollectorChildrenProps {
+  /**
+   * Background, same usage as usual css.
+   */
   background: string;
+
+  /**
+   * Direction the swipe will be heading towards.
+   */
   direction: 'left' | 'right' | 'up' | 'down';
+
+  /**
+   * How long the animation should take over {duration}ms.
+   */
   duration?: number;
 }
 
