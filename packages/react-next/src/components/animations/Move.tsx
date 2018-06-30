@@ -16,9 +16,25 @@ import SimpleTween from '../SimpleTween';
 const noop = () => {};
 
 export interface MoveProps extends CollectorChildrenProps {
+  /**
+   * How long the animation should take over {duration}ms.
+   */
   duration?: number;
+
+  /**
+   * Delays the animation from starting for {delay}ms.
+   */
   delay?: number;
+
+  /**
+   * zIndex to be applied to the moving element.
+   */
   zIndex?: number;
+
+  /**
+   * Timing function to be used in the transition, see: https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
+   */
+  timingFunction?: string;
 }
 
 /**
@@ -34,6 +50,7 @@ export default class Move extends React.Component<MoveProps> {
 
   static defaultProps = {
     duration: 300,
+    timingFunction: '',
   };
 
   prepare: AnimationCallback = data => {
@@ -47,10 +64,12 @@ export default class Move extends React.Component<MoveProps> {
     const elementToMountChildren = document.createElement('div');
     const duration = this.props.duration as number;
     const noTransform = 'translate3d(0, 0, 0) scale3d(1, 1, 1)';
+    const { timingFunction } = this.props;
     document.body.appendChild(elementToMountChildren);
 
     const from = {
-      transition: `transform ${duration}ms, opacity ${duration / 2}ms`,
+      transition: `transform ${duration}ms ${timingFunction}, opacity ${duration /
+        2}ms ${timingFunction}`,
       position: 'absolute',
       transformOrigin: '0 0',
     };
@@ -103,7 +122,7 @@ export default class Move extends React.Component<MoveProps> {
               ...from,
               // NOTE: We want to minimize the background bleeding through into the animation.
               // Make the "end" element appear very quickly minimizes this.
-              transition: `transform ${duration}ms, opacity 10ms`,
+              transition: `transform ${duration}ms ${timingFunction}, opacity 10ms ${timingFunction}`,
               zIndex: this.props.zIndex ? this.props.zIndex - 1 : 19999,
               opacity: 0,
               transform: `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
