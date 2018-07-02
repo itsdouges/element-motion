@@ -15,7 +15,7 @@ import SimpleTween from '../SimpleTween';
  */
 const noop = () => {};
 
-export interface MoveProps extends CollectorChildrenProps {
+export interface CrossFadeMoveProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
@@ -38,12 +38,12 @@ export interface MoveProps extends CollectorChildrenProps {
 }
 
 /**
- * ## Move
+ * ## CrossFadeMove
  *
- * Move will animate the fromNode to the toNode while transitioning
+ * CrossFadeMove will animate the fromNode to the toNode while transitioning
  * between the two nodes for a seamless transition.
  */
-export default class Move extends React.Component<MoveProps> {
+export default class CrossFadeMove extends React.Component<CrossFadeMoveProps> {
   finishAnimation: () => Promise<any>;
   finishCleanup: () => void;
   realAbort: () => void;

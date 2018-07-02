@@ -33,7 +33,7 @@ Orchestrating when animations should execute and when content should be displaye
 ## Usage
 
 ```javascript
-import Baba, { Move, BabaManager } from 'yubaba';
+import Baba, { CrossFadeMove, BabaManager } from 'yubaba';
 
 class App extends React.Component {
   state = {
@@ -47,18 +47,18 @@ class App extends React.Component {
       <Root>
         {this.state.show || (
           <Baba name="finn-attack">
-            <Move>
+            <CrossFadeMove>
               {({ ref, style }) => <FinnStart onClick={this.toggle} style={style} innerRef={ref} />}
-            </Move>
+            </CrossFadeMove>
           </Baba>
         )}
 
         {this.state.show && (
           <React.Fragment>
             <Baba name="finn-attack">
-              <Move>
+              <CrossFadeMove>
                 {({ ref, style }) => <FinnEnd onClick={this.toggle} style={style} innerRef={ref} />}
-              </Move>
+              </CrossFadeMove>
             </Baba>
 
             <Sword />
@@ -80,12 +80,12 @@ How could we have them transition nicely to each other?
 
 [![Intro to Yubaba 0/4](https://github.com/madou/yubaba/blob/master/test/images/finn-0.gif?raw=true)](https://codesandbox.io/s/jvw344oll3)
 
-### Introducing `<Baba />` and `<Move />`
+### Introducing `<Baba />` and `<CrossFadeMove />`
 
-Let's use the `Baba` and `Move` components to have them seamlessly transition to each other.
+Let's use the `Baba` and `CrossFadeMove` components to have them seamlessly transition to each other.
 `Baba` is the brains of `yubaba`,
 it does all of the orchestration.
-`Move` does just that,
+`CrossFadeMove` does just that,
 it moves the paired children to each other.
 
 [![Intro to Yubaba 1/4](https://github.com/madou/yubaba/blob/master/test/images/finn-1.gif?raw=true)](https://codesandbox.io/s/x3v5ywk5ro)
@@ -114,8 +114,8 @@ for Finn it will give him some _oomph_ to really sell the attack.
 [![Intro to Yubaba 3/4](https://github.com/madou/yubaba/blob/master/test/images/finn-3.gif?raw=true)](https://codesandbox.io/s/6xp1jk4xjw)
 
 Really cool!
-But both the `CircleExpand` and `Move` happening at the same time looks kind of weird,
-what if we could delay `Move` until after `CircleExpand` had finished animating?
+But both the `CircleExpand` and `CrossFadeMove` happening at the same time looks kind of weird,
+what if we could delay `CrossFadeMove` until after `CircleExpand` had finished animating?
 
 ### Introducing `<Wait />`
 
@@ -162,9 +162,9 @@ CircleShrink will animate a circle from the entire window to cover end target, a
 
 Generally you will use CircleShrink and CircleExpand together to seamlessly transition the background between pages.
 
-### [Move](https://madou.github.io/yubaba/typedoc/classes/move.html)
+### [CrossFadeMove](https://madou.github.io/yubaba/typedoc/classes/crossfademove.html)
 
-Move will animate the fromNode to the toNode while transitioning between the two nodes for a seamless transition.
+CrossFadeMove will animate the fromNode to the toNode while transitioning between the two nodes for a seamless transition.
 
 ### [Swipe](https://madou.github.io/yubaba/typedoc/classes/swipe.html)
 
