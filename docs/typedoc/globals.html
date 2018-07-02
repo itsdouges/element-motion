@@ -928,7 +928,7 @@ img { max-width: 100%; }
 			<a href="classes/collector.html" class="tsd-kind-icon">Collector</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
-			<a href="classes/move.html" class="tsd-kind-icon">Move</a>
+			<a href="classes/crossfademove.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="classes/swipe.html" class="tsd-kind-icon">Swipe</a>
@@ -958,10 +958,10 @@ img { max-width: 100%; }
 			<a href="interfaces/collectorprops.html" class="tsd-kind-icon">Collector<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
-			<a href="interfaces/inlinestyles.html" class="tsd-kind-icon">Inline<wbr>Styles</a>
+			<a href="interfaces/crossfademoveprops.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
-			<a href="interfaces/moveprops.html" class="tsd-kind-icon">Move<wbr>Props</a>
+			<a href="interfaces/inlinestyles.html" class="tsd-kind-icon">Inline<wbr>Styles</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="interfaces/swipeprops.html" class="tsd-kind-icon">Swipe<wbr>Props</a>
@@ -1005,7 +1005,7 @@ img { max-width: 100%; }
 				and have beautiful transitions easily?
 			Orchestrating when animations should execute and when content should be displayed is what <code>yubaba</code> does best.</p>
 			<h2 id="usage">Usage</h2>
-			<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> Baba, { Move, BabaManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+			<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> Baba, { CrossFadeMove, BabaManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   state = {
@@ -1019,18 +1019,18 @@ img { max-width: 100%; }
       &lt;Root&gt;
         {this.state.show || (
           &lt;Baba name="finn-attack"&gt;
-            &lt;Move&gt;
+            &lt;CrossFadeMove&gt;
               {({ ref, style }) =&gt; &lt;FinnStart onClick={this.toggle} style={style} innerRef={ref} /&gt;}
-            &lt;/Move&gt;
+            &lt;/CrossFadeMove&gt;
           &lt;/Baba&gt;
         )}
 
         {this.state.show &amp;&amp; (
           &lt;React.Fragment&gt;
             &lt;Baba name="finn-attack"&gt;
-              &lt;Move&gt;
+              &lt;CrossFadeMove&gt;
                 {({ ref, style }) =&gt; &lt;FinnEnd onClick={this.toggle} style={style} innerRef={ref} /&gt;}
-              &lt;/Move&gt;
+              &lt;/CrossFadeMove&gt;
             &lt;/Baba&gt;
 
             &lt;Sword /&gt;
@@ -1047,11 +1047,11 @@ img { max-width: 100%; }
 			<p>So we have two disjointed components that are toggled when clicked (click on Finn!).
 			How could we have them transition nicely to each other?</p>
 			<p><a href="https://codesandbox.io/s/jvw344oll3"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-0.gif?raw=true" alt="Intro to Yubaba 0/4"></a></p>
-			<h3 id="introducing-baba-and-move-">Introducing <code>&lt;Baba /&gt;</code> and <code>&lt;Move /&gt;</code></h3>
-			<p>Let&#39;s use the <code>Baba</code> and <code>Move</code> components to have them seamlessly transition to each other.
+			<h3 id="introducing-baba-and-crossfademove-">Introducing <code>&lt;Baba /&gt;</code> and <code>&lt;CrossFadeMove /&gt;</code></h3>
+			<p>Let&#39;s use the <code>Baba</code> and <code>CrossFadeMove</code> components to have them seamlessly transition to each other.
 				<code>Baba</code> is the brains of <code>yubaba</code>,
 				it does all of the orchestration.
-				<code>Move</code> does just that,
+				<code>CrossFadeMove</code> does just that,
 			it moves the paired children to each other.</p>
 			<p><a href="https://codesandbox.io/s/x3v5ywk5ro"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-1.gif?raw=true" alt="Intro to Yubaba 1/4"></a></p>
 			<p>Okay so that looks cool,
@@ -1070,8 +1070,8 @@ img { max-width: 100%; }
 			for Finn it will give him some <em>oomph</em> to really sell the attack.</p>
 			<p><a href="https://codesandbox.io/s/6xp1jk4xjw"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-3.gif?raw=true" alt="Intro to Yubaba 3/4"></a></p>
 			<p>Really cool!
-				But both the <code>CircleExpand</code> and <code>Move</code> happening at the same time looks kind of weird,
-			what if we could delay <code>Move</code> until after <code>CircleExpand</code> had finished animating?</p>
+				But both the <code>CircleExpand</code> and <code>CrossFadeMove</code> happening at the same time looks kind of weird,
+			what if we could delay <code>CrossFadeMove</code> until after <code>CircleExpand</code> had finished animating?</p>
 			<h3 id="introducing-wait-">Introducing <code>&lt;Wait /&gt;</code></h3>
 			<p>Let&#39;s bring in a component <code>Wait</code> which will delay the next animation from happening until after the previous one has finished!</p>
 			<p><a href="https://codesandbox.io/s/llv7pkv9y9"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-4.gif?raw=true" alt="Intro to Yubaba 4/4"></a></p>
@@ -1080,10 +1080,31 @@ img { max-width: 100%; }
 			<h2 id="other-examples">Other Examples</h2>
 			<p>There are many examples in our <a href="https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleSearch&amp;selectedStory=search%20bar&amp;full=0&amp;addons=0&amp;stories=1&amp;panelRight=0">storybook</a>,
 			top picks would include the Google Music and Mobile Google Image Search examples.</p>
-			<h2 id="make-your-own">Make your own</h2>
+			<h2 id="make-your-own-animations">Make your own animations</h2>
 			<p>Tutorial coming soon,
 			refer to <a href="https://github.com/madou/yubaba/tree/master/packages/react-next/src/components/animations">src/components/animations</a> for example implementations for now.</p>
-			<h2 id="api">API</h2>
+			<h2 id="components">Components</h2>
+			<p>Click through on the component names to see their api docs and prop definitions.</p>
+			<h3 id="baba"><a href="https://madou.github.io/yubaba/typedoc/classes/baba.html">Baba</a></h3>
+			<p>This is the primary component in yubaba. When rendering it will be given all of the animation data from its children. When unmounting or flipping the prop in from true to false, it will execute all the animations top to bottom below it if a matching <Baba /> pair is found within 50ms.</p>
+			<h3 id="babamanager"><a href="https://madou.github.io/yubaba/typedoc/classes/babamanager.html">BabaManager</a></h3>
+			<p>Used to hide contents before an animation is complete triggered from a child <Baba /> component. If there is more than one child <Baba /> you can use an optional name prop which should match the appropriate <Baba /> component.</p>
+			<p>If it is the initial mount it will immediately be shown.</p>
+			<h3 id="circleexpand"><a href="https://madou.github.io/yubaba/typedoc/classes/circleexpand.html">CircleExpand</a></h3>
+			<p>CircleExpand will animate a circle from the entire window to cover end target, and then fade out.</p>
+			<p>Generally you will use CircleExpand and CircleShrink together to seamlessly transition the background between pages.</p>
+			<h3 id="circleshrink"><a href="https://madou.github.io/yubaba/typedoc/classes/circleshrink.html">CircleShrink</a></h3>
+			<p>CircleShrink will animate a circle from the entire window to cover end target, and then fade out.</p>
+			<p>Generally you will use CircleShrink and CircleExpand together to seamlessly transition the background between pages.</p>
+			<h3 id="crossfademove"><a href="https://madou.github.io/yubaba/typedoc/classes/move.html">CrossFadeMove</a></h3>
+			<p>CrossFadeMove will animate the fromNode to the toNode while transitioning between the two nodes for a seamless transition.</p>
+			<h3 id="swipe"><a href="https://madou.github.io/yubaba/typedoc/classes/swipe.html">Swipe</a></h3>
+			<p>Swipe will animate a block swiping over the viewport.</p>
+			<h3 id="wait"><a href="https://madou.github.io/yubaba/typedoc/classes/wait.html">Wait</a></h3>
+			<p>Wait is used to pause the execution of all parent animations until all children animations have completed.</p>
+			<h3 id="collector"><a href="https://madou.github.io/yubaba/typedoc/classes/collector.html">Collector</a></h3>
+			<p>Used as the glue for all yubaba components. It is purely an internal component which will collect and pass all props up to the parent <Baba /> component.</p>
+			<h2 id="api-reference">API Reference</h2>
 			<p><a href="https://madou.github.io/yubaba/typedoc/">See typedoc.</a></p>
 		</div>
 		<section class="tsd-panel-group tsd-index-group">
@@ -1104,7 +1125,7 @@ img { max-width: 100%; }
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/circleexpand.html" class="tsd-kind-icon">Circle<wbr>Expand</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/circleshrink.html" class="tsd-kind-icon">Circle<wbr>Shrink</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/collector.html" class="tsd-kind-icon">Collector</a></li>
-							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/move.html" class="tsd-kind-icon">Move</a></li>
+							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/crossfademove.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/swipe.html" class="tsd-kind-icon">Swipe</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/wait.html" class="tsd-kind-icon">Wait</a></li>
 						</ul>
@@ -1119,8 +1140,8 @@ img { max-width: 100%; }
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/circleshrinkprops.html" class="tsd-kind-icon">Circle<wbr>Shrink<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/collectorchildrenprops.html" class="tsd-kind-icon">Collector<wbr>Children<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/collectorprops.html" class="tsd-kind-icon">Collector<wbr>Props</a></li>
+							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/crossfademoveprops.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/inlinestyles.html" class="tsd-kind-icon">Inline<wbr>Styles</a></li>
-							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/moveprops.html" class="tsd-kind-icon">Move<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/swipeprops.html" class="tsd-kind-icon">Swipe<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/waitaction.html" class="tsd-kind-icon">Wait<wbr>Action</a></li>
 						</ul>
@@ -1144,7 +1165,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Collector<wbr>Children<wbr>AsFunction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/e7059f2/packages/react-next/src/components/Collector.tsx#L43">components/Collector.tsx:43</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22c0f2d/packages/react-next/src/components/Collector.tsx#L43">components/Collector.tsx:43</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1183,7 +1204,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Collector<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="interfaces/animationaction.html" class="tsd-signature-type">AnimationAction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/waitaction.html" class="tsd-signature-type">WaitAction</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/e7059f2/packages/react-next/src/components/Collector.tsx#L29">components/Collector.tsx:29</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22c0f2d/packages/react-next/src/components/Collector.tsx#L29">components/Collector.tsx:29</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1193,7 +1214,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Supply<wbr>Ref<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/e7059f2/packages/react-next/src/components/Collector.tsx#L31">components/Collector.tsx:31</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22c0f2d/packages/react-next/src/components/Collector.tsx#L31">components/Collector.tsx:31</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
