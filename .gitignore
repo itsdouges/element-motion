@@ -7,4 +7,3 @@ node_modules
 .DS_Store
 .npmrc
 IsolatedStorage
-docs
