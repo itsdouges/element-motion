@@ -64,7 +64,7 @@ const FillSpace = styled.img`
   width: 100%;
 `;
 
-storiesOf('Animations/Move', module)
+storiesOf('Animations/CrossFadeMove', module)
   .add('square to square', () => (
     <Toggler>
       {({ shown, toggle }) => (

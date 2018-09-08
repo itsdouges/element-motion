@@ -6,7 +6,7 @@ import BackIcon from '@material-ui/icons/Close';
 import { IconButton } from 'material-ui';
 
 import Toggler from '../Toggler';
-import Baba, { Move, BabaManager } from '../../src/';
+import Baba, { FLIPMove, BabaManager } from '../../src/';
 
 const Container = styled.div`
   position: relative;
@@ -149,9 +149,9 @@ const Image: React.StatelessComponent<ImageProps> = ({ src, title, from, onClick
   <Root>
     <ImageContainer>
       <Baba name={title} in={inn}>
-        <Move>
+        <FLIPMove>
           {({ ref, style }) => <Img src={src} onClick={onClick} innerRef={ref} style={style} />}
-        </Move>
+        </FLIPMove>
       </Baba>
 
       <ImageBack />
@@ -253,7 +253,9 @@ const ImagePage: React.StatelessComponent<ImageProps> = ({ src, title, onClick }
         </IconButton>
 
         <Baba name={title}>
-          <Move>{({ ref, style }) => <PageImage src={src} innerRef={ref} style={style} />}</Move>
+          <FLIPMove>
+            {({ ref, style }) => <PageImage src={src} innerRef={ref} style={style} />}
+          </FLIPMove>
         </Baba>
 
         <ContentContainer {...props}>
@@ -309,7 +311,7 @@ const ImagePage: React.StatelessComponent<ImageProps> = ({ src, title, onClick }
   </BabaManager>
 );
 
-storiesOf('Examples/GoogleSearch', module).add('image search', () => (
+storiesOf('Examples/ImageSearch', module).add('flip move', () => (
   <Toggler>
     {({ toggle, shown }) => (
       <Container>

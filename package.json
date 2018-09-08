@@ -39,6 +39,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.3",
     "jest": "^22.4.3",
+    "jest-enzyme": "^6.0.4",
     "lerna": "^2.11.0",
     "react-body-classname": "^1.2.0",
     "sinon": "^4.5.0",

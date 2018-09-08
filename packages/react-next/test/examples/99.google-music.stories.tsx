@@ -208,7 +208,7 @@ class MultipleTargets extends React.Component<{
 }
 
 storiesOf('Examples/GoogleMusic', module)
-  .add('move', () => <MultipleTargets />)
-  .add('move expand', () => <MultipleTargets expand />)
-  .add('move expand shrink', () => <MultipleTargets expand shrink />)
-  .add('move expand shrink wait', () => <MultipleTargets expand shrink wait />);
+  .add('cross fade move', () => <MultipleTargets />)
+  .add('+ expand', () => <MultipleTargets expand />)
+  .add('+ shrink', () => <MultipleTargets expand shrink />)
+  .add('+ wait', () => <MultipleTargets expand shrink wait />);

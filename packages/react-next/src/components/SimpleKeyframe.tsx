@@ -14,7 +14,7 @@ export interface Props {
   style: Style;
   keyframes: Style[];
   onFinish: () => void;
-  at?: number;
+  step?: number;
 }
 
 /**
@@ -26,13 +26,13 @@ export default class SimpleKeyframe extends React.Component<Props> {
   };
 
   componentDidMount() {
-    if (this.props.at !== undefined) {
+    if (this.props.step !== undefined) {
       this.start();
     }
   }
 
   componentDidUpdate() {
-    if (this.props.at !== undefined && !this.state.started) {
+    if (this.props.step !== undefined && !this.state.started) {
       this.start();
     }
   }
@@ -52,15 +52,15 @@ export default class SimpleKeyframe extends React.Component<Props> {
   };
 
   render() {
-    const { style, keyframes, at } = this.props;
-    const ready = at !== undefined && this.state.started;
+    const { style, keyframes, step, children } = this.props;
+    const ready = step !== undefined && this.state.started;
 
     return (
       <span
         onTransitionEnd={this.onTransitionEnd}
-        style={{ ...style, ...(ready ? keyframes[at || 0] : {}) }}
+        style={{ ...style, ...(ready ? keyframes[step || 0] : {}) }}
       >
-        {this.props.children}
+        {children}
       </span>
     );
   }

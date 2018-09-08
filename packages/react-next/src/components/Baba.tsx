@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
 import Collector, {
   SupplyDataHandler,
   SupplyRenderChildrenHandler,
@@ -7,36 +8,47 @@ import Collector, {
   CollectorData,
   CollectorChildrenProps,
   CollectorActions,
+  InlineStyles,
 } from './Collector';
 import { getElementSizeLocation } from '../lib/dom';
+import { defer } from '../lib/defer';
 import * as childrenStore from '../lib/childrenStore';
 import { InjectedProps, withBabaManagerContext } from './BabaManager';
 
 /**
  * @hidden
  */
-export type PromiseFunc = () => Promise<any>;
-
-/**
- * @hidden
- */
-export type Func = () => void;
+export type AnimationFunc = () => Promise<void>;
 
 /**
  * @hidden
  */
 export interface MappedAnimation {
-  animate: PromiseFunc;
-  beforeAnimate: PromiseFunc;
-  afterAnimate: PromiseFunc;
-  abort: Func;
-  cleanup: Func;
+  animate: AnimationFunc;
+  beforeAnimate: AnimationFunc;
+  afterAnimate: AnimationFunc;
+  cleanup: () => void;
 }
 
 /**
  * @hidden
  */
 export type AnimationBlock = MappedAnimation[];
+
+/**
+ * @hidden
+ */
+export interface ChildProps {
+  style?: InlineStyles;
+}
+
+/**
+ * @hidden
+ */
+export interface State {
+  shown: boolean;
+  childProps: ChildProps;
+}
 
 export interface BabaProps extends CollectorChildrenProps, InjectedProps {
   /**
@@ -52,15 +64,9 @@ export interface BabaProps extends CollectorChildrenProps, InjectedProps {
 
   /**
    * Callback called when all animations have finished and been cleaned up.
+   * **Word of caution**: Currently the _target_ `Baba` component will be the one who fires this callback.
    */
   onFinish?: () => void;
-}
-
-/**
- * @hidden
- */
-export interface State {
-  shown: boolean;
 }
 
 /**
@@ -74,51 +80,59 @@ export interface State {
  * ### Usage
  *
  * ```
- * import Baba, { Move } from 'yubaba';
+ * import Baba, { CrossFadeMove } from 'yubaba';
  *
  * const MyApp = ({ shown, show }) => (
- *  <React.Fragment>
- *    {shown || <Baba name="my-anim">
- *      <Move>
- *        {({ ref, style }) => <div onClick={() => show(false)} ref={ref} style={style}>starting point</div>}
- *      </Move>
- *    </Baba>}
+ *  <div>
+ *    {shown || (
+ *      <Baba name="my-anim">
+ *        <CrossFadeMove>
+ *          {({ ref, style }) => <div onClick={() => show(false)} ref={ref} style={style}>starting point</div>}
+ *        </CrossFadeMove>
+ *      </Baba>
+ *    )}
  *
- *    {shown && <Baba name="my-anim">
- *      <Move>
- *        {({ ref, style }) => <div onClick={() => show(true)} ref={ref} style={style}>ending point</div>}
- *      </Move>
- *    </Baba>}
- *  </React.Fragment>
+ *    {shown && (
+ *      <Baba name="my-anim">
+ *        <CrossFadeMove>
+ *          {({ ref, style }) => <div onClick={() => show(true)} ref={ref} style={style}>ending point</div>}
+ *        </CrossFadeMove>
+ *      </Baba>
+ *    )}
+ *  </div>
  * );
  * ```
  */
 export class Baba extends React.PureComponent<BabaProps, State> {
   state: State = {
     shown: false,
+    childProps: {},
   };
 
+  TIME_TO_WAIT_FOR_NEXT_BABA = 50;
   animating: boolean = false;
   unmounting: boolean = false;
   element: HTMLElement | null;
   renderChildren: CollectorChildrenAsFunction;
-  abortAnimations = () => {};
   data: CollectorData[];
+  abortAnimations: () => void = () => undefined;
 
   componentDidMount() {
-    if (this.props.in === undefined && childrenStore.has(this.props.name)) {
+    const { in: componentIn, name } = this.props;
+
+    if (componentIn === undefined && childrenStore.has(name)) {
       // A child has already been stored, so this is probably the matching pair.
       this.executeAnimations();
       return;
     }
 
-    if (this.props.in === undefined || this.props.in) {
+    if (componentIn === undefined || componentIn) {
       // Ok nothing is there yet, show ourself and store DOM data for later.
       // We'll be waiting for another Baba to mount.
       this.showSelfAndNotifyManager();
     }
 
-    if (this.props.in) {
+    if (componentIn) {
       // Store data so it can be used later. This works around the problem of the "in" prop not having data when it needs.
       this.storeDOMData();
     }
@@ -172,13 +186,15 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
 
     // If a BabaManager is a parent up the tree context will be available.
     // Notify them that we're finished getting ready.
-    this.props.context && this.props.context.onFinish({ name: this.props.name });
+    if (this.props.context) {
+      this.props.context.onFinish({ name: this.props.name });
+    }
   }
 
   delayedClearDOMData() {
     setTimeout(() => {
       childrenStore.remove(this.props.name);
-    }, 50);
+    }, this.TIME_TO_WAIT_FOR_NEXT_BABA);
   }
 
   storeDOMData() {
@@ -186,8 +202,8 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
       return;
     }
 
-    // If there is only a Baba target and no animation data
-    // will be undefined, which means there are no animations to store.
+    // If there is only a Baba target and no child animations
+    // data will be undefined, which means there are no animations to store.
     if (this.data) {
       const DOMData = getElementSizeLocation(this.element as HTMLElement);
 
@@ -202,7 +218,6 @@ If it's an image, try and have the image loaded before mounting, or set a static
       // resulting in inaccurate calculations of location. Watch out!
       childrenStore.set(this.props.name, {
         ...DOMData,
-        element: this.element as HTMLElement,
         render: this.renderChildren,
         data: this.data,
       });
@@ -215,44 +230,135 @@ If it's an image, try and have the image loaded before mounting, or set a static
       const { data, ...target } = fromTarget;
       this.animating = true;
 
-      const actions = fromTarget.data.map(data => {
-        if (data.action === CollectorActions.animation) {
-          const animationData = {
-            caller: this,
-            fromTarget: target,
-            toTarget: {
-              render: this.renderChildren,
-              ...getElementSizeLocation(this.element as HTMLElement),
-            },
+      // Calculate element DOM data _once_.
+      const elementDOMData = {
+        fromTarget: target,
+        toTarget: {
+          render: this.renderChildren,
+          ...getElementSizeLocation(this.element as HTMLElement),
+        },
+      };
+
+      // Loads each action up in an easy-to-execute format.
+      const actions = fromTarget.data.map(targetData => {
+        if (targetData.action === CollectorActions.animation) {
+          let elementToMountChildren: HTMLElement;
+
+          const mount = (jsx: React.ReactElement<{}>) => {
+            if (!elementToMountChildren) {
+              elementToMountChildren = document.createElement('div');
+              document.body.appendChild(elementToMountChildren);
+            }
+
+            // This ensures that if there was an update to the jsx that is animating,
+            // it changes next frame. Resulting in the transition _actually_ happening.
+            requestAnimationFrame(() =>
+              unstable_renderSubtreeIntoContainer(this, jsx, elementToMountChildren)
+            );
+          };
+
+          const unmount = () => {
+            if (elementToMountChildren) {
+              unmountComponentAtNode(elementToMountChildren);
+              document.body.removeChild(elementToMountChildren);
+            }
+          };
+
+          let propsStore: ChildProps = {};
+          const setTargetProps = (props: { style: InlineStyles } | null) => {
+            if (props) {
+              // We keep existing set props so consumers don't need to keep
+              // calling it with the same props. Think of how setState works
+              // except in this instance its deeply nested.
+              propsStore = {
+                ...propsStore,
+                ...props,
+                style: {
+                  ...propsStore.style,
+                  ...props.style,
+                },
+              };
+
+              this.setState({
+                childProps: propsStore || {},
+              });
+            } else {
+              this.setState({
+                childProps: {},
+              });
+            }
           };
 
           return {
             action: CollectorActions.animation,
             payload: {
-              beforeAnimate: () =>
-                data.payload.beforeAnimate
-                  ? data.payload.beforeAnimate(animationData)
-                  : Promise.resolve(),
-              animate: () => data.payload.animate(animationData),
-              afterAnimate: () =>
-                data.payload.afterAnimate
-                  ? data.payload.afterAnimate(animationData)
-                  : Promise.resolve(),
-              abort: () => data.payload.abort && data.payload.abort(),
-              cleanup: () => data.payload.cleanup && data.payload.cleanup(),
+              beforeAnimate: () => {
+                if (targetData.payload.beforeAnimate) {
+                  const deferred = defer();
+                  const jsx = targetData.payload.beforeAnimate(
+                    elementDOMData,
+                    deferred.resolve,
+                    setTargetProps
+                  );
+
+                  if (jsx) {
+                    mount(jsx);
+                  }
+
+                  return deferred.promise;
+                }
+
+                return Promise.resolve();
+              },
+              animate: () => {
+                const deferred = defer();
+                const jsx = targetData.payload.animate(
+                  elementDOMData,
+                  deferred.resolve,
+                  setTargetProps
+                );
+
+                if (jsx) {
+                  mount(jsx);
+                }
+
+                return deferred.promise;
+              },
+              afterAnimate: () => {
+                if (targetData.payload.afterAnimate) {
+                  const deferred = defer();
+                  const jsx = targetData.payload.afterAnimate(
+                    elementDOMData,
+                    deferred.resolve,
+                    setTargetProps
+                  );
+
+                  if (jsx) {
+                    mount(jsx);
+                  }
+
+                  return deferred.promise;
+                }
+
+                return Promise.resolve();
+              },
+              cleanup: () => {
+                unmount();
+                setTargetProps(null);
+              },
             },
           };
         }
 
-        return data;
+        return targetData;
       });
 
       const blocks = actions.reduce<AnimationBlock[]>(
-        (arr, data) => {
-          switch (data.action) {
+        (arr, targetData) => {
+          switch (targetData.action) {
             case CollectorActions.animation: {
               // Add to the last block in the array.
-              arr[arr.length - 1].push(data.payload);
+              arr[arr.length - 1].push(targetData.payload);
               return arr;
             }
 
@@ -273,52 +379,65 @@ If it's an image, try and have the image loaded before mounting, or set a static
       this.abortAnimations = () => {
         if (this.animating) {
           this.animating = false;
-          blocks.forEach(block => block.forEach(anim => anim.abort()));
+          blocks.forEach(block => block.forEach(anim => anim.cleanup()));
         }
       };
 
       const beforeAnimatePromises = actions.map(
-        data =>
-          data.action === CollectorActions.animation
-            ? data.payload.beforeAnimate()
+        targetData =>
+          targetData.action === CollectorActions.animation
+            ? targetData.payload.beforeAnimate()
             : Promise.resolve()
       );
 
       Promise.all(beforeAnimatePromises).then(() => {
         // Trigger each blocks animations, one block at a time.
-        return blocks
-          .reduce<Promise<any>>(
-            (promise, block) => promise.then(() => Promise.all(block.map(anim => anim.animate()))),
-            Promise.resolve()
-          )
-          .then(() => {
-            // We're finished all the transitions! Show the child element.
-            this.setState({
-              shown: true,
-            });
-
-            // Store data so it can be used later.
-            // This primarily works around the problem of the "in" prop not having data when it needs.
-            this.storeDOMData();
-
-            // If a BabaManager is a parent somewhere, notify them that
-            // we're finished animating.
-            this.props.context && this.props.context.onFinish({ name: this.props.name });
-
-            // Run through all after animates.
-            return blocks.reduce<Promise<any>>(
+        return (
+          blocks
+            // We don't care what the promises return.
+            // tslint:disable-next-line no-any
+            .reduce<Promise<any>>(
               (promise, block) =>
-                promise.then(() => Promise.all(block.map(anim => anim.afterAnimate()))),
+                promise.then(() => Promise.all(block.map(anim => anim.animate()))),
               Promise.resolve()
-            );
-          })
-          .then(() => blocks.forEach(block => block.forEach(anim => anim.cleanup())))
-          .then(() => {
-            // Animations can still "animate" away when finishing. So we're truly not finished animating
-            // until the cleanup step has finished.
-            this.animating = false;
-            this.props.onFinish && this.props.onFinish();
-          });
+            )
+            .then(() => {
+              // We're finished all the transitions! Show the child element.
+              this.setState({
+                shown: true,
+              });
+
+              // Store data so it can be used later.
+              // This primarily works around the problem of the "in" prop not having data when it needs.
+              this.storeDOMData();
+
+              // If a BabaManager is a parent somewhere, notify them that
+              // we're finished animating.
+              if (this.props.context) {
+                this.props.context.onFinish({ name: this.props.name });
+              }
+
+              // Run through all after animates.
+              return blocks.reduce(
+                (promise, block) =>
+                  promise.then(() =>
+                    Promise.all(block.map(anim => anim.afterAnimate())).then(() => undefined)
+                  ),
+                Promise.resolve()
+              );
+            })
+            .then(() => {
+              blocks.forEach(block => block.forEach(anim => anim.cleanup()));
+            })
+            .then(() => {
+              // Animations can still "animate" away when finishing. So we're truly not finished animating
+              // until the cleanup step has finished.
+              this.animating = false;
+              if (this.props.onFinish) {
+                this.props.onFinish();
+              }
+            })
+        );
       });
     }
   };
@@ -343,6 +462,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
         receiveRef={this.setRef}
         style={{
           opacity: this.state.shown ? 1 : 0,
+          ...this.state.childProps.style,
         }}
       >
         {this.props.children}

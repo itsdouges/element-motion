@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
 import Collecter, {
   CollectorChildrenProps,
   AnimationCallback,
@@ -31,98 +30,72 @@ export interface SwipeProps extends CollectorChildrenProps {
  * Swipe will animate a block swiping over the viewport.
  */
 export default class Swipe extends React.Component<SwipeProps> {
-  finishAnimation: () => Promise<any>;
-  renderAnimation: (at?: number) => Promise<any>;
-  finishAfterAnimate: () => Promise<any>;
-  finishCleanup: () => void;
-
   static defaultProps = {
     duration: 500,
   };
 
-  beforeAnimate: AnimationCallback = data => {
-    return new Promise(resolve => {
-      window.requestAnimationFrame(() => {
-        const duration = this.props.duration as number;
-        const elementToMountChildren = document.createElement('div');
-        document.body.appendChild(elementToMountChildren);
+  renderAnimation: (
+    opts: { step: number | undefined; onFinish: () => void }
+  ) => React.ReactElement<{}>;
 
-        this.renderAnimation = (at?: number) => {
-          const directionMap = {
-            left: '100%, 0, 0',
-            right: '-100%, 0, 0',
-            down: '0, -100%, 0',
-            up: '0, 100%, 0',
-          };
+  beforeAnimate: AnimationCallback = (_, onFinish) => {
+    const duration = this.props.duration as number;
 
-          return new Promise(resolve => {
-            unstable_renderSubtreeIntoContainer(
-              data.caller,
-              <SimpleKeyframe
-                at={at}
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: this.props.background,
-                  transform: `translate3d(${directionMap[this.props.direction]})`,
-                  transition: `transform ease-out ${duration}ms, opacity ease-in-out ${duration}ms`,
-                }}
-                keyframes={[
-                  {
-                    transform: 'translate3d(0, 0, 0)',
-                  },
-                  {
-                    transform: 'translate3d(0, 0, 0)',
-                    opacity: 0,
-                  },
-                ]}
-                onFinish={resolve}
-              />,
-              elementToMountChildren
-            );
-          });
-        };
+    this.renderAnimation = (opts: { step: number | undefined; onFinish: () => void }) => {
+      const directionMap = {
+        left: '100%, 0, 0',
+        right: '-100%, 0, 0',
+        down: '0, -100%, 0',
+        up: '0, 100%, 0',
+      };
 
-        this.renderAnimation();
+      return (
+        <SimpleKeyframe
+          step={opts.step}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: this.props.background,
+            transform: `translate3d(${directionMap[this.props.direction]})`,
+            transition: `transform ease-out ${duration}ms, opacity ease-in-out ${duration}ms`,
+          }}
+          keyframes={[
+            {
+              transform: 'translate3d(0, 0, 0)',
+            },
+            {
+              transform: 'translate3d(0, 0, 0)',
+              opacity: 0,
+            },
+          ]}
+          onFinish={opts.onFinish}
+        />
+      );
+    };
 
-        resolve();
+    requestAnimationFrame(onFinish);
 
-        this.finishCleanup = () => {
-          unmountComponentAtNode(elementToMountChildren);
-          document.body.removeChild(elementToMountChildren);
-        };
-
-        this.finishAfterAnimate = () => this.renderAnimation(1);
-      });
-    });
+    return this.renderAnimation({ onFinish, step: undefined });
   };
 
-  afterAnimate: AnimationCallback = () => {
-    return this.finishAfterAnimate();
+  animate: AnimationCallback = (_, onFinish) => {
+    return this.renderAnimation({ onFinish, step: 0 });
   };
 
-  abort = () => this.finishCleanup();
-
-  cleanup = () => {
-    this.finishCleanup();
-  };
-
-  animate: AnimationCallback = () => {
-    return this.renderAnimation(0);
+  afterAnimate: AnimationCallback = (_, onFinish) => {
+    return this.renderAnimation({ onFinish, step: 1 });
   };
 
   render() {
     const data: CollectorData = {
       action: CollectorActions.animation,
       payload: {
-        animate: this.animate,
-        abort: this.abort,
         beforeAnimate: this.beforeAnimate,
+        animate: this.animate,
         afterAnimate: this.afterAnimate,
-        cleanup: this.cleanup,
       },
     };
 

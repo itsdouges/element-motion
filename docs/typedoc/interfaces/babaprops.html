@@ -987,13 +987,22 @@ img { max-width: 100%; }
 			<a href="waitaction.html" class="tsd-kind-icon">Wait<wbr>Action</a>
 		</li>
 		<li class=" tsd-kind-type-alias tsd-is-external">
+			<a href="../globals.html#animationcallback" class="tsd-kind-icon">Animation<wbr>Callback</a>
+		</li>
+		<li class=" tsd-kind-type-alias tsd-is-external">
 			<a href="../globals.html#collectorchildrenasfunction" class="tsd-kind-icon">Collector<wbr>Children<wbr>AsFunction</a>
 		</li>
 		<li class=" tsd-kind-type-alias tsd-is-external">
 			<a href="../globals.html#collectordata" class="tsd-kind-icon">Collector<wbr>Data</a>
 		</li>
 		<li class=" tsd-kind-type-alias tsd-is-external">
+			<a href="../globals.html#settargetprops" class="tsd-kind-icon">Set<wbr>Target<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-type-alias tsd-is-external">
 			<a href="../globals.html#supplyrefhandler" class="tsd-kind-icon">Supply<wbr>Ref<wbr>Handler</a>
+		</li>
+		<li class=" tsd-kind-function tsd-has-type-parameter tsd-is-external">
+			<a href="../globals.html#defer" class="tsd-kind-icon">defer</a>
 		</li>
 	</ul>
 </nav>
@@ -1041,7 +1050,7 @@ img { max-width: 100%; }
 				<aside class="tsd-sources">
 					<p>Inherited from <a href="collectorchildrenprops.html">CollectorChildrenProps</a>.<a href="collectorchildrenprops.html#children">children</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/1379237/packages/react-next/src/components/Collector.tsx#L68">components/Collector.tsx:68</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/Collector.tsx#L76">components/Collector.tsx:76</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1052,17 +1061,17 @@ img { max-width: 100%; }
 				<aside class="tsd-sources">
 					<p>Inherited from InjectedProps.context</p>
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/1379237/packages/react-next/src/components/BabaManager.tsx#L28">components/BabaManager.tsx:28</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/BabaManager.tsx#L28">components/BabaManager.tsx:28</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 				<a name="in" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> in</h3>
-				<div class="tsd-signature tsd-kind-icon">in<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span></div>
+				<div class="tsd-signature tsd-kind-icon">in<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/1379237/packages/react-next/src/components/Baba.tsx#L51">components/Baba.tsx:51</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/Baba.tsx#L63">components/Baba.tsx:63</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1078,7 +1087,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/1379237/packages/react-next/src/components/Baba.tsx#L45">components/Baba.tsx:45</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/Baba.tsx#L57">components/Baba.tsx:57</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1093,12 +1102,13 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">on<wbr>Finish<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/1379237/packages/react-next/src/components/Baba.tsx#L56">components/Baba.tsx:56</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/Baba.tsx#L69">components/Baba.tsx:69</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Callback called when all animations have finished and been cleaned up.</p>
+						<p>Callback called when all animations have finished and been cleaned up.
+						<strong>Word of caution</strong>: Currently the <em>target</em> <code>Baba</code> component will be the one who fires this callback.</p>
 					</div>
 				</div>
 			</section>

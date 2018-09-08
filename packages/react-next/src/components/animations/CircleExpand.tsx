@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
+// import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
 import Collecter, {
   CollectorChildrenProps,
   AnimationCallback,
@@ -40,98 +40,66 @@ export default class CircleExpand extends React.Component<CircleExpandProps> {
     duration: 500,
   };
 
-  renderAnimation: (at: number) => Promise<void>;
-  finishCleanup: () => void;
+  renderAnimation: (opts: { step: number; onFinish: () => void }) => React.ReactElement<{}>;
 
-  prepare = () => {
-    return Promise.resolve();
-  };
+  afterAnimate: AnimationCallback = (_, onFinish) => this.renderAnimation({ onFinish, step: 1 });
 
-  abort = () => this.finishCleanup();
-
-  cleanup = () => {
-    this.finishCleanup();
-  };
-
-  afterAnimate = () => {
-    return this.renderAnimation(1);
-  };
-
-  animate: AnimationCallback = data => {
-    // Scroll could have changed between unmount and this prepare step, let's recalculate
-    // just in case.
+  animate: AnimationCallback = (data, onFinish) => {
+    // Scroll could have changed between unmount and this prepare step, let's recalculate just in case.
     const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
 
-    return new Promise(resolve => {
-      window.requestAnimationFrame(() => {
-        const duration = this.props.duration as number;
-        const minSize = Math.min(
-          fromTargetSizeLocation.size.width,
-          fromTargetSizeLocation.size.height
-        );
-        const fromTargetHypotenuse = calculateHypotenuse(fromTargetSizeLocation.size);
-        const fromTargetCenterInViewport = calculateElementCenterInViewport(fromTargetSizeLocation);
-        const viewportCenter = calculateWindowCentre();
-        const windowHypotenuse = calculateHypotenuse({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-        const difference = {
-          width: viewportCenter.left - fromTargetCenterInViewport.left,
-          height: viewportCenter.top - fromTargetCenterInViewport.top,
-        };
-        const hypotenuseDifference = calculateHypotenuse(difference);
-        const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
-        const elementToMountChildren = document.createElement('div');
-        document.body.appendChild(elementToMountChildren);
-
-        this.renderAnimation = (at: number) => {
-          return new Promise(resolve => {
-            unstable_renderSubtreeIntoContainer(
-              data.caller,
-              <SimpleKeyframe
-                style={{
-                  left:
-                    fromTargetSizeLocation.location.left -
-                    (fromTargetHypotenuse - fromTargetSizeLocation.size.width) / 2,
-                  top:
-                    fromTargetSizeLocation.location.top -
-                    (fromTargetHypotenuse - fromTargetSizeLocation.size.height) / 2,
-                  width: fromTargetHypotenuse,
-                  height: fromTargetHypotenuse,
-                  borderRadius: '50%',
-                  position: 'absolute',
-                  background: this.props.background,
-                  zIndex: 10000,
-                  transition: `transform ease-in ${duration}ms, opacity ease-in ${duration / 2}ms`,
-                  transform: 'scale(1)',
-                  opacity: 1,
-                }}
-                keyframes={[
-                  {
-                    transform: `scale(${scale})`,
-                  },
-                  {
-                    transform: `scale(${scale})`,
-                    opacity: 0,
-                  },
-                ]}
-                at={at}
-                onFinish={resolve}
-              />,
-              elementToMountChildren
-            );
-          });
-        };
-
-        this.finishCleanup = () => {
-          unmountComponentAtNode(elementToMountChildren);
-          document.body.removeChild(elementToMountChildren);
-        };
-
-        this.renderAnimation(0).then(resolve);
-      });
+    const duration = this.props.duration as number;
+    const minSize = Math.min(fromTargetSizeLocation.size.width, fromTargetSizeLocation.size.height);
+    const fromTargetHypotenuse = calculateHypotenuse(fromTargetSizeLocation.size);
+    const fromTargetCenterInViewport = calculateElementCenterInViewport(fromTargetSizeLocation);
+    const viewportCenter = calculateWindowCentre();
+    const windowHypotenuse = calculateHypotenuse({
+      width: window.innerWidth,
+      height: window.innerHeight,
     });
+    const difference = {
+      width: viewportCenter.left - fromTargetCenterInViewport.left,
+      height: viewportCenter.top - fromTargetCenterInViewport.top,
+    };
+    const hypotenuseDifference = calculateHypotenuse(difference);
+    const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
+
+    this.renderAnimation = (opts: { step: number; onFinish: () => void }) => (
+      <SimpleKeyframe
+        key="circle-expand"
+        style={{
+          left:
+            fromTargetSizeLocation.location.left -
+            (fromTargetHypotenuse - fromTargetSizeLocation.size.width) / 2,
+          top:
+            fromTargetSizeLocation.location.top -
+            (fromTargetHypotenuse - fromTargetSizeLocation.size.height) / 2,
+          width: fromTargetHypotenuse,
+          height: fromTargetHypotenuse,
+          borderRadius: '50%',
+          position: 'absolute',
+          background: this.props.background,
+          zIndex: 10000,
+          transition: `transform ease-in ${duration}ms, opacity ease-in ${duration / 2}ms`,
+          transform: 'scale(1)',
+          willChange: 'transform',
+          opacity: 1,
+        }}
+        keyframes={[
+          {
+            transform: `scale(${scale})`,
+          },
+          {
+            transform: `scale(${scale})`,
+            opacity: 0,
+          },
+        ]}
+        step={opts.step}
+        onFinish={opts.onFinish}
+      />
+    );
+
+    return this.renderAnimation({ onFinish, step: 0 });
   };
 
   render() {
@@ -139,9 +107,6 @@ export default class CircleExpand extends React.Component<CircleExpandProps> {
       action: CollectorActions.animation,
       payload: {
         animate: this.animate,
-        abort: this.abort,
-        beforeAnimate: this.prepare,
-        cleanup: this.cleanup,
         afterAnimate: this.afterAnimate,
       },
     };
