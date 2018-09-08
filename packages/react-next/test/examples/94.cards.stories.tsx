@@ -136,7 +136,7 @@ const Image = styled.img`
   object-fit: contain;
 `;
 
-const BigImageContainer = ImageContainer.extend`
+const BigImageContainer = styled(ImageContainer)`
   width: 100%;
   height: 266px;
   margin: 0;

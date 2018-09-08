@@ -24,11 +24,11 @@ const Root = styled.div`
   margin: ${(props: RootProps) => (props.margin ? 30 : 0)}px;
 `;
 
-const RightRoot = Root.extend`
+const RightRoot = styled(Root)`
   float: right;
 `;
 
-const BigRightRoot = RightRoot.extend`
+const BigRightRoot = styled(RightRoot)`
   width: 315px;
   height: 480px;
 `;
@@ -45,11 +45,11 @@ const Padding = styled.div`
   height: 90vh;
 `;
 
-const Circle = RightRoot.extend`
+const Circle = styled(RightRoot)`
   border-radius: 50%;
 `;
 
-const Rectangle = RightRoot.extend`
+const Rectangle = styled(RightRoot)`
   width: 200px;
 `;
 

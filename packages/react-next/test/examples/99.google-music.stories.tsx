@@ -37,7 +37,7 @@ const Container = styled.div`
   background: ${(props: BackgroundProps) => props.background};
 `;
 
-const DetailsContainer = Container.extend`
+const DetailsContainer = styled(Container)`
   z-index: 1111;
   position: absolute;
   top: 0;
