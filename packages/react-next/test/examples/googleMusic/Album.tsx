@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import StarIcon from '@material-ui/icons/StarBorder';
 import Baba, { Move, CircleExpand, Collector } from '../../../src';
 import { Album as AlbumData } from './data';
-import { IconButton } from 'material-ui';
+import { IconButton } from '@material-ui/core';
 
 interface Props extends AlbumData {
   emphasis?: boolean;

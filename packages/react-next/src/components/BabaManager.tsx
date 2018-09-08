@@ -43,7 +43,7 @@ export interface BabaManagerContext {
 /**
  * @hidden
  */
-export const BabaContext = React.createContext<BabaManagerContext>();
+export const BabaContext = React.createContext<BabaManagerContext | undefined>(undefined);
 
 /**
  * ## BabaManager

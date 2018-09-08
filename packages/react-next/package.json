@@ -14,12 +14,12 @@
     "react-dom": "^16.4.x"
   },
   "devDependencies": {
-    "@material-ui/icons": "^1.0.0-beta.42",
-    "enzyme": "^3.5.0",
-    "material-ui": "^1.0.0-beta.42",
-    "polished": "^1.9.2",
-    "react": "^16.4.x",
-    "react-dom": "^16.4.x",
-    "styled-components": "^3.2.5"
+    "@material-ui/core": "^3.0.2",
+    "@material-ui/icons": "^3.0.1",
+    "material-ui": "^0.20.2",
+    "polished": "^2.0.3",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "styled-components": "^3.4.5"
   }
 }

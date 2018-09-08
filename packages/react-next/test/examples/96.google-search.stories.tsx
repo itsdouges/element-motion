@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import MicIcon from '@material-ui/icons/Mic';
-import { IconButton } from 'material-ui';
+import { IconButton } from '@material-ui/core';
 
 import Toggler from '../Toggler';
 import Baba, { CrossFadeMove } from '../../src/';

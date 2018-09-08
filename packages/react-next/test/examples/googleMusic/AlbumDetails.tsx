@@ -1,6 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Card, IconButton, Table, TableCell, TableRow, TableHead, TableBody } from 'material-ui';
+import {
+  Card,
+  IconButton,
+  Table,
+  TableCell,
+  TableRow,
+  TableHead,
+  TableBody,
+} from '@material-ui/core';
 import PlayButton from '@material-ui/icons/PlayArrow';
 import MoreVert from '@material-ui/icons/MoreVert';
 import StarIcon from '@material-ui/icons/StarBorder';

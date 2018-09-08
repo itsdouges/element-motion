@@ -8,7 +8,7 @@ import Collecter, {
 import * as math from '../../lib/math';
 import { recalculateLocationFromScroll } from '../../lib/dom';
 
-export interface CrossFadeMoveProps extends CollectorChildrenProps {
+export interface FLIPMoveProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
@@ -39,10 +39,10 @@ export interface CrossFadeMoveProps extends CollectorChildrenProps {
  * Note that it will not fade between elements, so this animation really only looks good
  * when transitioning the same (or very similar) element.
  *
- * If you want to transition distinct elements I'd suggestion using CrossFadeMove, however
+ * If you want to transition distinct elements I'd suggestion using FLIPMove, however
  * it is slightly more expensive to animate.
  */
-export default class CrossFadeMove extends React.Component<CrossFadeMoveProps> {
+export default class FLIPMove extends React.Component<FLIPMoveProps> {
   static defaultProps = {
     duration: 300,
     timingFunction: '',

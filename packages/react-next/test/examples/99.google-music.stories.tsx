@@ -9,7 +9,7 @@ import {
   Typography,
   createMuiTheme,
   MuiThemeProvider,
-} from 'material-ui';
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreVert from '@material-ui/icons/MoreVert';

@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import MenuIcon from '@material-ui/icons/Menu';
 import BackIcon from '@material-ui/icons/Close';
-import { IconButton } from 'material-ui';
+import { IconButton } from '@material-ui/core';
 
 import Toggler from '../Toggler';
 import Baba, { FLIPMove, BabaManager } from '../../src/';

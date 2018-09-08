@@ -102,7 +102,7 @@ export interface Collect {
 /**
  * @hidden
  */
-const CollectContext = React.createContext<Collect>();
+const CollectContext = React.createContext<Collect | undefined>(undefined);
 
 /**
  * ## Collector

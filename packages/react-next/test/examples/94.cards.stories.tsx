@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import BackIcon from '@material-ui/icons/Close';
-import { IconButton } from 'material-ui';
+import { IconButton } from '@material-ui/core';
 
 import Toggler from '../../test/Toggler';
 import Baba, { BabaManager, CrossFadeMove } from '../../src';
@@ -290,7 +290,9 @@ storiesOf('Examples/Cards', module).add('cross fade move', () => (
         </BackgroundContainer>
 
         <ChampionsText>
-          {'Stanley Cup Champs'.split('').map(char => <span key={char}>{char}</span>)}
+          {'Stanley Cup Champs'.split('').map(char => (
+            <span key={char}>{char}</span>
+          ))}
         </ChampionsText>
       </Container>
     )}
