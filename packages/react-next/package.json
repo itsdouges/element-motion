@@ -7,7 +7,7 @@
   "main": "dist/commonjs/packages/react-next/src/index.js",
   "module": "dist/es2015/packages/react-next/src/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.commonjs.json && tsc -p ./tsconfig.es2015.json && cp package.json dist/package.json && cp ../../README.md dist/README.md"
+    "build": "rm -rf dist && tsc -p ./tsconfig.commonjs.json && tsc -p ./tsconfig.es2015.json && cp ../../README.md README.md"
   },
   "peerDependencies": {
     "react": "^16.4.x",
