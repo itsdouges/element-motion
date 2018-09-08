@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Baba /> should pass dom data to child animation 1`] = `
+Array [
+  Object {
+    "fromTarget": Object {
+      "location": Object {
+        "left": 0,
+        "top": 0,
+      },
+      "raw": Object {
+        "rect": Object {},
+        "scrollLeft": 0,
+        "scrollTop": 0,
+      },
+      "render": [Function],
+      "size": Object {
+        "height": 200,
+        "width": 100,
+      },
+    },
+    "toTarget": Object {
+      "location": Object {
+        "left": 0,
+        "top": 0,
+      },
+      "raw": Object {
+        "rect": Object {},
+        "scrollLeft": 0,
+        "scrollTop": 0,
+      },
+      "render": undefined,
+      "size": Object {
+        "height": 200,
+        "width": 100,
+      },
+    },
+  },
+]
+`;

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
 import Collecter, {
   CollectorChildrenProps,
   AnimationCallback,
@@ -32,111 +31,81 @@ export interface CircleShrinkProps extends CollectorChildrenProps {
  * to seamlessly transition the background between pages.
  */
 export default class CircleShrink extends React.Component<CircleShrinkProps> {
-  finishAnimation: () => Promise<any>;
-  renderAnimation: (at?: number) => Promise<any>;
-  finishAfterAnimate: () => Promise<any>;
-  finishCleanup: () => void;
-
   static defaultProps = {
     duration: 500,
   };
 
-  beforeAnimate: AnimationCallback = data => {
-    return new Promise(resolve => {
-      window.requestAnimationFrame(() => {
-        const duration = this.props.duration as number;
-        const minSize = Math.min(data.toTarget.size.width, data.toTarget.size.height);
-        const toTargetHypotenuse = calculateHypotenuse(data.toTarget.size);
-        const toTargetCenterInViewport = calculateElementCenterInViewport(data.toTarget);
-        const viewportCenter = calculateWindowCentre();
-        const windowHypotenuse = calculateHypotenuse({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-        const difference = {
-          width: viewportCenter.left - toTargetCenterInViewport.left,
-          height: viewportCenter.top - toTargetCenterInViewport.top,
-        };
-        const hypotenuseDifference = calculateHypotenuse(difference);
-        const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
-        const elementToMountChildren = document.createElement('div');
-        document.body.appendChild(elementToMountChildren);
+  renderAnimation: (
+    opts: { step: number | undefined; onFinish: () => void }
+  ) => React.ReactElement<{}>;
 
-        this.renderAnimation = (at?: number) => {
-          return new Promise(resolve => {
-            unstable_renderSubtreeIntoContainer(
-              data.caller,
-              <SimpleKeyframe
-                at={at}
-                style={{
-                  left:
-                    data.toTarget.location.left -
-                    (toTargetHypotenuse - data.toTarget.size.width) / 2,
-                  top:
-                    data.toTarget.location.top -
-                    (toTargetHypotenuse - data.toTarget.size.height) / 2,
-                  width: toTargetHypotenuse,
-                  height: toTargetHypotenuse,
-                  borderRadius: '50%',
-                  position: 'absolute',
-                  background: this.props.background,
-                  zIndex: 10000,
-                  transition: `transform ease-out ${duration}ms, opacity ease-out ${duration}ms`,
-                  transform: `scale(${scale})`,
-                }}
-                keyframes={[
-                  {
-                    transform: 'scale(1)',
-                  },
-                  {
-                    transform: 'scale(1)',
-                    opacity: 0,
-                  },
-                ]}
-                onFinish={resolve}
-              />,
-              elementToMountChildren
-            );
-          });
-        };
-
-        this.renderAnimation();
-
-        resolve();
-
-        this.finishCleanup = () => {
-          unmountComponentAtNode(elementToMountChildren);
-          document.body.removeChild(elementToMountChildren);
-        };
-
-        this.finishAfterAnimate = () => this.renderAnimation(1);
-      });
+  beforeAnimate: AnimationCallback = (data, onFinish) => {
+    const duration = this.props.duration as number;
+    const minSize = Math.min(data.toTarget.size.width, data.toTarget.size.height);
+    const toTargetHypotenuse = calculateHypotenuse(data.toTarget.size);
+    const toTargetCenterInViewport = calculateElementCenterInViewport(data.toTarget);
+    const viewportCenter = calculateWindowCentre();
+    const windowHypotenuse = calculateHypotenuse({
+      width: window.innerWidth,
+      height: window.innerHeight,
     });
+    const difference = {
+      width: viewportCenter.left - toTargetCenterInViewport.left,
+      height: viewportCenter.top - toTargetCenterInViewport.top,
+    };
+    const hypotenuseDifference = calculateHypotenuse(difference);
+    const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
+
+    this.renderAnimation = (opts: { step?: number | undefined; onFinish: () => void }) => (
+      <SimpleKeyframe
+        style={{
+          left: data.toTarget.location.left - (toTargetHypotenuse - data.toTarget.size.width) / 2,
+          top: data.toTarget.location.top - (toTargetHypotenuse - data.toTarget.size.height) / 2,
+          width: toTargetHypotenuse,
+          height: toTargetHypotenuse,
+          borderRadius: '50%',
+          position: 'absolute',
+          background: this.props.background,
+          zIndex: 10000,
+          transition: `transform ease-out ${duration}ms, opacity ease-out ${duration}ms`,
+          transform: `scale(${scale})`,
+        }}
+        keyframes={[
+          {
+            transform: 'scale(1)',
+          },
+          {
+            transform: 'scale(1)',
+            opacity: 0,
+          },
+        ]}
+        step={opts.step}
+        onFinish={opts.onFinish}
+      />
+    );
+
+    // Finish next animation frame. We are just placing the circle ready to go
+    // for the animate step.
+    requestAnimationFrame(() => onFinish());
+
+    return this.renderAnimation({ onFinish, step: undefined });
   };
 
-  afterAnimate: AnimationCallback = () => {
-    return this.finishAfterAnimate();
+  animate: AnimationCallback = (_, onFinish) => {
+    return this.renderAnimation({ onFinish, step: 0 });
   };
 
-  abort = () => this.finishCleanup();
-
-  cleanup = () => {
-    this.finishCleanup();
-  };
-
-  animate: AnimationCallback = () => {
-    return this.renderAnimation(0);
+  afterAnimate: AnimationCallback = (_, onFinish) => {
+    return this.renderAnimation({ onFinish, step: 1 });
   };
 
   render() {
     const data: CollectorData = {
       action: CollectorActions.animation,
       payload: {
-        animate: this.animate,
-        abort: this.abort,
         beforeAnimate: this.beforeAnimate,
+        animate: this.animate,
         afterAnimate: this.afterAnimate,
-        cleanup: this.cleanup,
       },
     };
 

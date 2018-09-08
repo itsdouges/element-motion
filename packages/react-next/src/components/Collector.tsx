@@ -1,10 +1,20 @@
 import * as React from 'react';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
+export type SetTargetProps = (props: { style: InlineStyles }) => void;
+
 /**
- * @hidden
+ * AnimationCallback
+ *
+ * Return JSX if you want to add a new element to the DOM,
+ * call onFinish() when you've finished the animation,
+ * call setTargetProps() if you want to update the target props.
  */
-export type AnimationCallback = (data: AnimationData) => Promise<any>;
+export type AnimationCallback = (
+  data: AnimationData,
+  onFinish: () => void,
+  setTargetProps: SetTargetProps
+) => React.ReactElement<{}> | undefined | void;
 
 export enum CollectorActions {
   animation = 'animation',
@@ -22,7 +32,6 @@ export interface AnimationAction {
     beforeAnimate?: AnimationCallback;
     afterAnimate?: AnimationCallback;
     abort?: () => void;
-    cleanup: () => void;
   };
 }
 
@@ -48,7 +57,6 @@ export type CollectorChildrenAsFunction = (
  * @hidden
  */
 export interface AnimationData {
-  caller: React.Component;
   fromTarget: TargetData;
   toTarget: TargetData;
 }

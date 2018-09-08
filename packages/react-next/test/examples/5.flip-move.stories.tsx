@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Baba, { Move } from '../../src';
+import Baba, { FLIPMove as Move } from '../../src';
 import Toggler from '../Toggler';
 import StickyButton from '../StickyButton';
 import createScrollStore from '../RestoreScrollOnMount';
@@ -13,13 +13,14 @@ interface RootProps {
   margin?: boolean;
 }
 
-const Root = styled.img`
+const Root = styled.div`
   position: relative;
   width: 105px;
   height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #2196f3;
   margin: ${(props: RootProps) => (props.margin ? 30 : 0)}px;
 `;
 
@@ -58,13 +59,14 @@ const SquareContainer = styled.div`
   position: relative;
 `;
 
-const FillSpace = styled.img`
+const FillSpace = styled.div`
+  background-color: #2196f3;
   position: absolute;
   height: 100%;
   width: 100%;
 `;
 
-storiesOf('Animations/CrossFadeMove', module)
+storiesOf('Animations/FLIPMove', module)
   .add('square to square', () => (
     <Toggler>
       {({ shown, toggle }) => (
@@ -72,19 +74,11 @@ storiesOf('Animations/CrossFadeMove', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-square" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
             <Baba name="square-to-square" key="2">
-              <Move>
-                {({ ref, style }) => (
-                  <RightRoot src={require('./images/female.png')} style={style} innerRef={ref} />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <RightRoot style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
         </div>
@@ -98,24 +92,11 @@ storiesOf('Animations/CrossFadeMove', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-square-margin" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('./images/guess-who.png')}
-                    margin
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root margin style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
             <Baba name="square-to-square-margin" key="2">
-              <Move>
-                {({ ref, style }) => (
-                  <RightRoot src={require('./images/male.png')} style={style} innerRef={ref} />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <RightRoot style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
         </div>
@@ -129,19 +110,11 @@ storiesOf('Animations/CrossFadeMove', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-big-square" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
             <Baba name="square-to-big-square" key="2">
-              <Move>
-                {({ ref, style }) => (
-                  <BigRightRoot src={require('./images/female.png')} style={style} innerRef={ref} />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <BigRightRoot style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
         </div>
@@ -155,11 +128,7 @@ storiesOf('Animations/CrossFadeMove', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-rectangle" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
             <Baba name="square-to-rectangle" key="2">
@@ -186,19 +155,11 @@ storiesOf('Animations/CrossFadeMove', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-circle" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
             <Baba name="square-to-circle" key="2">
-              <Move>
-                {({ ref, style }) => (
-                  <Circle src={require('./images/female.png')} style={style} innerRef={ref} />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Circle style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
         </div>
@@ -214,24 +175,12 @@ storiesOf('Animations/CrossFadeMove', module)
             <div>
               <Padding data-big />
               <Baba name="offscreen-big-square-to-small-square" key="2">
-                <Move>
-                  {({ ref, style }) => (
-                    <BigRightRoot
-                      src={require('./images/guess-who.png')}
-                      style={style}
-                      innerRef={ref}
-                    />
-                  )}
-                </Move>
+                <Move>{({ ref, style }) => <BigRightRoot style={style} innerRef={ref} />}</Move>
               </Baba>
             </div>
           ) : (
             <Baba name="offscreen-big-square-to-small-square" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root src={require('./images/female2.png')} style={style} innerRef={ref} />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
         </LongContainer>
@@ -245,30 +194,14 @@ storiesOf('Animations/CrossFadeMove', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
             <Baba name="square-to-offscreen-big-square-with-margin" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('./images/guess-who.png')}
-                    margin
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root margin style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
             <div>
               <Padding data-yolo />
               <Baba name="square-to-offscreen-big-square-with-margin" key="2">
                 <Move>
-                  {({ ref, style }) => (
-                    <BigRightRoot
-                      src={require('./images/female.png')}
-                      margin
-                      style={style}
-                      innerRef={ref}
-                    />
-                  )}
+                  {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
                 </Move>
               </Baba>
             </div>
@@ -285,29 +218,14 @@ storiesOf('Animations/CrossFadeMove', module)
           {!shown ? (
             <SquareContainer>
               <Baba name="indescriminate-size-to-square" key="1">
-                <Move>
-                  {({ ref, style }) => (
-                    <FillSpace
-                      src={require('./images/guess-who.png')}
-                      style={style}
-                      innerRef={ref}
-                    />
-                  )}
-                </Move>
+                <Move>{({ ref, style }) => <FillSpace style={style} innerRef={ref} />}</Move>
               </Baba>
             </SquareContainer>
           ) : (
             <div>
               <Baba name="indescriminate-size-to-square" key="2">
                 <Move>
-                  {({ ref, style }) => (
-                    <BigRightRoot
-                      src={require('./images/male.png')}
-                      margin
-                      style={style}
-                      innerRef={ref}
-                    />
-                  )}
+                  {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
                 </Move>
               </Baba>
             </div>
@@ -326,11 +244,7 @@ storiesOf('Animations/CrossFadeMove', module)
               <RestoreScrollOnMount />
               <MediumContainer />
               <Baba name="long-scroll-to-no-scroll" key="1">
-                <Move>
-                  {({ ref, style }) => (
-                    <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
-                  )}
-                </Move>
+                <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
               </Baba>
             </LongContainer>
           ) : (
@@ -338,14 +252,7 @@ storiesOf('Animations/CrossFadeMove', module)
               <ScrollTopOnMount />
               <Baba name="long-scroll-to-no-scroll" key="2">
                 <Move>
-                  {({ ref, style }) => (
-                    <BigRightRoot
-                      src={require('./images/female2.png')}
-                      margin
-                      style={style}
-                      innerRef={ref}
-                    />
-                  )}
+                  {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
                 </Move>
               </Baba>
             </div>
@@ -362,13 +269,7 @@ storiesOf('Animations/CrossFadeMove', module)
           {!shown && (
             <Baba name="one-already-mounted" key="1">
               <Move>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('./images/guess-who.png')}
-                    style={{ ...style, float: 'left' }}
-                    innerRef={ref}
-                  />
-                )}
+                {({ ref, style }) => <Root style={{ ...style, float: 'left' }} innerRef={ref} />}
               </Move>
             </Baba>
           )}
@@ -377,7 +278,6 @@ storiesOf('Animations/CrossFadeMove', module)
             <Move>
               {({ ref, style }) => (
                 <RightRoot
-                  src={require('./images/female.png')}
                   style={{
                     ...style,
                   }}
@@ -399,11 +299,7 @@ storiesOf('Animations/CrossFadeMove', module)
             <Baba name="one-already-mounted-reversed" key="1">
               <Move>
                 {({ ref, style }) => (
-                  <Root
-                    src={require('./images/guess-who.png')}
-                    style={{ ...style, position: 'fixed', top: 0, left: 0 }}
-                    innerRef={ref}
-                  />
+                  <Root style={{ ...style, position: 'fixed', top: 0, left: 0 }} innerRef={ref} />
                 )}
               </Move>
             </Baba>
@@ -415,11 +311,7 @@ storiesOf('Animations/CrossFadeMove', module)
             <br />
             <br />
             <Baba name="one-already-mounted-reversed" key="2" in={!shown}>
-              <Move>
-                {({ ref, style }) => (
-                  <RightRoot src={require('./images/female.png')} style={style} innerRef={ref} />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <RightRoot style={style} innerRef={ref} />}</Move>
             </Baba>
           </LongContainer>
         </div>
@@ -433,13 +325,7 @@ storiesOf('Animations/CrossFadeMove', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           <Baba name="both-already-mounted" key="1" in={!shown}>
             <Move>
-              {({ ref, style }) => (
-                <Root
-                  src={require('./images/guess-who.png')}
-                  style={{ ...style, float: 'left' }}
-                  innerRef={ref}
-                />
-              )}
+              {({ ref, style }) => <Root style={{ ...style, float: 'left' }} innerRef={ref} />}
             </Move>
           </Baba>
 
@@ -447,7 +333,6 @@ storiesOf('Animations/CrossFadeMove', module)
             <Move>
               {({ ref, style }) => (
                 <RightRoot
-                  src={require('./images/female.png')}
                   style={{
                     ...style,
                   }}
@@ -467,13 +352,7 @@ storiesOf('Animations/CrossFadeMove', module)
           <StickyButton onClick={toggle}>toggle</StickyButton>
           <Baba name="both-already-mounted-reversed" key="1" in={!!shown}>
             <Move>
-              {({ ref, style }) => (
-                <Root
-                  src={require('./images/guess-who.png')}
-                  style={{ ...style, float: 'left' }}
-                  innerRef={ref}
-                />
-              )}
+              {({ ref, style }) => <Root style={{ ...style, float: 'left' }} innerRef={ref} />}
             </Move>
           </Baba>
 
@@ -481,7 +360,6 @@ storiesOf('Animations/CrossFadeMove', module)
             <Move>
               {({ ref, style }) => (
                 <RightRoot
-                  src={require('./images/female.png')}
                   style={{
                     ...style,
                   }}
@@ -502,16 +380,12 @@ storiesOf('Animations/CrossFadeMove', module)
           {!shown ? (
             <Baba name="aborting" key="1">
               <Move duration={5000}>
-                {({ ref, style }) => (
-                  <Root src={require('./images/guess-who.png')} style={style} innerRef={ref} />
-                )}
+                {({ ref, style }) => <Root style={style} innerRef={ref} />}
               </Move>
             </Baba>
           ) : (
             <Baba name="aborting" key="2">
-              {({ ref, style }) => (
-                <RightRoot src={require('./images/female.png')} style={style} innerRef={ref} />
-              )}
+              {({ ref, style }) => <RightRoot style={style} innerRef={ref} />}
             </Baba>
           )}
         </div>

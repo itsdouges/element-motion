@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",
+    "enzyme": "^3.5.0",
     "material-ui": "^1.0.0-beta.42",
     "polished": "^1.9.2",
     "react": "^16.4.x",

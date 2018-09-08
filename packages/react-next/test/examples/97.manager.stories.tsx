@@ -21,11 +21,15 @@ const Noop: React.StatelessComponent<CollectorChildrenProps & { duration: number
     data={{
       action: CollectorActions.animation,
       payload: {
-        abort: () => {},
-        cleanup: () => {},
-        afterAnimate: () => Promise.resolve(),
-        animate: () => new Promise(resolve => setTimeout(resolve, duration)),
-        beforeAnimate: () => Promise.resolve(),
+        beforeAnimate: (_, onFinish) => {
+          onFinish();
+        },
+        animate: (_, onFinish) => {
+          setTimeout(onFinish, duration);
+        },
+        afterAnimate: (_, onFinish) => {
+          onFinish();
+        },
       },
     }}
   >

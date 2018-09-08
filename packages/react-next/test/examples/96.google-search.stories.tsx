@@ -6,7 +6,7 @@ import MicIcon from '@material-ui/icons/Mic';
 import { IconButton } from 'material-ui';
 
 import Toggler from '../Toggler';
-import Baba, { Move } from '../../src/';
+import Baba, { CrossFadeMove } from '../../src/';
 
 const Container = styled.div`
   position: relative;
@@ -67,14 +67,14 @@ const FixedSearchBar = styled.div`
   background: white;
 `;
 
-storiesOf('Examples/GoogleSearch', module).add('search bar', () => (
+storiesOf('Examples/FloatingSearchBar', module).add('cross fade move', () => (
   <Toggler>
     {({ shown, toggle }) => (
       <Container>
         <InnerContainer>
           {shown || (
             <Baba name="google-searchbar">
-              <Move duration={150}>
+              <CrossFadeMove duration={150}>
                 {({ ref, style }) => (
                   <FloatingSearchBar onClick={toggle} innerRef={ref} style={style}>
                     <IconButton color="default" aria-label="Menu" style={{ marginLeft: 'auto ' }}>
@@ -82,13 +82,13 @@ storiesOf('Examples/GoogleSearch', module).add('search bar', () => (
                     </IconButton>
                   </FloatingSearchBar>
                 )}
-              </Move>
+              </CrossFadeMove>
             </Baba>
           )}
 
           {shown && (
             <Baba name="google-searchbar">
-              <Move duration={150}>
+              <CrossFadeMove duration={150}>
                 {({ ref, style }) => (
                   <FixedSearchBar innerRef={ref} style={style}>
                     <IconButton color="default" aria-label="Menu" onClick={toggle}>
@@ -102,7 +102,7 @@ storiesOf('Examples/GoogleSearch', module).add('search bar', () => (
                     </IconButton>
                   </FixedSearchBar>
                 )}
-              </Move>
+              </CrossFadeMove>
             </Baba>
           )}
         </InnerContainer>

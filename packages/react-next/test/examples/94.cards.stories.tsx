@@ -5,7 +5,7 @@ import BackIcon from '@material-ui/icons/Close';
 import { IconButton } from 'material-ui';
 
 import Toggler from '../../test/Toggler';
-import Baba, { BabaManager, Move } from '../../src';
+import Baba, { BabaManager, CrossFadeMove } from '../../src';
 
 const Container = styled.div`
   min-height: 120vh;
@@ -208,7 +208,7 @@ const cards = [
   },
 ];
 
-storiesOf('Examples/Cards', module).add('list to content', () => (
+storiesOf('Examples/Cards', module).add('cross fade move', () => (
   <Toggler>
     {({ shown, toggle, set }) => (
       <Container>
@@ -220,20 +220,20 @@ storiesOf('Examples/Cards', module).add('list to content', () => (
                   {props => (
                     <>
                       <Baba name={`${index}-card`}>
-                        <Move zIndex={999}>
+                        <CrossFadeMove zIndex={999}>
                           {({ style, ref }) => <Card style={style} innerRef={ref} />}
-                        </Move>
+                        </CrossFadeMove>
                       </Baba>
 
                       <CardContent {...props}>
                         <Baba name={`${index}-card-image`}>
-                          <Move zIndex={1000}>
+                          <CrossFadeMove zIndex={1000}>
                             {({ style, ref }) => (
                               <ImageContainer style={style} innerRef={ref}>
                                 <Image src={card.image} />
                               </ImageContainer>
                             )}
-                          </Move>
+                          </CrossFadeMove>
                         </Baba>
 
                         {card.name}
@@ -262,22 +262,22 @@ storiesOf('Examples/Cards', module).add('list to content', () => (
                     </IconButton>
 
                     <Baba name={`${shown}-card-image`}>
-                      <Move zIndex={1000}>
+                      <CrossFadeMove zIndex={1000}>
                         {({ style, ref }) => (
                           <BigImageContainer style={style} innerRef={ref}>
                             <Image src={cards[typeof shown === 'string' ? shown : 0].image} />
                           </BigImageContainer>
                         )}
-                      </Move>
+                      </CrossFadeMove>
                     </Baba>
 
                     <Title>{cards[typeof shown === 'string' ? shown : 0].name}</Title>
                   </ContentInnerCard>
 
                   <Baba name={`${shown}-card`}>
-                    <Move zIndex={999}>
+                    <CrossFadeMove zIndex={999}>
                       {({ style, ref }) => <ContentCard style={style} innerRef={ref} />}
-                    </Move>
+                    </CrossFadeMove>
                   </Baba>
                 </>
               )}
@@ -290,7 +290,7 @@ storiesOf('Examples/Cards', module).add('list to content', () => (
         </BackgroundContainer>
 
         <ChampionsText>
-          {'Stanley Cup Champs'.split('').map(char => <span>{char}</span>)}
+          {'Stanley Cup Champs'.split('').map(char => <span key={char}>{char}</span>)}
         </ChampionsText>
       </Container>
     )}
