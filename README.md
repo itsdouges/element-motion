@@ -162,9 +162,13 @@ CircleShrink will animate a circle from the entire window to cover end target, a
 
 Generally you will use CircleShrink and CircleExpand together to seamlessly transition the background between pages.
 
+### [FLIPMove](https://madou.github.io/yubaba/typedoc/classes/flipmove.html)
+
+FLIPMove will conduct a [FLIP](https://aerotwist.com/blog/flip-your-animations/) styled animation on the target element.
+
 ### [CrossFadeMove](https://madou.github.io/yubaba/typedoc/classes/crossfademove.html)
 
-CrossFadeMove will animate the fromNode to the toNode while transitioning between the two nodes for a seamless transition.
+CrossFadeMove will animate the from element to the target element while transitioning between the two for a seamless transition.
 
 ### [Swipe](https://madou.github.io/yubaba/typedoc/classes/swipe.html)
 
