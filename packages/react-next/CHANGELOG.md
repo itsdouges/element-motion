@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/madou/yubaba/compare/v1.1.1...v1.1.2) (2018-09-09)
+
+
+### Bug Fixes
+
+* set default curve for move animations to spring like, change default duration from 300ms to 500ms ([f6370a9](https://github.com/madou/yubaba/commit/f6370a9))
+
+
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/madou/yubaba/compare/v1.1.0...v1.1.1) (2018-09-08)
 
