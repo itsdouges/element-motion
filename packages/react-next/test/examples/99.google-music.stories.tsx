@@ -38,7 +38,6 @@ const Container = styled.div`
 `;
 
 const DetailsContainer = styled(Container)`
-  z-index: 1111;
   position: absolute;
   top: 0;
   min-height: 100vh;
@@ -143,7 +142,10 @@ class MultipleTargets extends React.Component<{
             <FixedBg
               background={this.props.expand && hero ? `url(${hero})` : data[index || 0].color}
             />
-            <AppBar position="fixed" style={{ background: 'transparent', boxShadow: 'none' }}>
+            <AppBar
+              position="fixed"
+              style={{ background: 'transparent', boxShadow: 'none', zIndex: 1 }}
+            >
               <Toolbar>
                 <IconButton
                   color="inherit"
@@ -182,7 +184,10 @@ class MultipleTargets extends React.Component<{
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <AppBar position="fixed">
+        <AppBar
+          position="fixed"
+          style={{ zIndex: 1, display: this.state.shown === undefined ? '' : 'none' }}
+        >
           <Toolbar>
             <IconButton color="inherit" aria-label="Menu" style={{ marginRight: '10px' }}>
               <MenuIcon />

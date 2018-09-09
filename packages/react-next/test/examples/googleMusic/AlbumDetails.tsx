@@ -14,7 +14,7 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import StarIcon from '@material-ui/icons/StarBorder';
 import { lighten, readableColor } from 'polished';
 import { Album as AlbumData } from './data';
-import Baba, { Move, CircleShrink, Wait, Collector } from '../../../src';
+import Baba, { FLIPMove as Move, CircleShrink, Wait, Collector } from '../../../src';
 
 interface Props extends AlbumData {
   onClick?: () => void;
@@ -28,7 +28,8 @@ const Root = styled.div`
   margin: 0 auto;
   color: ${(props: DataProps) => (readableColor(props.color) === '#000' ? '#000000b0' : 'white')};
   font-family: Roboto, sans-serif;
-  padding-top: 300px;
+  padding-top: 150px;
+  padding-bottom: 124px;
 `;
 
 interface DataProps {
@@ -114,7 +115,7 @@ export default class AlbumDetails extends React.Component<Props> {
 
     return (
       <Root color={color}>
-        <Page raised elevation={20} style={{ minHeight: '90vh' }}>
+        <Page raised elevation={20} style={{ minHeight: '90vh', overflow: 'visible' }}>
           <Data color={color}>
             <Baba name={baba}>
               <Move>

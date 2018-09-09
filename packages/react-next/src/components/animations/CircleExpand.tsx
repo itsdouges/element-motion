@@ -79,7 +79,7 @@ export default class CircleExpand extends React.Component<CircleExpandProps> {
           borderRadius: '50%',
           position: 'absolute',
           background: this.props.background,
-          zIndex: 10000,
+          zIndex: 1110,
           transition: `transform ease-in ${duration}ms, opacity ease-in ${duration / 2}ms`,
           transform: 'scale(1)',
           willChange: 'transform',

@@ -1,84 +1,17 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { Baba } from '../Baba';
-import Collector, { CollectorActions, CollectorChildrenProps } from '../Collector';
-import { getElementSizeLocation, GetElementSizeLocationReturnValue } from '../../lib/dom';
-import noop from '../../lib/noop';
+import { getElementSizeLocation } from '../../lib/dom';
 import { defer } from '../../lib/defer';
+import * as utils from './utils';
 
 jest.mock('../../lib/dom');
 
 describe('<Baba />', () => {
-  const createTestAnimation = ({
-    onBeforeAnimate = noop,
-    onAnimate = noop,
-    onAfterAnimate = noop,
-    beforeAnimateJsx,
-    animateJsx,
-    afterAnimateJsx,
-    beforeAnimateTargetProps,
-    animateTargetProps,
-    afterAnimateTargetProps,
-  }: any = {}): React.StatelessComponent<CollectorChildrenProps> => ({ children }) => (
-    <Collector
-      data={{
-        action: CollectorActions.animation,
-        payload: {
-          beforeAnimate: (data, onFinish, setTargetProps) => {
-            onBeforeAnimate(data);
-            setTimeout(onFinish, 0);
-            if (beforeAnimateTargetProps) {
-              setTargetProps(beforeAnimateTargetProps);
-            }
-            return beforeAnimateJsx;
-          },
-          animate: (data, onFinish, setTargetProps) => {
-            onAnimate(data);
-            setTimeout(onFinish, 0);
-            if (animateTargetProps) {
-              setTargetProps(animateTargetProps);
-            }
-            return animateJsx;
-          },
-          afterAnimate: (data, onFinish, setTargetProps) => {
-            onAfterAnimate(data);
-            setTimeout(onFinish, 0);
-            if (afterAnimateTargetProps) {
-              setTargetProps(afterAnimateTargetProps);
-            }
-            return afterAnimateJsx;
-          },
-        },
-      }}
-    >
-      {children}
-    </Collector>
-  );
-
-  const BabaUnderTest = ({ from, to, start }) =>
-    start ? <aside>{to}</aside> : <main>{from}</main>;
-
-  const domData = (): GetElementSizeLocationReturnValue => ({
-    size: {
-      width: 100,
-      height: 200,
-    },
-    location: {
-      left: 0,
-      top: 0,
-    },
-    raw: {
-      // tslint:disable-next-line
-      rect: {} as ClientRect,
-      scrollTop: 0,
-      scrollLeft: 0,
-    },
-  });
-
   it('should callback when animation has finished', done => {
-    const Animation = createTestAnimation();
+    const Animation = utils.createTestAnimation();
     const wrapper = mount(
-      <BabaUnderTest
+      <utils.BabaUnderTest
         from={
           <Baba name="anim-0">
             <Animation>{props => <div {...props} />}</Animation>
@@ -100,14 +33,14 @@ describe('<Baba />', () => {
 
   it('should pass dom data to child animation', async () => {
     const callback = jest.fn();
-    const elementData = domData();
+    const elementData = utils.domData();
     (getElementSizeLocation as jest.Mock).mockReturnValue(elementData);
     const deferred = defer();
-    const Animation = createTestAnimation({
+    const Animation = utils.createTestAnimation({
       onAnimate: callback,
     });
     const wrapper = mount(
-      <BabaUnderTest
+      <utils.BabaUnderTest
         from={
           <Baba name="anim-1">
             <Animation>{props => <div {...props} />}</Animation>
@@ -131,7 +64,7 @@ describe('<Baba />', () => {
   });
 
   it('should make children visible inside first baba element before animating has been triggered', () => {
-    const Animation = createTestAnimation();
+    const Animation = utils.createTestAnimation();
 
     const wrapper = mount(
       <Baba name="anim-2">
@@ -143,9 +76,9 @@ describe('<Baba />', () => {
   });
 
   it('should hide children inside target baba element when animating has been triggered', () => {
-    const Animation = createTestAnimation();
+    const Animation = utils.createTestAnimation();
     const wrapper = mount(
-      <BabaUnderTest
+      <utils.BabaUnderTest
         from={
           <Baba name="anim-3">
             <Animation>{props => <div {...props} />}</Animation>
@@ -165,10 +98,10 @@ describe('<Baba />', () => {
   });
 
   it('should show children inside target baba element when animating has completed', async () => {
-    const Animation = createTestAnimation();
+    const Animation = utils.createTestAnimation();
     const deferred = defer();
     const wrapper = mount(
-      <BabaUnderTest
+      <utils.BabaUnderTest
         from={
           <Baba name="anim-3">
             <Animation>{props => <div {...props} />}</Animation>

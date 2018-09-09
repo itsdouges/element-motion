@@ -145,17 +145,32 @@ export default class Collector extends React.Component<CollectorProps> {
             <CollectContext.Provider
               value={{
                 ref: ref => {
-                  this.props.receiveRef && this.props.receiveRef(ref);
-                  collect && collect.ref(ref);
+                  if (this.props.receiveRef) {
+                    this.props.receiveRef(ref);
+                  }
+
+                  if (collect) {
+                    collect.ref(ref);
+                  }
                 },
                 data: childData => {
                   const data = this.props.data ? [this.props.data].concat(childData) : childData;
-                  collect && collect.data(data);
-                  this.props.receiveData && this.props.receiveData(childData);
+                  if (collect) {
+                    collect.data(data);
+                  }
+
+                  if (this.props.receiveData) {
+                    this.props.receiveData(childData);
+                  }
                 },
                 renderChildren: node => {
-                  collect && collect.renderChildren(node);
-                  this.props.receiveRenderChildren && this.props.receiveRenderChildren(node);
+                  if (collect) {
+                    collect.renderChildren(node);
+                  }
+
+                  if (this.props.receiveRenderChildren) {
+                    this.props.receiveRenderChildren(node);
+                  }
                 },
                 style: {
                   ...this.props.style,

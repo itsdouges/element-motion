@@ -247,7 +247,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
           const mount = (jsx: React.ReactElement<{}>) => {
             if (!elementToMountChildren) {
               elementToMountChildren = document.createElement('div');
-              document.body.appendChild(elementToMountChildren);
+              document.body.insertBefore(elementToMountChildren, document.body.firstChild);
             }
 
             // This ensures that if there was an update to the jsx that is animating,
@@ -411,8 +411,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
               // This primarily works around the problem of the "in" prop not having data when it needs.
               this.storeDOMData();
 
-              // If a BabaManager is a parent somewhere, notify them that
-              // we're finished animating.
+              // If a BabaManager is a parent somewhere, notify them that we're finished animating.
               if (this.props.context) {
                 this.props.context.onFinish({ name: this.props.name });
               }
@@ -430,8 +429,6 @@ If it's an image, try and have the image loaded before mounting, or set a static
               blocks.forEach(block => block.forEach(anim => anim.cleanup()));
             })
             .then(() => {
-              // Animations can still "animate" away when finishing. So we're truly not finished animating
-              // until the cleanup step has finished.
               this.animating = false;
               if (this.props.onFinish) {
                 this.props.onFinish();

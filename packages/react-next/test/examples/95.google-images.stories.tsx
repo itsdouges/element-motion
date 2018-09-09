@@ -175,7 +175,6 @@ const Column = styled.div`
 const ImagePageRoot = styled.div`
   position: fixed;
   top: 8px;
-  z-index: 99999;
   height: 666px;
   width: 400px;
   overflow: auto;
@@ -239,6 +238,11 @@ const ContentContainer = styled.div`
   margin-top: -4px;
 `;
 
+const FadeIn = styled.div<any>`
+  transition: opacity 500ms;
+  opacity: ${props => (props.in ? 1 : 0)};
+`;
+
 const ImagePage: React.StatelessComponent<ImageProps> = ({ src, title, onClick }) => (
   <BabaManager name={title}>
     {props => (
@@ -259,52 +263,54 @@ const ImagePage: React.StatelessComponent<ImageProps> = ({ src, title, onClick }
         </Baba>
 
         <ContentContainer {...props}>
-          <MetaRoot>
-            <PageTitle>{title}</PageTitle>
-            <Copyright>Images may be subject to copyright.</Copyright>
-          </MetaRoot>
+          <FadeIn in={props.style.visibility !== 'hidden'}>
+            <MetaRoot>
+              <PageTitle>{title}</PageTitle>
+              <Copyright>Images may be subject to copyright.</Copyright>
+            </MetaRoot>
 
-          <Images>
-            <Related>Related images</Related>
-            <Related>See more</Related>
-          </Images>
+            <Images>
+              <Related>Related images</Related>
+              <Related>See more</Related>
+            </Images>
 
-          <Images>
-            <Column>
-              <Image
-                src={require('./images/4.png')}
-                title="Washington Capitals - Wikipedia 1"
-                from="en.wikipedia.org"
-              />
-              <Image
-                src={require('./images/4.png')}
-                title="Washington Capitals - Wikipedia 2"
-                from="en.wikipedia.org"
-              />
-              <Image
-                src={require('./images/4.png')}
-                title="Washington Capitals - Wikipedia 3"
-                from="en.wikipedia.org"
-              />
-            </Column>
-            <Column>
-              <Image
-                src={require('./images/4.png')}
-                title="Washington Capitals - Wikipedia 4"
-                from="en.wikipedia.org"
-              />
-              <Image
-                src={require('./images/4.png')}
-                title="Washington Capitals - Wikipedia 5"
-                from="en.wikipedia.org"
-              />
-              <Image
-                src={require('./images/4.png')}
-                title="Washington Capitals - Wikipedia 6"
-                from="en.wikipedia.org"
-              />
-            </Column>
-          </Images>
+            <Images>
+              <Column>
+                <Image
+                  src={require('./images/4.png')}
+                  title="Washington Capitals - Wikipedia 1"
+                  from="en.wikipedia.org"
+                />
+                <Image
+                  src={require('./images/4.png')}
+                  title="Washington Capitals - Wikipedia 2"
+                  from="en.wikipedia.org"
+                />
+                <Image
+                  src={require('./images/4.png')}
+                  title="Washington Capitals - Wikipedia 3"
+                  from="en.wikipedia.org"
+                />
+              </Column>
+              <Column>
+                <Image
+                  src={require('./images/4.png')}
+                  title="Washington Capitals - Wikipedia 4"
+                  from="en.wikipedia.org"
+                />
+                <Image
+                  src={require('./images/4.png')}
+                  title="Washington Capitals - Wikipedia 5"
+                  from="en.wikipedia.org"
+                />
+                <Image
+                  src={require('./images/4.png')}
+                  title="Washington Capitals - Wikipedia 6"
+                  from="en.wikipedia.org"
+                />
+              </Column>
+            </Images>
+          </FadeIn>
         </ContentContainer>
       </ImagePageRoot>
     )}

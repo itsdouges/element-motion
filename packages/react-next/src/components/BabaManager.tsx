@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { InlineStyles } from './Collector';
 
-export interface BabaManangerProps {
+export interface BabaManangerProps extends InjectedProps {
   /**
    * Children as function which passes down style,
    * add this to the elements you want to hide until all child animations have finished.
@@ -53,6 +53,12 @@ export const BabaContext = React.createContext<BabaManagerContext | undefined>(u
  *
  * If it is the initial mount it will immediately be shown.
  *
+ * You can also nest `<BabaManager />`'s and they will all be notified from the appropriate child `<Baba />`.
+ *
+ * We use visibility over opacity as it can show nested children even if the parent is `visibility: hidden`.
+ * This greatly simplifies code we need to write.
+ * It will be up to consumers to handle their own fade-in behaviour.
+ *
  * ### Usage
  *
  * ```
@@ -69,21 +75,25 @@ export const BabaContext = React.createContext<BabaManagerContext | undefined>(u
  * );
  * ```
  */
-export default class BabaManager extends React.Component<BabaManangerProps, State> {
+export class BabaManager extends React.Component<BabaManangerProps, State> {
   state: State = {
     style: {
-      opacity: 0,
+      visibility: 'hidden',
     },
   };
 
   onFinish: OnFinishHandler = opts => {
+    if (this.props.context && this.props.context.onFinish) {
+      this.props.context.onFinish(opts);
+    }
+
     if (this.props.name && opts.name !== this.props.name) {
       return;
     }
 
     this.setState({
       style: {
-        opacity: 1,
+        visibility: 'visible',
       },
     });
   };
@@ -107,3 +117,8 @@ export const withBabaManagerContext = <T extends InjectedProps>(
     {context => <WrappedComponent context={context} {...props} />}
   </BabaContext.Consumer>
 );
+
+/**
+ * @hidden
+ */
+export default withBabaManagerContext(BabaManager);
