@@ -931,6 +931,9 @@ img { max-width: 100%; }
 			<a href="../classes/crossfademove.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
+			<a href="../classes/flipmove.html" class="tsd-kind-icon">FLIPMove</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="../classes/swipe.html" class="tsd-kind-icon">Swipe</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
@@ -944,6 +947,9 @@ img { max-width: 100%; }
 			<ul>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 					<a href="babamanangerprops.html#children" class="tsd-kind-icon">children</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+					<a href="babamanangerprops.html#context" class="tsd-kind-icon">context</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 					<a href="babamanangerprops.html#name" class="tsd-kind-icon">name</a>
@@ -967,6 +973,9 @@ img { max-width: 100%; }
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="crossfademoveprops.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external">
+			<a href="flipmoveprops.html" class="tsd-kind-icon">FLIPMove<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="inlinestyles.html" class="tsd-kind-icon">Inline<wbr>Styles</a>
@@ -995,6 +1004,9 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-function tsd-has-type-parameter tsd-is-external">
 			<a href="../globals.html#defer" class="tsd-kind-icon">defer</a>
 		</li>
+		<li class=" tsd-kind-function tsd-is-external">
+			<a href="../globals.html#spring" class="tsd-kind-icon">spring</a>
+		</li>
 	</ul>
 </nav>
 <div class="container container-main">
@@ -1003,7 +1015,12 @@ img { max-width: 100%; }
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
 				<li>
-					<span class="target">BabaManangerProps</span>
+					<span class="tsd-signature-type">InjectedProps</span>
+					<ul class="tsd-hierarchy">
+						<li>
+							<span class="target">BabaManangerProps</span>
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</section>
@@ -1015,6 +1032,7 @@ img { max-width: 100%; }
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="babamanangerprops.html#children" class="tsd-kind-icon">children</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="babamanangerprops.html#context" class="tsd-kind-icon">context</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="babamanangerprops.html#name" class="tsd-kind-icon">name</a></li>
 						</ul>
 					</section>
@@ -1029,7 +1047,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">children<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/BabaManager.tsx#L9">components/BabaManager.tsx:9</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/c817c0c/packages/react-next/src/components/BabaManager.tsx#L9">components/BabaManager.tsx:9</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1065,13 +1083,24 @@ img { max-width: 100%; }
 					</ul>
 				</div>
 			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
+				<a name="context" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> context</h3>
+				<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BabaManagerContext</span></div>
+				<aside class="tsd-sources">
+					<p>Inherited from InjectedProps.context</p>
+					<ul>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/c817c0c/packages/react-next/src/components/BabaManager.tsx#L28">components/BabaManager.tsx:28</a></li>
+					</ul>
+				</aside>
+			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 				<a name="name" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
 				<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/BabaManager.tsx#L14">components/BabaManager.tsx:14</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/c817c0c/packages/react-next/src/components/BabaManager.tsx#L14">components/BabaManager.tsx:14</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">

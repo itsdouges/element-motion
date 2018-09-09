@@ -175,7 +175,6 @@ const Column = styled.div`
 const ImagePageRoot = styled.div`
   position: fixed;
   top: 8px;
-  z-index: 99999;
   height: 666px;
   width: 400px;
   overflow: auto;

@@ -61,9 +61,10 @@ export default class FLIPMove extends React.Component<FLIPMoveProps> {
     const { timingFunction } = this.props;
 
     const style = {
-      zIndex: this.props.zIndex || 9999,
+      zIndex: this.props.zIndex || 10001,
       opacity: 1,
       transformOrigin: '0 0',
+      visibility: 'visible',
       transform: `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
         fromTargetSizeLocation.size.width,
         data.toTarget.size.width

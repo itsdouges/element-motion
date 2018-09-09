@@ -66,7 +66,7 @@ export default class CircleShrink extends React.Component<CircleShrinkProps> {
           borderRadius: '50%',
           position: 'absolute',
           background: this.props.background,
-          zIndex: 10000,
+          zIndex: 1110,
           transition: `transform ease-out ${duration}ms, opacity ease-out ${duration}ms`,
           transform: `scale(${scale})`,
         }}

@@ -931,6 +931,9 @@ img { max-width: 100%; }
 			<a href="../classes/crossfademove.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
+			<a href="../classes/flipmove.html" class="tsd-kind-icon">FLIPMove</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="../classes/swipe.html" class="tsd-kind-icon">Swipe</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
@@ -960,7 +963,7 @@ img { max-width: 100%; }
 		<li class="current tsd-kind-interface tsd-is-external">
 			<a href="crossfademoveprops.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move<wbr>Props</a>
 			<ul>
-				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-external">
+				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 					<a href="crossfademoveprops.html#children" class="tsd-kind-icon">children</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
@@ -976,6 +979,9 @@ img { max-width: 100%; }
 					<a href="crossfademoveprops.html#zindex" class="tsd-kind-icon">z<wbr>Index</a>
 				</li>
 			</ul>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external">
+			<a href="flipmoveprops.html" class="tsd-kind-icon">FLIPMove<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="inlinestyles.html" class="tsd-kind-icon">Inline<wbr>Styles</a>
@@ -1004,6 +1010,9 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-function tsd-has-type-parameter tsd-is-external">
 			<a href="../globals.html#defer" class="tsd-kind-icon">defer</a>
 		</li>
+		<li class=" tsd-kind-function tsd-is-external">
+			<a href="../globals.html#spring" class="tsd-kind-icon">spring</a>
+		</li>
 	</ul>
 </nav>
 <div class="container container-main">
@@ -1011,9 +1020,6 @@ img { max-width: 100%; }
 		<section class="tsd-panel tsd-hierarchy">
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
-				<li>
-					<a href="collectorchildrenprops.html" class="tsd-signature-type">CollectorChildrenProps</a>
-				</li>
 				<li>
 					<a href="collectorchildrenprops.html" class="tsd-signature-type">CollectorChildrenProps</a>
 					<ul class="tsd-hierarchy">
@@ -1031,7 +1037,7 @@ img { max-width: 100%; }
 					<section class="tsd-index-section tsd-is-external">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-external"><a href="crossfademoveprops.html#children" class="tsd-kind-icon">children</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external"><a href="crossfademoveprops.html#children" class="tsd-kind-icon">children</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="crossfademoveprops.html#delay" class="tsd-kind-icon">delay</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="crossfademoveprops.html#duration" class="tsd-kind-icon">duration</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="crossfademoveprops.html#timingfunction" class="tsd-kind-icon">timing<wbr>Function</a></li>
@@ -1043,15 +1049,14 @@ img { max-width: 100%; }
 		</section>
 		<section class="tsd-panel-group tsd-member-group tsd-is-external">
 			<h2>Properties</h2>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-external">
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-external">
 				<a name="children" class="tsd-anchor"></a>
 				<h3>children</h3>
 				<div class="tsd-signature tsd-kind-icon">children<span class="tsd-signature-symbol">:</span> <a href="../globals.html#collectorchildrenasfunction" class="tsd-signature-type">CollectorChildrenAsFunction</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReactElement</span><span class="tsd-signature-symbol">&lt;</span><a href="collectorprops.html" class="tsd-signature-type">CollectorProps</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<p>Inherited from <a href="collectorchildrenprops.html">CollectorChildrenProps</a>.<a href="collectorchildrenprops.html#children">children</a></p>
-					<p>Overrides <a href="collectorchildrenprops.html">CollectorChildrenProps</a>.<a href="collectorchildrenprops.html#children">children</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/Collector.tsx#L76">components/Collector.tsx:76</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/c817c0c/packages/react-next/src/components/Collector.tsx#L76">components/Collector.tsx:76</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1061,14 +1066,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">delay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/animations/Move.tsx#L22">components/animations/Move.tsx:22</a></li>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/animations/FLIPMove.tsx#L20">components/animations/FLIPMove.tsx:20</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/c817c0c/packages/react-next/src/components/animations/Move.tsx#L23">components/animations/Move.tsx:23</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Delays the animation from starting for {delay}ms.
-						Delays the animation from starting for {delay}ms.</p>
+						<p>Delays the animation from starting for {delay}ms.</p>
 					</div>
 				</div>
 			</section>
@@ -1078,14 +1081,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/animations/Move.tsx#L17">components/animations/Move.tsx:17</a></li>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/animations/FLIPMove.tsx#L15">components/animations/FLIPMove.tsx:15</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/c817c0c/packages/react-next/src/components/animations/Move.tsx#L18">components/animations/Move.tsx:18</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>How long the animation should take over {duration}ms.
-						How long the animation should take over {duration}ms.</p>
+						<p>How long the animation should take over {duration}ms.</p>
 					</div>
 				</div>
 			</section>
@@ -1095,14 +1096,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">timing<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/animations/Move.tsx#L32">components/animations/Move.tsx:32</a></li>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/animations/FLIPMove.tsx#L30">components/animations/FLIPMove.tsx:30</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/c817c0c/packages/react-next/src/components/animations/Move.tsx#L33">components/animations/Move.tsx:33</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Timing function to be used in the transition, see: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function">https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function</a>
-						Timing function to be used in the transition, see: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function">https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function</a></p>
+						<p>Timing function to be used in the transition, see: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function">https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function</a></p>
 					</div>
 				</div>
 			</section>
@@ -1112,14 +1111,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">z<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/animations/Move.tsx#L27">components/animations/Move.tsx:27</a></li>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/f90a16a/packages/react-next/src/components/animations/FLIPMove.tsx#L25">components/animations/FLIPMove.tsx:25</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/c817c0c/packages/react-next/src/components/animations/Move.tsx#L28">components/animations/Move.tsx:28</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>zIndex to be applied to the moving element.
-						zIndex to be applied to the moving element.</p>
+						<p>zIndex to be applied to the moving element.</p>
 					</div>
 				</div>
 			</section>

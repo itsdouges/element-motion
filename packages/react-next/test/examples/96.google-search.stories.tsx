@@ -74,7 +74,7 @@ storiesOf('Examples/FloatingSearchBar', module).add('cross fade move', () => (
         <InnerContainer>
           {shown || (
             <Baba name="google-searchbar">
-              <CrossFadeMove duration={150}>
+              <CrossFadeMove duration={150} timingFunction="">
                 {({ ref, style }) => (
                   <FloatingSearchBar onClick={toggle} innerRef={ref} style={style}>
                     <IconButton color="default" aria-label="Menu" style={{ marginLeft: 'auto ' }}>
@@ -88,7 +88,7 @@ storiesOf('Examples/FloatingSearchBar', module).add('cross fade move', () => (
 
           {shown && (
             <Baba name="google-searchbar">
-              <CrossFadeMove duration={150}>
+              <CrossFadeMove duration={150} timingFunction="">
                 {({ ref, style }) => (
                   <FixedSearchBar innerRef={ref} style={style}>
                     <IconButton color="default" aria-label="Menu" onClick={toggle}>

@@ -1,23 +1,172 @@
 import * as React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import Baba from '../Baba';
 import BabaManager from '../BabaManager';
+import * as utils from './utils';
+import { defer } from '../../lib/defer';
 
 describe('<BabaManager />', () => {
-  it('should hide child initially', () => {
-    const render = jest.fn();
+  it('should show manager content when waiting for animation', () => {
+    const Animation = utils.createTestAnimation();
 
-    shallow(<BabaManager>{render}</BabaManager>);
+    const wrapper = mount(
+      <BabaManager>
+        {props => (
+          <span {...props}>
+            <Baba name="fff">
+              <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
+            </Baba>
+          </span>
+        )}
+      </BabaManager>
+    );
 
-    expect(render).toHaveBeenCalledWith({ style: { opacity: 0 } });
+    expect(wrapper.find('span')).toHaveProp('style', { visibility: 'visible' });
   });
 
-  it('should show child when child says its ready', () => {
-    const render = jest.fn();
-    const wrapper = shallow(<BabaManager>{render}</BabaManager>);
-    const { value: context } = wrapper.props();
+  it('should hide manager children if animation is already in flight', () => {
+    const Animation = utils.createTestAnimation();
+    const wrapper = mount(
+      <utils.BabaUnderTest
+        from={
+          <Baba name="aaa">
+            <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
+          </Baba>
+        }
+        to={
+          <BabaManager>
+            {props => (
+              <span {...props}>
+                <Baba name="aaa">{({ ref, style }) => <div ref={ref} style={style} />}</Baba>
+              </span>
+            )}
+          </BabaManager>
+        }
+        start={false}
+      />
+    );
 
-    context.onFinish();
+    wrapper.setProps({
+      start: true,
+    });
+    wrapper.update();
 
-    expect(render).toHaveBeenLastCalledWith({ style: { opacity: 1 } });
+    expect(wrapper.find('span')).toHaveProp('style', { visibility: 'hidden' });
+  });
+
+  it('should show manager children when animation is finished', async () => {
+    const deferred = defer();
+    const Animation = utils.createTestAnimation();
+    const wrapper = mount(
+      <utils.BabaUnderTest
+        from={
+          <Baba name="eee">
+            <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
+          </Baba>
+        }
+        to={
+          <BabaManager>
+            {props => (
+              <span {...props}>
+                <Baba name="eee" onFinish={deferred.resolve}>
+                  {({ ref, style }) => <div ref={ref} style={style} />}
+                </Baba>
+              </span>
+            )}
+          </BabaManager>
+        }
+        start={false}
+      />
+    );
+
+    wrapper.setProps({
+      start: true,
+    });
+    await deferred.promise;
+    wrapper.update();
+
+    expect(wrapper.find('span')).toHaveProp('style', { visibility: 'visible' });
+  });
+
+  it('should hide all nested manager children if animation is already in flight', async () => {
+    const Animation = utils.createTestAnimation();
+    const wrapper = mount(
+      <utils.BabaUnderTest
+        from={
+          <Baba name="eee">
+            <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
+          </Baba>
+        }
+        to={
+          <BabaManager>
+            {topProps => (
+              <div>
+                <div id="parent1" {...topProps} />
+
+                <BabaManager>
+                  {innerProps => (
+                    <div id="parent2" {...innerProps}>
+                      <Baba name="eee">{({ ref, style }) => <div ref={ref} style={style} />}</Baba>
+                    </div>
+                  )}
+                </BabaManager>
+              </div>
+            )}
+          </BabaManager>
+        }
+        start={false}
+      />
+    );
+
+    wrapper.setProps({
+      start: true,
+    });
+    wrapper.update();
+
+    expect(wrapper.find('#parent1')).toHaveProp('style', { visibility: 'hidden' });
+    expect(wrapper.find('#parent2')).toHaveProp('style', { visibility: 'hidden' });
+  });
+
+  it('should show all nested manager children when animation is finished', async () => {
+    const deferred = defer();
+    const Animation = utils.createTestAnimation();
+    const wrapper = mount(
+      <utils.BabaUnderTest
+        from={
+          <Baba name="eee">
+            <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
+          </Baba>
+        }
+        to={
+          <BabaManager>
+            {topProps => (
+              <div>
+                <div id="parent1" {...topProps} />
+
+                <BabaManager>
+                  {innerProps => (
+                    <div id="parent2" {...innerProps}>
+                      <Baba name="eee" onFinish={deferred.resolve}>
+                        {({ ref, style }) => <div ref={ref} style={style} />}
+                      </Baba>
+                    </div>
+                  )}
+                </BabaManager>
+              </div>
+            )}
+          </BabaManager>
+        }
+        start={false}
+      />
+    );
+
+    wrapper.setProps({
+      start: true,
+    });
+    await deferred.promise;
+    wrapper.update();
+
+    expect(wrapper.find('#parent1')).toHaveProp('style', { visibility: 'visible' });
+    expect(wrapper.find('#parent2')).toHaveProp('style', { visibility: 'visible' });
   });
 });
