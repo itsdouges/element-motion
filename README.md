@@ -134,7 +134,7 @@ top picks would include the Google Music and Mobile Google Image Search examples
 ## Make your own animations
 
 Tutorial coming soon,
-refer to [src/components/animations](https://github.com/madou/yubaba/tree/master/packages/react-next/src/components/animations) for example implementations for now.
+refer to [src/components/animations](https://github.com/madou/yubaba/tree/master/packages/yubaba/src/components/animations) for example implementations for now.
 
 ## Components
 
