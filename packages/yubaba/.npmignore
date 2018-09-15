@@ -1,2 +1,5 @@
+examples
 test
 tsconfig*
+*test*
+*stories*

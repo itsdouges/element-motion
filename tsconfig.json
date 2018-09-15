@@ -22,10 +22,12 @@
   },
   "exclude": [
     "node_modules",
-    "packages/**/test/**/*.tsx",
     "packages/**/node_modules",
     "packages/**/build",
-    "packages/**/*.test.tsx",
-    "packages/**/*.stories.tsx"
+    "packages/**/*test.tsx",
+    "packages/**/test/**/*",
+    "packages/**/examples/**/*",
+    "packages/**/__tests__/**/*",
+    "packages/**/stories.tsx"
   ]
 }

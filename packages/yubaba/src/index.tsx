@@ -1,18 +1,18 @@
 // Primary components
-export { default } from './components/Baba';
-export { default as BabaManager } from './components/BabaManager';
+export { default } from './Baba';
+export { default as BabaManager } from './BabaManager';
 
 // Animation components
-export { default as Wait } from './components/Wait';
-export { default as CrossFadeMove } from './components/animations/Move';
-export { default as FLIPMove } from './components/animations/FLIPMove';
-export { default as Swipe } from './components/animations/Swipe';
-export { default as CircleExpand } from './components/animations/CircleExpand';
-export { default as CircleShrink } from './components/animations/CircleShrink';
+export { default as Wait } from './Wait';
+export { default as CrossFadeMove } from './animations/CrossFadeMove';
+export { default as FLIPMove } from './animations/FLIPMove';
+export { default as Swipe } from './animations/Swipe';
+export { default as CircleExpand } from './animations/CircleExpand';
+export { default as CircleShrink } from './animations/CircleShrink';
 
 // Utility components
-export * from './components/Collector';
-export { default as Collector } from './components/Collector';
+export * from './Collector';
+export { default as Collector } from './Collector';
 
 // To be deleted
-export { default as Move } from './components/animations/Move';
+export { default as Move } from './animations/CrossFadeMove';

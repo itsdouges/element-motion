@@ -4,10 +4,10 @@
   "repository": "madou/yubaba",
   "author": "Michael Dougall",
   "license": "MIT",
-  "main": "dist/commonjs/packages/yubaba/src/index.js",
-  "module": "dist/es2015/packages/yubaba/src/index.js",
+  "main": "dist/cjs/packages/yubaba/src/index.js",
+  "module": "dist/es6/packages/yubaba/src/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.commonjs.json && tsc -p ./tsconfig.es2015.json && cp ../../README.md README.md"
+    "build": "rm -rf dist && tsc -p ./tsconfig.cjs.json && tsc -p ./tsconfig.es6.json && cp ../../README.md README.md"
   },
   "peerDependencies": {
     "react": "^16.4.x",

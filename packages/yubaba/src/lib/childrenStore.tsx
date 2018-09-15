@@ -1,5 +1,5 @@
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
-import { CollectorData, CollectorChildrenAsFunction } from '../components/Collector';
+import { CollectorData, CollectorChildrenAsFunction } from '../Collector';
 
 /**
  * @hidden
