@@ -11,6 +11,7 @@
     "build": "rm -rf dist && tsc -p ./tsconfig.json"
   },
   "peerDependencies": {
+    "@material-ui/core": "^3.1.0",
     "react": "^16.4.x",
     "react-dom": "^16.4.x",
     "styled-components": "^3.4.5"
