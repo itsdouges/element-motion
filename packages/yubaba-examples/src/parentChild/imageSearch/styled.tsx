@@ -69,6 +69,7 @@ export interface ImageProps {
   title: string;
   from: string;
   in?: boolean;
+  selected?: boolean;
   onClick?: () => void;
 }
 

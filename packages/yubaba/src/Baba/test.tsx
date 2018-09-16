@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
+import 'jest-enzyme';
 import { Baba } from '../Baba';
 import { getElementSizeLocation } from '../lib/dom';
 import { defer } from '../lib/defer';
@@ -95,6 +96,57 @@ describe('<Baba />', () => {
     wrapper.update();
 
     expect(wrapper.find('div')).toHaveProp('style', { opacity: 0 });
+  });
+
+  it('should show children when when flipping back to an already mounted baba', () => {
+    const wrapper = mount(
+      <utils.BabaUnderTest
+        from={start => (
+          <Baba name="flip-back" in={!start}>
+            {props => <div {...props} />}
+          </Baba>
+        )}
+        to={<Baba name="flip-back">{props => <div {...props} />}</Baba>}
+        start
+      />
+    );
+
+    wrapper.setProps({
+      start: false,
+    });
+    wrapper.update();
+
+    expect(wrapper.find('div')).toHaveProp('style', { opacity: 1 });
+  });
+
+  it('should keep showing baba elements that have no matching pair when flipping in prop', () => {
+    const Animation = utils.createTestAnimation();
+    const wrapper = mount(
+      <utils.BabaUnderTest
+        from={start => (
+          <Baba name="keep-showing" in={!start}>
+            <Animation>{props => <div {...props} />}</Animation>
+          </Baba>
+        )}
+        to={
+          <Baba name="sdadsdad">
+            {props => (
+              <Animation>
+                <span {...props} />
+              </Animation>
+            )}
+          </Baba>
+        }
+        start={false}
+      />
+    );
+
+    wrapper.setProps({
+      start: true,
+    });
+    wrapper.update();
+
+    expect(wrapper.find('div')).toHaveProp('style', { opacity: 1 });
   });
 
   it('should show children inside target baba element when animating has completed', async () => {

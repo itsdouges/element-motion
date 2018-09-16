@@ -14,13 +14,19 @@ const Image: React.StatelessComponent<Styled.ImageProps> = ({
   from,
   onClick,
   in: inn,
+  selected,
 }) => (
   <Styled.Root>
     <Styled.ImageContainer>
       <Baba name={title} in={inn}>
         <FLIPMove>
           {({ ref, style }) => (
-            <Styled.Img src={src} onClick={onClick} innerRef={ref} style={style} />
+            <Styled.Img
+              src={src}
+              onClick={onClick}
+              innerRef={ref}
+              style={{ ...style, opacity: selected ? 0 : (style.opacity as any) }}
+            />
           )}
         </FLIPMove>
       </Baba>
@@ -164,6 +170,7 @@ storiesOf('yubaba-examples/ParentChild/ImageSearch', module).add('Default', () =
               from="en.wikipedia.org"
               onClick={toggle}
               in={!shown}
+              selected={!!shown}
             />
             <Image
               src={require('./images/5.png')}

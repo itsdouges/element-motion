@@ -104,6 +104,8 @@ export interface BabaProps extends CollectorChildrenProps, InjectedProps {
  * ```
  */
 export class Baba extends React.PureComponent<BabaProps, State> {
+  static displayName = 'Baba';
+
   state: State = {
     shown: false,
     childProps: {},
@@ -168,11 +170,8 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
       // Store data so it can be used later. This works around the problem of the "in" prop not having data when it needs.
       this.storeDOMData();
       this.showSelfAndNotifyManager();
+      return;
     }
-
-    this.setState({
-      shown: false,
-    });
 
     this.storeDOMData();
     this.delayedClearDOMData();

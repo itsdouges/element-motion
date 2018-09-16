@@ -3,15 +3,30 @@ import Collector, { CollectorActions, CollectorChildrenProps } from '../Collecto
 import noop from '../lib/noop';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
+/**
+ * Pass function in for `from` or `start` and it will always be rendered.
+ */
 export const BabaUnderTest = ({
   from,
   to,
   start,
 }: {
-  from: React.ReactNode;
-  to: React.ReactNode;
+  from: React.ReactNode | ((start: boolean) => React.ReactNode);
+  to: React.ReactNode | ((start: boolean) => React.ReactNode);
   start: boolean;
-}) => (start ? <aside>{to}</aside> : <main>{from}</main>);
+}) => {
+  const showTo = typeof to === 'function' || start;
+  const showFrom = typeof from === 'function' || !start;
+  const toElement = typeof to === 'function' ? to(start) : to;
+  const fromElement = typeof from === 'function' ? from(start) : from;
+
+  return (
+    <React.Fragment>
+      {showFrom && <aside>{fromElement}</aside>}
+      {showTo && <main>{toElement}</main>}
+    </React.Fragment>
+  );
+};
 
 export const createTestAnimation = ({
   onBeforeAnimate = noop,
