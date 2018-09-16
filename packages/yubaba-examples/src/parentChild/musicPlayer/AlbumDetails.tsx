@@ -14,7 +14,7 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import StarIcon from '@material-ui/icons/StarBorder';
 import { lighten, readableColor } from 'polished';
 import { Album as AlbumData } from './data';
-import Baba, { FLIPMove as Move, CircleShrink, Wait, Collector } from '../../src';
+import Baba, { FLIPMove as Move, CircleShrink, Wait, Collector } from 'yubaba';
 
 interface Props extends AlbumData {
   onClick?: () => void;

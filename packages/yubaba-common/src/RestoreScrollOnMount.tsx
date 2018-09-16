@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const createScrollStore = () => {
+export const createScrollStore = () => {
   let scrollPosition = 0;
 
   return class RestoreScrollOnMount extends React.Component {

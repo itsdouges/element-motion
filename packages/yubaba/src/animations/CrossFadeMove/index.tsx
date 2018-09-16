@@ -9,7 +9,7 @@ import * as math from '../../lib/math';
 import { recalculateLocationFromScroll } from '../../lib/dom';
 import SimpleTween from '../SimpleTween';
 import noop from '../../lib/noop';
-import { spring } from '../../lib/curves';
+import { standard } from '../../lib/curves';
 
 export interface CrossFadeMoveProps extends CollectorChildrenProps {
   /**
@@ -48,7 +48,7 @@ export interface CrossFadeMoveProps extends CollectorChildrenProps {
 export default class CrossFadeMove extends React.Component<CrossFadeMoveProps> {
   static defaultProps = {
     duration: 500,
-    timingFunction: spring(),
+    timingFunction: standard(),
   };
 
   renderAnimation: (opts: { start: boolean; onFinish: () => void }) => React.ReactElement<{}>;

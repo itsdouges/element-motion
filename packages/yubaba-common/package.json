@@ -1,0 +1,18 @@
+{
+  "name": "yubaba-common",
+  "private": true,
+  "version": "0.0.0",
+  "repository": "madou/yubaba",
+  "author": "Michael Dougall",
+  "license": "MIT",
+  "main": "dist/packages/yubaba-common/src/index.js",
+  "module": "dist/packages/yubaba-common/src/index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsc -p ./tsconfig.json"
+  },
+  "peerDependencies": {
+    "react": "^16.4.x",
+    "react-dom": "^16.4.x",
+    "styled-components": "^3.4.5"
+  }
+}

@@ -2,7 +2,11 @@ import * as React from 'react';
 
 interface Props {
   children: (
-    props: { toggle: () => void; set: (value: string) => void; shown: boolean | string }
+    props: {
+      toggle: (value?: string) => void;
+      set: (value: string) => void;
+      shown: boolean | string;
+    }
   ) => React.ReactNode;
 }
 
@@ -15,9 +19,9 @@ export default class Toggler extends React.Component<Props, State> {
     shown: false,
   };
 
-  toggle = () => {
+  toggle = (value?: string) => {
     this.setState(prevState => ({
-      shown: !prevState.shown,
+      shown: prevState.shown ? false : value || true,
     }));
   };
 

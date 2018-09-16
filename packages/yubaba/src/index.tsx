@@ -4,6 +4,7 @@ export { default as BabaManager } from './BabaManager';
 
 // Animation components
 export { default as Wait } from './Wait';
+export { default as Noop } from './animations/Noop';
 export { default as CrossFadeMove } from './animations/CrossFadeMove';
 export { default as FLIPMove } from './animations/FLIPMove';
 export { default as Swipe } from './animations/Swipe';

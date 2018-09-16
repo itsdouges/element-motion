@@ -2,12 +2,9 @@ import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Baba, { Move } from '../../../src';
-import Toggler from '../../../examples/common/Toggler';
-import StickyButton from '../../../examples/common/StickyButton';
-import createScrollStore from '../../../examples/common/RestoreScrollOnMount';
-import ScrollTopOnMount from '../../../examples/common/ScrollTopOnMount';
+import * as Common from 'yubaba-common';
 
-const RestoreScrollOnMount = createScrollStore();
+const RestoreScrollOnMount = Common.createRestoreScrollOnMount();
 
 interface RootProps {
   margin?: boolean;
@@ -64,232 +61,144 @@ const FillSpace = styled.img`
   width: 100%;
 `;
 
-storiesOf('CrossFadeMove', module)
+const imageA = 'https://picsum.photos/200/300?a';
+const imageB = 'https://picsum.photos/200/300?b';
+
+storiesOf('yubaba/CrossFadeMove', module)
   .add('Default', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-square" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('../../../examples/guessWho/images/guess-who.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root src={imageA} style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
             <Baba name="square-to-square" key="2">
               <Move>
-                {({ ref, style }) => (
-                  <RightRoot
-                    src={require('../../../examples/guessWho/images/female.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
+                {({ ref, style }) => <RightRoot src={imageB} style={style} innerRef={ref} />}
               </Move>
             </Baba>
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('WithMargin', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-square-margin" key="1">
               <Move>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('../../../examples/guessWho/images/guess-who.png')}
-                    margin
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
+                {({ ref, style }) => <Root src={imageA} margin style={style} innerRef={ref} />}
               </Move>
             </Baba>
           ) : (
             <Baba name="square-to-square-margin" key="2">
               <Move>
-                {({ ref, style }) => (
-                  <RightRoot
-                    src={require('../../../examples/guessWho/images/male.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
+                {({ ref, style }) => <RightRoot src={imageB} style={style} innerRef={ref} />}
               </Move>
             </Baba>
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SmallToLarge', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-big-square" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('../../../examples/guessWho/images/guess-who.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root src={imageA} style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
             <Baba name="square-to-big-square" key="2">
               <Move>
-                {({ ref, style }) => (
-                  <BigRightRoot
-                    src={require('../../../examples/guessWho/images/female.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
+                {({ ref, style }) => <BigRightRoot src={imageB} style={style} innerRef={ref} />}
               </Move>
             </Baba>
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SquareToRectangle', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-rectangle" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('../../../examples/guessWho/images/guess-who.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root src={imageA} style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
             <Baba name="square-to-rectangle" key="2">
               <Move>
-                {({ ref, style }) => (
-                  <Rectangle
-                    src={require('../../../examples/guessWho/images/male.png')}
-                    margin
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
+                {({ ref, style }) => <Rectangle src={imageB} margin style={style} innerRef={ref} />}
               </Move>
             </Baba>
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SquareToCircle', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-circle" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('../../../examples/guessWho/images/guess-who.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root src={imageA} style={style} innerRef={ref} />}</Move>
             </Baba>
           ) : (
             <Baba name="square-to-circle" key="2">
               <Move>
-                {({ ref, style }) => (
-                  <Circle
-                    src={require('../../../examples/guessWho/images/female.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
+                {({ ref, style }) => <Circle src={imageB} style={style} innerRef={ref} />}
               </Move>
             </Baba>
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('OffscreenLargeToSmall', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <LongContainer>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <div>
               <Padding data-big />
               <Baba name="offscreen-big-square-to-small-square" key="2">
                 <Move>
-                  {({ ref, style }) => (
-                    <BigRightRoot
-                      src={require('../../../examples/guessWho/images/guess-who.png')}
-                      style={style}
-                      innerRef={ref}
-                    />
-                  )}
+                  {({ ref, style }) => <BigRightRoot src={imageA} style={style} innerRef={ref} />}
                 </Move>
               </Baba>
             </div>
           ) : (
             <Baba name="offscreen-big-square-to-small-square" key="1">
-              <Move>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('../../../examples/guessWho/images/female2.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
-              </Move>
+              <Move>{({ ref, style }) => <Root src={imageB} style={style} innerRef={ref} />}</Move>
             </Baba>
           )}
         </LongContainer>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SmallWithMarginToOffscreenLargeWithMargin', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-offscreen-big-square-with-margin" key="1">
               <Move>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('../../../examples/guessWho/images/guess-who.png')}
-                    margin
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
+                {({ ref, style }) => <Root src={imageA} margin style={style} innerRef={ref} />}
               </Move>
             </Baba>
           ) : (
@@ -298,12 +207,7 @@ storiesOf('CrossFadeMove', module)
               <Baba name="square-to-offscreen-big-square-with-margin" key="2">
                 <Move>
                   {({ ref, style }) => (
-                    <BigRightRoot
-                      src={require('../../../examples/guessWho/images/female.png')}
-                      margin
-                      style={style}
-                      innerRef={ref}
-                    />
+                    <BigRightRoot src={imageB} margin style={style} innerRef={ref} />
                   )}
                 </Move>
               </Baba>
@@ -311,24 +215,18 @@ storiesOf('CrossFadeMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('IndescriminateSizeToSmall', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <SquareContainer>
               <Baba name="indescriminate-size-to-square" key="1">
                 <Move>
-                  {({ ref, style }) => (
-                    <FillSpace
-                      src={require('../../../examples/guessWho/images/guess-who.png')}
-                      style={style}
-                      innerRef={ref}
-                    />
-                  )}
+                  {({ ref, style }) => <FillSpace src={imageA} style={style} innerRef={ref} />}
                 </Move>
               </Baba>
             </SquareContainer>
@@ -337,12 +235,7 @@ storiesOf('CrossFadeMove', module)
               <Baba name="indescriminate-size-to-square" key="2">
                 <Move>
                   {({ ref, style }) => (
-                    <BigRightRoot
-                      src={require('../../../examples/guessWho/images/male.png')}
-                      margin
-                      style={style}
-                      innerRef={ref}
-                    />
+                    <BigRightRoot src={imageB} margin style={style} innerRef={ref} />
                   )}
                 </Move>
               </Baba>
@@ -350,41 +243,30 @@ storiesOf('CrossFadeMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('LongPageSmallToLarge', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <LongContainer>
               <RestoreScrollOnMount />
               <MediumContainer />
               <Baba name="long-scroll-to-no-scroll" key="1">
                 <Move>
-                  {({ ref, style }) => (
-                    <Root
-                      src={require('../../../examples/guessWho/images/guess-who.png')}
-                      style={style}
-                      innerRef={ref}
-                    />
-                  )}
+                  {({ ref, style }) => <Root src={imageA} style={style} innerRef={ref} />}
                 </Move>
               </Baba>
             </LongContainer>
           ) : (
             <div>
-              <ScrollTopOnMount />
+              <Common.ScrollTopOnMount />
               <Baba name="long-scroll-to-no-scroll" key="2">
                 <Move>
                   {({ ref, style }) => (
-                    <BigRightRoot
-                      src={require('../../../examples/guessWho/images/female2.png')}
-                      margin
-                      style={style}
-                      innerRef={ref}
-                    />
+                    <BigRightRoot src={imageB} margin style={style} innerRef={ref} />
                   )}
                 </Move>
               </Baba>
@@ -392,22 +274,18 @@ storiesOf('CrossFadeMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SmallToElementThatNeverUnmounts', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown && (
             <Baba name="one-already-mounted" key="1">
               <Move>
                 {({ ref, style }) => (
-                  <Root
-                    src={require('../../../examples/guessWho/images/guess-who.png')}
-                    style={{ ...style, float: 'left' }}
-                    innerRef={ref}
-                  />
+                  <Root src={imageA} style={{ ...style, float: 'left' }} innerRef={ref} />
                 )}
               </Move>
             </Baba>
@@ -417,7 +295,7 @@ storiesOf('CrossFadeMove', module)
             <Move>
               {({ ref, style }) => (
                 <RightRoot
-                  src={require('../../../examples/guessWho/images/female.png')}
+                  src={imageB}
                   style={{
                     ...style,
                   }}
@@ -428,19 +306,19 @@ storiesOf('CrossFadeMove', module)
           </Baba>
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SmallToElementThatNeverUnmountsReversed', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {shown && (
             <Baba name="one-already-mounted-reversed" key="1">
               <Move>
                 {({ ref, style }) => (
                   <Root
-                    src={require('../../../examples/guessWho/images/guess-who.png')}
+                    src={imageA}
                     style={{ ...style, position: 'fixed', top: 0, left: 0 }}
                     innerRef={ref}
                   />
@@ -456,33 +334,23 @@ storiesOf('CrossFadeMove', module)
             <br />
             <Baba name="one-already-mounted-reversed" key="2" in={!shown}>
               <Move>
-                {({ ref, style }) => (
-                  <RightRoot
-                    src={require('../../../examples/guessWho/images/female.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
+                {({ ref, style }) => <RightRoot src={imageB} style={style} innerRef={ref} />}
               </Move>
             </Baba>
           </LongContainer>
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('BothNeverUnmounting', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           <Baba name="both-already-mounted" key="1" in={!shown}>
             <Move>
               {({ ref, style }) => (
-                <Root
-                  src={require('../../../examples/guessWho/images/guess-who.png')}
-                  style={{ ...style, float: 'left' }}
-                  innerRef={ref}
-                />
+                <Root src={imageA} style={{ ...style, float: 'left' }} innerRef={ref} />
               )}
             </Move>
           </Baba>
@@ -491,7 +359,7 @@ storiesOf('CrossFadeMove', module)
             <Move>
               {({ ref, style }) => (
                 <RightRoot
-                  src={require('../../../examples/guessWho/images/female.png')}
+                  src={imageB}
                   style={{
                     ...style,
                   }}
@@ -502,21 +370,17 @@ storiesOf('CrossFadeMove', module)
           </Baba>
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('BothNeverUnmountingReversed', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           <Baba name="both-already-mounted-reversed" key="1" in={!!shown}>
             <Move>
               {({ ref, style }) => (
-                <Root
-                  src={require('../../../examples/guessWho/images/guess-who.png')}
-                  style={{ ...style, float: 'left' }}
-                  innerRef={ref}
-                />
+                <Root src={imageA} style={{ ...style, float: 'left' }} innerRef={ref} />
               )}
             </Move>
           </Baba>
@@ -525,7 +389,7 @@ storiesOf('CrossFadeMove', module)
             <Move>
               {({ ref, style }) => (
                 <RightRoot
-                  src={require('../../../examples/guessWho/images/female.png')}
+                  src={imageB}
                   style={{
                     ...style,
                   }}
@@ -536,37 +400,27 @@ storiesOf('CrossFadeMove', module)
           </Baba>
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('Aborting', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>{!shown ? 'toggle' : 'abort'}</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>
+            {!shown ? 'toggle' : 'abort'}
+          </Common.StickyButton>
           {!shown ? (
             <Baba name="aborting" key="1">
               <Move duration={5000}>
-                {({ ref, style }) => (
-                  <Root
-                    src={require('../../../examples/guessWho/images/guess-who.png')}
-                    style={style}
-                    innerRef={ref}
-                  />
-                )}
+                {({ ref, style }) => <Root src={imageA} style={style} innerRef={ref} />}
               </Move>
             </Baba>
           ) : (
             <Baba name="aborting" key="2">
-              {({ ref, style }) => (
-                <RightRoot
-                  src={require('../../../examples/guessWho/images/female.png')}
-                  style={style}
-                  innerRef={ref}
-                />
-              )}
+              {({ ref, style }) => <RightRoot src={imageB} style={style} innerRef={ref} />}
             </Baba>
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ));

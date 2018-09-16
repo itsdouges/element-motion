@@ -2,12 +2,9 @@ import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Baba, { FLIPMove as Move } from '../../../src';
-import Toggler from '../../../examples/common/Toggler';
-import StickyButton from '../../../examples/common/StickyButton';
-import createScrollStore from '../../../examples/common/RestoreScrollOnMount';
-import ScrollTopOnMount from '../../../examples/common/ScrollTopOnMount';
+import * as Common from 'yubaba-common';
 
-const RestoreScrollOnMount = createScrollStore();
+const RestoreScrollOnMount = Common.createRestoreScrollOnMount();
 
 interface RootProps {
   margin?: boolean;
@@ -66,12 +63,12 @@ const FillSpace = styled.div`
   width: 100%;
 `;
 
-storiesOf('FLIPMove', module)
+storiesOf('yubaba/FLIPMove', module)
   .add('Default', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-square" key="1">
               <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
@@ -83,13 +80,13 @@ storiesOf('FLIPMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('WithMargin', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-square-margin" key="1">
               <Move>{({ ref, style }) => <Root margin style={style} innerRef={ref} />}</Move>
@@ -101,13 +98,13 @@ storiesOf('FLIPMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SmallToLarge', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-big-square" key="1">
               <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
@@ -119,13 +116,13 @@ storiesOf('FLIPMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SquareToRectangle', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-rectangle" key="1">
               <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
@@ -137,13 +134,13 @@ storiesOf('FLIPMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SquareToCircle', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-circle" key="1">
               <Move>{({ ref, style }) => <Root style={style} innerRef={ref} />}</Move>
@@ -155,13 +152,13 @@ storiesOf('FLIPMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('OffscreenLargeToSmall', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <LongContainer>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <div>
               <Padding data-big />
@@ -176,13 +173,13 @@ storiesOf('FLIPMove', module)
           )}
         </LongContainer>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('OffscreenLargeToSmallWithMargin', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <Baba name="square-to-offscreen-big-square-with-margin" key="1">
               <Move>{({ ref, style }) => <Root margin style={style} innerRef={ref} />}</Move>
@@ -199,13 +196,13 @@ storiesOf('FLIPMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('IndescriminateSizeToSmall', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <SquareContainer>
               <Baba name="indescriminate-size-to-square" key="1">
@@ -223,13 +220,13 @@ storiesOf('FLIPMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('LongPageToSmall', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown ? (
             <LongContainer>
               <RestoreScrollOnMount />
@@ -240,7 +237,7 @@ storiesOf('FLIPMove', module)
             </LongContainer>
           ) : (
             <div>
-              <ScrollTopOnMount />
+              <Common.ScrollTopOnMount />
               <Baba name="long-scroll-to-no-scroll" key="2">
                 <Move>
                   {({ ref, style }) => <BigRightRoot margin style={style} innerRef={ref} />}
@@ -250,13 +247,13 @@ storiesOf('FLIPMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SmallToElementThatNeverUnmounts', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {!shown && (
             <Baba name="one-already-mounted" key="1">
               <Move>
@@ -279,13 +276,13 @@ storiesOf('FLIPMove', module)
           </Baba>
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('SmallToElementThatNeverUnmountsReversed', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           {shown && (
             <Baba name="one-already-mounted-reversed" key="1">
               <Move>
@@ -307,13 +304,13 @@ storiesOf('FLIPMove', module)
           </LongContainer>
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('BothElementThatNeverUnmounts', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           <Baba name="both-already-mounted" key="1" in={!shown}>
             <Move>
               {({ ref, style }) => <Root style={{ ...style, float: 'left' }} innerRef={ref} />}
@@ -334,13 +331,13 @@ storiesOf('FLIPMove', module)
           </Baba>
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('BothElementThatNeverUnmountsReversed', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
           <Baba name="both-already-mounted-reversed" key="1" in={!!shown}>
             <Move>
               {({ ref, style }) => <Root style={{ ...style, float: 'left' }} innerRef={ref} />}
@@ -361,13 +358,15 @@ storiesOf('FLIPMove', module)
           </Baba>
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ))
   .add('Aborting', () => (
-    <Toggler>
+    <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>{!shown ? 'toggle' : 'abort'}</StickyButton>
+          <Common.StickyButton onClick={() => toggle()}>
+            {!shown ? 'toggle' : 'abort'}
+          </Common.StickyButton>
           {!shown ? (
             <Baba name="aborting" key="1">
               <Move duration={5000}>
@@ -381,5 +380,5 @@ storiesOf('FLIPMove', module)
           )}
         </div>
       )}
-    </Toggler>
+    </Common.Toggler>
   ));

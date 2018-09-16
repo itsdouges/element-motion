@@ -15,13 +15,12 @@ import SearchIcon from '@material-ui/icons/Search';
 import MoreVert from '@material-ui/icons/MoreVert';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import Album from './Album';
-import { BabaManager } from '../../src';
+import { BabaManager } from 'yubaba';
 import data from './data';
-import createScrollStore from '../common/RestoreScrollOnMount';
-import ScrollTopOnMount from '../common/ScrollTopOnMount';
+import * as Common from 'yubaba-common';
 import AlbumDetails from './AlbumDetails';
 
-const RestoreScrollOnMount = createScrollStore();
+const RestoreScrollOnMount = Common.createRestoreScrollOnMount();
 
 interface BackgroundProps {
   background: string;
@@ -109,13 +108,13 @@ class MultipleTargets extends React.Component<{
   }
 
   renderItems() {
-    const items = data.map((data, index) => (
+    const items = data.map((dta, index) => (
       <Album
         expand={this.props.expand}
         baba={`${this.getKey()}-${index}`}
         onClick={() => this.select(index)}
         key={index}
-        {...data}
+        {...dta}
       />
     ));
 
@@ -167,7 +166,7 @@ class MultipleTargets extends React.Component<{
             </AppBar>
 
             <NoMarginBody className="" />
-            <ScrollTopOnMount />
+            <Common.ScrollTopOnMount />
 
             <AlbumDetails
               baba={`${this.getKey()}-${index}`}
@@ -212,8 +211,6 @@ class MultipleTargets extends React.Component<{
   }
 }
 
-storiesOf('Example/GoogleMusic', module)
-  .add('WithFlipMove', () => <MultipleTargets />)
-  .add('WithCircleExpand', () => <MultipleTargets expand />)
-  .add('WithCircleShrink', () => <MultipleTargets expand shrink />)
-  .add('WithWait', () => <MultipleTargets expand shrink wait />);
+storiesOf('yubaba-examples/ParentChild/MusicPlayer', module)
+  .add('Default', () => <MultipleTargets expand shrink />)
+  .add('MoveOnly', () => <MultipleTargets />);

@@ -1,73 +1,85 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
-import Baba, { Collector, CollectorChildrenProps, CollectorActions, BabaManager } from '../../src';
-import Toggler from '../../examples/common/Toggler';
-import StickyButton from '../../examples/common/StickyButton';
+import BodyClassName from 'react-body-classname';
+import Baba, { BabaManager, Noop } from '../../src';
+import { Toggler } from 'yubaba-common';
+
+const StyledBody = styled(BodyClassName)`
+  background-color: #f2a2e8;
+  margin: 0;
+  box-sizing: border-box;
+
+  * {
+    box-sizing: border-box;
+  }
+`;
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  min-height: 100vh;
+  background-color: ${props => props.color};
+  font-family: Roboto, HelveticaNeue, Arial, sans-serif;
+  font-size: 24px;
+  padding: 50px;
+  height: calc(100vh - 100px);
+  margin: 50px;
 `;
 
-const Noop: React.StatelessComponent<CollectorChildrenProps & { duration: number }> = ({
-  children,
-  duration,
-}) => (
-  <Collector
-    data={{
-      action: CollectorActions.animation,
-      payload: {
-        beforeAnimate: (_, onFinish) => {
-          onFinish();
-        },
-        animate: (_, onFinish) => {
-          setTimeout(onFinish, duration);
-        },
-        afterAnimate: (_, onFinish) => {
-          onFinish();
-        },
-      },
-    }}
-  >
-    {children}
-  </Collector>
-);
+const Button = styled.button`
+  background-color: #baed91;
+  padding: 10px;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+`;
 
-storiesOf('BabaManager', module)
+const TextContainer = styled.div`
+  max-width: 500px;
+  padding-bottom: 20px;
+  text-align: center;
+`;
+
+storiesOf('yubaba/BabaManager', module)
   .add('NoManager', () => (
     <Toggler>
       {({ shown, toggle }) => (
-        <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+        <React.Fragment>
+          <StyledBody className="" />
           {!shown ? (
-            <Container>
+            <Container color="#f8b88b">
               <Baba name="manager-example-1" key="1">
                 <Noop duration={500}>
                   {({ ref, style }) => (
-                    <div style={style} ref={ref}>
-                      hi im the source target
-                    </div>
+                    <Button style={style} innerRef={ref} onClick={() => toggle()}>
+                      Click me and I'll render the next page
+                    </Button>
                   )}
                 </Noop>
               </Baba>
             </Container>
           ) : (
-            <Container>
-              hi im content around the baba target i will be shown immediately
+            <Container color="#b2cefe">
+              <TextContainer>
+                This text was displayed immediately, which might not be what we want!
+                <br />
+                <br />
+                Thanks to BabaManager we can hide elements until all animations have finished.
+              </TextContainer>
+
               <Baba name="manager-example-1" key="2">
                 {({ ref, style }) => (
-                  <div style={style} ref={ref}>
-                    hi im the destination target i will be shown when all animations have finished
-                  </div>
+                  <Button style={style} innerRef={ref} onClick={() => toggle()}>
+                    Click me and I'll render the previous page
+                  </Button>
                 )}
               </Baba>
             </Container>
           )}
-        </div>
+        </React.Fragment>
       )}
     </Toggler>
   ))
@@ -75,15 +87,15 @@ storiesOf('BabaManager', module)
     <Toggler>
       {({ shown, toggle }) => (
         <div>
-          <StickyButton onClick={toggle}>toggle</StickyButton>
+          <StyledBody className="" />
           {!shown ? (
-            <Container>
+            <Container color="#f8b88b">
               <Baba name="manager-example-2" key="1">
                 <Noop duration={500}>
                   {({ ref, style }) => (
-                    <div style={style} ref={ref}>
-                      hi im the source target
-                    </div>
+                    <Button style={style} innerRef={ref} onClick={() => toggle()}>
+                      Click me and I'll render the next page
+                    </Button>
                   )}
                 </Noop>
               </Baba>
@@ -91,15 +103,17 @@ storiesOf('BabaManager', module)
           ) : (
             <BabaManager>
               {props => (
-                <Container {...props}>
-                  hi im content around the baba target i will be shown after all animations have
-                  finished
+                <Container {...props} color="#b2cefe">
+                  <TextContainer>
+                    This text and container were hidden until the animation completed thanks to
+                    BabaManager.
+                  </TextContainer>
+
                   <Baba name="manager-example-2" key="2">
                     {({ ref, style }) => (
-                      <div style={style} ref={ref}>
-                        hi im the destination target i will be shown when all animations have
-                        finished
-                      </div>
+                      <Button style={style} innerRef={ref} onClick={() => toggle()}>
+                        Click me and I'll render the previous page
+                      </Button>
                     )}
                   </Baba>
                 </Container>

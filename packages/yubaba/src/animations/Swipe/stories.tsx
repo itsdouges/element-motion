@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Baba, { Swipe } from '../../../src';
-import Toggler from '../../../examples/common/Toggler';
-import StickyButton from '../../../examples/common/StickyButton';
+import * as Common from 'yubaba-common';
 
 const Root = styled.div`
   width: 100px;
@@ -24,10 +23,10 @@ const Container = styled.div`
 `;
 
 const makeStory = (direction: string) => (
-  <Toggler>
+  <Common.Toggler>
     {({ shown, toggle }) => (
       <div>
-        <StickyButton onClick={toggle}>toggle</StickyButton>
+        <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
         {!shown ? (
           <Container>
             <Baba name={`swipe-${direction}`} key="1">
@@ -45,10 +44,10 @@ const makeStory = (direction: string) => (
         )}
       </div>
     )}
-  </Toggler>
+  </Common.Toggler>
 );
 
-storiesOf('Swipe', module)
+storiesOf('yubaba/Swipe', module)
   .add('Up', () => makeStory('up'))
   .add('Down', () => makeStory('down'))
   .add('Left', () => makeStory('left'))

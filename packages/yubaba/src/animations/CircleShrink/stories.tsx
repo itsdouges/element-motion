@@ -3,16 +3,16 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
 import Baba, { CircleShrink } from '../../../src';
-import Toggler from '../../../examples/common/Toggler';
-import StickyButton from '../../../examples/common/StickyButton';
+import { Toggler } from 'yubaba-common';
 
 const Root = styled.div`
   width: 100px;
   height: 100px;
-  background: #fcce2e;
+  background: #faf884;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
 
 interface BackgroundProps {
@@ -37,18 +37,17 @@ const Padding = styled.div`
   flex-shrink: 0;
 `;
 
-storiesOf('CircleShrink', module)
+storiesOf('yubaba/CircleShrink', module)
   .add('Default', () => (
     <Toggler>
       {({ shown, toggle }) => (
         <div>
           <NoMarginBody className="" />
 
-          <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
-            <Container background="#fcce2e">
+            <Container background="#faf884" onClick={() => toggle()} style={{ cursor: 'pointer' }}>
               <Baba name="circle-shrink-square" key="1">
-                <CircleShrink background="#fcce2e">
+                <CircleShrink background="#faf884">
                   {({ ref, style }) => <div style={style} ref={ref} />}
                 </CircleShrink>
               </Baba>
@@ -56,7 +55,7 @@ storiesOf('CircleShrink', module)
           ) : (
             <Container background="white">
               <Baba name="circle-shrink-square" key="2">
-                {({ ref, style }) => <Root style={style} innerRef={ref} />}
+                {({ ref, style }) => <Root onClick={() => toggle()} style={style} innerRef={ref} />}
               </Baba>
             </Container>
           )}
@@ -70,12 +69,11 @@ storiesOf('CircleShrink', module)
         <div>
           <NoMarginBody className="" />
 
-          <StickyButton onClick={toggle}>toggle</StickyButton>
           {!shown ? (
-            <Container background="#fcce2e">
+            <Container background="#faf884" onClick={() => toggle()} style={{ cursor: 'pointer' }}>
               <Padding />
               <Baba name="page-with-different-scroll-shrink" key="1">
-                <CircleShrink background="#fcce2e">
+                <CircleShrink background="#faf884">
                   {({ ref, style }) => <Root style={style} innerRef={ref} />}
                 </CircleShrink>
               </Baba>
@@ -86,7 +84,7 @@ storiesOf('CircleShrink', module)
               <Padding />
               <Padding />
               <Baba name="page-with-different-scroll-shrink" key="2">
-                {({ ref, style }) => <Root style={style} innerRef={ref} />}
+                {({ ref, style }) => <Root onClick={() => toggle()} style={style} innerRef={ref} />}
               </Baba>
               <Padding />
               <Padding />
