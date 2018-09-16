@@ -2,8 +2,12 @@ import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Baba, { Swipe } from '../../../src';
+<<<<<<< HEAD:packages/yubaba/src/animations/Swipe/stories.tsx
 import Toggler from '../../../examples/common/Toggler';
 import StickyButton from '../../../examples/common/StickyButton';
+=======
+import * as Common from 'yubaba-common';
+>>>>>>> chore: extract examples and common to their own packages:packages/yubaba/src/animations/Swipe/stories.tsx
 
 const Root = styled.div`
   width: 100px;
@@ -24,10 +28,10 @@ const Container = styled.div`
 `;
 
 const makeStory = (direction: string) => (
-  <Toggler>
+  <Common.Toggler>
     {({ shown, toggle }) => (
       <div>
-        <StickyButton onClick={toggle}>toggle</StickyButton>
+        <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
         {!shown ? (
           <Container>
             <Baba name={`swipe-${direction}`} key="1">
@@ -45,10 +49,14 @@ const makeStory = (direction: string) => (
         )}
       </div>
     )}
-  </Toggler>
+  </Common.Toggler>
 );
 
+<<<<<<< HEAD:packages/yubaba/src/animations/Swipe/stories.tsx
 storiesOf('Swipe', module)
+=======
+storiesOf('yubaba/Swipe', module)
+>>>>>>> chore: extract examples and common to their own packages:packages/yubaba/src/animations/Swipe/stories.tsx
   .add('Up', () => makeStory('up'))
   .add('Down', () => makeStory('down'))
   .add('Left', () => makeStory('left'))

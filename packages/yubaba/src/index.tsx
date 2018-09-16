@@ -4,6 +4,10 @@ export { default as BabaManager } from './BabaManager';
 
 // Animation components
 export { default as Wait } from './Wait';
+<<<<<<< HEAD
+=======
+export { default as Noop } from './animations/Noop';
+>>>>>>> chore: extract examples and common to their own packages
 export { default as CrossFadeMove } from './animations/CrossFadeMove';
 export { default as FLIPMove } from './animations/FLIPMove';
 export { default as Swipe } from './animations/Swipe';

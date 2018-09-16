@@ -7,7 +7,7 @@ import Collecter, {
 } from '../../Collector';
 import * as math from '../../lib/math';
 import { recalculateLocationFromScroll } from '../../lib/dom';
-import { spring } from '../../lib/curves';
+import { standard } from '../../lib/curves';
 
 export interface FLIPMoveProps extends CollectorChildrenProps {
   /**
@@ -46,7 +46,7 @@ export interface FLIPMoveProps extends CollectorChildrenProps {
 export default class FLIPMove extends React.Component<FLIPMoveProps> {
   static defaultProps = {
     duration: 500,
-    timingFunction: spring(),
+    timingFunction: standard(),
   };
 
   renderAnimation: (opts: { start: boolean; onFinish: () => void }) => React.ReactElement<{}>;
@@ -79,16 +79,18 @@ export default class FLIPMove extends React.Component<FLIPMoveProps> {
       style,
     });
 
-    setTimeout(() => {
-      setTargetProps({
-        style: {
-          transition: `transform ${duration}ms ${timingFunction}, opacity ${duration /
-            2}ms ${timingFunction}`,
-        },
-      });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setTargetProps({
+          style: {
+            transition: `transform ${duration}ms ${timingFunction}, opacity ${duration /
+              2}ms ${timingFunction}`,
+          },
+        });
 
-      onFinish();
-    }, 14);
+        requestAnimationFrame(onFinish);
+      });
+    });
   };
 
   animate: AnimationCallback = (_, onFinish, setTargetProps) => {

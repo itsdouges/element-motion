@@ -14,12 +14,19 @@
     "react-dom": "^16.4.x"
   },
   "devDependencies": {
-    "@material-ui/core": "^3.0.2",
-    "@material-ui/icons": "^3.0.1",
+    "@storybook/addon-actions": "^3.4.10",
+    "@storybook/addon-links": "^3.4.10",
+    "@storybook/addon-notes": "^3.4.10",
+    "@storybook/addon-options": "^3.4.10",
+    "@storybook/react": "4.0.0-alpha.2",
+    "enzyme": "^3.6.0",
     "material-ui": "^0.20.2",
     "polished": "^2.0.3",
     "react": "^16.5.0",
+    "yubaba-common": "^0.0.0",
+    "react-body-classname": "^1.2.0",
     "react-dom": "^16.5.0",
+    "react-router-dom": "^4.3.1",
     "styled-components": "^3.4.5"
   }
 }
