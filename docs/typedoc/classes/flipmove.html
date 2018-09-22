@@ -928,6 +928,9 @@ img { max-width: 100%; }
 			<a href="collector.html" class="tsd-kind-icon">Collector</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
+			<a href="concealmove.html" class="tsd-kind-icon">Conceal<wbr>Move</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="crossfademove.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move</a>
 		</li>
 		<li class="current tsd-kind-class tsd-has-type-parameter tsd-is-external">
@@ -1008,7 +1011,13 @@ img { max-width: 100%; }
 			</ul>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
+			<a href="revealmove.html" class="tsd-kind-icon">Reveal<wbr>Move</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="swipe.html" class="tsd-kind-icon">Swipe</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
+			<a href="target.html" class="tsd-kind-icon">Target</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="wait.html" class="tsd-kind-icon">Wait</a>
@@ -1035,6 +1044,9 @@ img { max-width: 100%; }
 			<a href="../interfaces/collectorprops.html" class="tsd-kind-icon">Collector<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
+			<a href="../interfaces/concealmoveprops.html" class="tsd-kind-icon">Conceal<wbr>Move<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="../interfaces/crossfademoveprops.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
@@ -1044,7 +1056,16 @@ img { max-width: 100%; }
 			<a href="../interfaces/inlinestyles.html" class="tsd-kind-icon">Inline<wbr>Styles</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
+			<a href="../interfaces/revealmoveprops.html" class="tsd-kind-icon">Reveal<wbr>Move<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="../interfaces/swipeprops.html" class="tsd-kind-icon">Swipe<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
+			<a href="../interfaces/targetchildprops.html" class="tsd-kind-icon">Target<wbr>Child<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external">
+			<a href="../interfaces/targetprops.html" class="tsd-kind-icon">Target<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="../interfaces/waitaction.html" class="tsd-kind-icon">Wait<wbr>Action</a>
@@ -1064,11 +1085,11 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-type-alias tsd-is-external">
 			<a href="../globals.html#supplyrefhandler" class="tsd-kind-icon">Supply<wbr>Ref<wbr>Handler</a>
 		</li>
+		<li class=" tsd-kind-variable tsd-is-external">
+			<a href="../globals.html#collectorcontext" class="tsd-kind-icon">Collector<wbr>Context</a>
+		</li>
 		<li class=" tsd-kind-function tsd-has-type-parameter tsd-is-external">
 			<a href="../globals.html#defer" class="tsd-kind-icon">defer</a>
-		</li>
-		<li class=" tsd-kind-function tsd-is-external">
-			<a href="../globals.html#spring" class="tsd-kind-icon">spring</a>
 		</li>
 	</ul>
 </nav>
@@ -1083,7 +1104,7 @@ img { max-width: 100%; }
 				It will match both size and position of the start target.</p>
 				<p>Note that it will not fade between elements, so this animation really only looks good
 				when transitioning the same (or very similar) element.</p>
-				<p>If you want to transition distinct elements I&#39;d suggestion using FLIPMove, however
+				<p>If you want to transition distinct elements I&#39;d suggestion using CrossFadeMove, however
 				it is slightly more expensive to animate.</p>
 			</div>
 		</section>
@@ -1281,7 +1302,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">render<wbr>Animation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/animations/FLIPMove.tsx#L52">components/animations/FLIPMove.tsx:52</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/animations/FLIPMove/index.tsx#L52">animations/FLIPMove/index.tsx:52</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1487,7 +1508,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/animations/FLIPMove.tsx#L94">components/animations/FLIPMove.tsx:94</a></li>
+								<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/animations/FLIPMove/index.tsx#L96">animations/FLIPMove/index.tsx:96</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1515,19 +1536,14 @@ img { max-width: 100%; }
 								<ul class="tsd-parameters">
 									<li class="tsd-parameter-siganture">
 										<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><a href="../interfaces/targetprops.html" class="tsd-signature-type">TargetProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 										</ul>
 										<ul class="tsd-descriptions">
 											<li class="tsd-description">
 												<h4 class="tsd-parameters-title">Parameters</h4>
 												<ul class="tsd-parameters">
 													<li>
-														<h5>props: <span class="tsd-signature-type">object</span></h5>
-														<ul class="tsd-parameters">
-															<li class="tsd-parameter">
-																<h5>style<span class="tsd-signature-symbol">: </span><a href="../interfaces/inlinestyles.html" class="tsd-signature-type">InlineStyles</a></h5>
-															</li>
-														</ul>
+														<h5>props: <a href="../interfaces/targetprops.html" class="tsd-signature-type">TargetProps</a></h5>
 													</li>
 												</ul>
 												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -1551,7 +1567,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/animations/FLIPMove.tsx#L54">components/animations/FLIPMove.tsx:54</a></li>
+								<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/animations/FLIPMove/index.tsx#L54">animations/FLIPMove/index.tsx:54</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1579,19 +1595,14 @@ img { max-width: 100%; }
 								<ul class="tsd-parameters">
 									<li class="tsd-parameter-siganture">
 										<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><a href="../interfaces/targetprops.html" class="tsd-signature-type">TargetProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 										</ul>
 										<ul class="tsd-descriptions">
 											<li class="tsd-description">
 												<h4 class="tsd-parameters-title">Parameters</h4>
 												<ul class="tsd-parameters">
 													<li>
-														<h5>props: <span class="tsd-signature-type">object</span></h5>
-														<ul class="tsd-parameters">
-															<li class="tsd-parameter">
-																<h5>style<span class="tsd-signature-symbol">: </span><a href="../interfaces/inlinestyles.html" class="tsd-signature-type">InlineStyles</a></h5>
-															</li>
-														</ul>
+														<h5>props: <a href="../interfaces/targetprops.html" class="tsd-signature-type">TargetProps</a></h5>
 													</li>
 												</ul>
 												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -1929,7 +1940,7 @@ img { max-width: 100%; }
 						<aside class="tsd-sources">
 							<p>Overrides Component.render</p>
 							<ul>
-								<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/animations/FLIPMove.tsx#L104">components/animations/FLIPMove.tsx:104</a></li>
+								<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/animations/FLIPMove/index.tsx#L106">animations/FLIPMove/index.tsx:106</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Element</span></h4>
@@ -2018,7 +2029,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">default<wbr>Props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/animations/FLIPMove.tsx#L47">components/animations/FLIPMove.tsx:47</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/animations/FLIPMove/index.tsx#L47">animations/FLIPMove/index.tsx:47</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
@@ -2027,17 +2038,17 @@ img { max-width: 100%; }
 					<div class="tsd-signature tsd-kind-icon">duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;500</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/animations/FLIPMove.tsx#L48">components/animations/FLIPMove.tsx:48</a></li>
+							<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/animations/FLIPMove/index.tsx#L48">animations/FLIPMove/index.tsx:48</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
 					<a name="defaultprops.timingfunction" class="tsd-anchor"></a>
 					<h3>timing<wbr>Function</h3>
-					<div class="tsd-signature tsd-kind-icon">timing<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;spring()</span></div>
+					<div class="tsd-signature tsd-kind-icon">timing<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;standard()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/animations/FLIPMove.tsx#L49">components/animations/FLIPMove.tsx:49</a></li>
+							<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/animations/FLIPMove/index.tsx#L49">animations/FLIPMove/index.tsx:49</a></li>
 						</ul>
 					</aside>
 				</section>

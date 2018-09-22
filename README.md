@@ -170,6 +170,10 @@ FLIPMove will conduct a [FLIP](https://aerotwist.com/blog/flip-your-animations/)
 
 CrossFadeMove will animate the from element to the target element while transitioning between the two for a seamless transition.
 
+### [RevealMove](https://madou.github.io/yubaba/typedoc/classes/revealmove.html)
+
+### [ConcealMove](https://madou.github.io/yubaba/typedoc/classes/concealmove.html)
+
 ### [Swipe](https://madou.github.io/yubaba/typedoc/classes/swipe.html)
 
 Swipe will animate a block swiping over the viewport.

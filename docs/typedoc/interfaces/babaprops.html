@@ -928,13 +928,22 @@ img { max-width: 100%; }
 			<a href="../classes/collector.html" class="tsd-kind-icon">Collector</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
+			<a href="../classes/concealmove.html" class="tsd-kind-icon">Conceal<wbr>Move</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="../classes/crossfademove.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="../classes/flipmove.html" class="tsd-kind-icon">FLIPMove</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
+			<a href="../classes/revealmove.html" class="tsd-kind-icon">Reveal<wbr>Move</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="../classes/swipe.html" class="tsd-kind-icon">Swipe</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
+			<a href="../classes/target.html" class="tsd-kind-icon">Target</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="../classes/wait.html" class="tsd-kind-icon">Wait</a>
@@ -978,6 +987,9 @@ img { max-width: 100%; }
 			<a href="collectorprops.html" class="tsd-kind-icon">Collector<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
+			<a href="concealmoveprops.html" class="tsd-kind-icon">Conceal<wbr>Move<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="crossfademoveprops.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
@@ -987,7 +999,16 @@ img { max-width: 100%; }
 			<a href="inlinestyles.html" class="tsd-kind-icon">Inline<wbr>Styles</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
+			<a href="revealmoveprops.html" class="tsd-kind-icon">Reveal<wbr>Move<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="swipeprops.html" class="tsd-kind-icon">Swipe<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
+			<a href="targetchildprops.html" class="tsd-kind-icon">Target<wbr>Child<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external">
+			<a href="targetprops.html" class="tsd-kind-icon">Target<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="waitaction.html" class="tsd-kind-icon">Wait<wbr>Action</a>
@@ -1007,11 +1028,11 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-type-alias tsd-is-external">
 			<a href="../globals.html#supplyrefhandler" class="tsd-kind-icon">Supply<wbr>Ref<wbr>Handler</a>
 		</li>
+		<li class=" tsd-kind-variable tsd-is-external">
+			<a href="../globals.html#collectorcontext" class="tsd-kind-icon">Collector<wbr>Context</a>
+		</li>
 		<li class=" tsd-kind-function tsd-has-type-parameter tsd-is-external">
 			<a href="../globals.html#defer" class="tsd-kind-icon">defer</a>
-		</li>
-		<li class=" tsd-kind-function tsd-is-external">
-			<a href="../globals.html#spring" class="tsd-kind-icon">spring</a>
 		</li>
 	</ul>
 </nav>
@@ -1059,7 +1080,7 @@ img { max-width: 100%; }
 				<aside class="tsd-sources">
 					<p>Inherited from <a href="collectorchildrenprops.html">CollectorChildrenProps</a>.<a href="collectorchildrenprops.html#children">children</a></p>
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/Collector.tsx#L76">components/Collector.tsx:76</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/Collector/index.tsx#L88">Collector/index.tsx:88</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1070,7 +1091,7 @@ img { max-width: 100%; }
 				<aside class="tsd-sources">
 					<p>Inherited from InjectedProps.context</p>
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/BabaManager.tsx#L28">components/BabaManager.tsx:28</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/BabaManager/index.tsx#L28">BabaManager/index.tsx:28</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1080,13 +1101,16 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">in<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/Baba.tsx#L63">components/Baba.tsx:63</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/Baba/index.tsx#L68">Baba/index.tsx:68</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>Used alternatively to the implicit animation triggering via unmounting/mounting of Baba components.
-						Only use <code>in</code> if your component is expected to persist through the entire lifecyle of the app.</p>
+							Only use <code>in</code> if your component is expected to persist through the entire lifecyle of the app.
+							When you transition to the &quot;next page&quot; make sure to set your &quot;in&quot; to false. When you transition
+							back to the original page set the &quot;in&quot; prop back to true. This lets the Baba components know when to
+						execute the animations.</p>
 					</div>
 				</div>
 			</section>
@@ -1096,7 +1120,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/Baba.tsx#L57">components/Baba.tsx:57</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/Baba/index.tsx#L59">Baba/index.tsx:59</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1111,13 +1135,13 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">on<wbr>Finish<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/b59c6a4/packages/react-next/src/components/Baba.tsx#L69">components/Baba.tsx:69</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/Baba/index.tsx#L74">Baba/index.tsx:74</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Callback called when all animations have finished and been cleaned up.
-						<strong>Word of caution</strong>: Currently the <em>target</em> <code>Baba</code> component will be the one who fires this callback.</p>
+						<p>Callback called when all animations have finished and been cleaned up. Fired from the triggering Baba
+						component.</p>
 					</div>
 				</div>
 			</section>
