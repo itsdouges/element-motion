@@ -1,7 +1,7 @@
 {
   "name": "yubaba-common",
   "private": true,
-  "version": "1.1.4",
+  "version": "1.2.0",
   "repository": "madou/yubaba",
   "author": "Michael Dougall",
   "license": "MIT",
