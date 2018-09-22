@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
-export type SetTargetProps = (props: { style: InlineStyles }) => void;
+export interface TargetProps {
+  style: InlineStyles;
+  className?: string;
+}
+
+export type SetTargetProps = (props: TargetProps) => void;
 
 /**
  * AnimationCallback
@@ -14,7 +19,7 @@ export type AnimationCallback = (
   data: AnimationData,
   onFinish: () => void,
   setTargetProps: SetTargetProps
-) => React.ReactElement<{}> | undefined | void;
+) => React.ReactNode | undefined | void;
 
 export enum CollectorActions {
   animation = 'animation',
@@ -50,7 +55,11 @@ export type SupplyRenderChildrenHandler = (reactNode: CollectorChildrenAsFunctio
 export type SupplyDataHandler = (data: CollectorData[]) => void;
 
 export type CollectorChildrenAsFunction = (
-  props: { ref: SupplyRefHandler; style: InlineStyles }
+  props: {
+    ref: SupplyRefHandler;
+    style: InlineStyles;
+    className?: string;
+  }
 ) => React.ReactNode;
 
 /**
@@ -69,6 +78,9 @@ export interface InlineStyles {
  * @hidden
  */
 export interface TargetData extends GetElementSizeLocationReturnValue {
+  containerElement: HTMLElement;
+  targetElement: HTMLElement | null | undefined;
+  targetDOMData: GetElementSizeLocationReturnValue | undefined;
   render: CollectorChildrenAsFunction;
 }
 
@@ -83,10 +95,12 @@ export interface CollectorChildrenProps {
  */
 export interface CollectorProps extends CollectorChildrenProps {
   receiveRef?: SupplyRefHandler;
+  receiveTargetRef?: SupplyRefHandler;
   receiveRenderChildren?: SupplyRenderChildrenHandler;
   receiveData?: SupplyDataHandler;
   data?: CollectorData;
   style?: InlineStyles;
+  className?: string;
 }
 
 /**
@@ -94,15 +108,18 @@ export interface CollectorProps extends CollectorChildrenProps {
  */
 export interface Collect {
   ref: SupplyRefHandler;
+  /**
+   * Used for more complex animations when there is a child in the container
+   * that is needed for the animation calculation.
+   */
+  targetRef: SupplyRefHandler;
   data: SupplyDataHandler;
   renderChildren: SupplyRenderChildrenHandler;
   style: InlineStyles;
+  className?: string;
 }
 
-/**
- * @hidden
- */
-const CollectContext = React.createContext<Collect | undefined>(undefined);
+export const CollectorContext = React.createContext<Collect | undefined>(undefined);
 
 /**
  * ## Collector
@@ -140,9 +157,9 @@ export default class Collector extends React.Component<CollectorProps> {
   render() {
     if (typeof this.props.children !== 'function') {
       return (
-        <CollectContext.Consumer>
+        <CollectorContext.Consumer>
           {collect => (
-            <CollectContext.Provider
+            <CollectorContext.Provider
               value={{
                 ref: ref => {
                   if (this.props.receiveRef) {
@@ -151,6 +168,15 @@ export default class Collector extends React.Component<CollectorProps> {
 
                   if (collect) {
                     collect.ref(ref);
+                  }
+                },
+                targetRef: ref => {
+                  if (this.props.receiveTargetRef) {
+                    this.props.receiveTargetRef(ref);
+                  }
+
+                  if (collect) {
+                    collect.targetRef(ref);
                   }
                 },
                 data: childData => {
@@ -176,17 +202,18 @@ export default class Collector extends React.Component<CollectorProps> {
                   ...this.props.style,
                   ...(collect ? collect.style : {}),
                 },
+                className: this.props.className || (collect ? collect.className : undefined),
               }}
             >
               {this.props.children}
-            </CollectContext.Provider>
+            </CollectorContext.Provider>
           )}
-        </CollectContext.Consumer>
+        </CollectorContext.Consumer>
       );
     }
 
     return (
-      <CollectContext.Consumer>
+      <CollectorContext.Consumer>
         {collect => {
           if (typeof this.props.children === 'function') {
             if (collect) {
@@ -199,23 +226,26 @@ export default class Collector extends React.Component<CollectorProps> {
               this.props.receiveRenderChildren(this.props.children);
             }
 
-            return this.props.children({
-              ref: (ref: HTMLElement) => {
-                if (collect) {
-                  collect.ref(ref);
-                }
+            return React.Children.only(
+              this.props.children({
+                className: this.props.className || (collect ? collect.className : undefined),
+                ref: (ref: HTMLElement) => {
+                  if (collect) {
+                    collect.ref(ref);
+                  }
 
-                if (this.props.receiveRef) {
-                  this.props.receiveRef(ref);
-                }
-              },
-              style: collect ? { ...this.props.style, ...collect.style } : this.props.style || {},
-            });
+                  if (this.props.receiveRef) {
+                    this.props.receiveRef(ref);
+                  }
+                },
+                style: collect ? { ...this.props.style, ...collect.style } : this.props.style || {},
+              })
+            );
           }
 
           throw new Error('Children is guaranteed to be a function. Impossible condition.');
         }}
-      </CollectContext.Consumer>
+      </CollectorContext.Consumer>
     );
   }
 }

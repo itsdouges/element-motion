@@ -8,6 +8,7 @@
   "dependencies": {
     "@material-ui/core": "^3.0.2",
     "@material-ui/icons": "^3.0.1",
+    "emotion": "^9.2.9",
     "material-ui": "^0.20.2",
     "polished": "^2.0.3",
     "react": "^16.4.x",

@@ -55,7 +55,7 @@ storiesOf('yubaba/BabaManager', module)
                 <Noop duration={500}>
                   {({ ref, style }) => (
                     <Button style={style} innerRef={ref} onClick={() => toggle()}>
-                      Click me and I'll render the next page
+                      Click me and I'll render the next page and start the animation
                     </Button>
                   )}
                 </Noop>
@@ -73,7 +73,9 @@ storiesOf('yubaba/BabaManager', module)
               <Baba name="manager-example-1" key="2">
                 {({ ref, style }) => (
                   <Button style={style} innerRef={ref} onClick={() => toggle()}>
-                    Click me and I'll render the previous page
+                    This button was shown after the animation completed.
+                    <br />
+                    Click me and I'll render the previous page!
                   </Button>
                 )}
               </Baba>
@@ -94,7 +96,7 @@ storiesOf('yubaba/BabaManager', module)
                 <Noop duration={500}>
                   {({ ref, style }) => (
                     <Button style={style} innerRef={ref} onClick={() => toggle()}>
-                      Click me and I'll render the next page
+                      Click me and I'll render the next page and start the animation
                     </Button>
                   )}
                 </Noop>
@@ -112,7 +114,9 @@ storiesOf('yubaba/BabaManager', module)
                   <Baba name="manager-example-2" key="2">
                     {({ ref, style }) => (
                       <Button style={style} innerRef={ref} onClick={() => toggle()}>
-                        Click me and I'll render the previous page
+                        This button was shown after the animation completed.
+                        <br />
+                        Click me and I'll render the previous page!
                       </Button>
                     )}
                   </Baba>

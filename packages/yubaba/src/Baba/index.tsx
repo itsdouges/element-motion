@@ -9,6 +9,7 @@ import Collector, {
   CollectorChildrenProps,
   CollectorActions,
   InlineStyles,
+  TargetProps,
 } from '../Collector';
 import { getElementSizeLocation } from '../lib/dom';
 import { defer } from '../lib/defer';
@@ -40,6 +41,7 @@ export type AnimationBlock = MappedAnimation[];
  */
 export interface ChildProps {
   style?: InlineStyles;
+  className?: string;
 }
 
 /**
@@ -59,12 +61,15 @@ export interface BabaProps extends CollectorChildrenProps, InjectedProps {
   /**
    * Used alternatively to the implicit animation triggering via unmounting/mounting of Baba components.
    * Only use `in` if your component is expected to persist through the entire lifecyle of the app.
+   * When you transition to the "next page" make sure to set your "in" to false. When you transition
+   * back to the original page set the "in" prop back to true. This lets the Baba components know when to
+   * execute the animations.
    */
   in?: boolean;
 
   /**
-   * Callback called when all animations have finished and been cleaned up.
-   * **Word of caution**: Currently the _target_ `Baba` component will be the one who fires this callback.
+   * Callback called when all animations have finished and been cleaned up. Fired from the triggering Baba
+   * component.
    */
   onFinish?: () => void;
 }
@@ -114,7 +119,8 @@ export class Baba extends React.PureComponent<BabaProps, State> {
   TIME_TO_WAIT_FOR_NEXT_BABA = 50;
   animating: boolean = false;
   unmounting: boolean = false;
-  element: HTMLElement | null;
+  containerElement: HTMLElement | null;
+  targetElement: HTMLElement | null;
   renderChildren: CollectorChildrenAsFunction;
   data: CollectorData[];
   abortAnimations: () => void = () => undefined;
@@ -133,11 +139,6 @@ export class Baba extends React.PureComponent<BabaProps, State> {
       // We'll be waiting for another Baba to mount.
       this.showSelfAndNotifyManager();
     }
-
-    if (componentIn) {
-      // Store data so it can be used later. This works around the problem of the "in" prop not having data when it needs.
-      this.storeDOMData();
-    }
   }
 
   componentWillUnmount() {
@@ -147,9 +148,19 @@ export class Baba extends React.PureComponent<BabaProps, State> {
     this.unmounting = true;
   }
 
+  componentWillUpdate(prevProps: BabaProps) {
+    if (prevProps.in === false && this.props.in === true) {
+      // We're being removed from "in". Let's recalculate our DOM position.
+      this.storeDOMData();
+      this.delayedClearDOMData();
+      this.abortAnimations();
+      return;
+    }
+  }
+
   componentDidUpdate(prevProps: BabaProps) {
     if (this.props.in === prevProps.in) {
-      // Nothing to do, return early.
+      // Nothing has changed, return early.
       return;
     }
 
@@ -167,15 +178,9 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
         return;
       }
 
-      // Store data so it can be used later. This works around the problem of the "in" prop not having data when it needs.
-      this.storeDOMData();
       this.showSelfAndNotifyManager();
       return;
     }
-
-    this.storeDOMData();
-    this.delayedClearDOMData();
-    this.abortAnimations();
   }
 
   showSelfAndNotifyManager() {
@@ -204,7 +209,10 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
     // If there is only a Baba target and no child animations
     // data will be undefined, which means there are no animations to store.
     if (this.data) {
-      const DOMData = getElementSizeLocation(this.element as HTMLElement);
+      const DOMData = getElementSizeLocation(this.containerElement as HTMLElement);
+      const targetDOMData = this.targetElement
+        ? getElementSizeLocation(this.targetElement)
+        : undefined;
 
       if (process.env.NODE_ENV === 'development' && DOMData.size.height === 0) {
         console.warn(`yubaba
@@ -217,6 +225,9 @@ If it's an image, try and have the image loaded before mounting, or set a static
       // resulting in inaccurate calculations of location. Watch out!
       childrenStore.set(this.props.name, {
         ...DOMData,
+        targetDOMData,
+        containerElement: this.containerElement as HTMLElement,
+        targetElement: this.targetElement,
         render: this.renderChildren,
         data: this.data,
       });
@@ -229,30 +240,42 @@ If it's an image, try and have the image loaded before mounting, or set a static
       const { data, ...target } = fromTarget;
       this.animating = true;
 
-      // Calculate element DOM data _once_.
+      // Calculate DOM data for the executing element to then be passed to the animation/s.
       const elementDOMData = {
         fromTarget: target,
         toTarget: {
           render: this.renderChildren,
-          ...getElementSizeLocation(this.element as HTMLElement),
+          containerElement: this.containerElement as HTMLElement,
+          targetElement: this.targetElement,
+          targetDOMData: this.targetElement
+            ? getElementSizeLocation(this.targetElement)
+            : undefined,
+          ...getElementSizeLocation(this.containerElement as HTMLElement),
         },
       };
 
       // Loads each action up in an easy-to-execute format.
       const actions = fromTarget.data.map(targetData => {
         if (targetData.action === CollectorActions.animation) {
+          // Element will be lazily instantiated if we need to add something to the DOM.
           let elementToMountChildren: HTMLElement;
 
-          const mount = (jsx: React.ReactElement<{}>) => {
+          const mount = (jsx: React.ReactNode) => {
             if (!elementToMountChildren) {
               elementToMountChildren = document.createElement('div');
+              // We insert the new element at the beginning of the body to ensure correct
+              // stacking context.
               document.body.insertBefore(elementToMountChildren, document.body.firstChild);
             }
 
             // This ensures that if there was an update to the jsx that is animating,
             // it changes next frame. Resulting in the transition _actually_ happening.
             requestAnimationFrame(() =>
-              unstable_renderSubtreeIntoContainer(this, jsx, elementToMountChildren)
+              unstable_renderSubtreeIntoContainer(
+                this,
+                jsx as React.ReactElement<{}>,
+                elementToMountChildren
+              )
             );
           };
 
@@ -264,7 +287,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
           };
 
           let propsStore: ChildProps = {};
-          const setTargetProps = (props: { style: InlineStyles } | null) => {
+          const setTargetProps = (props: TargetProps | null) => {
             if (props) {
               // We keep existing set props so consumers don't need to keep
               // calling it with the same props. Think of how setState works
@@ -276,10 +299,11 @@ If it's an image, try and have the image loaded before mounting, or set a static
                   ...propsStore.style,
                   ...props.style,
                 },
+                className: props.className,
               };
 
               this.setState({
-                childProps: propsStore || {},
+                childProps: propsStore,
               });
             } else {
               this.setState({
@@ -406,10 +430,6 @@ If it's an image, try and have the image loaded before mounting, or set a static
                 shown: true,
               });
 
-              // Store data so it can be used later.
-              // This primarily works around the problem of the "in" prop not having data when it needs.
-              this.storeDOMData();
-
               // If a BabaManager is a parent somewhere, notify them that we're finished animating.
               if (this.props.context) {
                 this.props.context.onFinish({ name: this.props.name });
@@ -439,7 +459,11 @@ If it's an image, try and have the image loaded before mounting, or set a static
   };
 
   setRef: SupplyRefHandler = ref => {
-    this.element = ref;
+    this.containerElement = ref;
+  };
+
+  setTargetRef: SupplyRefHandler = ref => {
+    this.targetElement = ref;
   };
 
   setReactNode: SupplyRenderChildrenHandler = renderChildren => {
@@ -451,17 +475,22 @@ If it's an image, try and have the image loaded before mounting, or set a static
   };
 
   render() {
+    const { childProps, shown } = this.state;
+    const { children } = this.props;
+
     return (
       <Collector
         receiveData={this.setData}
         receiveRenderChildren={this.setReactNode}
         receiveRef={this.setRef}
+        receiveTargetRef={this.setTargetRef}
         style={{
-          opacity: this.state.shown ? 1 : 0,
-          ...this.state.childProps.style,
+          opacity: shown ? 1 : 0,
+          ...childProps.style,
         }}
+        className={childProps.className}
       >
-        {this.props.children}
+        {typeof children === 'function' ? children : React.Children.only(children)}
       </Collector>
     );
   }

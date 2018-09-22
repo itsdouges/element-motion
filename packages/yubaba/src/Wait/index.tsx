@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Collecter, { CollectorChildrenProps, CollectorActions, CollectorData } from '../Collector';
+import Collector, { CollectorChildrenProps, CollectorActions, CollectorData } from '../Collector';
 
 /**
  * ## Wait
@@ -12,6 +12,6 @@ export default class Wait extends React.Component<CollectorChildrenProps> {
   };
 
   render() {
-    return <Collecter data={this.data}>{this.props.children}</Collecter>;
+    return <Collector data={this.data}>{this.props.children}</Collector>;
   }
 }

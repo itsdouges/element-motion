@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Collecter, {
+import Collector, {
   CollectorChildrenProps,
   AnimationCallback,
   CollectorData,
@@ -165,6 +165,6 @@ export default class CrossFadeMove extends React.Component<CrossFadeMoveProps> {
       },
     };
 
-    return <Collecter data={data}>{this.props.children}</Collecter>;
+    return <Collector data={data}>{this.props.children}</Collector>;
   }
 }

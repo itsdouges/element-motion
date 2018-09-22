@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Collecter, {
+import Collector, {
   CollectorChildrenProps,
   AnimationCallback,
   CollectorData,
@@ -99,6 +99,6 @@ export default class Swipe extends React.Component<SwipeProps> {
       },
     };
 
-    return <Collecter data={data}>{this.props.children}</Collecter>;
+    return <Collector data={data}>{this.props.children}</Collector>;
   }
 }

@@ -49,6 +49,7 @@ export const createTestAnimation = ({
           if (beforeAnimateTargetProps) {
             setTargetProps(beforeAnimateTargetProps);
           }
+
           return beforeAnimateJsx;
         },
         animate: (data, onFinish, setTargetProps) => {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Collecter, {
+import Collector, {
   CollectorChildrenProps,
   AnimationCallback,
   CollectorData,
@@ -112,6 +112,6 @@ export default class FLIPMove extends React.Component<FLIPMoveProps> {
       },
     };
 
-    return <Collecter data={data}>{this.props.children}</Collecter>;
+    return <Collector data={data}>{this.props.children}</Collector>;
   }
 }
