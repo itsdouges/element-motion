@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
 const PixelContainer = styled.div`
   height: 100vh;
@@ -12,10 +13,17 @@ const PixelContainer = styled.div`
   font-family: Roboto, HelveticaNeue, Arial, sans-serif;
   user-select: none;
   position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   * {
     box-sizing: border-box;
     user-select: none;
+  }
+
+  button::-moz-focus-inner {
+    border: 0;
   }
 
   ul {
@@ -37,14 +45,21 @@ const Toolbar = styled.div`
   background-color: rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
-  z-index: 9999999;
 `;
 
-const Square = styled.div`
+const ToolbarContainer = styled.div`
+  z-index: 999999999;
+`;
+
+interface SquareProps {
+  invertColor: boolean;
+}
+
+const Square = styled.div<SquareProps>`
   height: 12px;
   width: 12px;
   margin-left: auto;
-  background-color: #000;
+  background-color: ${props => (props.invertColor ? '#fff' : '#000')};
   margin-right: 9px;
   opacity: 0.35;
 `;
@@ -61,25 +76,58 @@ const Triangle = styled(Square)`
   background-color: transparent;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  border-top: 12px solid #000;
+  border-top: 12px solid ${props => (props.invertColor ? '#fff' : '#000')};
+`;
+
+const RelativeContainer = styled.div`
+  position: relative;
+  /* Hack to align contents to container taking off header height */
+  height: calc(100% - 82px);
+
+  @media (min-width: 584px) {
+    /* Hack to align contents to container taking off header height */
+    height: calc(100% - 90px);
+  }
 `;
 
 interface SmallViewportProps {
   children: React.ReactNode;
+  invertColor?: boolean;
+  appBar?: React.ReactNode;
 }
 
 export default class SmallViewport extends React.Component<SmallViewportProps> {
-  render() {
-    return (
-      <PixelContainer id="small-viewport">
-        <Toolbar>
-          <Square />
-          <Circle />
-          <Triangle />
-        </Toolbar>
+  theme = createMuiTheme({
+    palette: {
+      primary: {
+        light: '#484848',
+        main: '#212121',
+        dark: '#000000',
+        contrastText: '#fff',
+      },
+    },
+  });
 
-        <OverflowContainer>{this.props.children}</OverflowContainer>
-      </PixelContainer>
+  render() {
+    const { invertColor, children, appBar } = this.props;
+    return (
+      <MuiThemeProvider theme={this.theme}>
+        <PixelContainer>
+          <ToolbarContainer>
+            <Toolbar>
+              <Square invertColor={!!invertColor} />
+              <Circle invertColor={!!invertColor} />
+              <Triangle invertColor={!!invertColor} />
+            </Toolbar>
+
+            {appBar}
+          </ToolbarContainer>
+
+          <RelativeContainer>
+            <OverflowContainer>{children}</OverflowContainer>
+          </RelativeContainer>
+        </PixelContainer>
+      </MuiThemeProvider>
     );
   }
 }

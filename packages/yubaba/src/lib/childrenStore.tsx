@@ -7,6 +7,9 @@ import { CollectorData, CollectorChildrenAsFunction } from '../Collector';
 export interface ChildrenData extends GetElementSizeLocationReturnValue {
   render: CollectorChildrenAsFunction;
   data: CollectorData[];
+  containerElement: HTMLElement;
+  targetDOMData: GetElementSizeLocationReturnValue | undefined;
+  targetElement: HTMLElement | null | undefined;
 }
 
 /**

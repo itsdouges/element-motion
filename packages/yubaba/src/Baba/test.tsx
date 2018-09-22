@@ -2,6 +2,7 @@ import * as React from 'react';
 import { mount } from 'enzyme';
 import 'jest-enzyme';
 import { Baba } from '../Baba';
+import Target from '../Target';
 import { getElementSizeLocation } from '../lib/dom';
 import { defer } from '../lib/defer';
 import * as utils from '../__tests__/utils';
@@ -64,11 +65,85 @@ describe('<Baba />', () => {
     expect(callback.mock.calls[0]).toMatchSnapshot();
   });
 
+  it('should pass dom data to child animation when using in prop', async () => {
+    const callback = jest.fn();
+    const elementData = utils.domData();
+    (getElementSizeLocation as jest.Mock).mockReturnValue(elementData);
+    const deferred = defer();
+    const Animation = utils.createTestAnimation({
+      onAnimate: callback,
+    });
+    const wrapper = mount(
+      <utils.BabaUnderTest
+        from={start => (
+          <Baba name="anim-aa" in={!start}>
+            <Animation>{props => <div {...props} />}</Animation>
+          </Baba>
+        )}
+        to={
+          <Baba name="anim-aa" onFinish={deferred.resolve}>
+            <div />
+          </Baba>
+        }
+        start={false}
+      />
+    );
+
+    wrapper.setProps({
+      start: true,
+    });
+    await deferred.promise;
+
+    expect(callback.mock.calls[0]).toMatchSnapshot();
+  });
+
+  it('should pass target dom data to child animation', async () => {
+    const callback = jest.fn();
+    const elementData = utils.domData();
+    (getElementSizeLocation as jest.Mock).mockReturnValue(elementData);
+    const deferred = defer();
+    const Animation = utils.createTestAnimation({
+      onAnimate: callback,
+    });
+    const wrapper = mount(
+      <utils.BabaUnderTest
+        from={
+          <Baba name="anim-bb">
+            <Animation>{props => <div {...props} />}</Animation>
+          </Baba>
+        }
+        to={
+          <Baba name="anim-bb" onFinish={deferred.resolve}>
+            <Animation>
+              {animProps => (
+                <Target>
+                  {props => (
+                    <main {...animProps}>
+                      <div {...props} />
+                    </main>
+                  )}
+                </Target>
+              )}
+            </Animation>
+          </Baba>
+        }
+        start={false}
+      />
+    );
+
+    wrapper.setProps({
+      start: true,
+    });
+    await deferred.promise;
+
+    expect(callback.mock.calls[0][0].toTarget.targetDOMData).toMatchSnapshot();
+  });
+
   it('should make children visible inside first baba element before animating has been triggered', () => {
     const Animation = utils.createTestAnimation();
 
     const wrapper = mount(
-      <Baba name="anim-2">
+      <Baba name="anim-cc">
         <Animation>{props => <div {...props} />}</Animation>
       </Baba>
     );
@@ -81,11 +156,11 @@ describe('<Baba />', () => {
     const wrapper = mount(
       <utils.BabaUnderTest
         from={
-          <Baba name="anim-3">
+          <Baba name="anim-dd">
             <Animation>{props => <div {...props} />}</Animation>
           </Baba>
         }
-        to={<Baba name="anim-3">{props => <div {...props} />}</Baba>}
+        to={<Baba name="anim-dd">{props => <div {...props} />}</Baba>}
         start={false}
       />
     );
@@ -102,11 +177,11 @@ describe('<Baba />', () => {
     const wrapper = mount(
       <utils.BabaUnderTest
         from={start => (
-          <Baba name="flip-back" in={!start}>
+          <Baba name="flip-back-ee" in={!start}>
             {props => <div {...props} />}
           </Baba>
         )}
-        to={<Baba name="flip-back">{props => <div {...props} />}</Baba>}
+        to={<Baba name="flip-back-ee">{props => <div {...props} />}</Baba>}
         start
       />
     );
@@ -124,7 +199,7 @@ describe('<Baba />', () => {
     const wrapper = mount(
       <utils.BabaUnderTest
         from={start => (
-          <Baba name="keep-showing" in={!start}>
+          <Baba name="keep-showing-aa" in={!start}>
             <Animation>{props => <div {...props} />}</Animation>
           </Baba>
         )}
@@ -155,12 +230,12 @@ describe('<Baba />', () => {
     const wrapper = mount(
       <utils.BabaUnderTest
         from={
-          <Baba name="anim-3">
+          <Baba name="anim-pp">
             <Animation>{props => <div {...props} />}</Animation>
           </Baba>
         }
         to={
-          <Baba name="anim-3" onFinish={deferred.resolve}>
+          <Baba name="anim-pp" onFinish={deferred.resolve}>
             {props => <div {...props} />}
           </Baba>
         }

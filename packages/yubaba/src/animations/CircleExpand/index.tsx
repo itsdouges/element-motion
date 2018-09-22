@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Collecter, {
+import Collector, {
   CollectorChildrenProps,
   AnimationCallback,
   CollectorData,
@@ -110,6 +110,6 @@ export default class CircleExpand extends React.Component<CircleExpandProps> {
       },
     };
 
-    return <Collecter data={data}>{this.props.children}</Collecter>;
+    return <Collector data={data}>{this.props.children}</Collector>;
   }
 }

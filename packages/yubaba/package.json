@@ -10,6 +10,7 @@
     "build": "rm -rf dist && tsc -p ./tsconfig.cjs.json && tsc -p ./tsconfig.es6.json && cp ../../README.md README.md"
   },
   "peerDependencies": {
+    "emotion": "^9.2.9",
     "react": "^16.4.x",
     "react-dom": "^16.4.x"
   },
@@ -19,6 +20,7 @@
     "@storybook/addon-notes": "^3.4.10",
     "@storybook/addon-options": "^3.4.10",
     "@storybook/react": "4.0.0-alpha.2",
+    "emotion": "^9.2.9",
     "enzyme": "^3.6.0",
     "jest-enzyme": "^6.0.4",
     "material-ui": "^0.20.2",

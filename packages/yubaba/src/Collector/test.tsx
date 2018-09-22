@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { render } from 'enzyme';
-import Collector, { CollectorActions, CollectorData } from '../Collector';
+import { render, mount } from 'enzyme';
+import Collector, { CollectorActions, CollectorData, CollectorContext } from '../Collector';
 
 describe('<Collector />', () => {
   const element = document.createElement('div');
@@ -179,7 +179,7 @@ describe('<Collector />', () => {
       <Collector>
         <Collector>
           <Collector>
-            <Collector>{({ style }) => callback(style)}</Collector>
+            <Collector>{({ style }) => callback(style) || <div />}</Collector>
           </Collector>
         </Collector>
       </Collector>
@@ -195,7 +195,7 @@ describe('<Collector />', () => {
       <Collector style={{ margin: 0 }}>
         <Collector>
           <Collector style={{ opacity: 1 }}>
-            <Collector>{({ style }) => callback(style)}</Collector>
+            <Collector>{({ style }) => callback(style) || <div />}</Collector>
           </Collector>
         </Collector>
       </Collector>
@@ -210,10 +210,36 @@ describe('<Collector />', () => {
   it('should pass style on immediate collector', () => {
     const callback = jest.fn();
 
-    render(<Collector style={{ opacity: 1 }}>{({ style }) => callback(style)}</Collector>);
+    render(
+      <Collector style={{ opacity: 1 }}>{({ style }) => callback(style) || <div />}</Collector>
+    );
 
     expect(callback).toHaveBeenCalledWith({
       opacity: 1,
     });
+  });
+
+  it('should collect extra data beneath a rendered child', () => {
+    const callback = jest.fn();
+    const containerRef = document.createElement('div');
+    const targetRef = document.createElement('span');
+    containerRef.appendChild(targetRef);
+
+    mount(
+      <Collector receiveRef={callback} receiveTargetRef={callback}>
+        <Collector>
+          {({ ref }) => (
+            <div ref={ref}>
+              <CollectorContext.Consumer>
+                {collect => <span ref={collect.targetRef} />}
+              </CollectorContext.Consumer>
+            </div>
+          )}
+        </Collector>
+      </Collector>
+    );
+
+    expect(callback).toHaveBeenCalledWith(targetRef);
+    expect(callback).toHaveBeenLastCalledWith(containerRef);
   });
 });

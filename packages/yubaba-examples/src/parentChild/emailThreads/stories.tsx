@@ -1,66 +1,183 @@
 import * as React from 'react';
+import { findDOMNode } from 'react-dom';
 import { storiesOf } from '@storybook/react';
 import { withMarkdownNotes } from '@storybook/addon-notes';
-import { MemoryRouter, Switch, Route } from 'react-router-dom';
-import Baba, { FLIPMove } from 'yubaba';
+import { MemoryRouter, Route, Switch } from 'react-router-dom';
+import Baba, { RevealMove, ConcealMove, Target } from 'yubaba';
 import * as Common from 'yubaba-common';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import MoreVert from '@material-ui/icons/MoreVert';
+import ImageIcon from '@material-ui/icons/Image';
+import StarIcon from '@material-ui/icons/StarBorder';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  List,
+  Avatar,
+  ListItem,
+  ListItemText,
+  Divider,
+} from '@material-ui/core';
 import * as Styled from './styled';
 import { data } from './data';
 
 const Home = (props: { in: boolean }) => (
-  <ul>
-    {data.map((email, index) => (
-      <Baba name={`card-${index}`} key={index} in={props.in}>
-        <FLIPMove duration={500}>
-          {baba => (
-            <Styled.Card innerRef={baba.ref} style={baba.style}>
-              {email.title}
+  <React.Fragment>
+    <Typography
+      gutterBottom
+      variant="subheading"
+      color="inherit"
+      style={{ marginTop: 20, marginLeft: 22 }}
+    >
+      Today
+    </Typography>
 
-              <Styled.StyledLink to={`/screen/${index}`} />
-            </Styled.Card>
-          )}
-        </FLIPMove>
-      </Baba>
-    ))}
-  </ul>
+    <List>
+      {data.map((email, index) => (
+        <React.Fragment key={index}>
+          <Baba name={`card-${index}`} in={props.in}>
+            <RevealMove duration={600}>
+              {baba => (
+                <ListItem
+                  innerRef={ref => baba.ref(findDOMNode(ref) as HTMLElement)}
+                  style={baba.style}
+                  button
+                >
+                  <Avatar>
+                    <ImageIcon />
+                  </Avatar>
+                  <ListItemText
+                    primary={email.title}
+                    secondary={`${email.recipients} - ${email.body}`}
+                    secondaryTypographyProps={{ noWrap: true }}
+                  />
+                  <Styled.StyledLink to={`/screen/${index}`} />
+                </ListItem>
+              )}
+            </RevealMove>
+          </Baba>
+          <Divider inset component="li" />
+        </React.Fragment>
+      ))}
+    </List>
+  </React.Fragment>
 );
 
 const Screen = (props: { index: number }) => (
   <Baba name={`card-${props.index}`}>
-    <FLIPMove>
+    <ConcealMove>
       {baba => (
-        <Styled.Screen innerRef={baba.ref} style={baba.style} {...props}>
-          {data[props.index].title}
+        <Styled.Screen innerRef={baba.ref} style={baba.style} className={baba.className} {...props}>
+          <ListItem>
+            <Typography variant="title">{data[props.index].title}</Typography>
+            <IconButton
+              color="inherit"
+              aria-label="Menu"
+              style={{ marginLeft: 'auto', marginRight: '-10px' }}
+            >
+              <StarIcon />
+            </IconButton>
+          </ListItem>
 
-          <Styled.StyledLink to="/" />
+          <Divider />
+
+          <Target>
+            {targetProps => (
+              <ListItem innerRef={ref => targetProps.ref(findDOMNode(ref) as HTMLElement)}>
+                <Avatar>
+                  <ImageIcon />
+                </Avatar>
+                <ListItemText
+                  primary={data[props.index].title}
+                  secondary={data[props.index].recipients}
+                />
+              </ListItem>
+            )}
+          </Target>
+
+          <ListItem>
+            <Typography variant="body2">{data[props.index].body}</Typography>
+          </ListItem>
         </Styled.Screen>
       )}
-    </FLIPMove>
+    </ConcealMove>
   </Baba>
 );
 
-storiesOf('yubaba-examples/ParentChild/EmailThreads', module).addWithJSX(
-  'Default',
-  withMarkdownNotes(`
-# Basic
+const AppBarActions = () => (
+  <Switch>
+    <Route
+      render={() => (
+        <Styled.LightLink to="/">
+          <IconButton
+            color="inherit"
+            aria-label="Menu"
+            style={{ marginLeft: '-15px', marginRight: 20 }}
+          >
+            <BackIcon />
+          </IconButton>
+        </Styled.LightLink>
+      )}
+      path="/screen/:index"
+    />
 
-This example shows an inline item expanding to a new page using the CrossFadeMove component, along with react-router-dom for the routing.
+    <Route
+      path="*"
+      render={() => (
+        <React.Fragment>
+          <IconButton
+            color="inherit"
+            aria-label="Menu"
+            style={{ marginLeft: '-15px', marginRight: 20 }}
+          >
+            <MenuIcon />
+          </IconButton>
 
-See [this video](https://storage.googleapis.com/spec-host-backup/mio-design%2Fassets%2F1DenoCsHNb_H1S1zErzmGCxhz6wjmdO8y%2F01-hierarchy-parentchild.mp4) for the inspiration.
-`)(() => (
-    <Common.SmallViewport>
-      <MemoryRouter>
-        <div>
-          <Route
-            render={props => <Screen index={props.match.params.index} />}
-            path="/screen/:index"
-          />
-
-          <Route path="/" exact>
-            {props => <Home in={!!props.match} aria-hidden={!props.match} />}
-          </Route>
-        </div>
-      </MemoryRouter>
-    </Common.SmallViewport>
-  ))
+          <Typography variant="title" color="inherit">
+            Inbox
+          </Typography>
+        </React.Fragment>
+      )}
+    />
+  </Switch>
 );
+
+const buildApp = (initialEntry = '/') => () => (
+  <MemoryRouter initialEntries={[initialEntry]}>
+    <Common.SmallViewport
+      invertColor
+      appBar={
+        <AppBar
+          position="static"
+          style={{ paddingTop: 26, background: 'rgb(97, 0, 236)', zIndex: 1 }}
+        >
+          <Toolbar>
+            <AppBarActions />
+
+            <IconButton color="inherit" aria-label="Menu" style={{ marginLeft: 'auto' }}>
+              <SearchIcon />
+            </IconButton>
+
+            <IconButton color="inherit" aria-label="Menu" style={{ marginRight: '-15px' }}>
+              <MoreVert />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      }
+    >
+      <Route render={props => <Screen index={props.match.params.index} />} path="/screen/:index" />
+
+      <Route path="/" exact>
+        {props => <Home in={!!props.match} aria-hidden={!props.match} />}
+      </Route>
+    </Common.SmallViewport>
+  </MemoryRouter>
+);
+
+storiesOf('yubaba-examples/ParentChild/EmailThreads', module)
+  .add('Default', withMarkdownNotes('')(buildApp()))
+  .add('Screen', withMarkdownNotes('')(buildApp('/screen/1')));
