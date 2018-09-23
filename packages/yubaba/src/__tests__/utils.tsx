@@ -85,7 +85,6 @@ export const domData = (): GetElementSizeLocationReturnValue => ({
     top: 0,
   },
   raw: {
-    // tslint:disable-next-line
     rect: {} as ClientRect,
     scrollTop: 0,
     scrollLeft: 0,

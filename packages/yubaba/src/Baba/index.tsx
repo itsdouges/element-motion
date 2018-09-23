@@ -418,7 +418,6 @@ If it's an image, try and have the image loaded before mounting, or set a static
         return (
           blocks
             // We don't care what the promises return.
-            // tslint:disable-next-line no-any
             .reduce<Promise<any>>(
               (promise, block) =>
                 promise.then(() => Promise.all(block.map(anim => anim.animate()))),
