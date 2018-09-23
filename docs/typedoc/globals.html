@@ -1022,127 +1022,183 @@ img { max-width: 100%; }
 <div class="container container-main">
 	<div class="content-wrap">
 		<div class="tsd-panel tsd-typography">
-			<div align="center">
-				<br />
-				<img src="https://github.com/madou/yubaba/blob/master/icon.png?raw=true" width="256px" height="256px" align="center" />
-			</div>
 			<h1 id="yubaba">yubaba</h1>
-			<p>✨ Element to element animation orchestrator for React.js</p>
-			<p><a href="https://travis-ci.org/madou/yubaba"><img src="https://travis-ci.org/madou/yubaba.svg?branch=master" alt="Build Status"></a>
-				<a href="https://www.npmjs.com/package/yubaba"><img src="https://img.shields.io/npm/v/yubaba.svg" alt="npm"></a>
-				<a href="https://david-dm.org/madou/yubaba"><img src="https://img.shields.io/david/madou/yubaba.svg?style=flat-squarer" alt="Dependencies"></a>
+			<p>is an element to element animation orchestrator for React.js ✨</p>
+			<p><a href="https://www.npmjs.com/package/yubaba"><img src="https://img.shields.io/npm/v/yubaba.svg" alt="npm"></a>
+				<a href="https://bundlephobia.com/result?p=yubaba"><img src="https://img.shields.io/bundlephobia/minzip/yubaba.svg" alt="npm bundle size (minified + gzip)"></a>
+				<a href="https://travis-ci.org/madou/yubaba"><img src="https://travis-ci.org/madou/yubaba.svg?branch=master" alt="Build Status"></a>
 			<a href="https://david-dm.org/madou/yubaba?type=dev"><img src="https://david-dm.org/madou/yubaba/dev-status.svg" alt="Dev Dependencies"></a></p>
-			<p><a href="https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleMusic&amp;selectedStory=move%20expand%20shrink%20wait&amp;full=0&amp;addons=0&amp;stories=1&amp;panelRight=0"><img src="https://github.com/madou/yubaba/raw/master/test/images/example-music.gif" alt="Example"></a></p>
+			<p><a href="https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleMusic&amp;selectedStory=move%20expand%20shrink%20wait&amp;full=0&amp;addons=0&amp;stories=1&amp;panelRight=0"><img src="https://github.com/madou/yubaba/raw/master/test/images/intro.gif" alt="Example animation using yubaba"></a></p>
 			<h2 id="installation">Installation</h2>
 			<pre><code class="language-bash">npm install yubaba --save</code></pre>
-			<h2 id="motivation">Motivation</h2>
-			<p>Beautiful page transitions are becoming more common on the web but we&#39;re still at apoint where we need to write a lot of boilerplate to make it happen,
-			and worse yet different parts of our apps needing to know about each other to make it all work.</p>
-			<p>What if we could keep writing our apps as we do today,
-				have no leaky abstractions,
-				and have beautiful transitions easily?
-			Orchestrating when animations should execute and when content should be displayed is what <code>yubaba</code> does best.</p>
+			<p>or</p>
+			<pre><code class="language-bash">yarn add yubaba</code></pre>
 			<h2 id="usage">Usage</h2>
-			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Baba, { CrossFadeMove, BabaManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+			<p><code>Baba</code> is the primary orchestrating component.
+				We wrap the components we want to transition to each other as well as passing through the animation we want to happen,
+			in this case the <code>CrossFadeMove</code> animation.</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Baba, { CrossFadeMove } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  state = {
-    <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span>,
-  };
-
+  state = { <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span> };
   toggle = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">this</span>.setState(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> ({ <span class="hljs-attr">show</span>: !prev.show }));
 
   render() {
-    <span class="hljs-keyword">return</span> (
-      &lt;Root&gt;
-        {this.state.show || (
-          &lt;Baba name="finn-attack"&gt;
-            &lt;CrossFadeMove&gt;
-              {({ ref, style }) =&gt; &lt;FinnStart onClick={this.toggle} style={style} innerRef={ref} /&gt;}
-            &lt;/CrossFadeMove&gt;
-          &lt;/Baba&gt;
-        )}
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.state.show ? (
+      &lt;div className="root"&gt;
+        &lt;Baba name="finn-attack"&gt;
+          &lt;CrossFadeMove&gt;
+            {provided =&gt; &lt;button {...provided} onClick={this.toggle} className="finn-end" /&gt;}
+          &lt;/CrossFadeMove&gt;
+        &lt;/Baba&gt;
 
-        {this.state.show &amp;&amp; (
-          &lt;React.Fragment&gt;
-            &lt;Baba name="finn-attack"&gt;
-              &lt;CrossFadeMove&gt;
-                {({ ref, style }) =&gt; &lt;FinnEnd onClick={this.toggle} style={style} innerRef={ref} /&gt;}
-              &lt;/CrossFadeMove&gt;
-            &lt;/Baba&gt;
-
-            &lt;Sword /&gt;
-          &lt;/React.Fragment&gt;
-        )}
-      &lt;/Root&gt;
+        &lt;div className="sword" /&gt;
+      &lt;/div&gt;
+    ) : (
+      &lt;Baba name="finn-attack"&gt;
+        &lt;CrossFadeMove&gt;
+          {provided =&gt; &lt;button {...provided} onClick={this.toggle} className="finn-start" /&gt;}
+        &lt;/CrossFadeMove&gt;
+      &lt;/Baba&gt;
     );
   }
 }</code></pre>
-			<h2 id="example">Example</h2>
-			<p>These examples will build up from each other to leave you with a <em>awesome</em> transition that was really easy to make.
-			Click on the gif&#39;s to see each steps codesandbox.</p>
-			<p>So we have two disjointed components that are toggled when clicked (click on Finn!).
-			How could we have them transition nicely to each other?</p>
+			<h2 id="motivation">Motivation</h2>
+			<p>Complex page transitions are becoming more common on the web but we&#39;re still at a point where we need to write a lot of boilerplate to make it happen,
+			worse yet disjointed parts of our apps needing to know about each other to make it all work.</p>
+			<p>Yubaba tries to solve this by allowing disjointed parts of your app define what animations they want to happen when a matching partner is found,
+			without explicit knowledge of each other.</p>
+			<p>See usage and examples for a deeper look at this.</p>
+			<h2 id="examples">Examples</h2>
+			<ul>
+				<li><a href="https://madou.github.io/yubaba">All examples</a></li>
+			</ul>
+			<h3 id="parent-to-child">Parent to child</h3>
+			<p>A list of elements (the parent) transitioning to show more information (the child).</p>
+			<ul>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba-examples%2FParentChild%2FEmailThreads&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">Email Threads</a> (<a href="https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/parentChild/emailThreads/stories.tsx">code</a>)</li>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba-examples%2FParentChild%2FImageSearch&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">Image Search</a> (<a href="https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/parentChild/imageSearch/stories.tsx">code</a>)</li>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba-examples%2FParentChild%2FMusicPlayer&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">Music Player</a> (<a href="https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/parentChild/musicPlayer/stories.tsx">code</a>)</li>
+			</ul>
+			<h3 id="transformation">Transformation</h3>
+			<p>Elements transforming into another.</p>
+			<ul>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba-examples%2FTransformation%2FSearchBar&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">Search Bar</a> (<a href="https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/transformation/searchBar/stories.tsx">code</a>)</li>
+			</ul>
+			<h3 id="core">Core</h3>
+			<p>A range of different scenarios for each animation component. <a href="#components">Looking for component API docs</a>?</p>
+			<h4 id="focal">Focal</h4>
+			<p>Transitioning the same element from one place to another.</p>
+			<ul>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FFLIPMove&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">Move</a></li>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FCrossFadeMove&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">CrossFadeMove</a></li>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FConcealMove&amp;selectedStory=TargetHeight&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">ConcealMove</a></li>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FRevealMove&amp;selectedStory=TargetHeight&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">RevealMove</a></li>
+			</ul>
+			<h4 id="supporting">Supporting</h4>
+			<p><em>Helping</em> the focal animation look the best it can be.</p>
+			<ul>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FBabaManager&amp;selectedStory=NoManager&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">BabaManager</a></li>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleExpand&amp;selectedStory=FromStaticPosition&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">CircleExpand</a></li>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleShrink&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">CircleShrink</a></li>
+				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FSwipe&amp;selectedStory=Up&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">Swipe</a></li>
+			</ul>
+			<h3 id="build-ups">Build ups</h3>
+			<p>We&#39;ll build up each step to leave you with an <em>awesome</em> transition.
+			Click each gif to see its codesandbox.</p>
+			<p>We have two disjointed components that are toggled when clicked (click on Finn!).
+			How can we transition them to each other?</p>
 			<p><a href="https://codesandbox.io/s/jvw344oll3"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-0.gif?raw=true" alt="Intro to Yubaba 0/4"></a></p>
-			<h3 id="introducing-baba-and-crossfademove-">Introducing <code>&lt;Baba /&gt;</code> and <code>&lt;CrossFadeMove /&gt;</code></h3>
-			<p>Let&#39;s use the <code>Baba</code> and <code>CrossFadeMove</code> components to have them seamlessly transition to each other.
-				<code>Baba</code> is the brains of <code>yubaba</code>,
-				it does all of the orchestration.
-				<code>CrossFadeMove</code> does just that,
-			it moves the paired children to each other.</p>
+			<h4 id="introducing-baba-and-crossfademove-">Introducing <code>&lt;Baba /&gt;</code> and <code>&lt;CrossFadeMove /&gt;</code></h4>
+			<p>Let&#39;s use the <code>Baba</code> and <code>CrossFadeMove</code> components to have them seamlessly transition to the destination.
+				<code>Baba</code> is the brains - it does all of the orchestration.
+			<code>CrossFadeMove</code> is one of many focal animations available - it will cross fade both elements from the starting point to the destination point.</p>
 			<p><a href="https://codesandbox.io/s/x3v5ywk5ro"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-1.gif?raw=true" alt="Intro to Yubaba 1/4"></a></p>
 			<p>Okay so that looks cool,
 				but Finn&#39;s sword is shown immediately!
 			Is there anything we can do to make it show after all animations have finished?</p>
-			<h3 id="introducing-babamanager-">Introducing <code>&lt;BabaManager /&gt;</code></h3>
+			<h4 id="introducing-babamanager-">Introducing <code>&lt;BabaManager /&gt;</code></h4>
 			<p>Let&#39;s bring in a component <code>BabaManager</code> which will be used to delay showing Finn&#39;s sword.
-			You can imagine this as content in a page around the connecting element (connecting element meaning the element that is transitioning between pages) that should be shown <em>after</em> all animations have finished.</p>
+			You can imagine this as content in a page around the destination element that should be shown <em>after</em> all animations have finished.</p>
 			<p><a href="https://codesandbox.io/s/oo6905z0k9"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-2.gif?raw=true" alt="Intro to Yubaba 2/4"></a></p>
 			<p>Cool,
 				now we&#39;re making progress.
-				I think we can do better though,
+				We can do better though,
 			what if Finn could really sell his preparation that he&#39;s about to attack?</p>
-			<h3 id="introducing-circleexpand-">Introducing <code>&lt;CircleExpand /&gt;</code></h3>
+			<h4 id="introducing-circleexpand-">Introducing <code>&lt;CircleExpand /&gt;</code></h4>
 			<p>Let&#39;s bring in a component <code>CircleExpand</code> which will expand to fit the viewport,
 			for Finn it will give him some <em>oomph</em> to really sell the attack.</p>
 			<p><a href="https://codesandbox.io/s/6xp1jk4xjw"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-3.gif?raw=true" alt="Intro to Yubaba 3/4"></a></p>
 			<p>Really cool!
 				But both the <code>CircleExpand</code> and <code>CrossFadeMove</code> happening at the same time looks kind of weird,
 			what if we could delay <code>CrossFadeMove</code> until after <code>CircleExpand</code> had finished animating?</p>
-			<h3 id="introducing-wait-">Introducing <code>&lt;Wait /&gt;</code></h3>
+			<h4 id="introducing-wait-">Introducing <code>&lt;Wait /&gt;</code></h4>
 			<p>Let&#39;s bring in a component <code>Wait</code> which will delay the next animation from happening until after the previous one has finished!</p>
 			<p><a href="https://codesandbox.io/s/llv7pkv9y9"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-4.gif?raw=true" alt="Intro to Yubaba 4/4"></a></p>
 			<p>And there you have it,
 			a masta-peece!</p>
-			<h2 id="other-examples">Other Examples</h2>
-			<p>There are many examples in our <a href="https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleSearch&amp;selectedStory=search%20bar&amp;full=0&amp;addons=0&amp;stories=1&amp;panelRight=0">storybook</a>,
-			top picks would include the Google Music and Mobile Google Image Search examples.</p>
-			<h2 id="make-your-own-animations">Make your own animations</h2>
-			<p>Tutorial coming soon,
-			refer to <a href="https://github.com/madou/yubaba/tree/master/packages/yubaba/src/components/animations">src/components/animations</a> for example implementations for now.</p>
+			<h2 id="create-your-own-animations">Create your own animations</h2>
+			<p>Yubaba comes with the ability for you to make your own animations using the same plumbing the official animations are constructed from.
+			Look at <a href="https://github.com/madou/yubaba/tree/master/packages/yubaba/src/animations">src/components/animations</a> for example implementations.</p>
+			<p>Tutorial(s) coming soon.</p>
 			<h2 id="components">Components</h2>
-			<p>Click through on the component names to see their api docs and prop definitions.</p>
-			<h3 id="baba"><a href="https://madou.github.io/yubaba/typedoc/classes/baba.html">Baba</a></h3>
-			<p>This is the primary component in yubaba. When rendering it will be given all of the animation data from its children. When unmounting or flipping the prop in from true to false, it will execute all the animations top to bottom below it if a matching <Baba /> pair is found within 50ms.</p>
-			<h3 id="babamanager"><a href="https://madou.github.io/yubaba/typedoc/classes/babamanager.html">BabaManager</a></h3>
-			<p>Used to hide contents before an animation is complete triggered from a child <Baba /> component. If there is more than one child <Baba /> you can use an optional name prop which should match the appropriate <Baba /> component.</p>
-			<p>If it is the initial mount it will immediately be shown.</p>
-			<h3 id="circleexpand"><a href="https://madou.github.io/yubaba/typedoc/classes/circleexpand.html">CircleExpand</a></h3>
-			<p>CircleExpand will animate a circle from the entire window to cover end target, and then fade out.</p>
-			<p>Generally you will use CircleExpand and CircleShrink together to seamlessly transition the background between pages.</p>
-			<h3 id="circleshrink"><a href="https://madou.github.io/yubaba/typedoc/classes/circleshrink.html">CircleShrink</a></h3>
-			<p>CircleShrink will animate a circle from the entire window to cover end target, and then fade out.</p>
-			<p>Generally you will use CircleShrink and CircleExpand together to seamlessly transition the background between pages.</p>
-			<h3 id="flipmove"><a href="https://madou.github.io/yubaba/typedoc/classes/flipmove.html">FLIPMove</a></h3>
+			<h3 id="utility">Utility</h3>
+			<p>These components exist to pass data around and orchestrate the animations.</p>
+			<h4 id="baba">Baba</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/baba.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/babaprops.html">Props</a></p>
+			<p>This is the primary component in yubaba.
+				When rendering it will be given all of the animation data from its children.
+				When unmounting or flipping the prop in from true to false,
+			it will execute all the animations top to bottom below it if a matching <Baba /> pair is found within 50ms.</p>
+			<h4 id="target">Target</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/target.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/targetprops.html">Props</a></p>
+			<p>Used to explicitly mark the focal element,
+			only a handful of animations require this component to be used.</p>
+			<h4 id="collector">Collector</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/collector.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/collectorprops.html">Props</a></p>
+			<p>Used as the glue for all animation components,
+			every animation component will use this internally to pass the data to the parent <code>Baba</code>.</p>
+			<h3 id="focal">Focal</h3>
+			<p>Transitioning the same element from one place to another.</p>
+			<h4 id="flipmove-example-">FLIPMove (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FFLIPMove&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/flipmove.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/flipmoveprops.html">Props</a></p>
 			<p>FLIPMove will conduct a <a href="https://aerotwist.com/blog/flip-your-animations/">FLIP</a> styled animation on the target element.</p>
-			<h3 id="crossfademove"><a href="https://madou.github.io/yubaba/typedoc/classes/crossfademove.html">CrossFadeMove</a></h3>
+			<h4 id="crossfademove-example-">CrossFadeMove (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FCrossFadeMove&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/crossfademove.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/crossfademoveprops.html">Props</a></p>
 			<p>CrossFadeMove will animate the from element to the target element while transitioning between the two for a seamless transition.</p>
-			<h3 id="swipe"><a href="https://madou.github.io/yubaba/typedoc/classes/swipe.html">Swipe</a></h3>
-			<p>Swipe will animate a block swiping over the viewport.</p>
-			<h3 id="wait"><a href="https://madou.github.io/yubaba/typedoc/classes/wait.html">Wait</a></h3>
+			<h4 id="revealmove-example-">RevealMove (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FRevealMove&amp;selectedStory=TargetHeight&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/revealmove.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/revealmoveprops.html">Props</a></p>
+			<p>Useful for transitioning from a parent to a child,
+				will expand from the focal element to the container.
+			Requires the use of the <a href="#target">Target</a> component to specify the focal element.</p>
+			<h4 id="concealmove-example-">ConcealMove (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FConcealMove&amp;selectedStory=TargetHeight&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/concealmove.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/concealmoveprops.html">Props</a></p>
+			<p>Useful for transitioning from a child to a parent,
+				will shrink from the container to the focal element.
+			Requires the use of the <a href="#target">Target</a> component to specify the focal element.</p>
+			<h3 id="supporting">Supporting</h3>
+			<p><em>Helping</em> the focal animation look the best it can be.</p>
+			<h4 id="babamanager-example-">BabaManager (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FBabaManager&amp;selectedStory=WithManager&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/babamanager.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/babamanagerprops.html">Props</a></p>
+			<p>Used to hide contents before an animation is complete triggered from a child <Baba /> component.
+			If there is more than one child <Baba /> you can use an optional name prop which should match the appropriate <Baba /> component.</p>
+			<p>If it is the initial mount it will immediately be shown.</p>
+			<h4 id="wait">Wait</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/wait.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/waitprops.html">Props</a></p>
 			<p>Wait is used to pause the execution of all parent animations until all children animations have completed.</p>
-			<h3 id="collector"><a href="https://madou.github.io/yubaba/typedoc/classes/collector.html">Collector</a></h3>
-			<p>Used as the glue for all yubaba components. It is purely an internal component which will collect and pass all props up to the parent <Baba /> component.</p>
+			<h4 id="circleexpand-example-">CircleExpand (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleExpand&amp;selectedStory=FromStaticPosition&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/circleexpand.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/circleexpandprops.html">Props</a></p>
+			<p>CircleExpand will animate a circle from the entire window to cover end target,
+			and then fade out.</p>
+			<p>Generally you will use CircleExpand and CircleShrink together to seamlessly transition the background between pages.</p>
+			<h4 id="circleshrink-example-">CircleShrink (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleShrink&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/circleshrink.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/circleshrinkprops.html">Props</a></p>
+			<p>CircleShrink will animate a circle from the entire window to cover end target,
+			and then fade out.</p>
+			<p>Generally you will use CircleShrink and CircleExpand together to seamlessly transition the background between pages.</p>
+			<h4 id="swipe-example-">Swipe (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FSwipe&amp;selectedStory=Up&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/swipe.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/swipeprops.html">Props</a></p>
+			<p>Swipe will animate a block swiping over the viewport.</p>
 			<h2 id="api-reference">API Reference</h2>
 			<p><a href="https://madou.github.io/yubaba/typedoc/">See typedoc.</a></p>
 		</div>
@@ -1227,7 +1283,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Animation<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/Collector/index.tsx#L18">Collector/index.tsx:18</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L18">Collector/index.tsx:18</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1289,7 +1345,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Collector<wbr>Children<wbr>AsFunction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/Collector/index.tsx#L57">Collector/index.tsx:57</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L57">Collector/index.tsx:57</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1331,7 +1387,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Collector<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="interfaces/animationaction.html" class="tsd-signature-type">AnimationAction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/waitaction.html" class="tsd-signature-type">WaitAction</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/Collector/index.tsx#L43">Collector/index.tsx:43</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L43">Collector/index.tsx:43</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1341,7 +1397,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Set<wbr>Target<wbr>Props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/Collector/index.tsx#L9">Collector/index.tsx:9</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L9">Collector/index.tsx:9</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1372,7 +1428,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Supply<wbr>Ref<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/Collector/index.tsx#L45">Collector/index.tsx:45</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L45">Collector/index.tsx:45</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1406,7 +1462,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Collector<wbr>Context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Context</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Collect</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;React.createContext&lt;Collect | undefined&gt;(undefined)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/Collector/index.tsx#L122">Collector/index.tsx:122</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L122">Collector/index.tsx:122</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1423,7 +1479,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/madou/yubaba/blob/22bfe7b/packages/yubaba/src/lib/defer.tsx#L1">lib/defer.tsx:1</a></li>
+								<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/lib/defer.tsx#L1">lib/defer.tsx:1</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
