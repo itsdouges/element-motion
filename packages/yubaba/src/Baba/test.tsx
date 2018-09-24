@@ -4,7 +4,7 @@ import 'jest-enzyme';
 import { Baba } from '../Baba';
 import Target from '../Target';
 import { getElementSizeLocation } from '../lib/dom';
-import { defer } from '../lib/defer';
+import defer from '../lib/defer';
 import * as utils from '../__tests__/utils';
 
 jest.mock('../lib/dom');

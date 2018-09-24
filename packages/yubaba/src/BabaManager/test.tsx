@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import Baba from '../Baba';
 import BabaManager from '../BabaManager';
 import * as utils from '../__tests__/utils';
-import { defer } from '../lib/defer';
+import defer from '../lib/defer';
 
 describe('<BabaManager />', () => {
   it('should show manager content when waiting for animation', () => {

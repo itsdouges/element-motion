@@ -1,4 +1,23 @@
 {
   "parser": "typescript-eslint-parser",
-  "plugins": ["eslint-plugin-typescript"]
+  "plugins": ["typescript"],
+  "extends": ["airbnb", "prettier", "prettier/react"],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "rules": {
+    "typescript/class-name-casing": "error",
+    "typescript/no-unused-vars": "error",
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "import/no-unresolved": "off",
+    "no-undef": "off",
+    "arrow-body-style": "off",
+    "no-restricted-globals": "off",
+    "no-multi-str": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*test.tsx", "**/*stories.tsx"] }
+    ]
+  }
 }

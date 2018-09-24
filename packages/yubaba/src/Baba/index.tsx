@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom';
+import {
+  unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer,
+  unmountComponentAtNode,
+} from 'react-dom';
 import Collector, {
   SupplyDataHandler,
   SupplyRenderChildrenHandler,
@@ -12,7 +15,7 @@ import Collector, {
   TargetProps,
 } from '../Collector';
 import { getElementSizeLocation } from '../lib/dom';
-import { defer } from '../lib/defer';
+import defer from '../lib/defer';
 import * as childrenStore from '../lib/childrenStore';
 import { InjectedProps, withBabaManagerContext } from '../BabaManager';
 
@@ -271,7 +274,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
             // This ensures that if there was an update to the jsx that is animating,
             // it changes next frame. Resulting in the transition _actually_ happening.
             requestAnimationFrame(() =>
-              unstable_renderSubtreeIntoContainer(
+              renderSubtreeIntoContainer(
                 this,
                 jsx as React.ReactElement<{}>,
                 elementToMountChildren

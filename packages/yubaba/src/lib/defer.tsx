@@ -1,4 +1,4 @@
-export const defer = <TValue extends void>() => {
+const defer = <TValue extends void>() => {
   let resolve: (value?: TValue | PromiseLike<TValue> | undefined) => void = () => {};
   let reject: (value?: TValue | PromiseLike<TValue> | undefined) => void = () => {};
 
@@ -13,3 +13,5 @@ export const defer = <TValue extends void>() => {
     promise,
   };
 };
+
+export default defer;
