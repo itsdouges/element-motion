@@ -1,6 +1,6 @@
 {
   "name": "yubaba",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "repository": "madou/yubaba",
   "author": "Michael Dougall",
   "license": "MIT",
@@ -31,6 +31,6 @@
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1",
     "styled-components": "^3.4.5",
-    "yubaba-common": "^1.2.0"
+    "yubaba-common": "^1.3.0"
   }
 }
