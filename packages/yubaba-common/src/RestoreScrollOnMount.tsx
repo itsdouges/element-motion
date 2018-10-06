@@ -11,7 +11,9 @@ export const createScrollStore = () => {
     componentWillUnmount() {
       if (document.body) {
         scrollPosition =
-          document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;
+          (document.documentElement && document.documentElement.scrollTop) ||
+          document.body.scrollTop ||
+          window.pageYOffset;
       }
     }
 

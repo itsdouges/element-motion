@@ -1,12 +1,12 @@
 import { storiesOf } from '@storybook/react';
 import Baba from '../../Baba';
-import FLIPMove from '../FLIPMove';
+import Move from './index';
 import { createMoveExamples } from 'yubaba-common';
 
 const Examples = createMoveExamples({
-  namePrefix: 'FLIPMove',
+  namePrefix: 'Move',
   useDistinctEnd: false,
-})(Baba, FLIPMove);
+})(Baba, Move);
 
-const stories = storiesOf('yubaba/FLIPMove', module);
+const stories = storiesOf('yubaba/Move', module);
 Object.keys(Examples).forEach(key => stories.add(key, Examples[key]));

@@ -2,10 +2,10 @@ import * as React from 'react';
 import Collector, {
   CollectorChildrenProps,
   AnimationCallback,
-  CollectorData,
   CollectorActions,
 } from '../../Collector';
 import SimpleKeyframe from '../SimpleKeyframe';
+import { standard, decelerate } from '../../lib/curves';
 
 export interface SwipeProps extends CollectorChildrenProps {
   /**
@@ -21,7 +21,7 @@ export interface SwipeProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
-  duration?: number;
+  duration: number;
 }
 
 /**
@@ -34,50 +34,45 @@ export default class Swipe extends React.Component<SwipeProps> {
     duration: 500,
   };
 
-  renderAnimation: (
-    opts: { step: number | undefined; onFinish: () => void }
-  ) => React.ReactElement<{}>;
+  renderAnimation = (options: { step: number | undefined; onFinish: () => void }) => {
+    const { duration, background, direction } = this.props;
 
-  beforeAnimate: AnimationCallback = (_, onFinish) => {
-    const duration = this.props.duration as number;
-
-    this.renderAnimation = (opts: { step: number | undefined; onFinish: () => void }) => {
-      const directionMap = {
-        left: '100%, 0, 0',
-        right: '-100%, 0, 0',
-        down: '0, -100%, 0',
-        up: '0, 100%, 0',
-      };
-
-      return (
-        <SimpleKeyframe
-          step={opts.step}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: this.props.background,
-            transform: `translate3d(${directionMap[this.props.direction]})`,
-            transition: `transform ease-out ${duration}ms, opacity ease-in-out ${duration}ms`,
-          }}
-          keyframes={[
-            {
-              transform: 'translate3d(0, 0, 0)',
-            },
-            {
-              transform: 'translate3d(0, 0, 0)',
-              opacity: 0,
-            },
-          ]}
-          onFinish={opts.onFinish}
-        />
-      );
+    const directionMap = {
+      left: '100%, 0, 0',
+      right: '-100%, 0, 0',
+      down: '0, -100%, 0',
+      up: '0, 100%, 0',
     };
 
-    requestAnimationFrame(onFinish);
+    return (
+      <SimpleKeyframe
+        step={options.step}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background,
+          transform: `translate3d(${directionMap[direction]})`,
+          transition: `transform ${decelerate()} ${duration}ms, opacity ${standard()} ${duration}ms`,
+        }}
+        keyframes={[
+          {
+            transform: 'translate3d(0, 0, 0)',
+          },
+          {
+            transform: 'translate3d(0, 0, 0)',
+            opacity: 0,
+          },
+        ]}
+        onFinish={options.onFinish}
+      />
+    );
+  };
 
+  beforeAnimate: AnimationCallback = (_, onFinish) => {
+    onFinish();
     return this.renderAnimation({ onFinish, step: undefined });
   };
 
@@ -90,15 +85,21 @@ export default class Swipe extends React.Component<SwipeProps> {
   };
 
   render() {
-    const data: CollectorData = {
-      action: CollectorActions.animation,
-      payload: {
-        beforeAnimate: this.beforeAnimate,
-        animate: this.animate,
-        afterAnimate: this.afterAnimate,
-      },
-    };
+    const { children } = this.props;
 
-    return <Collector data={data}>{this.props.children}</Collector>;
+    return (
+      <Collector
+        data={{
+          action: CollectorActions.animation,
+          payload: {
+            beforeAnimate: this.beforeAnimate,
+            animate: this.animate,
+            afterAnimate: this.afterAnimate,
+          },
+        }}
+      >
+        {children}
+      </Collector>
+    );
   }
 }

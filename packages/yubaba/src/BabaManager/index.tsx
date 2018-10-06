@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { InlineStyles } from '../Collector';
+import { ExtractProps, Omit } from '../lib/types';
 
 export interface BabaManangerProps extends InjectedProps {
   /**
@@ -83,11 +84,13 @@ export class BabaManager extends React.Component<BabaManangerProps, State> {
   };
 
   onFinish: OnFinishHandler = opts => {
-    if (this.props.context && this.props.context.onFinish) {
-      this.props.context.onFinish(opts);
+    const { context, name } = this.props;
+
+    if (context && context.onFinish) {
+      context.onFinish(opts);
     }
 
-    if (this.props.name && opts.name !== this.props.name) {
+    if (name && opts.name !== name) {
       return;
     }
 
@@ -99,9 +102,12 @@ export class BabaManager extends React.Component<BabaManangerProps, State> {
   };
 
   render() {
+    const { children } = this.props;
+    const { style } = this.state;
+
     return (
       <BabaContext.Provider value={{ onFinish: this.onFinish }}>
-        {this.props.children({ style: this.state.style })}
+        {children({ style })}
       </BabaContext.Provider>
     );
   }
@@ -110,13 +116,35 @@ export class BabaManager extends React.Component<BabaManangerProps, State> {
 /**
  * @hidden
  */
-export const withBabaManagerContext = <T extends InjectedProps>(
-  WrappedComponent: React.ComponentType<T>
-) => (props: T) => (
-  <BabaContext.Consumer>
-    {context => <WrappedComponent context={context} {...props} />}
-  </BabaContext.Consumer>
-);
+export const withBabaManagerContext = <
+  TComponent extends React.ComponentType<InjectedProps & ExtractProps<TComponent>>
+>(
+  WrappedComponent: TComponent
+) => {
+  type WithBabaManagerContextProps = JSX.LibraryManagedAttributes<
+    TComponent,
+    ExtractProps<TComponent>
+  >;
+
+  // eslint-disable-next-line react/no-multi-comp
+  return class extends React.Component<Omit<WithBabaManagerContextProps, keyof InjectedProps>> {
+    static displayName = `babaManagerContext(${WrappedComponent.displayName})`;
+
+    render() {
+      // WrappedComponent isn't considered to be a proper element for JSX, need to understand why.
+      // See: https://github.com/Microsoft/TypeScript/issues/23812
+      const CoercedWrappedComponent = WrappedComponent as React.ComponentType<
+        InjectedProps & ExtractProps<TComponent>
+      >;
+
+      return (
+        <BabaContext.Consumer>
+          {context => <CoercedWrappedComponent context={context} {...this.props} />}
+        </BabaContext.Consumer>
+      );
+    }
+  };
+};
 
 /**
  * @hidden

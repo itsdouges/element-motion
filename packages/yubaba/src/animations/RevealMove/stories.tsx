@@ -3,14 +3,22 @@ import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from 'yubaba-common';
 import Baba from '../../Baba';
-import Collector from '../../Collector';
+import Noop from '../Noop';
 import Target from '../../Target';
 import RevealMove from './index';
 
-const Container = styled.div`
-  margin: 100px auto;
+type Appearance = 'left' | 'center' | 'right';
+
+const justifyContentMap = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
+};
+
+const List = styled.div<{ appearance?: Appearance }>`
+  margin: 100px ${props => (props.appearance === 'center' ? 'auto' : '100px')};
   display: flex;
-  justify-content: center;
+  justify-content: ${props => justifyContentMap[props.appearance]};
 `;
 
 interface ListItemProps {
@@ -22,7 +30,6 @@ const ListItem = styled.div<ListItemProps>`
   background: #fea3aa;
   height: ${props => props.height}px;
   width: ${props => props.width}px;
-
   position: relative;
   cursor: pointer;
 
@@ -62,62 +69,76 @@ const TallListItem = styled.div<TallListItemProps>`
   display: flex;
   align-items: center;
   background: #baed91;
+  margin: 200px auto;
   height: ${props =>
     props.orientation === 'both' || props.orientation === 'vertical'
       ? props.height * 3
       : props.height}px;
-  width: ${props =>
+  max-width: ${props =>
     props.orientation === 'both' || props.orientation === 'horizontal'
       ? props.width * 3
       : props.width}px;
 `;
 
-const build = (width: number, height: number, orientation: Orientation) => (
+const build = (
+  width: number,
+  height: number,
+  orientation: Orientation,
+  appearance: Appearance,
+  useClipPath = false
+) => (
   <Toggler>
     {({ shown, toggle }) => (
       <React.Fragment>
         {shown || (
-          <Baba name={`reveal-move-${orientation}`}>
-            <RevealMove
-              skipInitialTransformOffset={orientation === 'both' || orientation === 'horizontal'}
-            >
-              {baba => (
-                <ListItem
-                  onClick={() => toggle()}
-                  style={baba.style}
-                  className={baba.className}
-                  innerRef={baba.ref}
-                  width={width}
-                  height={height}
-                />
-              )}
-            </RevealMove>
-          </Baba>
+          <List appearance={appearance}>
+            <Baba name={`reveal-move-${orientation}-${appearance}-${useClipPath}`}>
+              <RevealMove
+                childrenTransformX={useClipPath || orientation === 'vertical'}
+                childrenTransformY={useClipPath || orientation === 'horizontal'}
+                transformX={useClipPath || appearance !== 'center'}
+                useClipPath={useClipPath}
+              >
+                {baba => (
+                  <ListItem
+                    onClick={() => toggle()}
+                    style={baba.style}
+                    className={baba.className}
+                    innerRef={baba.ref}
+                    width={width}
+                    height={height}
+                  />
+                )}
+              </RevealMove>
+            </Baba>
+          </List>
         )}
 
         {shown && (
-          <Baba name={`reveal-move-${orientation}`}>
-            <Collector>
+          <Baba name={`reveal-move-${orientation}-${appearance}-${useClipPath}`}>
+            <Noop>
               {baba => (
-                // We use a wrapper div here because the child centers it's children via flexbox.
-                // Since it centers it with flexbox when we transition it around our assumptions change
-                // when it's height changes.
-                <div {...baba}>
-                  <TallListItem width={width} height={height} orientation={orientation}>
-                    <Target>
-                      {target => (
-                        <ListItem
-                          width={width}
-                          height={height}
-                          onClick={() => toggle()}
-                          innerRef={target.ref}
-                        />
-                      )}
-                    </Target>
-                  </TallListItem>
-                </div>
+                <TallListItem
+                  width={width}
+                  height={height}
+                  orientation={orientation}
+                  style={baba.style}
+                  className={baba.className}
+                  innerRef={baba.ref}
+                >
+                  <Target>
+                    {target => (
+                      <ListItem
+                        width={width}
+                        height={height}
+                        onClick={() => toggle()}
+                        innerRef={target.ref}
+                      />
+                    )}
+                  </Target>
+                </TallListItem>
               )}
-            </Collector>
+            </Noop>
           </Baba>
         )}
       </React.Fragment>
@@ -126,7 +147,21 @@ const build = (width: number, height: number, orientation: Orientation) => (
 );
 
 storiesOf('yubaba/RevealMove', module)
-  .addDecorator(story => <Container>{story()}</Container>)
-  .add('TargetHeight', () => build(200, 200, 'vertical'))
-  .add('TargetWidth', () => build(200, 200, 'horizontal'))
-  .add('TargetBoth', () => build(200, 200, 'both'));
+  .add('RevealHeight/Left', () => build(200, 200, 'vertical', 'left'))
+  .add('RevealWidth/Left', () => build(200, 200, 'horizontal', 'left'))
+  .add('RevealBoth/Left', () => build(200, 200, 'both', 'left'))
+  .add('RevealHeight/Center', () => build(200, 200, 'vertical', 'center'))
+  .add('RevealWidth/Center', () => build(200, 200, 'horizontal', 'center'))
+  .add('RevealBoth/Center', () => build(200, 200, 'both', 'center'))
+  .add('RevealHeight/Right', () => build(200, 200, 'vertical', 'right'))
+  .add('RevealWidth/Right', () => build(200, 200, 'horizontal', 'right'))
+  .add('RevealBoth/Right', () => build(200, 200, 'both', 'right'))
+  .add('RevealHeight/Left/ClipPath', () => build(200, 200, 'vertical', 'left', true))
+  .add('RevealWidth/Left/ClipPath', () => build(200, 200, 'horizontal', 'left', true))
+  .add('RevealBoth/Left/ClipPath', () => build(200, 200, 'both', 'left', true))
+  .add('RevealHeight/Center/ClipPath', () => build(200, 200, 'vertical', 'center', true))
+  .add('RevealWidth/Center/ClipPath', () => build(200, 200, 'horizontal', 'center', true))
+  .add('RevealBoth/Center/ClipPath', () => build(200, 200, 'both', 'center', true))
+  .add('RevealHeight/Right/ClipPath', () => build(200, 200, 'vertical', 'right', true))
+  .add('RevealWidth/Right/ClipPath', () => build(200, 200, 'horizontal', 'right', true))
+  .add('RevealBoth/Right/ClipPath', () => build(200, 200, 'both', 'right', true));

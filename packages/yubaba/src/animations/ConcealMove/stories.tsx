@@ -92,9 +92,7 @@ const build = (width: number, height: number, orientation: Orientation) => (
 
         {shown || (
           <Baba name={`conceal-move-${orientation}`}>
-            <ConcealMove
-            //   skipInitialTransformOffset={orientation === 'both' || orientation === 'horizontal'}
-            >
+            <ConcealMove>
               {baba => (
                 // We use a wrapper div here because the child centers it's children via flexbox.
                 // Since it centers it with flexbox when we transition it around our assumptions change
