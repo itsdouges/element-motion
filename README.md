@@ -57,7 +57,7 @@ A range of different scenarios for each animation component. [Looking for compon
 
 Transitioning the same element from one place to another.
 
-- [Move](https://yubaba.netlify.com/?selectedKind=yubaba%2FFLIPMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
+- [Move](https://yubaba.netlify.com/?selectedKind=yubaba%2FMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
 - [CrossFadeMove](https://yubaba.netlify.com/?selectedKind=yubaba%2FCrossFadeMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
 - [ConcealMove](https://yubaba.netlify.com/?selectedKind=yubaba%2FConcealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
 - [RevealMove](https://yubaba.netlify.com/?selectedKind=yubaba%2FRevealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
@@ -155,19 +155,19 @@ import Baba from 'yubaba';
 </Baba>;
 ```
 
-#### Target
+#### FocalTarget
 
-[Docs](https://yubaba.netlify.com/typedoc/classes/target.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/targetprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/focaltarget.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/focaltargetprops.html)
 
 Used to explicitly mark the focal element,
 only a handful of animations require this component to be used,
 for example [Reveal](#reveal)`.
 
 ```jsx
-import Baba, { Target } from 'yubaba';
+import Baba, { FocalTarget } from 'yubaba';
 
 <Baba name="target">
-  <Target>{({ ref }) => <div ref={ref} />}</Target>
+  <FocalTarget>{({ ref }) => <div ref={ref} />}</FocalTarget>
 </Baba>;
 ```
 
@@ -199,15 +199,15 @@ import { Collector } from 'yubaba';
 
 Transitioning visually similar elements from one place to another.
 
-#### Move ([example](https://yubaba.netlify.com/?selectedKind=yubaba%2FFLIPMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
+#### Move ([example](https://yubaba.netlify.com/?selectedKind=yubaba%2FMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
-[Docs](https://yubaba.netlify.com/typedoc/classes/flipmove.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/flipmoveprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/move.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/moveprops.html)
 
 Will transition the destination element **from** the origin element position.
 
 ```jsx
 // origin-element.js
-import Baba, { FLIPMove as Move } from 'yubaba';
+import Baba, { Move } from 'yubaba';
 
 <Baba name="move">
   <Move>{baba => <div {...baba} />}</Move>
@@ -263,27 +263,27 @@ import Baba from 'yubaba';
 
 [Docs](https://yubaba.netlify.com/typedoc/classes/reveal.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/revealprops.html)
 
-Reveals the destination element container from the [Target](#target) component.
+Reveals the destination element container from the [FocalTarget](#focaltarget) component.
 A limitation at the moment is the destination element _must_ have an animation defined,
 if you don't want one to happen use the [Noop](#noop) animation.
-Requires the use of the [Target](#target) component to specify the focal element.
+Requires the use of the [FocalTarget](#focaltarget) component to specify the focal element.
 
 ```jsx
 // origin-element.js
-import Baba, { Reveal, Target } from 'yubaba';
+import Baba, { Reveal } from 'yubaba';
 
 <Baba name="reveal">
   <Reveal>{baba => <div {...baba} />}</Reveal>
 </Baba>;
 
 // destination-element.js
-import Baba, { Target, Noop } from 'yubaba';
+import Baba, { FocalTarget, Noop } from 'yubaba';
 
 <Baba name="reveal">
   <Noop>
     {baba => (
       <div {...baba}>
-        <Target>{target => <div {...target} />}</Target>
+        <FocalTarget>{target => <div {...target} />}</FocalTarget>
       </div>
     )}
   </Noop>
@@ -296,7 +296,7 @@ import Baba, { Target, Noop } from 'yubaba';
 
 Useful for transitioning from a parent to a child,
 will expand from the focal element to the container.
-Requires the use of the [Target](#target) component to specify the focal element.
+Requires the use of the [FocalTarget](#focaltarget) component to specify the focal element.
 
 ```jsx
 // origin-element.js
@@ -307,13 +307,13 @@ import Baba, { RevealMove } from 'yubaba';
 </Baba>;
 
 // destination-element.js
-import Baba, { Target, Noop } from 'yubaba';
+import Baba, { FocalTarget, Noop } from 'yubaba';
 
 <Baba name="reveal-move">
   <Noop>
     {baba => (
       <div {...baba}>
-        <Target>{target => <div {...target} />}</Target>
+        <FocalTarget>{target => <div {...target} />}</FocalTarget>
       </div>
     )}
   </Noop>
@@ -326,17 +326,17 @@ import Baba, { Target, Noop } from 'yubaba';
 
 Useful for transitioning from a child to a parent,
 will shrink from the container to the focal element.
-Requires the use of the [Target](#target) component to specify the focal element.
+Requires the use of the [FocalTarget](#focaltarget) component to specify the focal element.
 
 ```jsx
 // origin-element.js
-import Baba, { Target, ConcealMove } from 'yubaba';
+import Baba, { FocalTarget, ConcealMove } from 'yubaba';
 
 <Baba name="conceal-move">
   <ConcealMove>
     {baba => (
       <div {...baba}>
-        <Target>{target => <div {...target} />}</Target>
+        <FocalTarget>{target => <div {...target} />}</FocalTarget>
       </div>
     )}
   </ConcealMove>

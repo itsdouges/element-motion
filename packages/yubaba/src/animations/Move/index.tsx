@@ -31,7 +31,7 @@ export interface MoveProps extends CollectorChildrenProps {
   timingFunction: string;
 
   /**
-   * Will use <Target /> size and location for destination transform calculation.
+   * Will use <FocalTarget /> size and location for destination transform calculation.
    * Internally this is used for the <RevealMove /> animation.
    */
   useFocalElement: boolean;

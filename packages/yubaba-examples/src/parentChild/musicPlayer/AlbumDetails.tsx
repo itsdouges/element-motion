@@ -11,10 +11,10 @@ import {
 } from '@material-ui/core';
 import PlayButton from '@material-ui/icons/PlayArrow';
 import MoreVert from '@material-ui/icons/MoreVert';
+import Baba, { Move, CircleShrink, Wait, Collector } from 'yubaba';
 import StarIcon from '@material-ui/icons/StarBorder';
 import { lighten, readableColor } from 'polished';
 import { Album as AlbumData } from './data';
-import Baba, { FLIPMove as Move, CircleShrink, Wait, Collector } from 'yubaba';
 
 interface Props extends AlbumData {
   onClick?: () => void;
