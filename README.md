@@ -7,7 +7,7 @@ is an element to element animation orchestrator for React.js ✨
 [![Build Status](https://travis-ci.org/madou/yubaba.svg?branch=master)](https://travis-ci.org/madou/yubaba)
 [![Dev Dependencies](https://david-dm.org/madou/yubaba/dev-status.svg)](https://david-dm.org/madou/yubaba?type=dev)
 
-[![Example animation using yubaba](https://github.com/madou/yubaba/raw/master/test/images/intro.gif)](https://madou.github.io/yubaba/?selectedKind=yubaba-examples%2FParentChild%2FEmailThreads&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
+[![Example animation using yubaba](https://github.com/madou/yubaba/raw/master/test/images/intro.gif)](https://yubaba.netlify.com/?selectedKind=yubaba-examples%2FParentChild%2FEmailThreads&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
 
 ## Installation
 
@@ -33,21 +33,21 @@ See usage and examples for a deeper look at this.
 
 ## Examples
 
-- [All examples](https://madou.github.io/yubaba)
+- [All examples](https://yubaba.netlify.com)
 
 ### Parent to child
 
 A list of elements (the parent) transitioning to show more information (the child).
 
-- [Email Threads](https://madou.github.io/yubaba/?selectedKind=yubaba-examples%2FParentChild%2FEmailThreads&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel) ([code](https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/parentChild/emailThreads/stories.tsx))
-- [Image Search](https://madou.github.io/yubaba/?selectedKind=yubaba-examples%2FParentChild%2FImageSearch&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel) ([code](https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/parentChild/imageSearch/stories.tsx))
-- [Music Player](https://madou.github.io/yubaba/?selectedKind=yubaba-examples%2FParentChild%2FMusicPlayer&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel) ([code](https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/parentChild/musicPlayer/stories.tsx))
+- [Email Threads](https://yubaba.netlify.com/?selectedKind=yubaba-examples%2FParentChild%2FEmailThreads&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel) ([code](https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/parentChild/emailThreads/stories.tsx))
+- [Image Search](https://yubaba.netlify.com/?selectedKind=yubaba-examples%2FParentChild%2FImageSearch&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel) ([code](https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/parentChild/imageSearch/stories.tsx))
+- [Music Player](https://yubaba.netlify.com/?selectedKind=yubaba-examples%2FParentChild%2FMusicPlayer&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel) ([code](https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/parentChild/musicPlayer/stories.tsx))
 
 ### Transformation
 
 Elements transforming into another.
 
-- [Search Bar](https://madou.github.io/yubaba/?selectedKind=yubaba-examples%2FTransformation%2FSearchBar&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel) ([code](https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/transformation/searchBar/stories.tsx))
+- [Search Bar](https://yubaba.netlify.com/?selectedKind=yubaba-examples%2FTransformation%2FSearchBar&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel) ([code](https://github.com/madou/yubaba/blob/master/packages/yubaba-examples/src/transformation/searchBar/stories.tsx))
 
 ### Core
 
@@ -57,19 +57,19 @@ A range of different scenarios for each animation component. [Looking for compon
 
 Transitioning the same element from one place to another.
 
-- [Move](https://madou.github.io/yubaba/?selectedKind=yubaba%2FFLIPMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
-- [CrossFadeMove](https://madou.github.io/yubaba/?selectedKind=yubaba%2FCrossFadeMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
-- [ConcealMove](https://madou.github.io/yubaba/?selectedKind=yubaba%2FConcealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
-- [RevealMove](https://madou.github.io/yubaba/?selectedKind=yubaba%2FRevealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
+- [Move](https://yubaba.netlify.com/?selectedKind=yubaba%2FFLIPMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
+- [CrossFadeMove](https://yubaba.netlify.com/?selectedKind=yubaba%2FCrossFadeMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
+- [ConcealMove](https://yubaba.netlify.com/?selectedKind=yubaba%2FConcealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
+- [RevealMove](https://yubaba.netlify.com/?selectedKind=yubaba%2FRevealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
 
 #### Supporting
 
 _Helping_ the focal animation look the best it can be.
 
-- [BabaManager](https://madou.github.io/yubaba/?selectedKind=yubaba%2FBabaManager&selectedStory=NoManager&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
-- [CircleExpand](https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleExpand&selectedStory=FromStaticPosition&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
-- [CircleShrink](https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleShrink&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
-- [Swipe](https://madou.github.io/yubaba/?selectedKind=yubaba%2FSwipe&selectedStory=Up&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
+- [BabaManager](https://yubaba.netlify.com/?selectedKind=yubaba%2FBabaManager&selectedStory=NoManager&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
+- [CircleExpand](https://yubaba.netlify.com/?selectedKind=yubaba%2FCircleExpand&selectedStory=FromStaticPosition&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
+- [CircleShrink](https://yubaba.netlify.com/?selectedKind=yubaba%2FCircleShrink&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
+- [Swipe](https://yubaba.netlify.com/?selectedKind=yubaba%2FSwipe&selectedStory=Up&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
 
 ### Usage build ups
 
@@ -140,7 +140,7 @@ These components exist to pass data around and orchestrate the animations.
 
 #### Baba
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/baba.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/babaprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/baba.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/babaprops.html)
 
 This is the primary component in yubaba.
 When rendering it will be given all of the animation data from its children.
@@ -157,7 +157,7 @@ import Baba from 'yubaba';
 
 #### Target
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/target.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/targetprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/target.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/targetprops.html)
 
 Used to explicitly mark the focal element,
 only a handful of animations require this component to be used,
@@ -173,7 +173,7 @@ import Baba, { Target } from 'yubaba';
 
 #### Collector
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/collector.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/collectorprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/collector.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/collectorprops.html)
 
 Used as the glue for all animation components,
 every animation component will use this internally to pass the data to the parent [Baba](#baba).
@@ -199,9 +199,9 @@ import { Collector } from 'yubaba';
 
 Transitioning visually similar elements from one place to another.
 
-#### Move ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FFLIPMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
+#### Move ([example](https://yubaba.netlify.com/?selectedKind=yubaba%2FFLIPMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/flipmove.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/flipmoveprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/flipmove.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/flipmoveprops.html)
 
 Will transition the destination element **from** the origin element position.
 
@@ -221,7 +221,7 @@ import Baba from 'yubaba';
 
 #### FadeMove
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/fademove.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/fademoveprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/fademove.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/fademoveprops.html)
 
 Will `position: absolute` move the origin element to the destination element while fading out.
 
@@ -239,9 +239,9 @@ import Baba from 'yubaba';
 <Baba name="fade-move">{baba => <div {...baba} />}</Baba>;
 ```
 
-#### CrossFadeMove ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FCrossFadeMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
+#### CrossFadeMove ([example](https://yubaba.netlify.com/?selectedKind=yubaba%2FCrossFadeMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/crossfademove.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/crossfademoveprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/crossfademove.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/crossfademoveprops.html)
 
 Composes the [Move](#move) and [FadeMove](#fademove) animations for a cross-fade move.
 
@@ -261,7 +261,7 @@ import Baba from 'yubaba';
 
 #### Reveal
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/reveal.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/revealprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/reveal.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/revealprops.html)
 
 Reveals the destination element container from the [Target](#target) component.
 A limitation at the moment is the destination element _must_ have an animation defined,
@@ -290,9 +290,9 @@ import Baba, { Target, Noop } from 'yubaba';
 </Baba>;
 ```
 
-#### RevealMove ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FRevealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
+#### RevealMove ([example](https://yubaba.netlify.com/?selectedKind=yubaba%2FRevealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/revealmove.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/revealmoveprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/revealmove.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/revealmoveprops.html)
 
 Useful for transitioning from a parent to a child,
 will expand from the focal element to the container.
@@ -320,9 +320,9 @@ import Baba, { Target, Noop } from 'yubaba';
 </Baba>;
 ```
 
-#### ConcealMove ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FConcealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
+#### ConcealMove ([example](https://yubaba.netlify.com/?selectedKind=yubaba%2FConcealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/concealmove.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/concealmoveprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/concealmove.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/concealmoveprops.html)
 
 Useful for transitioning from a child to a parent,
 will shrink from the container to the focal element.
@@ -350,7 +350,7 @@ import Baba from 'yubaba';
 
 #### Noop
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/noop.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/noopprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/noop.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/noopprops.html)
 
 A no-operation "noop" animation.
 
@@ -372,9 +372,9 @@ import Baba from 'yubaba';
 
 _Helping_ the focal animation look the best it can be when transitioning.
 
-#### BabaManager ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FBabaManager&selectedStory=WithManager&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
+#### BabaManager ([example](https://yubaba.netlify.com/?selectedKind=yubaba%2FBabaManager&selectedStory=WithManager&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/babamanager.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/babamanagerprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/babamanager.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/babamanagerprops.html)
 
 Used to hide contents before an animation is complete triggered from a child <Baba /> component.
 If there is more than one child <Baba /> you can use an optional name prop which should match the appropriate <Baba /> component.
@@ -397,7 +397,7 @@ import Baba, { BabaManager } from 'yubaba';
 
 #### Wait
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/wait.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/waitprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/wait.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/waitprops.html)
 
 Is used to pause the execution of all child animations until all parent children animations have completed.
 
@@ -421,9 +421,9 @@ import Baba from 'yubaba';
 <Baba name="wait">{baba => <div {...baba} />}</Baba>;
 ```
 
-#### CircleExpand ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleExpand&selectedStory=FromStaticPosition&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
+#### CircleExpand ([example](https://yubaba.netlify.com/?selectedKind=yubaba%2FCircleExpand&selectedStory=FromStaticPosition&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/circleexpand.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/circleexpandprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/circleexpand.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/circleexpandprops.html)
 
 Will animate a circle from the origin element to cover the entire viewport,
 and then fade out.
@@ -444,9 +444,9 @@ import Baba from 'yubaba';
 <Baba name="expand">{baba => <div {...baba} />}</Baba>;
 ```
 
-#### CircleShrink ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleShrink&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
+#### CircleShrink ([example](https://yubaba.netlify.com/?selectedKind=yubaba%2FCircleShrink&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/circleshrink.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/circleshrinkprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/circleshrink.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/circleshrinkprops.html)
 
 Will animate a circle from the viewport to destination element,
 and then fade out.
@@ -467,9 +467,9 @@ import Baba from 'yubaba';
 <Baba name="shrink">{baba => <div {...baba} />}</Baba>;
 ```
 
-#### Swipe ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FSwipe&selectedStory=Up&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
+#### Swipe ([example](https://yubaba.netlify.com/?selectedKind=yubaba%2FSwipe&selectedStory=Up&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
-[Docs](https://madou.github.io/yubaba/typedoc/classes/swipe.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/swipeprops.html)
+[Docs](https://yubaba.netlify.com/typedoc/classes/swipe.html) | [Props](https://yubaba.netlify.com/typedoc/interfaces/swipeprops.html)
 
 Will animate a square swiping over the viewport.
 
@@ -489,4 +489,4 @@ import Baba from 'yubaba';
 
 ## API Reference
 
-[See typedoc.](https://madou.github.io/yubaba/typedoc/)
+[See typedoc.](https://yubaba.netlify.com/typedoc/)
