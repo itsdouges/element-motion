@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom';
 import { storiesOf } from '@storybook/react';
 import { withMarkdownNotes } from '@storybook/addon-notes';
 import { MemoryRouter, Route, Switch } from 'react-router-dom';
-import Baba, { RevealMove, ConcealMove, Target } from 'yubaba';
+import Baba, { RevealMove, ConcealMove, FocalTarget } from 'yubaba';
 import * as Common from 'yubaba-common';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -85,7 +85,7 @@ const Screen = (props: { index: number }) => (
 
           <Divider />
 
-          <Target>
+          <FocalTarget>
             {targetProps => (
               <ListItem innerRef={ref => targetProps.ref(findDOMNode(ref) as HTMLElement)}>
                 <Avatar>
@@ -97,7 +97,7 @@ const Screen = (props: { index: number }) => (
                 />
               </ListItem>
             )}
-          </Target>
+          </FocalTarget>
 
           <ListItem>
             <Typography variant="body2">{data[props.index].body}</Typography>

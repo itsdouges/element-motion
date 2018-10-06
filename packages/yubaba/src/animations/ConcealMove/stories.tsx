@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from 'yubaba-common';
 import Baba from '../../Baba';
-import Target from '../../Target';
+import FocalTarget from '../../FocalTarget';
 import ConcealMove from './index';
 
 const Container = styled.div`
@@ -99,7 +99,7 @@ const build = (width: number, height: number, orientation: Orientation) => (
                 // when it's height changes.
                 <div {...baba}>
                   <TallListItem width={width} height={height} orientation={orientation}>
-                    <Target>
+                    <FocalTarget>
                       {target => (
                         <ListItem
                           width={width}
@@ -108,7 +108,7 @@ const build = (width: number, height: number, orientation: Orientation) => (
                           innerRef={target.ref}
                         />
                       )}
-                    </Target>
+                    </FocalTarget>
                   </TallListItem>
                 </div>
               )}

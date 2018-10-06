@@ -18,11 +18,6 @@ export interface ConcealMoveProps extends CollectorChildrenProps {
   duration: number;
 
   /**
-   * Delays the animation from starting for {delay}ms.
-   */
-  delay?: number;
-
-  /**
    * zIndex to be applied to the moving element.
    */
   zIndex: number;
@@ -51,16 +46,16 @@ export default class ConcealMove extends React.Component<ConcealMoveProps> {
     data: AnimationData,
     options: { moveToTarget?: boolean; fadeOut?: boolean } = {}
   ) => {
-    if (!data.fromTarget.targetDOMData) {
+    if (!data.origin.focalTargetElementBoundingBox) {
       throw new Error(`yubaba
 targetElement was missing.`);
     }
 
     const { duration, timingFunction, zIndex } = this.props;
     // Scroll could have changed between unmount and this prepare step.
-    const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
+    const originSizeLocation = recalculateLocationFromScroll(data.origin.elementBoundingBox);
 
-    return data.fromTarget.render({
+    return data.origin.render({
       ref: noop,
       style: {
         zIndex,
@@ -70,16 +65,19 @@ targetElement was missing.`);
         position: 'absolute',
         transformOrigin: '0 0',
         willChange: 'transform, height, width',
-        top: fromTargetSizeLocation.location.top,
-        left: fromTargetSizeLocation.location.left,
+        top: originSizeLocation.location.top,
+        left: originSizeLocation.location.left,
         height: options.moveToTarget
-          ? data.toTarget.size.height
-          : fromTargetSizeLocation.size.height,
-        width: options.moveToTarget ? data.toTarget.size.width : fromTargetSizeLocation.size.width,
+          ? data.destination.elementBoundingBox.size.height
+          : originSizeLocation.size.height,
+        width: options.moveToTarget
+          ? data.destination.elementBoundingBox.size.width
+          : originSizeLocation.size.width,
         overflow: 'hidden',
         transform: options.moveToTarget
-          ? `translate3d(${data.toTarget.location.left - data.fromTarget.location.left}px, ${data
-              .toTarget.location.top - data.fromTarget.location.top}px, 0)`
+          ? `translate3d(${data.destination.elementBoundingBox.location.left -
+              data.origin.elementBoundingBox.location.left}px, ${data.destination.elementBoundingBox
+              .location.top - data.origin.elementBoundingBox.location.top}px, 0)`
           : undefined,
       },
       className: options.moveToTarget
@@ -87,8 +85,8 @@ targetElement was missing.`);
             > * {
               transition: transform ${duration}ms ${timingFunction};
               transform: translate3d(
-                -${data.fromTarget.targetDOMData.location.left - data.fromTarget.location.left}px,
-                -${data.fromTarget.targetDOMData.location.top - data.fromTarget.location.top}px,
+                -${data.origin.focalTargetElementBoundingBox.location.left - data.origin.elementBoundingBox.location.left}px,
+                -${data.origin.focalTargetElementBoundingBox.location.top - data.origin.elementBoundingBox.location.top}px,
                 0
               );
             }
@@ -110,8 +108,8 @@ targetElement was missing.`);
     return this.renderAnimation(data, { moveToTarget: true });
   };
 
-  afterAnimate: AnimationCallback = (data, onFinish, setTargetProps) => {
-    setTargetProps({
+  afterAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
+    setChildProps({
       style: () => ({
         opacity: 1,
       }),

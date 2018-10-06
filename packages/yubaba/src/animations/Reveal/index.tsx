@@ -15,11 +15,6 @@ export interface RevealProps extends CollectorChildrenProps {
   duration: number;
 
   /**
-   * Delays the animation from starting for {delay}ms.
-   */
-  delay?: number;
-
-  /**
    * zIndex to be applied to the moving element.
    */
   zIndex?: number;
@@ -60,8 +55,8 @@ export default class Reveal extends React.Component<RevealProps> {
     childrenTransformY: true,
   };
 
-  beforeAnimate: AnimationCallback = (data, onFinish, setTargetProps) => {
-    if (!data.toTarget.targetDOMData) {
+  beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
+    if (!data.destination.focalTargetElementBoundingBox) {
       throw new Error(`yubaba
 targetElement was missing.`);
     }
@@ -69,26 +64,29 @@ targetElement was missing.`);
     const { childrenTransformX, childrenTransformY, useClipPath } = this.props;
 
     const offsetChildrenX = childrenTransformX
-      ? data.toTarget.targetDOMData.location.left - data.toTarget.location.left
+      ? data.destination.focalTargetElementBoundingBox.location.left -
+        data.destination.elementBoundingBox.location.left
       : 0;
     const offsetChildrenY = childrenTransformY
-      ? data.toTarget.targetDOMData.location.top - data.toTarget.location.top
+      ? data.destination.focalTargetElementBoundingBox.location.top -
+        data.destination.elementBoundingBox.location.top
       : 0;
 
     const revealStyles = useClipPath
       ? {
-          clipPath: `inset(0 ${data.toTarget.size.width -
-            data.toTarget.targetDOMData.size.width}px ${data.toTarget.size.height -
-            data.toTarget.targetDOMData.size.height}px 0)`,
+          clipPath: `inset(0 ${data.destination.elementBoundingBox.size.width -
+            data.destination.focalTargetElementBoundingBox.size.width}px ${data.destination
+            .elementBoundingBox.size.height -
+            data.destination.focalTargetElementBoundingBox.size.height}px 0)`,
         }
       : {
-          height: data.toTarget.targetDOMData.size.height,
-          width: data.toTarget.targetDOMData.size.width,
+          height: data.destination.focalTargetElementBoundingBox.size.height,
+          width: data.destination.focalTargetElementBoundingBox.size.width,
         };
 
-    setTargetProps({
+    setChildProps({
       style: prevStyles =>
-        data.toTarget.targetDOMData
+        data.destination.focalTargetElementBoundingBox
           ? {
               ...prevStyles,
               ...revealStyles,
@@ -99,7 +97,7 @@ targetElement was missing.`);
             }
           : undefined,
       className: () =>
-        data.toTarget.targetDOMData
+        data.destination.focalTargetElementBoundingBox
           ? css({
               '> *': {
                 transform: `translate3d(-${offsetChildrenX}px, -${offsetChildrenY}px, 0)`,
@@ -111,7 +109,7 @@ targetElement was missing.`);
     onFinish();
   };
 
-  animate: AnimationCallback = (data, onFinish, setTargetProps) => {
+  animate: AnimationCallback = (data, onFinish, setChildProps) => {
     const { timingFunction, duration, useClipPath } = this.props;
 
     const revealStyles = useClipPath
@@ -119,11 +117,11 @@ targetElement was missing.`);
           clipPath: 'inset(0 0 0 0)',
         }
       : {
-          height: data.toTarget.size.height,
-          width: data.toTarget.size.width,
+          height: data.destination.elementBoundingBox.size.height,
+          width: data.destination.elementBoundingBox.size.width,
         };
 
-    setTargetProps({
+    setChildProps({
       style: prevStyles => ({
         ...prevStyles,
         ...revealStyles,

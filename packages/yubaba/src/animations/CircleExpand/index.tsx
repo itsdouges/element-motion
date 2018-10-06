@@ -51,18 +51,18 @@ export default class CircleExpand extends React.Component<CircleExpandProps> {
     const { duration, background, zIndex } = this.props;
 
     // Scroll could have changed between unmount and this prepare step, let's recalculate just in case.
-    const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
-    const minSize = Math.min(fromTargetSizeLocation.size.width, fromTargetSizeLocation.size.height);
-    const fromTargetHypotenuse = calculateHypotenuse(fromTargetSizeLocation.size);
-    const fromTargetCenterInViewport = calculateElementCenterInViewport(fromTargetSizeLocation);
+    const originBoundingBox = recalculateLocationFromScroll(data.origin.elementBoundingBox);
+    const minSize = Math.min(originBoundingBox.size.width, originBoundingBox.size.height);
+    const originHypotenuse = calculateHypotenuse(originBoundingBox.size);
+    const originCenterInViewport = calculateElementCenterInViewport(originBoundingBox);
     const viewportCenter = calculateWindowCentre();
     const windowHypotenuse = calculateHypotenuse({
       width: window.innerWidth,
       height: window.innerHeight,
     });
     const difference = {
-      width: viewportCenter.left - fromTargetCenterInViewport.left,
-      height: viewportCenter.top - fromTargetCenterInViewport.top,
+      width: viewportCenter.left - originCenterInViewport.left,
+      height: viewportCenter.top - originCenterInViewport.top,
     };
     const hypotenuseDifference = calculateHypotenuse(difference);
     const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
@@ -72,13 +72,11 @@ export default class CircleExpand extends React.Component<CircleExpandProps> {
         style={{
           zIndex,
           left:
-            fromTargetSizeLocation.location.left -
-            (fromTargetHypotenuse - fromTargetSizeLocation.size.width) / 2,
+            originBoundingBox.location.left - (originHypotenuse - originBoundingBox.size.width) / 2,
           top:
-            fromTargetSizeLocation.location.top -
-            (fromTargetHypotenuse - fromTargetSizeLocation.size.height) / 2,
-          width: fromTargetHypotenuse,
-          height: fromTargetHypotenuse,
+            originBoundingBox.location.top - (originHypotenuse - originBoundingBox.size.height) / 2,
+          width: originHypotenuse,
+          height: originHypotenuse,
           borderRadius: '50%',
           position: 'absolute',
           background,

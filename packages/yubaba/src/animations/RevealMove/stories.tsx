@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Toggler } from 'yubaba-common';
 import Baba from '../../Baba';
 import Noop from '../Noop';
-import Target from '../../Target';
+import FocalTarget from '../../FocalTarget';
 import RevealMove from './index';
 
 type Appearance = 'left' | 'center' | 'right';
@@ -126,7 +126,7 @@ const build = (
                   className={baba.className}
                   innerRef={baba.ref}
                 >
-                  <Target>
+                  <FocalTarget>
                     {target => (
                       <ListItem
                         width={width}
@@ -135,7 +135,7 @@ const build = (
                         innerRef={target.ref}
                       />
                     )}
-                  </Target>
+                  </FocalTarget>
                 </TallListItem>
               )}
             </Noop>

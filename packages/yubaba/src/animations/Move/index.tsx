@@ -16,11 +16,6 @@ export interface MoveProps extends CollectorChildrenProps {
   duration: number;
 
   /**
-   * Delays the animation from starting for {delay}ms.
-   */
-  delay?: number;
-
-  /**
    * zIndex to be applied to the moving element.
    */
   zIndex: number;
@@ -34,7 +29,7 @@ export interface MoveProps extends CollectorChildrenProps {
    * Will use <FocalTarget /> size and location for destination transform calculation.
    * Internally this is used for the <RevealMove /> animation.
    */
-  useFocalElement: boolean;
+  useFocalTarget: boolean;
 
   /**
    * Set to false to disable transforming the origin to the X position of the destination element.
@@ -66,29 +61,32 @@ export default class Move extends React.Component<MoveProps> {
     duration: 500,
     timingFunction: standard(),
     zIndex: zIndexStack.move,
-    useFocalElement: false,
+    useFocalTarget: false,
     transformX: true,
     transformY: true,
   };
 
-  beforeAnimate: AnimationCallback = (data, onFinish, setTargetProps) => {
-    const { zIndex, useFocalElement, transformX, transformY } = this.props;
+  beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
+    const { zIndex, useFocalTarget, transformX, transformY } = this.props;
 
-    if (useFocalElement && !data.toTarget.targetDOMData) {
+    if (useFocalTarget && !data.destination.focalTargetElementBoundingBox) {
       throw new Error(`yubaba
 targetElement was missing.`);
     }
 
     // Scroll could have changed between unmount and this prepare step.
-    const originTarget = recalculateLocationFromScroll(data.fromTarget);
-    const destinationTarget =
-      useFocalElement && data.toTarget.targetDOMData ? data.toTarget.targetDOMData : data.toTarget;
+    const originBoundingBox = recalculateLocationFromScroll(data.origin.elementBoundingBox);
+    const destinationBoundingBox =
+      (useFocalTarget && data.destination.focalTargetElementBoundingBox) ||
+      data.destination.elementBoundingBox;
     const toStartXOffset = transformX
-      ? originTarget.location.left - data.toTarget.location.left
+      ? originBoundingBox.location.left - data.destination.elementBoundingBox.location.left
       : 0;
-    const toStartYOffset = transformY ? originTarget.location.top - data.toTarget.location.top : 0;
+    const toStartYOffset = transformY
+      ? originBoundingBox.location.top - data.destination.elementBoundingBox.location.top
+      : 0;
 
-    setTargetProps({
+    setChildProps({
       style: prevStyles => ({
         ...prevStyles,
         zIndex,
@@ -97,11 +95,11 @@ targetElement was missing.`);
         visibility: 'visible',
         willChange: combine('transform')(prevStyles.willChange),
         transform: `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
-          originTarget.size.width,
-          destinationTarget.size.width
+          originBoundingBox.size.width,
+          destinationBoundingBox.size.width
         )}, ${math.percentageDifference(
-          originTarget.size.height,
-          destinationTarget.size.height
+          originBoundingBox.size.height,
+          destinationBoundingBox.size.height
         )}, 1)`,
       }),
     });
@@ -109,10 +107,10 @@ targetElement was missing.`);
     onFinish();
   };
 
-  animate: AnimationCallback = (_, onFinish, setTargetProps) => {
+  animate: AnimationCallback = (_, onFinish, setChildProps) => {
     const { duration, timingFunction } = this.props;
 
-    setTargetProps({
+    setChildProps({
       style: prevStyles => ({
         ...prevStyles,
         transition: combine(

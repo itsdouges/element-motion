@@ -104,7 +104,7 @@ const Album: React.StatelessComponent<Props> = ({
     <Root emphasis={emphasis} color={color}>
       <Baba name={baba}>
         <Expand background={color}>
-          <Move delay={expand ? 100 : 0}>
+          <Move>
             {({ ref, style }) => (
               <BackgroundImage onClick={onClick} src={albumArt} style={style} innerRef={ref} />
             )}

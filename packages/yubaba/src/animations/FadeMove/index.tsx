@@ -18,11 +18,6 @@ export interface FadeMoveProps extends CollectorChildrenProps {
   duration: number;
 
   /**
-   * Delays the animation from starting for {delay}ms.
-   */
-  delay?: number;
-
-  /**
    * zIndex to be applied to the moving element.
    */
   zIndex: number;
@@ -56,14 +51,16 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
     const { timingFunction, duration, zIndex } = this.props;
     // Scroll could have changed between unmount and this prepare step, let's recalculate
     // just in case.
-    const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
-    const fromEndXOffset = data.toTarget.location.left - fromTargetSizeLocation.location.left;
-    const fromEndYOffset = data.toTarget.location.top - fromTargetSizeLocation.location.top;
+    const originBoundingBox = recalculateLocationFromScroll(data.origin.elementBoundingBox);
+    const fromEndXOffset =
+      data.destination.elementBoundingBox.location.left - originBoundingBox.location.left;
+    const fromEndYOffset =
+      data.destination.elementBoundingBox.location.top - originBoundingBox.location.top;
 
-    return data.fromTarget.render({
+    return data.origin.render({
       ref: noop,
       style: {
-        ...fromTargetSizeLocation.location,
+        ...originBoundingBox.location,
         zIndex,
         transition: `transform ${duration}ms ${timingFunction}, opacity ${duration /
           2}ms ${timingFunction}`,
@@ -73,16 +70,16 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
         opacity: 1,
         // Elminate any margins so they don't affect the transition.
         margin: 0,
-        height: `${fromTargetSizeLocation.size.height}px`,
-        width: `${fromTargetSizeLocation.size.width}px`,
+        height: `${originBoundingBox.size.height}px`,
+        width: `${originBoundingBox.size.width}px`,
         ...(options.moveToTarget
           ? {
               transform: `translate3d(${fromEndXOffset}px, ${fromEndYOffset}px, 0) scale3d(${math.percentageDifference(
-                data.toTarget.size.width,
-                fromTargetSizeLocation.size.width
+                data.destination.elementBoundingBox.size.width,
+                originBoundingBox.size.width
               )}, ${math.percentageDifference(
-                data.toTarget.size.height,
-                fromTargetSizeLocation.size.height
+                data.destination.elementBoundingBox.size.height,
+                originBoundingBox.size.height
               )}, 1)`,
               opacity: 0,
             }
