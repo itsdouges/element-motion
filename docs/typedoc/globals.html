@@ -934,7 +934,13 @@ img { max-width: 100%; }
 			<a href="classes/crossfademove.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
-			<a href="classes/flipmove.html" class="tsd-kind-icon">FLIPMove</a>
+			<a href="classes/fademove.html" class="tsd-kind-icon">Fade<wbr>Move</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
+			<a href="classes/move.html" class="tsd-kind-icon">Move</a>
+		</li>
+		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
+			<a href="classes/reveal.html" class="tsd-kind-icon">Reveal</a>
 		</li>
 		<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-external">
 			<a href="classes/revealmove.html" class="tsd-kind-icon">Reveal<wbr>Move</a>
@@ -973,16 +979,19 @@ img { max-width: 100%; }
 			<a href="interfaces/concealmoveprops.html" class="tsd-kind-icon">Conceal<wbr>Move<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
-			<a href="interfaces/crossfademoveprops.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move<wbr>Props</a>
-		</li>
-		<li class=" tsd-kind-interface tsd-is-external">
-			<a href="interfaces/flipmoveprops.html" class="tsd-kind-icon">FLIPMove<wbr>Props</a>
+			<a href="interfaces/fademoveprops.html" class="tsd-kind-icon">Fade<wbr>Move<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="interfaces/inlinestyles.html" class="tsd-kind-icon">Inline<wbr>Styles</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
-			<a href="interfaces/revealmoveprops.html" class="tsd-kind-icon">Reveal<wbr>Move<wbr>Props</a>
+			<a href="interfaces/moveprops.html" class="tsd-kind-icon">Move<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
+			<a href="interfaces/noopprops.html" class="tsd-kind-icon">Noop<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external">
+			<a href="interfaces/revealprops.html" class="tsd-kind-icon">Reveal<wbr>Props</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="interfaces/swipeprops.html" class="tsd-kind-icon">Swipe<wbr>Props</a>
@@ -992,6 +1001,9 @@ img { max-width: 100%; }
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="interfaces/targetprops.html" class="tsd-kind-icon">Target<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-is-external">
+			<a href="interfaces/targetpropsfunc.html" class="tsd-kind-icon">Target<wbr>Props<wbr>Func</a>
 		</li>
 		<li class=" tsd-kind-interface tsd-is-external">
 			<a href="interfaces/waitaction.html" class="tsd-kind-icon">Wait<wbr>Action</a>
@@ -1005,6 +1017,12 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-type-alias tsd-is-external">
 			<a href="globals.html#collectordata" class="tsd-kind-icon">Collector<wbr>Data</a>
 		</li>
+		<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+			<a href="globals.html#extractprops" class="tsd-kind-icon">Extract<wbr>Props</a>
+		</li>
+		<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+			<a href="globals.html#omit" class="tsd-kind-icon">Omit</a>
+		</li>
 		<li class=" tsd-kind-type-alias tsd-is-external">
 			<a href="globals.html#settargetprops" class="tsd-kind-icon">Set<wbr>Target<wbr>Props</a>
 		</li>
@@ -1014,8 +1032,14 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-variable tsd-is-external">
 			<a href="globals.html#collectorcontext" class="tsd-kind-icon">Collector<wbr>Context</a>
 		</li>
+		<li class=" tsd-kind-function tsd-is-external">
+			<a href="globals.html#combine" class="tsd-kind-icon">combine</a>
+		</li>
 		<li class=" tsd-kind-function tsd-has-type-parameter tsd-is-external">
 			<a href="globals.html#defer" class="tsd-kind-icon">defer</a>
+		</li>
+		<li class=" tsd-kind-object-literal tsd-is-external">
+			<a href="globals.html#zindexstack" class="tsd-kind-icon">z<wbr>Index<wbr>Stack</a>
 		</li>
 	</ul>
 </nav>
@@ -1028,41 +1052,11 @@ img { max-width: 100%; }
 				<a href="https://bundlephobia.com/result?p=yubaba"><img src="https://img.shields.io/bundlephobia/minzip/yubaba.svg" alt="npm bundle size (minified + gzip)"></a>
 				<a href="https://travis-ci.org/madou/yubaba"><img src="https://travis-ci.org/madou/yubaba.svg?branch=master" alt="Build Status"></a>
 			<a href="https://david-dm.org/madou/yubaba?type=dev"><img src="https://david-dm.org/madou/yubaba/dev-status.svg" alt="Dev Dependencies"></a></p>
-			<p><a href="https://madou.github.io/yubaba/?selectedKind=Examples%2FGoogleMusic&amp;selectedStory=move%20expand%20shrink%20wait&amp;full=0&amp;addons=0&amp;stories=1&amp;panelRight=0"><img src="https://github.com/madou/yubaba/raw/master/test/images/intro.gif" alt="Example animation using yubaba"></a></p>
+			<p><a href="https://madou.github.io/yubaba/?selectedKind=yubaba-examples%2FParentChild%2FEmailThreads&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel"><img src="https://github.com/madou/yubaba/raw/master/test/images/intro.gif" alt="Example animation using yubaba"></a></p>
 			<h2 id="installation">Installation</h2>
 			<pre><code class="language-bash">npm install yubaba --save</code></pre>
 			<p>or</p>
 			<pre><code class="language-bash">yarn add yubaba</code></pre>
-			<h2 id="usage">Usage</h2>
-			<p><code>Baba</code> is the primary orchestrating component.
-				We wrap the components we want to transition to each other as well as passing through the animation we want to happen,
-			in this case the <code>CrossFadeMove</code> animation.</p>
-			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Baba, { CrossFadeMove } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
-
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  state = { <span class="hljs-attr">show</span>: <span class="hljs-literal">false</span> };
-  toggle = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">this</span>.setState(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> ({ <span class="hljs-attr">show</span>: !prev.show }));
-
-  render() {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.state.show ? (
-      &lt;div className="root"&gt;
-        &lt;Baba name="finn-attack"&gt;
-          &lt;CrossFadeMove&gt;
-            {provided =&gt; &lt;button {...provided} onClick={this.toggle} className="finn-end" /&gt;}
-          &lt;/CrossFadeMove&gt;
-        &lt;/Baba&gt;
-
-        &lt;div className="sword" /&gt;
-      &lt;/div&gt;
-    ) : (
-      &lt;Baba name="finn-attack"&gt;
-        &lt;CrossFadeMove&gt;
-          {provided =&gt; &lt;button {...provided} onClick={this.toggle} className="finn-start" /&gt;}
-        &lt;/CrossFadeMove&gt;
-      &lt;/Baba&gt;
-    );
-  }
-}</code></pre>
 			<h2 id="motivation">Motivation</h2>
 			<p>Complex page transitions are becoming more common on the web but we&#39;re still at a point where we need to write a lot of boilerplate to make it happen,
 			worse yet disjointed parts of our apps needing to know about each other to make it all work.</p>
@@ -1103,22 +1097,22 @@ img { max-width: 100%; }
 				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleShrink&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">CircleShrink</a></li>
 				<li><a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FSwipe&amp;selectedStory=Up&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">Swipe</a></li>
 			</ul>
-			<h3 id="build-ups">Build ups</h3>
+			<h3 id="usage-build-ups">Usage build ups</h3>
 			<p>We&#39;ll build up each step to leave you with an <em>awesome</em> transition.
 			Click each gif to see its codesandbox.</p>
 			<p>We have two disjointed components that are toggled when clicked (click on Finn!).
 			How can we transition them to each other?</p>
 			<p><a href="https://codesandbox.io/s/jvw344oll3"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-0.gif?raw=true" alt="Intro to Yubaba 0/4"></a></p>
 			<h4 id="introducing-baba-and-crossfademove-">Introducing <code>&lt;Baba /&gt;</code> and <code>&lt;CrossFadeMove /&gt;</code></h4>
-			<p>Let&#39;s use the <code>Baba</code> and <code>CrossFadeMove</code> components to have them seamlessly transition to the destination.
-				<code>Baba</code> is the brains - it does all of the orchestration.
-			<code>CrossFadeMove</code> is one of many focal animations available - it will cross fade both elements from the starting point to the destination point.</p>
+			<p>Let&#39;s use the <a href="#baba">Baba</a> and <a href="#crossfademove">CrossFadeMove</a> components to have them seamlessly transition to the destination.
+				<a href="#Baba">Baba</a> is the brains - it does all of the orchestration.
+			<a href="#crossfademove">CrossFadeMove</a> is one of many focal animations available - it will cross fade both elements from the starting point to the destination point.</p>
 			<p><a href="https://codesandbox.io/s/x3v5ywk5ro"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-1.gif?raw=true" alt="Intro to Yubaba 1/4"></a></p>
 			<p>Okay so that looks cool,
 				but Finn&#39;s sword is shown immediately!
 			Is there anything we can do to make it show after all animations have finished?</p>
 			<h4 id="introducing-babamanager-">Introducing <code>&lt;BabaManager /&gt;</code></h4>
-			<p>Let&#39;s bring in a component <code>BabaManager</code> which will be used to delay showing Finn&#39;s sword.
+			<p>Let&#39;s bring in a component <a href="#babamanager">BabaManager</a> which will be used to delay showing Finn&#39;s sword.
 			You can imagine this as content in a page around the destination element that should be shown <em>after</em> all animations have finished.</p>
 			<p><a href="https://codesandbox.io/s/oo6905z0k9"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-2.gif?raw=true" alt="Intro to Yubaba 2/4"></a></p>
 			<p>Cool,
@@ -1126,20 +1120,20 @@ img { max-width: 100%; }
 				We can do better though,
 			what if Finn could really sell his preparation that he&#39;s about to attack?</p>
 			<h4 id="introducing-circleexpand-">Introducing <code>&lt;CircleExpand /&gt;</code></h4>
-			<p>Let&#39;s bring in a component <code>CircleExpand</code> which will expand to fit the viewport,
+			<p>Let&#39;s bring in a component <a href="#circleexpand">CircleExpand</a> which will expand to fit the viewport,
 			for Finn it will give him some <em>oomph</em> to really sell the attack.</p>
 			<p><a href="https://codesandbox.io/s/6xp1jk4xjw"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-3.gif?raw=true" alt="Intro to Yubaba 3/4"></a></p>
 			<p>Really cool!
-				But both the <code>CircleExpand</code> and <code>CrossFadeMove</code> happening at the same time looks kind of weird,
-			what if we could delay <code>CrossFadeMove</code> until after <code>CircleExpand</code> had finished animating?</p>
+				But both the <a href="#circleexpand">CircleExpand</a> and <a href="#crossfademove">CrossFadeMove</a> happening at the same time looks kind of weird,
+			what if we could delay <a href="#crossfademove">CrossFadeMove</a> until after <a href="#circleexpand">CircleExpand</a> had finished animating?</p>
 			<h4 id="introducing-wait-">Introducing <code>&lt;Wait /&gt;</code></h4>
-			<p>Let&#39;s bring in a component <code>Wait</code> which will delay the next animation from happening until after the previous one has finished!</p>
+			<p>Let&#39;s bring in a component <a href="#wait">Wait</a> which will delay the next animation from happening until after the previous one has finished!</p>
 			<p><a href="https://codesandbox.io/s/llv7pkv9y9"><img src="https://github.com/madou/yubaba/blob/master/test/images/finn-4.gif?raw=true" alt="Intro to Yubaba 4/4"></a></p>
 			<p>And there you have it,
 			a masta-peece!</p>
 			<h2 id="create-your-own-animations">Create your own animations</h2>
 			<p>Yubaba comes with the ability for you to make your own animations using the same plumbing the official animations are constructed from.
-			Look at <a href="https://github.com/madou/yubaba/tree/master/packages/yubaba/src/animations">src/components/animations</a> for example implementations.</p>
+			Look in <a href="https://github.com/madou/yubaba/tree/master/packages/yubaba/src/animations">src/animations</a> for example implementations.</p>
 			<p>Tutorial(s) coming soon.</p>
 			<h2 id="components">Components</h2>
 			<h3 id="utility">Utility</h3>
@@ -1148,57 +1142,253 @@ img { max-width: 100%; }
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/baba.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/babaprops.html">Props</a></p>
 			<p>This is the primary component in yubaba.
 				When rendering it will be given all of the animation data from its children.
-				When unmounting or flipping the prop in from true to false,
-			it will execute all the animations top to bottom below it if a matching <Baba /> pair is found within 50ms.</p>
+				When unmounting or flipping the &quot;in&quot; prop from <code>true</code> to <code>false</code>,
+			it will execute all the animations <code>top to bottom</code> if a matching <a href="#baba">Baba</a> pair is found within <code>50ms</code>.</p>
+			<pre><code class="language-jsx"><span class="hljs-keyword">import</span> Baba <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Baba</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"baba"</span>&gt;</span>
+  {({ ref, style, className }) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{ref}</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{style}</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{className}</span> /&gt;</span>}
+<span class="hljs-tag">&lt;/<span class="hljs-name">Baba</span>&gt;</span>;</span></code></pre>
 			<h4 id="target">Target</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/target.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/targetprops.html">Props</a></p>
 			<p>Used to explicitly mark the focal element,
-			only a handful of animations require this component to be used.</p>
+				only a handful of animations require this component to be used,
+			for example <a href="#reveal">Reveal</a>`.</p>
+			<pre><code class="language-jsx"><span class="hljs-keyword">import</span> Baba, { Target } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Baba</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"target"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">Target</span>&gt;</span>{({ ref }) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{ref}</span> /&gt;</span>}<span class="hljs-tag">&lt;/<span class="hljs-name">Target</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Baba</span>&gt;</span>;</span></code></pre>
 			<h4 id="collector">Collector</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/collector.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/collectorprops.html">Props</a></p>
 			<p>Used as the glue for all animation components,
-			every animation component will use this internally to pass the data to the parent <code>Baba</code>.</p>
+			every animation component will use this internally to pass the data to the parent <a href="#baba">Baba</a>.</p>
+			<pre><code class="language-jsx"><span class="hljs-keyword">import</span> { Collector } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Collector</span>
+  <span class="hljs-attr">data</span>=<span class="hljs-string">{{</span>
+    <span class="hljs-attr">action:</span> '<span class="hljs-attr">animation</span>',
+    <span class="hljs-attr">payload:</span> {
+      <span class="hljs-attr">beforeAnimate:</span> <span class="hljs-attr">this.beforeAnimate</span>,
+      <span class="hljs-attr">animate:</span> <span class="hljs-attr">this.animate</span>,
+      <span class="hljs-attr">afterAnimate:</span> <span class="hljs-attr">this.afterAnimate</span>,
+    },
+  }}
+&gt;</span>
+  {children}
+<span class="hljs-tag">&lt;/<span class="hljs-name">Collector</span>&gt;</span></span>;</code></pre>
 			<h3 id="focal">Focal</h3>
-			<p>Transitioning the same element from one place to another.</p>
-			<h4 id="flipmove-example-">FLIPMove (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FFLIPMove&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
+			<p>Transitioning visually similar elements from one place to another.</p>
+			<h4 id="move-example-">Move (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FFLIPMove&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/flipmove.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/flipmoveprops.html">Props</a></p>
-			<p>FLIPMove will conduct a <a href="https://aerotwist.com/blog/flip-your-animations/">FLIP</a> styled animation on the target element.</p>
+			<p>Will transition the destination element <strong>from</strong> the origin element position.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { FLIPMove <span class="hljs-keyword">as</span> Move } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="move"&gt;
+  &lt;Move&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Move&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+&lt;Baba name="move"&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Baba&gt;;</code></pre>
+			<h4 id="fademove">FadeMove</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/fademove.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/fademoveprops.html">Props</a></p>
+			<p>Will <code>position: absolute</code> move the origin element to the destination element while fading out.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { FadeMove } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="fade-move"&gt;
+  &lt;FadeMove&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/FadeMove&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+&lt;Baba name="fade-move"&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Baba&gt;;</code></pre>
 			<h4 id="crossfademove-example-">CrossFadeMove (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FCrossFadeMove&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/crossfademove.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/crossfademoveprops.html">Props</a></p>
-			<p>CrossFadeMove will animate the from element to the target element while transitioning between the two for a seamless transition.</p>
+			<p>Composes the <a href="#move">Move</a> and <a href="#fademove">FadeMove</a> animations for a cross-fade move.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { CrossFadeMove } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="cross-fade"&gt;
+  &lt;CrossFadeMove&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/CrossFadeMove&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+&lt;Baba name="cross-fade"&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Baba&gt;;</code></pre>
+			<h4 id="reveal">Reveal</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/reveal.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/revealprops.html">Props</a></p>
+			<p>Reveals the destination element container from the <a href="#target">Target</a> component.
+				A limitation at the moment is the destination element <em>must</em> have an animation defined,
+				if you don&#39;t want one to happen use the <a href="#noop">Noop</a> animation.
+			Requires the use of the <a href="#target">Target</a> component to specify the focal element.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { Reveal, Target } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="reveal"&gt;
+  &lt;Reveal&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Reveal&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba, { Target, Noop } from 'yubaba';
+
+&lt;Baba name="reveal"&gt;
+  &lt;Noop&gt;
+    {baba =&gt; (
+      &lt;div {...baba}&gt;
+        &lt;Target&gt;{target =&gt; &lt;div {...target} /&gt;}&lt;/Target&gt;
+      &lt;/div&gt;
+    )}
+  &lt;/Noop&gt;
+&lt;/Baba&gt;;</code></pre>
 			<h4 id="revealmove-example-">RevealMove (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FRevealMove&amp;selectedStory=TargetHeight&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/revealmove.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/revealmoveprops.html">Props</a></p>
 			<p>Useful for transitioning from a parent to a child,
 				will expand from the focal element to the container.
 			Requires the use of the <a href="#target">Target</a> component to specify the focal element.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { RevealMove } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="reveal-move"&gt;
+  &lt;RevealMove&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/RevealMove&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba, { Target, Noop } from 'yubaba';
+
+&lt;Baba name="reveal-move"&gt;
+  &lt;Noop&gt;
+    {baba =&gt; (
+      &lt;div {...baba}&gt;
+        &lt;Target&gt;{target =&gt; &lt;div {...target} /&gt;}&lt;/Target&gt;
+      &lt;/div&gt;
+    )}
+  &lt;/Noop&gt;
+&lt;/Baba&gt;;</code></pre>
 			<h4 id="concealmove-example-">ConcealMove (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FConcealMove&amp;selectedStory=TargetHeight&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/concealmove.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/concealmoveprops.html">Props</a></p>
 			<p>Useful for transitioning from a child to a parent,
 				will shrink from the container to the focal element.
 			Requires the use of the <a href="#target">Target</a> component to specify the focal element.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { Target, ConcealMove } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="conceal-move"&gt;
+  &lt;ConcealMove&gt;
+    {baba =&gt; (
+      &lt;div {...baba}&gt;
+        &lt;Target&gt;{target =&gt; &lt;div {...target} /&gt;}&lt;/Target&gt;
+      &lt;/div&gt;
+    )}
+  &lt;/ConcealMove&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+&lt;Baba name="conceal-move"&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Baba&gt;;</code></pre>
+			<h4 id="noop">Noop</h4>
+			<p><a href="https://madou.github.io/yubaba/typedoc/classes/noop.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/noopprops.html">Props</a></p>
+			<p>A no-operation &quot;noop&quot; animation.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { Noop } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="noop"&gt;
+  &lt;Noop&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Noop&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+&lt;Baba name="noop"&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Baba&gt;;</code></pre>
 			<h3 id="supporting">Supporting</h3>
-			<p><em>Helping</em> the focal animation look the best it can be.</p>
+			<p><em>Helping</em> the focal animation look the best it can be when transitioning.</p>
 			<h4 id="babamanager-example-">BabaManager (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FBabaManager&amp;selectedStory=WithManager&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/babamanager.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/babamanagerprops.html">Props</a></p>
 			<p>Used to hide contents before an animation is complete triggered from a child <Baba /> component.
 			If there is more than one child <Baba /> you can use an optional name prop which should match the appropriate <Baba /> component.</p>
 			<p>If it is the initial mount it will immediately be shown.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { Move } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Baba</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"expand"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">Move</span>&gt;</span>{baba =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> {<span class="hljs-attr">...baba</span>} /&gt;</span>}<span class="hljs-tag">&lt;/<span class="hljs-name">Move</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Baba</span>&gt;</span>;
+
+// destination-element.js
+import Baba, { BabaManager } from 'yubaba';
+
+<span class="hljs-tag">&lt;<span class="hljs-name">BabaManager</span>&gt;</span>{({ style }) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{style}</span>&gt;</span>{<span class="hljs-tag">&lt;<span class="hljs-name">Baba</span>&gt;</span>{/* ... */}<span class="hljs-tag">&lt;/<span class="hljs-name">Baba</span>&gt;</span>}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>}<span class="hljs-tag">&lt;/<span class="hljs-name">BabaManager</span>&gt;</span>;</span></code></pre>
 			<h4 id="wait">Wait</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/wait.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/waitprops.html">Props</a></p>
-			<p>Wait is used to pause the execution of all parent animations until all children animations have completed.</p>
+			<p>Is used to pause the execution of all child animations until all parent children animations have completed.</p>
+			<p>E.g: <a href="#circleexpand">CircleExpand</a> will wait until <a href="#move">Move</a> has finished before starting.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { Wait, Move, CircleExpand } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="wait"&gt;
+  &lt;Move&gt;
+    &lt;Wait&gt;
+      &lt;CircleExpand&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/CircleExpand&gt;
+    &lt;/Wait&gt;
+  &lt;/Move&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+&lt;Baba name="wait"&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Baba&gt;;</code></pre>
 			<h4 id="circleexpand-example-">CircleExpand (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleExpand&amp;selectedStory=FromStaticPosition&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/circleexpand.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/circleexpandprops.html">Props</a></p>
-			<p>CircleExpand will animate a circle from the entire window to cover end target,
+			<p>Will animate a circle from the origin element to cover the entire viewport,
 			and then fade out.</p>
-			<p>Generally you will use CircleExpand and CircleShrink together to seamlessly transition the background between pages.</p>
+			<p>Generally you should use <a href="#circleexpand">CircleExpand</a> and <a href="#circleshrink">CricleShrink</a> together to seamlessly transition the background between pages.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { CircleExpand } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="expand"&gt;
+  &lt;CircleExpand&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/CircleExpand&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+&lt;Baba name="expand"&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Baba&gt;;</code></pre>
 			<h4 id="circleshrink-example-">CircleShrink (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleShrink&amp;selectedStory=Default&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/circleshrink.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/circleshrinkprops.html">Props</a></p>
-			<p>CircleShrink will animate a circle from the entire window to cover end target,
+			<p>Will animate a circle from the viewport to destination element,
 			and then fade out.</p>
-			<p>Generally you will use CircleShrink and CircleExpand together to seamlessly transition the background between pages.</p>
+			<p>Generally you should use <a href="#circleexpand">CircleExpand</a> and <a href="#circleshrink">CricleShrink</a> together to seamlessly transition the background between pages.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { CircleShrink } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="shrink"&gt;
+  &lt;CircleShrink&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/CircleShrink&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+&lt;Baba name="shrink"&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Baba&gt;;</code></pre>
 			<h4 id="swipe-example-">Swipe (<a href="https://madou.github.io/yubaba/?selectedKind=yubaba%2FSwipe&amp;selectedStory=Up&amp;full=0&amp;addons=1&amp;stories=1&amp;panelRight=1&amp;addonPanel=storybook%2Fnotes%2Fpanel">example</a>)</h4>
 			<p><a href="https://madou.github.io/yubaba/typedoc/classes/swipe.html">Docs</a> | <a href="https://madou.github.io/yubaba/typedoc/interfaces/swipeprops.html">Props</a></p>
-			<p>Swipe will animate a block swiping over the viewport.</p>
+			<p>Will animate a square swiping over the viewport.</p>
+			<pre><code class="language-jsx"><span class="hljs-comment">// origin-element.js</span>
+<span class="hljs-keyword">import</span> Baba, { Swipe } <span class="hljs-keyword">from</span> <span class="hljs-string">'yubaba'</span>;
+
+&lt;Baba name="swipe"&gt;
+  &lt;Swipe&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Swipe&gt;
+&lt;/Baba&gt;;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+&lt;Baba name="swipe"&gt;{baba =&gt; &lt;div {...baba} /&gt;}&lt;/Baba&gt;;</code></pre>
 			<h2 id="api-reference">API Reference</h2>
 			<p><a href="https://madou.github.io/yubaba/typedoc/">See typedoc.</a></p>
 		</div>
@@ -1222,7 +1412,9 @@ img { max-width: 100%; }
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/collector.html" class="tsd-kind-icon">Collector</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/concealmove.html" class="tsd-kind-icon">Conceal<wbr>Move</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/crossfademove.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move</a></li>
-							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/flipmove.html" class="tsd-kind-icon">FLIPMove</a></li>
+							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/fademove.html" class="tsd-kind-icon">Fade<wbr>Move</a></li>
+							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/move.html" class="tsd-kind-icon">Move</a></li>
+							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/reveal.html" class="tsd-kind-icon">Reveal</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/revealmove.html" class="tsd-kind-icon">Reveal<wbr>Move</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/swipe.html" class="tsd-kind-icon">Swipe</a></li>
 							<li class="tsd-kind-class tsd-has-type-parameter tsd-is-external"><a href="classes/target.html" class="tsd-kind-icon">Target</a></li>
@@ -1240,13 +1432,15 @@ img { max-width: 100%; }
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/collectorchildrenprops.html" class="tsd-kind-icon">Collector<wbr>Children<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/collectorprops.html" class="tsd-kind-icon">Collector<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/concealmoveprops.html" class="tsd-kind-icon">Conceal<wbr>Move<wbr>Props</a></li>
-							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/crossfademoveprops.html" class="tsd-kind-icon">Cross<wbr>Fade<wbr>Move<wbr>Props</a></li>
-							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/flipmoveprops.html" class="tsd-kind-icon">FLIPMove<wbr>Props</a></li>
+							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/fademoveprops.html" class="tsd-kind-icon">Fade<wbr>Move<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/inlinestyles.html" class="tsd-kind-icon">Inline<wbr>Styles</a></li>
-							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/revealmoveprops.html" class="tsd-kind-icon">Reveal<wbr>Move<wbr>Props</a></li>
+							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/moveprops.html" class="tsd-kind-icon">Move<wbr>Props</a></li>
+							<li class="tsd-kind-interface tsd-is-external tsd-is-not-exported"><a href="interfaces/noopprops.html" class="tsd-kind-icon">Noop<wbr>Props</a></li>
+							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/revealprops.html" class="tsd-kind-icon">Reveal<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/swipeprops.html" class="tsd-kind-icon">Swipe<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external tsd-is-not-exported"><a href="interfaces/targetchildprops.html" class="tsd-kind-icon">Target<wbr>Child<wbr>Props</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/targetprops.html" class="tsd-kind-icon">Target<wbr>Props</a></li>
+							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/targetpropsfunc.html" class="tsd-kind-icon">Target<wbr>Props<wbr>Func</a></li>
 							<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/waitaction.html" class="tsd-kind-icon">Wait<wbr>Action</a></li>
 						</ul>
 					</section>
@@ -1256,6 +1450,8 @@ img { max-width: 100%; }
 							<li class="tsd-kind-type-alias tsd-is-external"><a href="globals.html#animationcallback" class="tsd-kind-icon">Animation<wbr>Callback</a></li>
 							<li class="tsd-kind-type-alias tsd-is-external"><a href="globals.html#collectorchildrenasfunction" class="tsd-kind-icon">Collector<wbr>Children<wbr>AsFunction</a></li>
 							<li class="tsd-kind-type-alias tsd-is-external"><a href="globals.html#collectordata" class="tsd-kind-icon">Collector<wbr>Data</a></li>
+							<li class="tsd-kind-type-alias tsd-has-type-parameter tsd-is-external"><a href="globals.html#extractprops" class="tsd-kind-icon">Extract<wbr>Props</a></li>
+							<li class="tsd-kind-type-alias tsd-has-type-parameter tsd-is-external"><a href="globals.html#omit" class="tsd-kind-icon">Omit</a></li>
 							<li class="tsd-kind-type-alias tsd-is-external"><a href="globals.html#settargetprops" class="tsd-kind-icon">Set<wbr>Target<wbr>Props</a></li>
 							<li class="tsd-kind-type-alias tsd-is-external"><a href="globals.html#supplyrefhandler" class="tsd-kind-icon">Supply<wbr>Ref<wbr>Handler</a></li>
 						</ul>
@@ -1269,7 +1465,14 @@ img { max-width: 100%; }
 					<section class="tsd-index-section tsd-is-external">
 						<h3>Functions</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-function tsd-is-external"><a href="globals.html#combine" class="tsd-kind-icon">combine</a></li>
 							<li class="tsd-kind-function tsd-has-type-parameter tsd-is-external"><a href="globals.html#defer" class="tsd-kind-icon">defer</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section tsd-is-external">
+						<h3>Object literals</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-object-literal tsd-is-external"><a href="globals.html#zindexstack" class="tsd-kind-icon">z<wbr>Index<wbr>Stack</a></li>
 						</ul>
 					</section>
 				</div>
@@ -1283,7 +1486,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Animation<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L18">Collector/index.tsx:18</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/Collector/index.tsx#L26">Collector/index.tsx:26</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1345,7 +1548,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Collector<wbr>Children<wbr>AsFunction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L57">Collector/index.tsx:57</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/Collector/index.tsx#L65">Collector/index.tsx:65</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1387,7 +1590,27 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Collector<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="interfaces/animationaction.html" class="tsd-signature-type">AnimationAction</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/waitaction.html" class="tsd-signature-type">WaitAction</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L43">Collector/index.tsx:43</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/Collector/index.tsx#L51">Collector/index.tsx:51</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+				<a name="extractprops" class="tsd-anchor"></a>
+				<h3>Extract<wbr>Props</h3>
+				<div class="tsd-signature tsd-kind-icon">Extract<wbr>Props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ExtractProps&lt;TComponentOrTProps&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/lib/types.tsx#L5">lib/types.tsx:5</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+				<a name="omit" class="tsd-anchor"></a>
+				<h3>Omit</h3>
+				<div class="tsd-signature tsd-kind-icon">Omit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Omit&lt;T, K&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/lib/types.tsx#L3">lib/types.tsx:3</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1397,7 +1620,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Set<wbr>Target<wbr>Props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L9">Collector/index.tsx:9</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/Collector/index.tsx#L17">Collector/index.tsx:17</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1405,14 +1628,14 @@ img { max-width: 100%; }
 					<ul class="tsd-parameters">
 						<li class="tsd-parameter-siganture">
 							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><a href="interfaces/targetprops.html" class="tsd-signature-type">TargetProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><a href="interfaces/targetpropsfunc.html" class="tsd-signature-type">TargetPropsFunc</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 							</ul>
 							<ul class="tsd-descriptions">
 								<li class="tsd-description">
 									<h4 class="tsd-parameters-title">Parameters</h4>
 									<ul class="tsd-parameters">
 										<li>
-											<h5>props: <a href="interfaces/targetprops.html" class="tsd-signature-type">TargetProps</a></h5>
+											<h5>props: <a href="interfaces/targetpropsfunc.html" class="tsd-signature-type">TargetPropsFunc</a></h5>
 										</li>
 									</ul>
 									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -1428,7 +1651,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Supply<wbr>Ref<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L45">Collector/index.tsx:45</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/Collector/index.tsx#L53">Collector/index.tsx:53</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -1462,13 +1685,36 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Collector<wbr>Context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Context</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Collect</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;React.createContext&lt;Collect | undefined&gt;(undefined)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/Collector/index.tsx#L122">Collector/index.tsx:122</a></li>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/Collector/index.tsx#L131">Collector/index.tsx:131</a></li>
 					</ul>
 				</aside>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group tsd-is-external">
 			<h2>Functions</h2>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-is-external">
+				<a name="combine" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> combine</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-is-external">
+					<li class="tsd-signature tsd-kind-icon">combine<span class="tsd-signature-symbol">(</span>t1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/lib/style.tsx#L1">lib/style.tsx:1</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>t1: <span class="tsd-signature-type">string</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter tsd-is-external">
 				<a name="defer" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagConst">Const</span> defer</h3>
@@ -1479,7 +1725,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/madou/yubaba/blob/627d89d/packages/yubaba/src/lib/defer.tsx#L1">lib/defer.tsx:1</a></li>
+								<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/lib/defer.tsx#L1">lib/defer.tsx:1</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1497,7 +1743,7 @@ img { max-width: 100%; }
 								<h5>reject<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></h5>
 								<ul class="tsd-parameters">
 									<li class="tsd-parameter-siganture">
-										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable">
 											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 										</ul>
 										<ul class="tsd-descriptions">
@@ -1518,7 +1764,7 @@ img { max-width: 100%; }
 								<h5>resolve<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></h5>
 								<ul class="tsd-parameters">
 									<li class="tsd-parameter-siganture">
-										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable">
 											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 										</ul>
 										<ul class="tsd-descriptions">
@@ -1538,6 +1784,69 @@ img { max-width: 100%; }
 						</ul>
 					</li>
 				</ul>
+			</section>
+		</section>
+		<section class="tsd-panel-group tsd-member-group tsd-is-external">
+			<h2>Object literals</h2>
+			<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-is-external">
+				<a name="zindexstack" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> z<wbr>Index<wbr>Stack</h3>
+				<div class="tsd-signature tsd-kind-icon">z<wbr>Index<wbr>Stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/lib/style.tsx#L9">lib/style.tsx:9</a></li>
+					</ul>
+				</aside>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
+					<a name="zindexstack.circleexpand" class="tsd-anchor"></a>
+					<h3>circle<wbr>Expand</h3>
+					<div class="tsd-signature tsd-kind-icon">circle<wbr>Expand<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1000</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/lib/style.tsx#L10">lib/style.tsx:10</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
+					<a name="zindexstack.circleshrink" class="tsd-anchor"></a>
+					<h3>circle<wbr>Shrink</h3>
+					<div class="tsd-signature tsd-kind-icon">circle<wbr>Shrink<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1000</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/lib/style.tsx#L11">lib/style.tsx:11</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
+					<a name="zindexstack.concealmove" class="tsd-anchor"></a>
+					<h3>conceal<wbr>Move</h3>
+					<div class="tsd-signature tsd-kind-icon">conceal<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1000</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/lib/style.tsx#L14">lib/style.tsx:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
+					<a name="zindexstack.fademove" class="tsd-anchor"></a>
+					<h3>fade<wbr>Move</h3>
+					<div class="tsd-signature tsd-kind-icon">fade<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1001</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/lib/style.tsx#L13">lib/style.tsx:13</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
+					<a name="zindexstack.move" class="tsd-anchor"></a>
+					<h3>move</h3>
+					<div class="tsd-signature tsd-kind-icon">move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1000</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/madou/yubaba/blob/9aa4945/packages/yubaba/src/lib/style.tsx#L12">lib/style.tsx:12</a></li>
+						</ul>
+					</aside>
+				</section>
 			</section>
 		</section>
 		<footer>

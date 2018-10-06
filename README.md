@@ -83,9 +83,9 @@ How can we transition them to each other?
 
 #### Introducing `<Baba />` and `<CrossFadeMove />`
 
-Let's use the `Baba` and `CrossFadeMove` components to have them seamlessly transition to the destination.
-`Baba` is the brains - it does all of the orchestration.
-`CrossFadeMove` is one of many focal animations available - it will cross fade both elements from the starting point to the destination point.
+Let's use the [Baba](#baba) and [CrossFadeMove](#crossfademove) components to have them seamlessly transition to the destination.
+[Baba](#Baba) is the brains - it does all of the orchestration.
+[CrossFadeMove](#crossfademove) is one of many focal animations available - it will cross fade both elements from the starting point to the destination point.
 
 [![Intro to Yubaba 1/4](https://github.com/madou/yubaba/blob/master/test/images/finn-1.gif?raw=true)](https://codesandbox.io/s/x3v5ywk5ro)
 
@@ -95,7 +95,7 @@ Is there anything we can do to make it show after all animations have finished?
 
 #### Introducing `<BabaManager />`
 
-Let's bring in a component `BabaManager` which will be used to delay showing Finn's sword.
+Let's bring in a component [BabaManager](#babamanager) which will be used to delay showing Finn's sword.
 You can imagine this as content in a page around the destination element that should be shown _after_ all animations have finished.
 
 [![Intro to Yubaba 2/4](https://github.com/madou/yubaba/blob/master/test/images/finn-2.gif?raw=true)](https://codesandbox.io/s/oo6905z0k9)
@@ -107,18 +107,18 @@ what if Finn could really sell his preparation that he's about to attack?
 
 #### Introducing `<CircleExpand />`
 
-Let's bring in a component `CircleExpand` which will expand to fit the viewport,
+Let's bring in a component [CircleExpand](#circleexpand) which will expand to fit the viewport,
 for Finn it will give him some _oomph_ to really sell the attack.
 
 [![Intro to Yubaba 3/4](https://github.com/madou/yubaba/blob/master/test/images/finn-3.gif?raw=true)](https://codesandbox.io/s/6xp1jk4xjw)
 
 Really cool!
-But both the `CircleExpand` and `CrossFadeMove` happening at the same time looks kind of weird,
-what if we could delay `CrossFadeMove` until after `CircleExpand` had finished animating?
+But both the [CircleExpand](#circleexpand) and [CrossFadeMove](#crossfademove) happening at the same time looks kind of weird,
+what if we could delay [CrossFadeMove](#crossfademove) until after [CircleExpand](#circleexpand) had finished animating?
 
 #### Introducing `<Wait />`
 
-Let's bring in a component `Wait` which will delay the next animation from happening until after the previous one has finished!
+Let's bring in a component [Wait](#wait) which will delay the next animation from happening until after the previous one has finished!
 
 [![Intro to Yubaba 4/4](https://github.com/madou/yubaba/blob/master/test/images/finn-4.gif?raw=true)](https://codesandbox.io/s/llv7pkv9y9)
 
@@ -144,14 +144,14 @@ These components exist to pass data around and orchestrate the animations.
 
 This is the primary component in yubaba.
 When rendering it will be given all of the animation data from its children.
-When unmounting or flipping the prop in from true to false,
-it will execute all the animations top to bottom below it if a matching `Baba` pair is found within 50ms.
+When unmounting or flipping the "in" prop from `true` to `false`,
+it will execute all the animations `top to bottom` if a matching [Baba](#baba) pair is found within `50ms`.
 
-```js
+```jsx
 import Baba from 'yubaba';
 
-<Baba name="my-anim">
-  {({ style, className, ref }) => <div style={style} className={className} ref={ref} />}
+<Baba name="baba">
+  {({ ref, style, className }) => <div ref={ref} style={style} className={className} />}
 </Baba>;
 ```
 
@@ -160,15 +160,14 @@ import Baba from 'yubaba';
 [Docs](https://madou.github.io/yubaba/typedoc/classes/target.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/targetprops.html)
 
 Used to explicitly mark the focal element,
-only a handful of animations require this component to be used.
+only a handful of animations require this component to be used,
+for example [Reveal](#reveal)`.
 
-```js
+```jsx
 import Baba, { Target } from 'yubaba';
 
-<Baba name="expand">
-  {/* <RevealMove> */}
+<Baba name="target">
   <Target>{({ ref }) => <div ref={ref} />}</Target>
-  {/* </RevealMove> */}
 </Baba>;
 ```
 
@@ -177,9 +176,9 @@ import Baba, { Target } from 'yubaba';
 [Docs](https://madou.github.io/yubaba/typedoc/classes/collector.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/collectorprops.html)
 
 Used as the glue for all animation components,
-every animation component will use this internally to pass the data to the parent `Baba`.
+every animation component will use this internally to pass the data to the parent [Baba](#baba).
 
-```js
+```jsx
 import { Collector } from 'yubaba';
 
 <Collector
@@ -198,37 +197,96 @@ import { Collector } from 'yubaba';
 
 ### Focal
 
-Transitioning the same element from one place to another.
+Transitioning visually similar elements from one place to another.
 
-#### FLIPMove ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FFLIPMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
+#### Move ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FFLIPMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
 [Docs](https://madou.github.io/yubaba/typedoc/classes/flipmove.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/flipmoveprops.html)
 
-FLIPMove will conduct a [FLIP](https://aerotwist.com/blog/flip-your-animations/) styled animation on the target element.
+Will transition the destination element **from** the origin element position.
 
-```js
-import Baba, { FLIPMove } from 'yubaba';
+```jsx
+// origin-element.js
+import Baba, { FLIPMove as Move } from 'yubaba';
 
 <Baba name="move">
-  <FLIPMove>
-    {({ style, className, ref }) => <div style={style} className={className} ref={ref} />}
-  </FLIPMove>
+  <Move>{baba => <div {...baba} />}</Move>
 </Baba>;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+<Baba name="move">{baba => <div {...baba} />}</Baba>;
+```
+
+#### FadeMove
+
+[Docs](https://madou.github.io/yubaba/typedoc/classes/fademove.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/fademoveprops.html)
+
+Will `position: absolute` move the origin element to the destination element while fading out.
+
+```jsx
+// origin-element.js
+import Baba, { FadeMove } from 'yubaba';
+
+<Baba name="fade-move">
+  <FadeMove>{baba => <div {...baba} />}</FadeMove>
+</Baba>;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+<Baba name="fade-move">{baba => <div {...baba} />}</Baba>;
 ```
 
 #### CrossFadeMove ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FCrossFadeMove&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
 [Docs](https://madou.github.io/yubaba/typedoc/classes/crossfademove.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/crossfademoveprops.html)
 
-CrossFadeMove will animate the from element to the target element while transitioning the two for a seamless transition.
+Composes the [Move](#move) and [FadeMove](#fademove) animations for a cross-fade move.
 
-```js
+```jsx
+// origin-element.js
 import Baba, { CrossFadeMove } from 'yubaba';
 
 <Baba name="cross-fade">
-  <CrossFadeMove>
-    {({ style, className, ref }) => <div style={style} className={className} ref={ref} />}
-  </CrossFadeMove>
+  <CrossFadeMove>{baba => <div {...baba} />}</CrossFadeMove>
+</Baba>;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+<Baba name="cross-fade">{baba => <div {...baba} />}</Baba>;
+```
+
+#### Reveal
+
+[Docs](https://madou.github.io/yubaba/typedoc/classes/reveal.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/revealprops.html)
+
+Reveals the destination element container from the [Target](#target) component.
+A limitation at the moment is the destination element _must_ have an animation defined,
+if you don't want one to happen use the [Noop](#noop) animation.
+Requires the use of the [Target](#target) component to specify the focal element.
+
+```jsx
+// origin-element.js
+import Baba, { Reveal, Target } from 'yubaba';
+
+<Baba name="reveal">
+  <Reveal>{baba => <div {...baba} />}</Reveal>
+</Baba>;
+
+// destination-element.js
+import Baba, { Target, Noop } from 'yubaba';
+
+<Baba name="reveal">
+  <Noop>
+    {baba => (
+      <div {...baba}>
+        <Target>{target => <div {...target} />}</Target>
+      </div>
+    )}
+  </Noop>
 </Baba>;
 ```
 
@@ -240,13 +298,25 @@ Useful for transitioning from a parent to a child,
 will expand from the focal element to the container.
 Requires the use of the [Target](#target) component to specify the focal element.
 
-```js
+```jsx
+// origin-element.js
 import Baba, { RevealMove } from 'yubaba';
 
-<Baba name="reveal">
-  <RevealMove>
-    {({ style, className, ref }) => <div style={style} className={className} ref={ref} />}
-  </RevealMove>
+<Baba name="reveal-move">
+  <RevealMove>{baba => <div {...baba} />}</RevealMove>
+</Baba>;
+
+// destination-element.js
+import Baba, { Target, Noop } from 'yubaba';
+
+<Baba name="reveal-move">
+  <Noop>
+    {baba => (
+      <div {...baba}>
+        <Target>{target => <div {...target} />}</Target>
+      </div>
+    )}
+  </Noop>
 </Baba>;
 ```
 
@@ -258,19 +328,49 @@ Useful for transitioning from a child to a parent,
 will shrink from the container to the focal element.
 Requires the use of the [Target](#target) component to specify the focal element.
 
-```js
-import Baba, { ConcealMove } from 'yubaba';
+```jsx
+// origin-element.js
+import Baba, { Target, ConcealMove } from 'yubaba';
 
-<Baba name="conceal">
+<Baba name="conceal-move">
   <ConcealMove>
-    {({ style, className, ref }) => <div style={style} className={className} ref={ref} />}
+    {baba => (
+      <div {...baba}>
+        <Target>{target => <div {...target} />}</Target>
+      </div>
+    )}
   </ConcealMove>
 </Baba>;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+<Baba name="conceal-move">{baba => <div {...baba} />}</Baba>;
+```
+
+#### Noop
+
+[Docs](https://madou.github.io/yubaba/typedoc/classes/noop.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/noopprops.html)
+
+A no-operation "noop" animation.
+
+```jsx
+// origin-element.js
+import Baba, { Noop } from 'yubaba';
+
+<Baba name="noop">
+  <Noop>{baba => <div {...baba} />}</Noop>
+</Baba>;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+<Baba name="noop">{baba => <div {...baba} />}</Baba>;
 ```
 
 ### Supporting
 
-_Helping_ the focal animation look the best it can be.
+_Helping_ the focal animation look the best it can be when transitioning.
 
 #### BabaManager ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FBabaManager&selectedStory=WithManager&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
@@ -281,7 +381,15 @@ If there is more than one child <Baba /> you can use an optional name prop which
 
 If it is the initial mount it will immediately be shown.
 
-```js
+```jsx
+// origin-element.js
+import Baba, { Move } from 'yubaba';
+
+<Baba name="expand">
+  <Move>{baba => <div {...baba} />}</Move>
+</Baba>;
+
+// destination-element.js
 import Baba, { BabaManager } from 'yubaba';
 
 <BabaManager>{({ style }) => <div style={style}>{<Baba>{/* ... */}</Baba>}</div>}</BabaManager>;
@@ -291,74 +399,92 @@ import Baba, { BabaManager } from 'yubaba';
 
 [Docs](https://madou.github.io/yubaba/typedoc/classes/wait.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/waitprops.html)
 
-Wait is used to pause the execution of all parent animations until all children animations have completed.
+Is used to pause the execution of all child animations until all parent children animations have completed.
 
-```js
-import Baba, { Wait } from 'yubaba';
+E.g: [CircleExpand](#circleexpand) will wait until [Move](#move) has finished before starting.
+
+```jsx
+// origin-element.js
+import Baba, { Wait, Move, CircleExpand } from 'yubaba';
 
 <Baba name="wait">
-  {/* <Animation1> */}
-  <Wait>
-    {/* <Animation2> */}
-    {({ style, className, ref }) => <div style={style} className={className} ref={ref} />}
-    {/* </Animation2> */}
-  </Wait>
-  {/* </Animation> */}
+  <Move>
+    <Wait>
+      <CircleExpand>{baba => <div {...baba} />}</CircleExpand>
+    </Wait>
+  </Move>
 </Baba>;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+<Baba name="wait">{baba => <div {...baba} />}</Baba>;
 ```
 
 #### CircleExpand ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleExpand&selectedStory=FromStaticPosition&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
 [Docs](https://madou.github.io/yubaba/typedoc/classes/circleexpand.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/circleexpandprops.html)
 
-CircleExpand will animate a circle from the entire window to cover end target,
+Will animate a circle from the origin element to cover the entire viewport,
 and then fade out.
 
-Generally you will use CircleExpand and CircleShrink together to seamlessly transition the background between pages.
+Generally you should use [CircleExpand](#circleexpand) and [CricleShrink](#circleshrink) together to seamlessly transition the background between pages.
 
-```js
+```jsx
+// origin-element.js
 import Baba, { CircleExpand } from 'yubaba';
 
 <Baba name="expand">
-  <CircleExpand>
-    {({ style, className, ref }) => <div style={style} className={className} ref={ref} />}
-  </CircleExpand>
+  <CircleExpand>{baba => <div {...baba} />}</CircleExpand>
 </Baba>;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+<Baba name="expand">{baba => <div {...baba} />}</Baba>;
 ```
 
 #### CircleShrink ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FCircleShrink&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
 [Docs](https://madou.github.io/yubaba/typedoc/classes/circleshrink.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/circleshrinkprops.html)
 
-CircleShrink will animate a circle from the entire window to cover end target,
+Will animate a circle from the viewport to destination element,
 and then fade out.
 
-Generally you will use CircleShrink and CircleExpand together to seamlessly transition the background between pages.
+Generally you should use [CircleExpand](#circleexpand) and [CricleShrink](#circleshrink) together to seamlessly transition the background between pages.
 
-```js
+```jsx
+// origin-element.js
 import Baba, { CircleShrink } from 'yubaba';
 
 <Baba name="shrink">
-  <CircleShrink>
-    {({ style, className, ref }) => <div style={style} className={className} ref={ref} />}
-  </CircleShrink>
+  <CircleShrink>{baba => <div {...baba} />}</CircleShrink>
 </Baba>;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+<Baba name="shrink">{baba => <div {...baba} />}</Baba>;
 ```
 
 #### Swipe ([example](https://madou.github.io/yubaba/?selectedKind=yubaba%2FSwipe&selectedStory=Up&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel))
 
 [Docs](https://madou.github.io/yubaba/typedoc/classes/swipe.html) | [Props](https://madou.github.io/yubaba/typedoc/interfaces/swipeprops.html)
 
-Swipe will animate a block swiping over the viewport.
+Will animate a square swiping over the viewport.
 
-```js
+```jsx
+// origin-element.js
 import Baba, { Swipe } from 'yubaba';
 
 <Baba name="swipe">
-  <Swipe>
-    {({ style, className, ref }) => <div style={style} className={className} ref={ref} />}
-  </Swipe>
+  <Swipe>{baba => <div {...baba} />}</Swipe>
 </Baba>;
+
+// destination-element.js
+import Baba from 'yubaba';
+
+<Baba name="swipe">{baba => <div {...baba} />}</Baba>;
 ```
 
 ## API Reference

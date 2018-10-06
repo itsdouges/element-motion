@@ -1,4 +1,7 @@
 import * as React from 'react';
+// We don't want to depend on this, we'll just grab whatever version emotion gets.
+// eslint-disable-next-line import/no-extraneous-dependencies
+// import { CSSObject } from 'create-emotion';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
 export interface TargetProps {
@@ -6,7 +9,12 @@ export interface TargetProps {
   className?: string;
 }
 
-export type SetTargetProps = (props: TargetProps) => void;
+export interface TargetPropsFunc {
+  style?: (previous: InlineStyles) => InlineStyles | undefined;
+  className?: (previous: string | undefined) => string | undefined;
+}
+
+export type SetTargetProps = (props: TargetPropsFunc) => void;
 
 /**
  * AnimationCallback
@@ -70,6 +78,7 @@ export interface AnimationData {
   toTarget: TargetData;
 }
 
+// export interface InlineStyles extends CSSObject {}
 export interface InlineStyles {
   [key: string]: string | number | undefined;
 }
@@ -155,15 +164,25 @@ export const CollectorContext = React.createContext<Collect | undefined>(undefin
  */
 export default class Collector extends React.Component<CollectorProps> {
   render() {
-    if (typeof this.props.children !== 'function') {
+    const {
+      children,
+      style,
+      className,
+      data,
+      receiveRenderChildren,
+      receiveRef,
+      receiveData,
+    } = this.props;
+
+    if (typeof children !== 'function') {
       return (
         <CollectorContext.Consumer>
           {collect => (
             <CollectorContext.Provider
               value={{
                 ref: ref => {
-                  if (this.props.receiveRef) {
-                    this.props.receiveRef(ref);
+                  if (receiveRef) {
+                    receiveRef(ref);
                   }
 
                   if (collect) {
@@ -171,8 +190,9 @@ export default class Collector extends React.Component<CollectorProps> {
                   }
                 },
                 targetRef: ref => {
-                  if (this.props.receiveTargetRef) {
-                    this.props.receiveTargetRef(ref);
+                  const { receiveTargetRef } = this.props;
+                  if (receiveTargetRef) {
+                    receiveTargetRef(ref);
                   }
 
                   if (collect) {
@@ -180,13 +200,13 @@ export default class Collector extends React.Component<CollectorProps> {
                   }
                 },
                 data: childData => {
-                  const data = this.props.data ? [this.props.data].concat(childData) : childData;
+                  const collectedData = data ? [data].concat(childData) : childData;
                   if (collect) {
-                    collect.data(data);
+                    collect.data(collectedData);
                   }
 
-                  if (this.props.receiveData) {
-                    this.props.receiveData(childData);
+                  if (receiveData) {
+                    receiveData(childData);
                   }
                 },
                 renderChildren: node => {
@@ -194,18 +214,18 @@ export default class Collector extends React.Component<CollectorProps> {
                     collect.renderChildren(node);
                   }
 
-                  if (this.props.receiveRenderChildren) {
-                    this.props.receiveRenderChildren(node);
+                  if (receiveRenderChildren) {
+                    receiveRenderChildren(node);
                   }
                 },
                 style: {
-                  ...this.props.style,
+                  ...style,
                   ...(collect ? collect.style : {}),
                 },
-                className: this.props.className || (collect ? collect.className : undefined),
+                className: className || (collect ? collect.className : undefined),
               }}
             >
-              {this.props.children}
+              {children}
             </CollectorContext.Provider>
           )}
         </CollectorContext.Consumer>
@@ -215,30 +235,30 @@ export default class Collector extends React.Component<CollectorProps> {
     return (
       <CollectorContext.Consumer>
         {collect => {
-          if (typeof this.props.children === 'function') {
+          if (typeof children === 'function') {
             if (collect) {
-              const data = this.props.data ? [this.props.data] : [];
-              collect.renderChildren(this.props.children);
-              collect.data(data);
+              const collectedData = data ? [data] : [];
+              collect.renderChildren(children);
+              collect.data(collectedData);
             }
 
-            if (this.props.receiveRenderChildren) {
-              this.props.receiveRenderChildren(this.props.children);
+            if (receiveRenderChildren) {
+              receiveRenderChildren(children);
             }
 
             return React.Children.only(
-              this.props.children({
-                className: this.props.className || (collect ? collect.className : undefined),
+              children({
+                className: className || (collect ? collect.className : undefined),
                 ref: (ref: HTMLElement) => {
                   if (collect) {
                     collect.ref(ref);
                   }
 
-                  if (this.props.receiveRef) {
-                    this.props.receiveRef(ref);
+                  if (receiveRef) {
+                    receiveRef(ref);
                   }
                 },
-                style: collect ? { ...this.props.style, ...collect.style } : this.props.style || {},
+                style: collect ? { ...style, ...collect.style } : style || {},
               })
             );
           }

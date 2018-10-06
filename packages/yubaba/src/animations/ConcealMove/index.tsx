@@ -3,18 +3,19 @@ import { css } from 'emotion';
 import Collector, {
   CollectorChildrenProps,
   AnimationCallback,
-  CollectorData,
   CollectorActions,
+  AnimationData,
 } from '../../Collector';
 import { recalculateLocationFromScroll } from '../../lib/dom';
 import noop from '../../lib/noop';
 import { standard } from '../../lib/curves';
+import { zIndexStack } from '../../lib/style';
 
 export interface ConcealMoveProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
-  duration?: number;
+  duration: number;
 
   /**
    * Delays the animation from starting for {delay}ms.
@@ -24,12 +25,12 @@ export interface ConcealMoveProps extends CollectorChildrenProps {
   /**
    * zIndex to be applied to the moving element.
    */
-  zIndex?: number;
+  zIndex: number;
 
   /**
    * Timing function to be used in the transition, see: https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
    */
-  timingFunction?: string;
+  timingFunction: string;
 }
 
 /**
@@ -43,140 +44,100 @@ export default class ConcealMove extends React.Component<ConcealMoveProps> {
   static defaultProps = {
     duration: 500,
     timingFunction: standard(),
+    zIndex: zIndexStack.concealMove,
   };
 
-  renderAnimation: (opts: { start: boolean; onFinish: () => void }) => React.ReactElement<{}>;
+  renderAnimation = (
+    data: AnimationData,
+    options: { moveToTarget?: boolean; fadeOut?: boolean } = {}
+  ) => {
+    if (!data.fromTarget.targetDOMData) {
+      throw new Error(`yubaba
+targetElement was missing.`);
+    }
 
-  beforeAnimate: AnimationCallback = (data, onFinish) => {
-    const duration = this.props.duration as number;
-    const { timingFunction } = this.props;
-    // Scroll could have changed between unmount and this prepare step, let's recalculate
-    // just in case.
+    const { duration, timingFunction, zIndex } = this.props;
+    // Scroll could have changed between unmount and this prepare step.
     const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
-
-    requestAnimationFrame(() => requestAnimationFrame(onFinish));
 
     return data.fromTarget.render({
       ref: noop,
       style: {
+        zIndex,
+        opacity: options.fadeOut ? 0 : 1,
         transition: `transform ${duration}ms ${timingFunction}, height ${duration}ms ${timingFunction}, width ${duration}ms ${timingFunction}, opacity ${duration /
           2}ms ${timingFunction}`,
         position: 'absolute',
         transformOrigin: '0 0',
         willChange: 'transform, height, width',
-        zIndex: this.props.zIndex || 19999,
         top: fromTargetSizeLocation.location.top,
         left: fromTargetSizeLocation.location.left,
-        height: fromTargetSizeLocation.size.height,
-        width: fromTargetSizeLocation.size.width,
+        height: options.moveToTarget
+          ? data.toTarget.size.height
+          : fromTargetSizeLocation.size.height,
+        width: options.moveToTarget ? data.toTarget.size.width : fromTargetSizeLocation.size.width,
         overflow: 'hidden',
+        transform: options.moveToTarget
+          ? `translate3d(${data.toTarget.location.left - data.fromTarget.location.left}px, ${data
+              .toTarget.location.top - data.fromTarget.location.top}px, 0)`
+          : undefined,
       },
+      className: options.moveToTarget
+        ? css`
+            > * {
+              transition: transform ${duration}ms ${timingFunction};
+              transform: translate3d(
+                -${data.fromTarget.targetDOMData.location.left - data.fromTarget.location.left}px,
+                -${data.fromTarget.targetDOMData.location.top - data.fromTarget.location.top}px,
+                0
+              );
+            }
+          `
+        : undefined,
     });
+  };
+
+  beforeAnimate: AnimationCallback = (data, onFinish) => {
+    onFinish();
+    return this.renderAnimation(data);
   };
 
   animate: AnimationCallback = (data, onFinish) => {
-    if (!data.fromTarget.targetDOMData) {
-      throw new Error(`yubaba
-targetElement was missing.`);
-    }
+    const { duration } = this.props;
 
-    const duration = this.props.duration as number;
-    const { timingFunction } = this.props;
-    const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
+    setTimeout(onFinish, duration);
 
-    setTimeout(onFinish, this.props.duration);
-
-    return data.fromTarget.render({
-      ref: noop,
-      style: {
-        transition: `transform ${duration}ms ${timingFunction}, height ${duration}ms ${timingFunction}, width ${duration}ms ${timingFunction}, opacity ${duration /
-          2}ms ${timingFunction}`,
-        position: 'absolute',
-        transformOrigin: '0 0',
-        willChange: 'transform, height, width',
-        zIndex: this.props.zIndex || 19999,
-        top: fromTargetSizeLocation.location.top,
-        left: fromTargetSizeLocation.location.left,
-        height: data.toTarget.size.height,
-        width: data.toTarget.size.width,
-        overflow: 'hidden',
-        transform: `translate3d(${data.toTarget.location.left -
-          data.fromTarget.location.left}px, ${data.toTarget.location.top -
-          data.fromTarget.location.top}px, 0)`,
-      },
-      className: css`
-        > * {
-          transition: transform ${duration}ms ${timingFunction};
-          transform: translate3d(
-            -${data.fromTarget.targetDOMData.location.left - data.fromTarget.location.left}px,
-            -${data.fromTarget.targetDOMData.location.top - data.fromTarget.location.top}px,
-            0
-          );
-        }
-      `,
-    });
+    return this.renderAnimation(data, { moveToTarget: true });
   };
 
   afterAnimate: AnimationCallback = (data, onFinish, setTargetProps) => {
-    if (!data.fromTarget.targetDOMData) {
-      throw new Error(`yubaba
-targetElement was missing.`);
-    }
-
-    const duration = this.props.duration as number;
-    const { timingFunction } = this.props;
-    const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
-
     setTargetProps({
-      style: {
+      style: () => ({
         opacity: 1,
-      },
+      }),
     });
 
     setTimeout(onFinish, 100);
 
-    return data.fromTarget.render({
-      ref: noop,
-      style: {
-        transition: `transform ${duration}ms ${timingFunction}, height ${duration}ms ${timingFunction}, width ${duration}ms ${timingFunction}, opacity ${duration /
-          2}ms ${timingFunction}`,
-        position: 'absolute',
-        transformOrigin: '0 0',
-        willChange: 'transform, height, width',
-        zIndex: this.props.zIndex || 19999,
-        top: fromTargetSizeLocation.location.top,
-        left: fromTargetSizeLocation.location.left,
-        height: data.toTarget.size.height,
-        width: data.toTarget.size.width,
-        overflow: 'hidden',
-        transform: `translate3d(${data.toTarget.location.left -
-          data.fromTarget.location.left}px, ${data.toTarget.location.top -
-          data.fromTarget.location.top}px, 0)`,
-        opacity: 0,
-      },
-      className: css`
-        > * {
-          transition: transform ${duration}ms ${timingFunction};
-          transform: translate3d(
-            -${data.fromTarget.targetDOMData.location.left - data.fromTarget.location.left}px,
-            -${data.fromTarget.targetDOMData.location.top - data.fromTarget.location.top}px,
-            0
-          );
-        }
-      `,
-    });
+    return this.renderAnimation(data, { moveToTarget: true, fadeOut: true });
   };
 
   render() {
-    const data: CollectorData = {
-      action: CollectorActions.animation,
-      payload: {
-        beforeAnimate: this.beforeAnimate,
-        animate: this.animate,
-        afterAnimate: this.afterAnimate,
-      },
-    };
+    const { children } = this.props;
 
-    return <Collector data={data}>{this.props.children}</Collector>;
+    return (
+      <Collector
+        data={{
+          action: CollectorActions.animation,
+          payload: {
+            beforeAnimate: this.beforeAnimate,
+            animate: this.animate,
+            afterAnimate: this.afterAnimate,
+          },
+        }}
+      >
+        {children}
+      </Collector>
+    );
   }
 }

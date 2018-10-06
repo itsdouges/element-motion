@@ -9,12 +9,15 @@
   "rules": {
     "typescript/class-name-casing": "error",
     "typescript/no-unused-vars": "error",
+    "no-unused-vars": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
     "import/no-unresolved": "off",
     "no-undef": "off",
     "arrow-body-style": "off",
     "no-restricted-globals": "off",
     "no-multi-str": "off",
+    "react/prefer-stateless-function": "never",
+    "react/sort-comp": "off",
     "import/no-extraneous-dependencies": [
       "error",
       { "devDependencies": ["**/*test.tsx", "**/*stories.tsx"] }

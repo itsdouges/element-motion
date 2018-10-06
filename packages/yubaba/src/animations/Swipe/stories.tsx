@@ -4,39 +4,41 @@ import { storiesOf } from '@storybook/react';
 import Baba, { Swipe } from '../../../src';
 import * as Common from 'yubaba-common';
 
-const Root = styled.div`
+const Root = styled.button`
   width: 100px;
   height: 100px;
-  background: #db6f59;
+  background: #f8b88b;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  cursor: pointer;
+  border: none;
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ interactive?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   min-height: 100vh;
+  cursor: ${props => (props.interactive ? 'pointer' : 'default')};
 `;
 
 const makeStory = (direction: string) => (
   <Common.Toggler>
     {({ shown, toggle }) => (
       <div>
-        <Common.StickyButton onClick={() => toggle()}>toggle</Common.StickyButton>
         {!shown ? (
           <Container>
             <Baba name={`swipe-${direction}`} key="1">
-              <Swipe background="#db6f59" direction={direction as any}>
-                {({ ref, style }) => <Root style={style} innerRef={ref} />}
+              <Swipe background="#f8b88b" direction={direction as any}>
+                {({ ref, style }) => <Root onClick={() => toggle()} style={style} innerRef={ref} />}
               </Swipe>
             </Baba>
           </Container>
         ) : (
-          <Container>
+          <Container onClick={() => toggle()} interactive>
             <Baba name={`swipe-${direction}`} key="2">
               {({ ref, style }) => <div style={style} ref={ref} />}
             </Baba>

@@ -2,12 +2,14 @@ import * as React from 'react';
 import Collector, {
   CollectorChildrenProps,
   AnimationCallback,
-  CollectorData,
   CollectorActions,
+  AnimationData,
 } from '../../Collector';
 import { calculateHypotenuse } from '../../lib/math';
 import { calculateWindowCentre, calculateElementCenterInViewport } from '../../lib/dom';
 import SimpleKeyframe from '../SimpleKeyframe';
+import { standard, decelerate } from '../../lib/curves';
+import { zIndexStack } from '../../lib/style';
 
 export interface CircleShrinkProps extends CollectorChildrenProps {
   /**
@@ -18,7 +20,12 @@ export interface CircleShrinkProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
-  duration?: number;
+  duration: number;
+
+  /**
+   * zIndex to be applied to the moving element.
+   */
+  zIndex: number;
 }
 
 /**
@@ -33,14 +40,12 @@ export interface CircleShrinkProps extends CollectorChildrenProps {
 export default class CircleShrink extends React.Component<CircleShrinkProps> {
   static defaultProps = {
     duration: 500,
+    zIndex: zIndexStack.circleShrink,
   };
 
-  renderAnimation: (
-    opts: { step: number | undefined; onFinish: () => void }
-  ) => React.ReactElement<{}>;
+  renderAnimation = (data: AnimationData, options: { step?: number; onFinish: () => void }) => {
+    const { duration, background, zIndex } = this.props;
 
-  beforeAnimate: AnimationCallback = (data, onFinish) => {
-    const duration = this.props.duration as number;
     const minSize = Math.min(data.toTarget.size.width, data.toTarget.size.height);
     const toTargetHypotenuse = calculateHypotenuse(data.toTarget.size);
     const toTargetCenterInViewport = calculateElementCenterInViewport(data.toTarget);
@@ -56,19 +61,19 @@ export default class CircleShrink extends React.Component<CircleShrinkProps> {
     const hypotenuseDifference = calculateHypotenuse(difference);
     const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
 
-    this.renderAnimation = (opts: { step?: number | undefined; onFinish: () => void }) => (
+    return (
       <SimpleKeyframe
         style={{
+          zIndex,
           left: data.toTarget.location.left - (toTargetHypotenuse - data.toTarget.size.width) / 2,
           top: data.toTarget.location.top - (toTargetHypotenuse - data.toTarget.size.height) / 2,
           width: toTargetHypotenuse,
           height: toTargetHypotenuse,
           borderRadius: '50%',
           position: 'absolute',
-          background: this.props.background,
+          background,
           willChange: 'transform',
-          zIndex: 1110,
-          transition: `transform ease-out ${duration}ms, opacity ease-out ${duration}ms`,
+          transition: `transform ${decelerate()} ${duration}ms, opacity ${standard()} ${duration}ms`,
           transform: `scale(${scale})`,
         }}
         keyframes={[
@@ -80,36 +85,41 @@ export default class CircleShrink extends React.Component<CircleShrinkProps> {
             opacity: 0,
           },
         ]}
-        step={opts.step}
-        onFinish={opts.onFinish}
+        step={options.step}
+        onFinish={options.onFinish}
       />
     );
-
-    // Finish next animation frame. We are just placing the circle ready to go
-    // for the animate step.
-    requestAnimationFrame(() => onFinish());
-
-    return this.renderAnimation({ onFinish, step: undefined });
   };
 
-  animate: AnimationCallback = (_, onFinish) => {
-    return this.renderAnimation({ onFinish, step: 0 });
+  beforeAnimate: AnimationCallback = (data, onFinish) => {
+    onFinish();
+    return this.renderAnimation(data, { onFinish });
   };
 
-  afterAnimate: AnimationCallback = (_, onFinish) => {
-    return this.renderAnimation({ onFinish, step: 1 });
+  animate: AnimationCallback = (data, onFinish) => {
+    return this.renderAnimation(data, { onFinish, step: 0 });
+  };
+
+  afterAnimate: AnimationCallback = (data, onFinish) => {
+    return this.renderAnimation(data, { onFinish, step: 1 });
   };
 
   render() {
-    const data: CollectorData = {
-      action: CollectorActions.animation,
-      payload: {
-        beforeAnimate: this.beforeAnimate,
-        animate: this.animate,
-        afterAnimate: this.afterAnimate,
-      },
-    };
+    const { children } = this.props;
 
-    return <Collector data={data}>{this.props.children}</Collector>;
+    return (
+      <Collector
+        data={{
+          action: CollectorActions.animation,
+          payload: {
+            beforeAnimate: this.beforeAnimate,
+            animate: this.animate,
+            afterAnimate: this.afterAnimate,
+          },
+        }}
+      >
+        {children}
+      </Collector>
+    );
   }
 }

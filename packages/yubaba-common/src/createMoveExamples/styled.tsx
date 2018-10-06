@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import * as Common from '../';
+import * as Common from '../index';
 
 export const RestoreScrollOnMount = Common.createRestoreScrollOnMount();
 
@@ -21,6 +21,7 @@ export const ListItem = styled.button<ListItemProps>`
   background: #fea3aa;
   position: relative;
   cursor: pointer;
+  border: none;
 
   &:before {
     content: 'click me';
