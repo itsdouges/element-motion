@@ -3,6 +3,7 @@ import {
   unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer,
   unmountComponentAtNode,
 } from 'react-dom';
+import { css, cx } from 'emotion';
 import Collector, {
   AnimationData,
   SupplyDataHandler,
@@ -12,7 +13,7 @@ import Collector, {
   CollectorData,
   CollectorChildrenProps,
   CollectorActions,
-  InlineStyles,
+  Styles,
   ChildPropsFunc,
 } from '../Collector';
 import { getElementSizeLocation } from '../lib/dom';
@@ -45,7 +46,7 @@ export type AnimationBlock = MappedAnimation[];
  * @hidden
  */
 export interface ChildProps {
-  style?: InlineStyles;
+  style?: Styles;
   className?: string;
 }
 
@@ -56,6 +57,9 @@ export interface State {
   shown: boolean;
   childProps: ChildProps;
 }
+
+const shownClass = css({ opacity: 1 });
+const hiddenClass = css({ opacity: 0 });
 
 export interface BabaProps extends CollectorChildrenProps, InjectedProps {
   /**
@@ -320,16 +324,18 @@ If it's an image, try and have the image loaded before mounting, or set a static
 
           const setChildProps = (props: ChildPropsFunc | null) => {
             if (props) {
-              this.setState(prevState => ({
-                childProps: {
-                  style: props.style
-                    ? props.style(prevState.childProps.style || {})
-                    : prevState.childProps.style,
-                  className: props.className
-                    ? props.className(prevState.childProps.className)
-                    : prevState.childProps.className,
-                },
-              }));
+              this.setState(prevState => {
+                const styles = props.style
+                  ? props.style(prevState.childProps.style || {})
+                  : prevState.childProps.style;
+
+                return {
+                  childProps: {
+                    style: styles,
+                    className: css(styles),
+                  },
+                };
+              });
             } else {
               this.setState({
                 childProps: {},
@@ -518,11 +524,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
         receiveRenderChildren={this.setReactNode}
         receiveRef={this.setRef}
         receiveFocalTargetRef={this.setTargetRef}
-        style={{
-          opacity: shown ? 1 : 0,
-          ...childProps.style,
-        }}
-        className={childProps.className}
+        className={cx(childProps.className, shown ? shownClass : hiddenClass)}
       >
         {typeof children === 'function' ? children : React.Children.only(children)}
       </Collector>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { css } from 'emotion';
 import Collector, {
   CollectorChildrenProps,
   AnimationCallback,
@@ -59,7 +60,7 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
 
     return data.origin.render({
       ref: noop,
-      style: {
+      className: css({
         ...originBoundingBox.location,
         zIndex,
         transition: `transform ${duration}ms ${timingFunction}, opacity ${duration /
@@ -84,7 +85,7 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
               opacity: 0,
             }
           : {}),
-      },
+      }),
     });
   };
 

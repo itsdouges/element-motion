@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { css } from 'emotion';
 import Collector, {
   CollectorChildrenProps,
   AnimationCallback,
@@ -94,15 +93,10 @@ targetElement was missing.`);
               visibility: 'visible',
               willChange: combine('height, width, clip-path')(prevStyles.willChange),
               overflow: 'hidden',
-            }
-          : undefined,
-      className: () =>
-        data.destination.focalTargetElementBoundingBox
-          ? css({
               '> *': {
                 transform: `translate3d(-${offsetChildrenX}px, -${offsetChildrenY}px, 0)`,
               },
-            })
+            }
           : undefined,
     });
 
@@ -128,14 +122,11 @@ targetElement was missing.`);
         transition: combine(
           `height ${duration}ms ${timingFunction}, width ${duration}ms ${timingFunction}, clip-path ${duration}ms ${timingFunction}`
         )(prevStyles.transition),
+        '> *': {
+          transform: `translate3d(0, 0, 0)`,
+          transition: `transform ${duration}ms ${timingFunction}`,
+        },
       }),
-      className: () =>
-        css({
-          '> *': {
-            transform: `translate3d(0, 0, 0)`,
-            transition: `transform ${duration}ms ${timingFunction}`,
-          },
-        }),
     });
 
     setTimeout(() => onFinish(), duration);

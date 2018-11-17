@@ -1,17 +1,14 @@
 import * as React from 'react';
-// We don't want to depend on this, we'll just grab whatever version emotion gets.
 // eslint-disable-next-line import/no-extraneous-dependencies
-// import { CSSObject } from 'create-emotion';
+import { CSSObject } from 'create-emotion';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
 export interface ChildProps {
-  style: InlineStyles;
   className?: string;
 }
 
 export interface ChildPropsFunc {
-  style?: (previous: InlineStyles) => InlineStyles | undefined;
-  className?: (previous: string | undefined) => string | undefined;
+  style?: (previous: CSSObject) => CSSObject | undefined;
 }
 
 /**
@@ -62,7 +59,6 @@ export type SupplyDataHandler = (data: CollectorData[]) => void;
 export type CollectorChildrenAsFunction = (
   props: {
     ref: SupplyRefHandler;
-    style: InlineStyles;
     className?: string;
   }
 ) => React.ReactNode;
@@ -75,10 +71,7 @@ export interface AnimationData {
   destination: ElementData;
 }
 
-// export interface InlineStyles extends CSSObject {}
-export interface InlineStyles {
-  [key: string]: string | number | undefined;
-}
+export interface Styles extends CSSObject {}
 
 /**
  * @hidden
@@ -106,7 +99,6 @@ export interface CollectorProps extends CollectorChildrenProps {
   receiveRenderChildren?: SupplyRenderChildrenHandler;
   receiveData?: SupplyDataHandler;
   data?: CollectorData;
-  style?: InlineStyles;
   className?: string;
 }
 
@@ -122,7 +114,6 @@ export interface Collect {
   focalTargetRef: SupplyRefHandler;
   data: SupplyDataHandler;
   renderChildren: SupplyRenderChildrenHandler;
-  style: InlineStyles;
   className?: string;
 }
 
@@ -164,7 +155,6 @@ export default class Collector extends React.Component<CollectorProps> {
   render() {
     const {
       children,
-      style,
       className,
       data,
       receiveRenderChildren,
@@ -216,10 +206,6 @@ export default class Collector extends React.Component<CollectorProps> {
                     receiveRenderChildren(node);
                   }
                 },
-                style: {
-                  ...style,
-                  ...(collect ? collect.style : {}),
-                },
                 className: className || (collect ? collect.className : undefined),
               }}
             >
@@ -256,7 +242,6 @@ export default class Collector extends React.Component<CollectorProps> {
                     receiveRef(ref);
                   }
                 },
-                style: collect ? { ...style, ...collect.style } : style || {},
               })
             );
           }

@@ -57,40 +57,40 @@ targetElement was missing.`);
 
     return data.origin.render({
       ref: noop,
-      style: {
-        zIndex,
-        opacity: options.fadeOut ? 0 : 1,
-        transition: `transform ${duration}ms ${timingFunction}, height ${duration}ms ${timingFunction}, width ${duration}ms ${timingFunction}, opacity ${duration /
-          2}ms ${timingFunction}`,
-        position: 'absolute',
-        transformOrigin: '0 0',
-        willChange: 'transform, height, width',
-        top: originSizeLocation.location.top,
-        left: originSizeLocation.location.left,
-        height: options.moveToTarget
-          ? data.destination.elementBoundingBox.size.height
-          : originSizeLocation.size.height,
-        width: options.moveToTarget
-          ? data.destination.elementBoundingBox.size.width
-          : originSizeLocation.size.width,
-        overflow: 'hidden',
-        transform: options.moveToTarget
-          ? `translate3d(${data.destination.elementBoundingBox.location.left -
-              data.origin.elementBoundingBox.location.left}px, ${data.destination.elementBoundingBox
-              .location.top - data.origin.elementBoundingBox.location.top}px, 0)`
-          : undefined,
-      },
       className: options.moveToTarget
-        ? css`
-            > * {
-              transition: transform ${duration}ms ${timingFunction};
-              transform: translate3d(
-                -${data.origin.focalTargetElementBoundingBox.location.left - data.origin.elementBoundingBox.location.left}px,
-                -${data.origin.focalTargetElementBoundingBox.location.top - data.origin.elementBoundingBox.location.top}px,
-                0
-              );
-            }
-          `
+        ? css({
+            zIndex,
+            opacity: options.fadeOut ? 0 : 1,
+            transition: `transform ${duration}ms ${timingFunction}, height ${duration}ms ${timingFunction}, width ${duration}ms ${timingFunction}, opacity ${duration /
+              2}ms ${timingFunction}`,
+            position: 'absolute',
+            transformOrigin: '0 0',
+            willChange: 'transform, height, width',
+            top: originSizeLocation.location.top,
+            left: originSizeLocation.location.left,
+            height: options.moveToTarget
+              ? data.destination.elementBoundingBox.size.height
+              : originSizeLocation.size.height,
+            width: options.moveToTarget
+              ? data.destination.elementBoundingBox.size.width
+              : originSizeLocation.size.width,
+            overflow: 'hidden',
+            transform: options.moveToTarget
+              ? `translate3d(${data.destination.elementBoundingBox.location.left -
+                  data.origin.elementBoundingBox.location.left}px, ${data.destination
+                  .elementBoundingBox.location.top -
+                  data.origin.elementBoundingBox.location.top}px, 0)`
+              : undefined,
+            '> *': {
+              transition: `transform ${duration}ms ${timingFunction}`,
+              transform: `translate3d(
+                -${data.origin.focalTargetElementBoundingBox.location.left -
+                  data.origin.elementBoundingBox.location.left}px,
+                -${data.origin.focalTargetElementBoundingBox.location.top -
+                  data.origin.elementBoundingBox.location.top}px,
+                0`,
+            },
+          })
         : undefined,
     });
   };

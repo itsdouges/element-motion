@@ -1,6 +1,7 @@
-export const combine = (t1: string) => (t2?: string | number) => {
+export const combine = (t1: string | string[]) => (t2?: string | string[]) => {
   if (t2) {
-    return `${t1}, ${t2}`;
+    const arr: string[] = [];
+    return arr.concat(t1).concat(t2);
   }
 
   return t1;
