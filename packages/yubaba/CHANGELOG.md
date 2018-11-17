@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/madou/yubaba/compare/v1.3.0...v1.4.0) (2018-11-17)
+
+
+### Features
+
+* adds TIME_TO_WAIT_FOR_NEXT_BABA prop ([ab441ad](https://github.com/madou/yubaba/commit/ab441ad))
+
+
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/madou/yubaba/compare/v1.2.0...v1.3.0) (2018-10-06)
 

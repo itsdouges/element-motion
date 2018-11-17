@@ -1,7 +1,7 @@
 {
   "name": "yubaba-examples",
   "private": true,
-  "version": "1.3.0",
+  "version": "1.4.0",
   "repository": "madou/yubaba",
   "author": "Michael Dougall",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "react-dom": "^16.4.x",
     "react-router-dom": "^4.3.1",
     "styled-components": "^3.4.5",
-    "yubaba": "^1.3.0",
+    "yubaba": "^1.4.0",
     "yubaba-common": "^1.3.0"
   },
   "devDependencies": {
