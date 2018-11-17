@@ -76,6 +76,12 @@ export interface BabaProps extends CollectorChildrenProps, InjectedProps {
    * component.
    */
   onFinish: () => void;
+
+  /**
+   * Time this component will wait until it throws away the animation.
+   * Defaults to 50ms, might want to bump it up if loading something that was code split.
+   */
+  TIME_TO_WAIT_FOR_NEXT_BABA: number;
 }
 
 /**
@@ -117,14 +123,13 @@ export class Baba extends React.PureComponent<BabaProps, State> {
 
   static defaultProps = {
     onFinish: noop,
+    TIME_TO_WAIT_FOR_NEXT_BABA: 50,
   };
 
   state: State = {
     shown: false,
     childProps: {},
   };
-
-  TIME_TO_WAIT_FOR_NEXT_BABA = 50;
 
   animating: boolean = false;
 
@@ -214,9 +219,9 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
   }
 
   delayedClearDOMData() {
-    const { name } = this.props;
+    const { name, TIME_TO_WAIT_FOR_NEXT_BABA } = this.props;
 
-    setTimeout(() => childrenStore.remove(name), this.TIME_TO_WAIT_FOR_NEXT_BABA);
+    setTimeout(() => childrenStore.remove(name), TIME_TO_WAIT_FOR_NEXT_BABA);
   }
 
   storeDOMData() {
@@ -421,11 +426,10 @@ If it's an image, try and have the image loaded before mounting, or set a static
         }
       };
 
-      const beforeAnimatePromises = actions.map(
-        targetData =>
-          targetData.action === CollectorActions.animation
-            ? targetData.payload.beforeAnimate()
-            : Promise.resolve()
+      const beforeAnimatePromises = actions.map(targetData =>
+        targetData.action === CollectorActions.animation
+          ? targetData.payload.beforeAnimate()
+          : Promise.resolve()
       );
 
       Promise.all(beforeAnimatePromises)
