@@ -4,6 +4,9 @@
   "repository": "madou/yubaba",
   "author": "Michael Dougall",
   "license": "MIT",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "tdd": "jest --watch",
     "build": "lerna run build",
