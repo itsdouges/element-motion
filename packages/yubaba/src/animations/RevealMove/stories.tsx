@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Toggler } from 'yubaba-common';
 import Baba from '../../Baba';
 import Noop from '../Noop';
-import Target from '../../Target';
+import Target from '../../FocalTarget';
 import RevealMove from './index';
 
 type Appearance = 'left' | 'center' | 'right';

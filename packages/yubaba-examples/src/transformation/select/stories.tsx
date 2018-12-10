@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Select from 'react-select';
-import Baba, { FLIPMove as Move } from 'yubaba';
+import Baba, { Move as Move } from 'yubaba';
 import { Toggler } from 'yubaba-common';
 import * as Styled from './styled';
 import data from './data';

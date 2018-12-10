@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import StarIcon from '@material-ui/icons/StarBorder';
-import Baba, { FLIPMove as Move, CircleExpand, Collector } from 'yubaba';
+import Baba, { Move as Move, CircleExpand, Collector } from 'yubaba';
 import { Album as AlbumData } from './data';
 import { IconButton } from '@material-ui/core';
 

@@ -5,7 +5,7 @@ import BackIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 
 import * as Common from 'yubaba-common';
-import Baba, { FLIPMove, BabaManager } from 'yubaba';
+import Baba, { Move, BabaManager } from 'yubaba';
 import * as Styled from './styled';
 
 const Image: React.StatelessComponent<Styled.ImageProps> = ({
@@ -19,7 +19,7 @@ const Image: React.StatelessComponent<Styled.ImageProps> = ({
   <Styled.Root>
     <Styled.ImageContainer>
       <Baba name={title} in={inn}>
-        <FLIPMove>
+        <Move>
           {({ ref, style }) => (
             <Styled.Img
               src={src}
@@ -28,7 +28,7 @@ const Image: React.StatelessComponent<Styled.ImageProps> = ({
               style={{ ...style, opacity: selected ? 0 : (style.opacity as any) }}
             />
           )}
-        </FLIPMove>
+        </Move>
       </Baba>
 
       <Styled.ImageBack />
@@ -53,9 +53,9 @@ const ImagePage: React.StatelessComponent<Styled.ImageProps> = ({ src, title, on
         </IconButton>
 
         <Baba name={title}>
-          <FLIPMove>
+          <Move>
             {({ ref, style }) => <Styled.PageImage src={src} innerRef={ref} style={style} />}
-          </FLIPMove>
+          </Move>
         </Baba>
 
         <Styled.ContentContainer>

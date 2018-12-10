@@ -18,6 +18,7 @@
     "no-multi-str": "off",
     "react/prefer-stateless-function": "never",
     "react/sort-comp": "off",
+    "react/destructuring-assignment": "never",
     "import/no-extraneous-dependencies": [
       "error",
       { "devDependencies": ["**/*test.tsx", "**/*stories.tsx"] }
