@@ -9,6 +9,7 @@
     "build": "lerna run build",
     "lint": "eslint --ext .tsx .",
     "test": "jest",
+    "size": "lerna exec --ignore yubaba-common --ignore yubaba-examples -- yarn size",
     "pre-cut-version": "yarn test",
     "postinstall": "yarn build && lerna link",
     "cut-version": "yarn pre-cut-version && lerna publish --conventional-commits --skip-npm && yarn post-cut-version",
