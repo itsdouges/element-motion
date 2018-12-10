@@ -4,6 +4,8 @@ import Baba, { FLIPMove as Move } from 'yubaba';
 import { Toggler } from 'yubaba-common';
 import * as Styled from './styled';
 
+const DURATION = 400;
+
 storiesOf('yubaba-examples/Transformation/Search', module).add('Default', () => (
   <Styled.Banner>
     <Styled.Container>
@@ -18,7 +20,7 @@ storiesOf('yubaba-examples/Transformation/Search', module).add('Default', () => 
                 <Styled.StickyContainer>
                   <Styled.Container>
                     <Baba name="search-bar">
-                      <Move zIndex={802}>
+                      <Move zIndex={802} duration={DURATION}>
                         {baba => (
                           <Styled.StickyInput
                             autoFocus
@@ -32,7 +34,7 @@ storiesOf('yubaba-examples/Transformation/Search', module).add('Default', () => 
                   </Styled.Container>
 
                   <Baba name="search-bar-bg">
-                    <Move zIndex={801}>
+                    <Move zIndex={801} duration={DURATION}>
                       {baba => <Styled.InputBackground style={baba.style} innerRef={baba.ref} />}
                     </Move>
                   </Baba>
@@ -42,7 +44,7 @@ storiesOf('yubaba-examples/Transformation/Search', module).add('Default', () => 
 
             <Styled.RelativeContainer>
               <Baba name="search-bar" in={!shown}>
-                <Move zIndex={802}>
+                <Move zIndex={802} duration={DURATION}>
                   {baba => (
                     <Styled.Input
                       onClick={() => toggle()}
@@ -58,7 +60,7 @@ storiesOf('yubaba-examples/Transformation/Search', module).add('Default', () => 
               </Baba>
 
               <Baba name="search-bar-bg" in={!shown}>
-                <Move zIndex={801}>
+                <Move zIndex={801} duration={DURATION}>
                   {baba => (
                     <Styled.InputStaticBackground
                       style={{

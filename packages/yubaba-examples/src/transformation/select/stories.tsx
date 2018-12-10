@@ -6,12 +6,14 @@ import { Toggler } from 'yubaba-common';
 import * as Styled from './styled';
 import data from './data';
 
+const DURATION = 350;
+
 storiesOf('yubaba-examples/Transformation/Select', module).add('Default', () => (
   <Toggler>
     {({ shown, toggle }) =>
       shown ? (
         <Baba name={`item-${shown}`}>
-          <Move>
+          <Move duration={DURATION}>
             {baba => (
               <div {...baba}>
                 <Select
@@ -37,7 +39,7 @@ storiesOf('yubaba-examples/Transformation/Select', module).add('Default', () => 
         <Styled.List>
           {data.map((item, index) => (
             <Baba key={index} name={`item-${index}`}>
-              <Move>
+              <Move duration={DURATION}>
                 {baba => (
                   <Styled.Value
                     onClick={() => toggle(`${index}`)}
