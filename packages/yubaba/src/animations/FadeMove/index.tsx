@@ -42,7 +42,7 @@ export interface FadeMoveProps extends CollectorChildrenProps {
  * This animation works best if you have two elements that aren't the same, but you'd like
  * to transition them to each other.
  *
- * If you're transitioning the same element I'd suggest using FLIPMove, as it is a cheaper
+ * If you're transitioning the same element I'd suggest using Move, as it is a cheaper
  * animation.
  */
 export default class FadeMove extends React.Component<FadeMoveProps> {

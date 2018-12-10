@@ -2,15 +2,15 @@ import * as React from 'react';
 import { CollectorContext, SupplyRefHandler } from '../Collector';
 import noop from '../lib/noop';
 
-interface TargetChildProps {
+interface FocalTargetChildProps {
   ref: SupplyRefHandler;
 }
 
-interface TargetProps {
-  children: (props: TargetChildProps) => React.ReactNode;
+interface FocalTargetProps {
+  children: (props: FocalTargetChildProps) => React.ReactNode;
 }
 
-export default class Target extends React.Component<TargetProps> {
+export default class Target extends React.Component<FocalTargetProps> {
   render() {
     return (
       <CollectorContext.Consumer>

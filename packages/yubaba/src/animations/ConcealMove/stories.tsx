@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from 'yubaba-common';
 import Baba from '../../Baba';
-import Target from '../../Target';
+import Target from '../../FocalTarget';
 import ConcealMove from './index';
 
 const Container = styled.div`

@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom';
 import { storiesOf } from '@storybook/react';
 import { withMarkdownNotes } from '@storybook/addon-notes';
 import { MemoryRouter, Route, Switch } from 'react-router-dom';
-import Baba, { RevealMove, ConcealMove, Target } from 'yubaba';
+import Baba, { RevealMove, ConcealMove, FocalTarget as Target } from 'yubaba';
 import * as Common from 'yubaba-common';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
