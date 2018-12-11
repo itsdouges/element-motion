@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import 'jest-enzyme';
 import { Baba } from '../Baba';
 import Target from '../FocalTarget';
-import { getElementSizeLocation } from '../lib/dom';
+import { getElementBoundingBox } from '../lib/dom';
 import defer from '../lib/defer';
 import * as utils from '../__tests__/utils';
 
@@ -36,7 +36,7 @@ describe('<Baba />', () => {
   it('should pass dom data to child animation', async () => {
     const callback = jest.fn();
     const elementData = utils.domData();
-    (getElementSizeLocation as jest.Mock).mockReturnValue(elementData);
+    (getElementBoundingBox as jest.Mock).mockReturnValue(elementData);
     const deferred = defer();
     const Animation = utils.createTestAnimation({
       onAnimate: callback,
@@ -68,7 +68,7 @@ describe('<Baba />', () => {
   it('should pass dom data to child animation when using in prop', async () => {
     const callback = jest.fn();
     const elementData = utils.domData();
-    (getElementSizeLocation as jest.Mock).mockReturnValue(elementData);
+    (getElementBoundingBox as jest.Mock).mockReturnValue(elementData);
     const deferred = defer();
     const Animation = utils.createTestAnimation({
       onAnimate: callback,
@@ -100,7 +100,7 @@ describe('<Baba />', () => {
   it('should pass target dom data to child animation', async () => {
     const callback = jest.fn();
     const elementData = utils.domData();
-    (getElementSizeLocation as jest.Mock).mockReturnValue(elementData);
+    (getElementBoundingBox as jest.Mock).mockReturnValue(elementData);
     const deferred = defer();
     const Animation = utils.createTestAnimation({
       onAnimate: callback,
@@ -136,7 +136,7 @@ describe('<Baba />', () => {
     });
     await deferred.promise;
 
-    expect(callback.mock.calls[0][0].toTarget.targetDOMData).toMatchSnapshot();
+    expect(callback.mock.calls[0][0].destination.elementBoundingBox).toMatchSnapshot();
   });
 
   it('should make children visible inside first baba element before animating has been triggered', () => {

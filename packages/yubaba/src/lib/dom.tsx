@@ -47,7 +47,7 @@ export interface GetElementSizeLocationReturnValue {
 /**
  * @hidden
  */
-export function getElementSizeLocation(
+export function getElementBoundingBox(
   element: HTMLElement,
   options: GetElementSizeLocationOptions = {}
 ): GetElementSizeLocationReturnValue {

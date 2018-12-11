@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import StarIcon from '@material-ui/icons/StarBorder';
-import Baba, { Move as Move, CircleExpand, Collector } from 'yubaba';
+import Baba, { Move, CircleExpand, Collector } from 'yubaba';
 import { Album as AlbumData } from './data';
 import { IconButton } from '@material-ui/core';
 
@@ -104,7 +104,7 @@ const Album: React.StatelessComponent<Props> = ({
     <Root emphasis={emphasis} color={color}>
       <Baba name={baba}>
         <Expand background={color}>
-          <Move delay={expand ? 100 : 0}>
+          <Move>
             {({ ref, style }) => (
               <BackgroundImage onClick={onClick} src={albumArt} style={style} innerRef={ref} />
             )}

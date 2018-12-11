@@ -11,7 +11,6 @@ describe('<Collector />', () => {
       beforeAnimate: () => Promise.resolve(),
       afterAnimate: () => Promise.resolve(),
       abort: () => {},
-      cleanup: () => {},
     },
   });
 
@@ -226,12 +225,12 @@ describe('<Collector />', () => {
     containerRef.appendChild(targetRef);
 
     mount(
-      <Collector receiveRef={callback} receiveTargetRef={callback}>
+      <Collector receiveRef={callback} receiveFocalTargetRef={callback}>
         <Collector>
           {({ ref }) => (
             <div ref={ref}>
               <CollectorContext.Consumer>
-                {collect => <span ref={collect.targetRef} />}
+                {collect => <span ref={collect.focalTargetRef} />}
               </CollectorContext.Consumer>
             </div>
           )}

@@ -51,7 +51,7 @@ export default class CircleExpand extends React.Component<CircleExpandProps> {
     const { duration, background, zIndex } = this.props;
 
     // Scroll could have changed between unmount and this prepare step, let's recalculate just in case.
-    const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
+    const fromTargetSizeLocation = recalculateLocationFromScroll(data.origin.elementBoundingBox);
     const minSize = Math.min(fromTargetSizeLocation.size.width, fromTargetSizeLocation.size.height);
     const fromTargetHypotenuse = calculateHypotenuse(fromTargetSizeLocation.size);
     const fromTargetCenterInViewport = calculateElementCenterInViewport(fromTargetSizeLocation);
