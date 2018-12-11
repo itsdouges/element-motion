@@ -15,7 +15,7 @@ export default class Target extends React.Component<FocalTargetProps> {
     return (
       <CollectorContext.Consumer>
         {collect => {
-          return this.props.children({ ref: collect ? collect.targetRef : noop });
+          return this.props.children({ ref: collect ? collect.focalTargetRef : noop });
         }}
       </CollectorContext.Consumer>
     );

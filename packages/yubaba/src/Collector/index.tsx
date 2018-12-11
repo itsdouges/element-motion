@@ -1,7 +1,4 @@
 import * as React from 'react';
-// We don't want to depend on this, we'll just grab whatever version emotion gets.
-// eslint-disable-next-line import/no-extraneous-dependencies
-// import { CSSObject } from 'create-emotion';
 import { GetElementSizeLocationReturnValue } from '../lib/dom';
 
 export interface TargetProps {
@@ -14,19 +11,19 @@ export interface TargetPropsFunc {
   className?: (previous: string | undefined) => string | undefined;
 }
 
-export type SetTargetProps = (props: TargetPropsFunc) => void;
+export type setChildProps = (props: TargetPropsFunc) => void;
 
 /**
  * AnimationCallback
  *
  * Return JSX if you want to add a new element to the DOM,
  * call onFinish() when you've finished the animation,
- * call setTargetProps() if you want to update the target props.
+ * call setChildProps() if you want to update the target props.
  */
 export type AnimationCallback = (
   data: AnimationData,
   onFinish: () => void,
-  setTargetProps: SetTargetProps
+  setChildProps: setChildProps
 ) => React.ReactNode | undefined | void;
 
 export enum CollectorActions {
@@ -74,11 +71,10 @@ export type CollectorChildrenAsFunction = (
  * @hidden
  */
 export interface AnimationData {
-  fromTarget: TargetData;
-  toTarget: TargetData;
+  origin: ElementData;
+  destination: ElementData;
 }
 
-// export interface InlineStyles extends CSSObject {}
 export interface InlineStyles {
   [key: string]: string | number | undefined;
 }
@@ -86,10 +82,11 @@ export interface InlineStyles {
 /**
  * @hidden
  */
-export interface TargetData extends GetElementSizeLocationReturnValue {
-  containerElement: HTMLElement;
-  targetElement: HTMLElement | null | undefined;
-  targetDOMData: GetElementSizeLocationReturnValue | undefined;
+export interface ElementData {
+  element: HTMLElement;
+  elementBoundingBox: GetElementSizeLocationReturnValue;
+  focalTargetElement: HTMLElement | null | undefined;
+  focalTargetElementBoundingBox: GetElementSizeLocationReturnValue | undefined;
   render: CollectorChildrenAsFunction;
 }
 
@@ -104,7 +101,7 @@ export interface CollectorChildrenProps {
  */
 export interface CollectorProps extends CollectorChildrenProps {
   receiveRef?: SupplyRefHandler;
-  receiveTargetRef?: SupplyRefHandler;
+  receiveFocalTargetRef?: SupplyRefHandler;
   receiveRenderChildren?: SupplyRenderChildrenHandler;
   receiveData?: SupplyDataHandler;
   data?: CollectorData;
@@ -121,7 +118,7 @@ export interface Collect {
    * Used for more complex animations when there is a child in the container
    * that is needed for the animation calculation.
    */
-  targetRef: SupplyRefHandler;
+  focalTargetRef: SupplyRefHandler;
   data: SupplyDataHandler;
   renderChildren: SupplyRenderChildrenHandler;
   style: InlineStyles;
@@ -189,14 +186,14 @@ export default class Collector extends React.Component<CollectorProps> {
                     collect.ref(ref);
                   }
                 },
-                targetRef: ref => {
-                  const { receiveTargetRef } = this.props;
-                  if (receiveTargetRef) {
-                    receiveTargetRef(ref);
+                focalTargetRef: ref => {
+                  const { receiveFocalTargetRef } = this.props;
+                  if (receiveFocalTargetRef) {
+                    receiveFocalTargetRef(ref);
                   }
 
                   if (collect) {
-                    collect.targetRef(ref);
+                    collect.focalTargetRef(ref);
                   }
                 },
                 data: childData => {

@@ -46,9 +46,14 @@ export default class CircleShrink extends React.Component<CircleShrinkProps> {
   renderAnimation = (data: AnimationData, options: { step?: number; onFinish: () => void }) => {
     const { duration, background, zIndex } = this.props;
 
-    const minSize = Math.min(data.toTarget.size.width, data.toTarget.size.height);
-    const toTargetHypotenuse = calculateHypotenuse(data.toTarget.size);
-    const toTargetCenterInViewport = calculateElementCenterInViewport(data.toTarget);
+    const minSize = Math.min(
+      data.destination.elementBoundingBox.size.width,
+      data.destination.elementBoundingBox.size.height
+    );
+    const toTargetHypotenuse = calculateHypotenuse(data.destination.elementBoundingBox.size);
+    const toTargetCenterInViewport = calculateElementCenterInViewport(
+      data.destination.elementBoundingBox
+    );
     const viewportCenter = calculateWindowCentre();
     const windowHypotenuse = calculateHypotenuse({
       width: window.innerWidth,
@@ -65,8 +70,12 @@ export default class CircleShrink extends React.Component<CircleShrinkProps> {
       <SimpleKeyframe
         style={{
           zIndex,
-          left: data.toTarget.location.left - (toTargetHypotenuse - data.toTarget.size.width) / 2,
-          top: data.toTarget.location.top - (toTargetHypotenuse - data.toTarget.size.height) / 2,
+          left:
+            data.destination.elementBoundingBox.location.left -
+            (toTargetHypotenuse - data.destination.elementBoundingBox.size.width) / 2,
+          top:
+            data.destination.elementBoundingBox.location.top -
+            (toTargetHypotenuse - data.destination.elementBoundingBox.size.height) / 2,
           width: toTargetHypotenuse,
           height: toTargetHypotenuse,
           borderRadius: '50%',

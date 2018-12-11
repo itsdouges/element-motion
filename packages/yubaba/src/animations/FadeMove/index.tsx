@@ -18,11 +18,6 @@ export interface FadeMoveProps extends CollectorChildrenProps {
   duration: number;
 
   /**
-   * Delays the animation from starting for {delay}ms.
-   */
-  delay?: number;
-
-  /**
    * zIndex to be applied to the moving element.
    */
   zIndex: number;
@@ -56,11 +51,13 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
     const { timingFunction, duration, zIndex } = this.props;
     // Scroll could have changed between unmount and this prepare step, let's recalculate
     // just in case.
-    const fromTargetSizeLocation = recalculateLocationFromScroll(data.fromTarget);
-    const fromEndXOffset = data.toTarget.location.left - fromTargetSizeLocation.location.left;
-    const fromEndYOffset = data.toTarget.location.top - fromTargetSizeLocation.location.top;
+    const fromTargetSizeLocation = recalculateLocationFromScroll(data.origin.elementBoundingBox);
+    const fromEndXOffset =
+      data.destination.elementBoundingBox.location.left - fromTargetSizeLocation.location.left;
+    const fromEndYOffset =
+      data.destination.elementBoundingBox.location.top - fromTargetSizeLocation.location.top;
 
-    return data.fromTarget.render({
+    return data.origin.render({
       ref: noop,
       style: {
         ...fromTargetSizeLocation.location,
@@ -78,10 +75,10 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
         ...(options.moveToTarget
           ? {
               transform: `translate3d(${fromEndXOffset}px, ${fromEndYOffset}px, 0) scale3d(${math.percentageDifference(
-                data.toTarget.size.width,
+                data.destination.elementBoundingBox.size.width,
                 fromTargetSizeLocation.size.width
               )}, ${math.percentageDifference(
-                data.toTarget.size.height,
+                data.destination.elementBoundingBox.size.height,
                 fromTargetSizeLocation.size.height
               )}, 1)`,
               opacity: 0,

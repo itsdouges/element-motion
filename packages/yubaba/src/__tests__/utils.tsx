@@ -43,28 +43,28 @@ export const createTestAnimation = ({
     data={{
       action: CollectorActions.animation,
       payload: {
-        beforeAnimate: (data, onFinish, setTargetProps) => {
+        beforeAnimate: (data, onFinish, setChildProps) => {
           onBeforeAnimate(data);
           setTimeout(onFinish, 0);
           if (beforeAnimateTargetProps) {
-            setTargetProps(beforeAnimateTargetProps);
+            setChildProps(beforeAnimateTargetProps);
           }
 
           return beforeAnimateJsx;
         },
-        animate: (data, onFinish, setTargetProps) => {
+        animate: (data, onFinish, setChildProps) => {
           onAnimate(data);
           setTimeout(onFinish, 0);
           if (animateTargetProps) {
-            setTargetProps(animateTargetProps);
+            setChildProps(animateTargetProps);
           }
           return animateJsx;
         },
-        afterAnimate: (data, onFinish, setTargetProps) => {
+        afterAnimate: (data, onFinish, setChildProps) => {
           onAfterAnimate(data);
           setTimeout(onFinish, 0);
           if (afterAnimateTargetProps) {
-            setTargetProps(afterAnimateTargetProps);
+            setChildProps(afterAnimateTargetProps);
           }
           return afterAnimateJsx;
         },

@@ -3,45 +3,49 @@
 exports[`<Baba /> should pass dom data to child animation 1`] = `
 Array [
   Object {
-    "fromTarget": Object {
-      "containerElement": <div
+    "destination": Object {
+      "element": undefined,
+      "elementBoundingBox": Object {
+        "location": Object {
+          "left": 0,
+          "top": 0,
+        },
+        "raw": Object {
+          "rect": Object {},
+          "scrollLeft": 0,
+          "scrollTop": 0,
+        },
+        "size": Object {
+          "height": 200,
+          "width": 100,
+        },
+      },
+      "focalTargetElement": undefined,
+      "focalTargetElementBoundingBox": undefined,
+      "render": undefined,
+    },
+    "origin": Object {
+      "element": <div
         style="opacity: 1;"
       />,
-      "location": Object {
-        "left": 0,
-        "top": 0,
+      "elementBoundingBox": Object {
+        "location": Object {
+          "left": 0,
+          "top": 0,
+        },
+        "raw": Object {
+          "rect": Object {},
+          "scrollLeft": 0,
+          "scrollTop": 0,
+        },
+        "size": Object {
+          "height": 200,
+          "width": 100,
+        },
       },
-      "raw": Object {
-        "rect": Object {},
-        "scrollLeft": 0,
-        "scrollTop": 0,
-      },
+      "focalTargetElement": undefined,
+      "focalTargetElementBoundingBox": undefined,
       "render": [Function],
-      "size": Object {
-        "height": 200,
-        "width": 100,
-      },
-      "targetDOMData": undefined,
-      "targetElement": undefined,
-    },
-    "toTarget": Object {
-      "containerElement": undefined,
-      "location": Object {
-        "left": 0,
-        "top": 0,
-      },
-      "raw": Object {
-        "rect": Object {},
-        "scrollLeft": 0,
-        "scrollTop": 0,
-      },
-      "render": undefined,
-      "size": Object {
-        "height": 200,
-        "width": 100,
-      },
-      "targetDOMData": undefined,
-      "targetElement": undefined,
     },
   },
 ]
@@ -50,45 +54,49 @@ Array [
 exports[`<Baba /> should pass dom data to child animation when using in prop 1`] = `
 Array [
   Object {
-    "fromTarget": Object {
-      "containerElement": <div
+    "destination": Object {
+      "element": undefined,
+      "elementBoundingBox": Object {
+        "location": Object {
+          "left": 0,
+          "top": 0,
+        },
+        "raw": Object {
+          "rect": Object {},
+          "scrollLeft": 0,
+          "scrollTop": 0,
+        },
+        "size": Object {
+          "height": 200,
+          "width": 100,
+        },
+      },
+      "focalTargetElement": undefined,
+      "focalTargetElementBoundingBox": undefined,
+      "render": undefined,
+    },
+    "origin": Object {
+      "element": <div
         style="opacity: 1;"
       />,
-      "location": Object {
-        "left": 0,
-        "top": 0,
+      "elementBoundingBox": Object {
+        "location": Object {
+          "left": 0,
+          "top": 0,
+        },
+        "raw": Object {
+          "rect": Object {},
+          "scrollLeft": 0,
+          "scrollTop": 0,
+        },
+        "size": Object {
+          "height": 200,
+          "width": 100,
+        },
       },
-      "raw": Object {
-        "rect": Object {},
-        "scrollLeft": 0,
-        "scrollTop": 0,
-      },
+      "focalTargetElement": undefined,
+      "focalTargetElementBoundingBox": undefined,
       "render": [Function],
-      "size": Object {
-        "height": 200,
-        "width": 100,
-      },
-      "targetDOMData": undefined,
-      "targetElement": undefined,
-    },
-    "toTarget": Object {
-      "containerElement": undefined,
-      "location": Object {
-        "left": 0,
-        "top": 0,
-      },
-      "raw": Object {
-        "rect": Object {},
-        "scrollLeft": 0,
-        "scrollTop": 0,
-      },
-      "render": undefined,
-      "size": Object {
-        "height": 200,
-        "width": 100,
-      },
-      "targetDOMData": undefined,
-      "targetElement": undefined,
     },
   },
 ]

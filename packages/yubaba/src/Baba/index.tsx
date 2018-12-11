@@ -13,11 +13,12 @@ import Collector, {
   CollectorActions,
   InlineStyles,
   TargetPropsFunc,
+  AnimationData,
 } from '../Collector';
-import { getElementSizeLocation } from '../lib/dom';
+import { getElementBoundingBox } from '../lib/dom';
 import defer from '../lib/defer';
 import noop from '../lib/noop';
-import * as childrenStore from '../lib/childrenStore';
+import * as babaStore from '../lib/babaStore';
 import { InjectedProps, withBabaManagerContext } from '../BabaManager';
 
 /**
@@ -81,7 +82,7 @@ export interface BabaProps extends CollectorChildrenProps, InjectedProps {
    * Time this component will wait until it throws away the animation.
    * Defaults to 50ms, might want to bump it up if loading something that was code split.
    */
-  TIME_TO_WAIT_FOR_NEXT_BABA: number;
+  timeToWaitForNextBaba: number;
 }
 
 /**
@@ -123,7 +124,7 @@ export class Baba extends React.PureComponent<BabaProps, State> {
 
   static defaultProps = {
     onFinish: noop,
-    TIME_TO_WAIT_FOR_NEXT_BABA: 50,
+    timeToWaitForNextBaba: 50,
   };
 
   state: State = {
@@ -135,9 +136,9 @@ export class Baba extends React.PureComponent<BabaProps, State> {
 
   unmounting: boolean = false;
 
-  containerElement: HTMLElement | null;
+  element: HTMLElement | null;
 
-  targetElement: HTMLElement | null;
+  focalTargetElement: HTMLElement | null;
 
   renderChildren: CollectorChildrenAsFunction;
 
@@ -148,7 +149,7 @@ export class Baba extends React.PureComponent<BabaProps, State> {
   componentDidMount() {
     const { in: componentIn, name } = this.props;
 
-    if (componentIn === undefined && childrenStore.has(name)) {
+    if (componentIn === undefined && babaStore.has(name)) {
       // A child has already been stored, so this is probably the matching pair.
       this.executeAnimations();
       return;
@@ -166,7 +167,7 @@ export class Baba extends React.PureComponent<BabaProps, State> {
     if (prevProps.in === false && isIn === true) {
       // We're being removed from "in". Let's recalculate our DOM position.
       this.storeDOMData();
-      this.delayedClearDOMData();
+      this.delayedClearBabaStore();
       this.abortAnimations();
     }
   }
@@ -188,7 +189,7 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
     }
 
     if (isIn) {
-      if (childrenStore.has(name)) {
+      if (babaStore.has(name)) {
         this.executeAnimations();
         return;
       }
@@ -199,7 +200,7 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
 
   componentWillUnmount() {
     this.storeDOMData();
-    this.delayedClearDOMData();
+    this.delayedClearBabaStore();
     this.abortAnimations();
     this.unmounting = true;
   }
@@ -218,10 +219,10 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
     }
   }
 
-  delayedClearDOMData() {
-    const { name, TIME_TO_WAIT_FOR_NEXT_BABA } = this.props;
+  delayedClearBabaStore() {
+    const { name, timeToWaitForNextBaba } = this.props;
 
-    setTimeout(() => childrenStore.remove(name), TIME_TO_WAIT_FOR_NEXT_BABA);
+    setTimeout(() => babaStore.remove(name), timeToWaitForNextBaba);
   }
 
   storeDOMData() {
@@ -232,12 +233,12 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
     // If there is only a Baba target and no child animations
     // data will be undefined, which means there are no animations to store.
     if (this.data) {
-      const DOMData = getElementSizeLocation(this.containerElement as HTMLElement);
-      const targetDOMData = this.targetElement
-        ? getElementSizeLocation(this.targetElement)
+      const elementBoundingBox = getElementBoundingBox(this.element as HTMLElement);
+      const focalTargetElementBoundingBox = this.focalTargetElement
+        ? getElementBoundingBox(this.focalTargetElement)
         : undefined;
 
-      if (process.env.NODE_ENV === 'development' && DOMData.size.height === 0) {
+      if (process.env.NODE_ENV === 'development' && elementBoundingBox.size.height === 0) {
         console.warn(`yubaba
 Your target child had a height of zero when capturing it's DOM data. This may affect the animation.
 If it's an image, try and have the image loaded before mounting, or set a static height.`);
@@ -248,41 +249,45 @@ If it's an image, try and have the image loaded before mounting, or set a static
       // NOTE: Currently in react 16.3 if the parent being unmounted is a Fragment
       // there is a chance for sibling elements to be removed from the DOM first
       // resulting in inaccurate calculations of location. Watch out!
-      childrenStore.set(name, {
-        ...DOMData,
-        targetDOMData,
-        containerElement: this.containerElement as HTMLElement,
-        targetElement: this.targetElement,
-        render: this.renderChildren,
-        data: this.data,
-      });
+      const data: babaStore.BabaData = {
+        elementData: {
+          element: this.element as HTMLElement,
+          elementBoundingBox,
+          focalTargetElement: this.focalTargetElement,
+          focalTargetElementBoundingBox,
+          render: this.renderChildren,
+        },
+        collectorData: this.data,
+      };
+
+      babaStore.set(name, data);
     }
   }
 
   executeAnimations = () => {
     const { name } = this.props;
-    const fromTarget = childrenStore.get(name);
+    const fromTarget = babaStore.get(name);
 
     if (fromTarget) {
-      const { data, ...target } = fromTarget;
+      const { collectorData, elementData } = fromTarget;
       this.animating = true;
 
       // Calculate DOM data for the executing element to then be passed to the animation/s.
-      const elementDOMData = {
-        fromTarget: target,
-        toTarget: {
+      const animationData: AnimationData = {
+        origin: elementData,
+        destination: {
           render: this.renderChildren,
-          containerElement: this.containerElement as HTMLElement,
-          targetElement: this.targetElement,
-          targetDOMData: this.targetElement
-            ? getElementSizeLocation(this.targetElement)
+          element: this.element as HTMLElement,
+          elementBoundingBox: getElementBoundingBox(this.element as HTMLElement),
+          focalTargetElement: this.focalTargetElement,
+          focalTargetElementBoundingBox: this.focalTargetElement
+            ? getElementBoundingBox(this.focalTargetElement)
             : undefined,
-          ...getElementSizeLocation(this.containerElement as HTMLElement),
         },
       };
 
       // Loads each action up in an easy-to-execute format.
-      const actions = fromTarget.data.map(targetData => {
+      const actions = collectorData.map(targetData => {
         if (targetData.action === CollectorActions.animation) {
           // Element will be lazily instantiated if we need to add something to the DOM.
           let elementToMountChildren: HTMLElement;
@@ -313,7 +318,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
             }
           };
 
-          const setTargetProps = (props: TargetPropsFunc | null) => {
+          const setChildProps = (props: TargetPropsFunc | null) => {
             if (props) {
               this.setState(prevState => ({
                 childProps: {
@@ -339,9 +344,9 @@ If it's an image, try and have the image loaded before mounting, or set a static
                 if (targetData.payload.beforeAnimate) {
                   const deferred = defer();
                   const jsx = targetData.payload.beforeAnimate(
-                    elementDOMData,
+                    animationData,
                     deferred.resolve,
-                    setTargetProps
+                    setChildProps
                   );
 
                   if (jsx) {
@@ -356,9 +361,9 @@ If it's an image, try and have the image loaded before mounting, or set a static
               animate: () => {
                 const deferred = defer();
                 const jsx = targetData.payload.animate(
-                  elementDOMData,
+                  animationData,
                   deferred.resolve,
-                  setTargetProps
+                  setChildProps
                 );
 
                 if (jsx) {
@@ -371,9 +376,9 @@ If it's an image, try and have the image loaded before mounting, or set a static
                 if (targetData.payload.afterAnimate) {
                   const deferred = defer();
                   const jsx = targetData.payload.afterAnimate(
-                    elementDOMData,
+                    animationData,
                     deferred.resolve,
-                    setTargetProps
+                    setChildProps
                   );
 
                   if (jsx) {
@@ -387,7 +392,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
               },
               cleanup: () => {
                 unmount();
-                setTargetProps(null);
+                setChildProps(null);
               },
             },
           };
@@ -488,11 +493,11 @@ If it's an image, try and have the image loaded before mounting, or set a static
   };
 
   setRef: SupplyRefHandler = ref => {
-    this.containerElement = ref;
+    this.element = ref;
   };
 
   setTargetRef: SupplyRefHandler = ref => {
-    this.targetElement = ref;
+    this.focalTargetElement = ref;
   };
 
   setReactNode: SupplyRenderChildrenHandler = renderChildren => {
@@ -512,7 +517,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
         receiveData={this.setData}
         receiveRenderChildren={this.setReactNode}
         receiveRef={this.setRef}
-        receiveTargetRef={this.setTargetRef}
+        receiveFocalTargetRef={this.setTargetRef}
         style={{
           opacity: shown ? 1 : 0,
           ...childProps.style,
