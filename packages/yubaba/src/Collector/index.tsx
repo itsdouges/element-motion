@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { GetElementSizeLocationReturnValue } from '../lib/dom';
+import { ElementBoundingBox } from '../lib/dom';
 
 export interface TargetProps {
   style: InlineStyles;
@@ -84,9 +84,9 @@ export interface InlineStyles {
  */
 export interface ElementData {
   element: HTMLElement;
-  elementBoundingBox: GetElementSizeLocationReturnValue;
+  elementBoundingBox: ElementBoundingBox;
   focalTargetElement: HTMLElement | null | undefined;
-  focalTargetElementBoundingBox: GetElementSizeLocationReturnValue | undefined;
+  focalTargetElementBoundingBox: ElementBoundingBox | undefined;
   render: CollectorChildrenAsFunction;
 }
 

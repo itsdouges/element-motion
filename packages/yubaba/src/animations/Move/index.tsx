@@ -5,7 +5,7 @@ import Collector, {
   CollectorActions,
 } from '../../Collector';
 import * as math from '../../lib/math';
-import { recalculateLocationFromScroll } from '../../lib/dom';
+import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
 import { standard } from '../../lib/curves';
 import { combine, zIndexStack } from '../../lib/style';
 
@@ -75,7 +75,7 @@ targetElement was missing.`);
     }
 
     // Scroll could have changed between unmount and this prepare step.
-    const originTarget = recalculateLocationFromScroll(data.origin.elementBoundingBox);
+    const originTarget = recalculateElementBoundingBoxFromScroll(data.origin.elementBoundingBox);
     const destinationTarget =
       useFocalTarget && data.destination.focalTargetElementBoundingBox
         ? data.destination.focalTargetElementBoundingBox

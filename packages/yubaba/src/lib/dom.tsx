@@ -21,14 +21,14 @@ export function getDocumentScroll() {
 /**
  * @hidden
  */
-export interface GetElementSizeLocationOptions {
+export interface ElementBoundingBoxOpts {
   useOffsetSize?: boolean;
 }
 
 /**
  * @hidden
  */
-export interface GetElementSizeLocationReturnValue {
+export interface ElementBoundingBox {
   size: {
     width: number;
     height: number;
@@ -49,8 +49,8 @@ export interface GetElementSizeLocationReturnValue {
  */
 export function getElementBoundingBox(
   element: HTMLElement,
-  options: GetElementSizeLocationOptions = {}
-): GetElementSizeLocationReturnValue {
+  options: ElementBoundingBoxOpts = {}
+): ElementBoundingBox {
   const rect = element.getBoundingClientRect();
   const { scrollLeft, scrollTop } = getDocumentScroll();
   const topOffset = (rect.height - element.offsetHeight) / 2;
@@ -76,10 +76,10 @@ export function getElementBoundingBox(
 /**
  * @hidden
  */
-export function calculateElementCenterInViewport(sizeLocation: GetElementSizeLocationReturnValue) {
+export function calculateElementCenterInViewport(elementBoundingBox: ElementBoundingBox) {
   return {
-    top: sizeLocation.location.top + Math.ceil(sizeLocation.size.width / 2),
-    left: sizeLocation.location.left - Math.ceil(sizeLocation.size.height / 2),
+    top: elementBoundingBox.location.top + Math.ceil(elementBoundingBox.size.width / 2),
+    left: elementBoundingBox.location.left - Math.ceil(elementBoundingBox.size.height / 2),
   };
 }
 
@@ -96,18 +96,18 @@ export function calculateWindowCentre() {
 /**
  * @hidden
  */
-export function recalculateLocationFromScroll(
-  sizeLocation: GetElementSizeLocationReturnValue
-): GetElementSizeLocationReturnValue {
+export function recalculateElementBoundingBoxFromScroll(
+  elementBoundingBox: ElementBoundingBox
+): ElementBoundingBox {
   const { scrollTop, scrollLeft } = getDocumentScroll();
-  const scrollTopDiff = scrollTop - sizeLocation.raw.scrollTop;
-  const scrollLeftDiff = scrollLeft - sizeLocation.raw.scrollLeft;
+  const scrollTopDiff = scrollTop - elementBoundingBox.raw.scrollTop;
+  const scrollLeftDiff = scrollLeft - elementBoundingBox.raw.scrollLeft;
 
   return {
-    ...sizeLocation,
+    ...elementBoundingBox,
     location: {
-      top: sizeLocation.location.top + scrollTopDiff,
-      left: sizeLocation.location.left + scrollLeftDiff,
+      top: elementBoundingBox.location.top + scrollTopDiff,
+      left: elementBoundingBox.location.left + scrollLeftDiff,
     },
   };
 }

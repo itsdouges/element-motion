@@ -6,7 +6,7 @@ import Collector, {
   AnimationData,
 } from '../../Collector';
 import * as math from '../../lib/math';
-import { recalculateLocationFromScroll } from '../../lib/dom';
+import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
 import noop from '../../lib/noop';
 import { standard } from '../../lib/curves';
 import { zIndexStack } from '../../lib/style';
@@ -51,7 +51,9 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
     const { timingFunction, duration, zIndex } = this.props;
     // Scroll could have changed between unmount and this prepare step, let's recalculate
     // just in case.
-    const fromTargetSizeLocation = recalculateLocationFromScroll(data.origin.elementBoundingBox);
+    const fromTargetSizeLocation = recalculateElementBoundingBoxFromScroll(
+      data.origin.elementBoundingBox
+    );
     const fromEndXOffset =
       data.destination.elementBoundingBox.location.left - fromTargetSizeLocation.location.left;
     const fromEndYOffset =

@@ -9,7 +9,7 @@ import { calculateHypotenuse } from '../../lib/math';
 import {
   calculateWindowCentre,
   calculateElementCenterInViewport,
-  recalculateLocationFromScroll,
+  recalculateElementBoundingBoxFromScroll,
 } from '../../lib/dom';
 import SimpleKeyframe from '../SimpleKeyframe';
 import { standard, accelerate } from '../../lib/curves';
@@ -51,7 +51,9 @@ export default class CircleExpand extends React.Component<CircleExpandProps> {
     const { duration, background, zIndex } = this.props;
 
     // Scroll could have changed between unmount and this prepare step, let's recalculate just in case.
-    const fromTargetSizeLocation = recalculateLocationFromScroll(data.origin.elementBoundingBox);
+    const fromTargetSizeLocation = recalculateElementBoundingBoxFromScroll(
+      data.origin.elementBoundingBox
+    );
     const minSize = Math.min(fromTargetSizeLocation.size.width, fromTargetSizeLocation.size.height);
     const fromTargetHypotenuse = calculateHypotenuse(fromTargetSizeLocation.size);
     const fromTargetCenterInViewport = calculateElementCenterInViewport(fromTargetSizeLocation);
