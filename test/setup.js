@@ -5,4 +5,3 @@ require('jest-enzyme');
 
 enzyme.configure({ adapter: new Adapter() });
 expect.addSnapshotSerializer(createSerializer({ mode: 'deep' }));
-window.requestAnimationFrame = cb => cb();
