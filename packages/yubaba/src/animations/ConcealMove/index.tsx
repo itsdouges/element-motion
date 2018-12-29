@@ -6,7 +6,7 @@ import Collector, {
   CollectorActions,
   AnimationData,
 } from '../../Collector';
-import { recalculateLocationFromScroll } from '../../lib/dom';
+import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
 import noop from '../../lib/noop';
 import { standard } from '../../lib/curves';
 import { zIndexStack } from '../../lib/style';
@@ -53,7 +53,9 @@ targetElement was missing.`);
 
     const { duration, timingFunction, zIndex } = this.props;
     // Scroll could have changed between unmount and this prepare step.
-    const fromTargetSizeLocation = recalculateLocationFromScroll(data.origin.elementBoundingBox);
+    const fromTargetSizeLocation = recalculateElementBoundingBoxFromScroll(
+      data.origin.elementBoundingBox
+    );
 
     return data.origin.render({
       ref: noop,
