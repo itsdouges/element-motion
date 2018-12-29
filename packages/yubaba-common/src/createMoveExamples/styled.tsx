@@ -61,6 +61,20 @@ export const ListItem = styled.button<ListItemProps>`
       : ''};
 `;
 
+export const RelativeListItem = styled(ListItem)`
+  position: relative;
+`;
+
+export const AbsoluteListItem = styled(ListItem)`
+  position: absolute;
+  bottom: 0;
+`;
+
+export const FixedListItem = styled(ListItem)`
+  position: fixed;
+  bottom: 0;
+`;
+
 export const ListItemContainer = styled.div`
   display: flex;
   align-items: center;

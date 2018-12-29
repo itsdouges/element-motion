@@ -39,6 +39,72 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
     </Common.Toggler>
   ),
 
+  WithAbsolutePositioning: () => (
+    <Common.Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <Styled.Padding />
+          {!shown ? (
+            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+              <Animation>
+                {({ ref, ...props }) => (
+                  <Styled.RelativeListItem innerRef={ref} onClick={() => toggle()} {...props} />
+                )}
+              </Animation>
+            </Baba>
+          ) : (
+            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+              <Animation>
+                {({ ref, ...props }) => (
+                  <Styled.AbsoluteListItem
+                    innerRef={ref}
+                    onClick={() => toggle()}
+                    alternate={options.useDistinctEnd}
+                    {...props}
+                  />
+                )}
+              </Animation>
+            </Baba>
+          )}
+          <Styled.Padding />
+        </div>
+      )}
+    </Common.Toggler>
+  ),
+
+  WithFixedPositioning: () => (
+    <Common.Toggler>
+      {({ shown, toggle }) => (
+        <div>
+          <Styled.Padding />
+          {!shown ? (
+            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+              <Animation>
+                {({ ref, ...props }) => (
+                  <Styled.RelativeListItem innerRef={ref} onClick={() => toggle()} {...props} />
+                )}
+              </Animation>
+            </Baba>
+          ) : (
+            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+              <Animation>
+                {({ ref, ...props }) => (
+                  <Styled.FixedListItem
+                    innerRef={ref}
+                    onClick={() => toggle()}
+                    alternate={options.useDistinctEnd}
+                    {...props}
+                  />
+                )}
+              </Animation>
+            </Baba>
+          )}
+          <Styled.Padding />
+        </div>
+      )}
+    </Common.Toggler>
+  ),
+
   WithMargin: () => (
     <Common.Toggler>
       {({ shown, toggle }) => (
