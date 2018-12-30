@@ -73,6 +73,7 @@ export const AbsoluteListItem = styled(ListItem)`
 export const FixedListItem = styled(ListItem)`
   position: fixed;
   bottom: 0;
+  right: 0;
 `;
 
 export const ListItemContainer = styled.div`

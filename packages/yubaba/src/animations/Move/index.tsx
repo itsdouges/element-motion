@@ -8,6 +8,9 @@ import * as math from '../../lib/math';
 import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
 import { standard } from '../../lib/curves';
 import { combine, zIndexStack } from '../../lib/style';
+import { cover } from '../../lib/move';
+
+export type MoveVariant = 'default' | 'arc-left' | 'arc-right';
 
 export interface MoveProps extends CollectorChildrenProps {
   /**
@@ -42,6 +45,14 @@ export interface MoveProps extends CollectorChildrenProps {
    * Defaults to `true`.
    */
   transformY?: boolean;
+
+  /**
+   * Move variant
+   * `default` will move in a straight line.
+   * `arc-left` will move in an arc favoring the left side of the viewport.
+   * `arc-right` will move in an arc favoring the right side of the viewport.
+   */
+  variant: MoveVariant;
 }
 
 /**
@@ -64,6 +75,7 @@ export default class Move extends React.Component<MoveProps> {
     useFocalTarget: false,
     transformX: true,
     transformY: true,
+    variant: 'default',
   };
 
   beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
@@ -80,28 +92,17 @@ targetElement was missing.`);
       useFocalTarget && data.destination.focalTargetElementBoundingBox
         ? data.destination.focalTargetElementBoundingBox
         : data.destination.elementBoundingBox;
-    const toStartXOffset = transformX
-      ? originTarget.location.left - data.destination.elementBoundingBox.location.left
-      : 0;
-    const toStartYOffset = transformY
-      ? originTarget.location.top - data.destination.elementBoundingBox.location.top
-      : 0;
+    const moveStyles = cover(originTarget, destinationTarget, { transformX, transformY });
 
     setChildProps({
       style: prevStyles => ({
         ...prevStyles,
+        ...moveStyles,
         zIndex,
         opacity: 1,
         transformOrigin: '0 0',
         visibility: 'visible',
         willChange: combine('transform')(prevStyles.willChange),
-        transform: `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
-          originTarget.size.width,
-          destinationTarget.size.width
-        )}, ${math.percentageDifference(
-          originTarget.size.height,
-          destinationTarget.size.height
-        )}, 1)`,
       }),
     });
 
