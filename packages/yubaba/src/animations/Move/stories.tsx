@@ -25,7 +25,7 @@ stories.add('Arc', () => (
           </Baba>
         ) : (
           <Baba name="Move-anim" key="arc-move-2">
-            <Move variant="arc-right">
+            <Move variant="arc-left">
               {({ ref, ...props }) => (
                 <Common.FixedListItem innerRef={ref} onClick={() => toggle()} {...props} />
               )}

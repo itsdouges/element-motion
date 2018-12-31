@@ -4,11 +4,10 @@ import Collector, {
   AnimationCallback,
   CollectorActions,
 } from '../../Collector';
-import * as math from '../../lib/math';
 import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
 import { standard } from '../../lib/curves';
 import { combine, zIndexStack } from '../../lib/style';
-import { cover } from '../../lib/move';
+import { cover, arcLeft, arcRight } from '../../lib/move';
 
 export type MoveVariant = 'default' | 'arc-left' | 'arc-right';
 
@@ -49,8 +48,8 @@ export interface MoveProps extends CollectorChildrenProps {
   /**
    * Move variant
    * `default` will move in a straight line.
-   * `arc-left` will move in an arc favoring the left side of the viewport.
-   * `arc-right` will move in an arc favoring the right side of the viewport.
+   * `arc-left` will move in an arc counter-clockwise.
+   * `arc-right` will move in an arc clockwise.
    */
   variant: MoveVariant;
 }
@@ -79,7 +78,7 @@ export default class Move extends React.Component<MoveProps> {
   };
 
   beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
-    const { zIndex, useFocalTarget, transformX, transformY } = this.props;
+    const { zIndex, useFocalTarget, transformX, transformY, duration, variant } = this.props;
 
     if (useFocalTarget && !data.destination.focalTargetElementBoundingBox) {
       throw new Error(`yubaba
@@ -92,12 +91,29 @@ targetElement was missing.`);
       useFocalTarget && data.destination.focalTargetElementBoundingBox
         ? data.destination.focalTargetElementBoundingBox
         : data.destination.elementBoundingBox;
-    const moveStyles = cover(originTarget, destinationTarget, { transformX, transformY });
+    const coverStyles = cover(originTarget, destinationTarget, { transformX, transformY });
+
+    let moveClassName: string;
+
+    switch (variant) {
+      case 'arc-left':
+        moveClassName = arcLeft(data.origin.elementBoundingBox, destinationTarget, duration);
+        break;
+
+      case 'arc-right':
+        moveClassName = arcRight(data.origin.elementBoundingBox, destinationTarget, duration);
+        break;
+
+      default:
+        break;
+    }
 
     setChildProps({
+      className: () => moveClassName,
       style: prevStyles => ({
         ...prevStyles,
-        ...moveStyles,
+        ...coverStyles,
+        animationPlayState: 'paused',
         zIndex,
         opacity: 1,
         transformOrigin: '0 0',
@@ -115,10 +131,8 @@ targetElement was missing.`);
     setChildProps({
       style: prevStyles => ({
         ...prevStyles,
-        transition: combine(
-          `transform ${duration}ms ${timingFunction}, opacity ${duration / 2}ms ${timingFunction}`
-        )(prevStyles.transition),
-        transform: 'translate3d(0, 0, 0) scale3d(1, 1, 1)',
+        animationPlayState: 'running',
+        transition: combine(`opacity ${duration / 2}ms ${timingFunction}`)(prevStyles.transition),
       }),
     });
 
