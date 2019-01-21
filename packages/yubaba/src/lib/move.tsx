@@ -1,5 +1,6 @@
 import { css, keyframes } from 'emotion';
 import { ElementBoundingBox } from './dom';
+import { standard } from './curves';
 
 interface CoverOpts {
   transformX?: boolean;
@@ -38,24 +39,28 @@ export function arcLeft(
 ): string {
   const translateX = origin.location.left - destination.location.left;
   const translateY = origin.location.top - destination.location.top;
-  const vertex: Point = [origin.location.left, origin.location.top];
-  const point: Point = [destination.location.left, destination.location.top];
-
+  const scaleX = origin.size.width / destination.size.width;
+  const scaleY = origin.size.height / destination.size.height;
   const kframes = keyframes`
-      ${Array(100)
-        .fill(undefined)
-        .map((_, percent) => {
-          const [x, y] = porabola(vertex, point)(percent);
-          return `
-        ${percent}% {
-        transform: translate3d(${x}px, ${y}px, 0);
-      }`;
-        })
-        .join('')}
+      0% {
+        transform: translate3d(${translateX}px, ${translateY}px, 0) scale3d(${scaleX}, ${scaleY}, 1);
+      }
+
+      40% {
+        transform: translate3d(${translateX}px, ${translateY * 0.1}px, 0) scale3d(1, 1, 1);
+      }
+
+      60% {
+        transform: translate3d(${translateX * 0.9}px, 0, 0) scale3d(1, 1, 1);
+      }
+
+      100% {
+        transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+      }
   `;
 
   return css`
-    animation: ${kframes} ${durationMs}ms linear;
+    animation: ${kframes} ${durationMs}ms ${standard()};
     /* Stops the animation on the destination. */
     animation-fill-mode: forwards;
   `;
@@ -85,7 +90,7 @@ export function arcRight(
   `;
 
   return css`
-    animation: ${kframes} ${durationMs}ms linear;
+    animation: ${kframes} ${durationMs}ms ${standard()};
     /* Stops the animation on the destination. */
     animation-fill-mode: forwards;
   `;
