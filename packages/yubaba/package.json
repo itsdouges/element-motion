@@ -13,7 +13,7 @@
   },
   "size-limit": [
     {
-      "limit": "5.4 KB",
+      "limit": "5.7 KB",
       "path": "dist/es6/packages/yubaba/src/index.js"
     }
   ],
