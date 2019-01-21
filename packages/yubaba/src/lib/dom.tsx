@@ -86,6 +86,16 @@ export function calculateElementCenterInViewport(elementBoundingBox: ElementBoun
 /**
  * @hidden
  */
+export function getWindowDimensions() {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight,
+  };
+}
+
+/**
+ * @hidden
+ */
 export function calculateWindowCentre() {
   return {
     left: Math.ceil(window.innerWidth / 2),

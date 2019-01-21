@@ -6,10 +6,16 @@ import Collector, {
   AnimationData,
 } from '../../Collector';
 import { calculateHypotenuse } from '../../lib/math';
-import { calculateWindowCentre, calculateElementCenterInViewport } from '../../lib/dom';
+import {
+  calculateWindowCentre,
+  calculateElementCenterInViewport,
+  getWindowDimensions,
+} from '../../lib/dom';
 import SimpleKeyframe from '../SimpleKeyframe';
 import { standard, decelerate } from '../../lib/curves';
 import { zIndexStack } from '../../lib/style';
+import { dynamic } from '../../lib/duration';
+import { Duration } from '../types';
 
 export interface CircleShrinkProps extends CollectorChildrenProps {
   /**
@@ -20,7 +26,7 @@ export interface CircleShrinkProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
-  duration: number;
+  duration: Duration;
 
   /**
    * zIndex to be applied to the moving element.
@@ -39,7 +45,7 @@ export interface CircleShrinkProps extends CollectorChildrenProps {
  */
 export default class CircleShrink extends React.Component<CircleShrinkProps> {
   static defaultProps = {
-    duration: 500,
+    duration: 'dynamic',
     zIndex: zIndexStack.circleShrink,
   };
 
@@ -55,16 +61,22 @@ export default class CircleShrink extends React.Component<CircleShrinkProps> {
       data.destination.elementBoundingBox
     );
     const viewportCenter = calculateWindowCentre();
-    const windowHypotenuse = calculateHypotenuse({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
+    const windowDimensions = getWindowDimensions();
+    const windowHypotenuse = calculateHypotenuse(windowDimensions);
     const difference = {
       width: viewportCenter.left - toTargetCenterInViewport.left,
       height: viewportCenter.top - toTargetCenterInViewport.top,
     };
     const hypotenuseDifference = calculateHypotenuse(difference);
     const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
+    const calculatedDuration =
+      duration === 'dynamic'
+        ? dynamic(data.destination.elementBoundingBox, {
+            location: { left: 0, top: 0 },
+            size: windowDimensions,
+            raw: {} as any,
+          })
+        : duration;
 
     return (
       <SimpleKeyframe
@@ -82,7 +94,7 @@ export default class CircleShrink extends React.Component<CircleShrinkProps> {
           position: 'absolute',
           background,
           willChange: 'transform',
-          transition: `transform ${decelerate()} ${duration}ms, opacity ${standard()} ${duration}ms`,
+          transition: `transform ${decelerate()} ${calculatedDuration}ms, opacity ${standard()} ${calculatedDuration}ms`,
           transform: `scale(${scale})`,
         }}
         keyframes={[
