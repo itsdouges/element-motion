@@ -8,12 +8,14 @@ import * as math from '../../lib/math';
 import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
 import { standard } from '../../lib/curves';
 import { combine, zIndexStack } from '../../lib/style';
+import { Duration } from '../types';
+import { dynamic } from '../../lib/duration';
 
 export interface MoveProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
-  duration: number;
+  duration: Duration;
 
   /**
    * zIndex to be applied to the moving element.
@@ -58,7 +60,7 @@ export interface MoveProps extends CollectorChildrenProps {
  */
 export default class Move extends React.Component<MoveProps> {
   static defaultProps = {
-    duration: 500,
+    duration: 'dynamic',
     timingFunction: standard(),
     zIndex: zIndexStack.move,
     useFocalTarget: false,
@@ -108,20 +110,26 @@ targetElement was missing.`);
     onFinish();
   };
 
-  animate: AnimationCallback = (_, onFinish, setChildProps) => {
+  animate: AnimationCallback = (data, onFinish, setChildProps) => {
     const { duration, timingFunction } = this.props;
+
+    const calculatedDuration =
+      duration === 'dynamic'
+        ? dynamic(data.origin.elementBoundingBox, data.destination.elementBoundingBox)
+        : duration;
 
     setChildProps({
       style: prevStyles => ({
         ...prevStyles,
         transition: combine(
-          `transform ${duration}ms ${timingFunction}, opacity ${duration / 2}ms ${timingFunction}`
+          `transform ${calculatedDuration}ms ${timingFunction}, opacity ${calculatedDuration /
+            2}ms ${timingFunction}`
         )(prevStyles.transition),
         transform: 'translate3d(0, 0, 0) scale3d(1, 1, 1)',
       }),
     });
 
-    setTimeout(() => onFinish(), duration);
+    setTimeout(() => onFinish(), calculatedDuration);
   };
 
   render() {

@@ -10,10 +10,13 @@ import {
   calculateWindowCentre,
   calculateElementCenterInViewport,
   recalculateElementBoundingBoxFromScroll,
+  getWindowDimensions,
 } from '../../lib/dom';
 import SimpleKeyframe from '../SimpleKeyframe';
 import { standard, accelerate } from '../../lib/curves';
 import { zIndexStack } from '../../lib/style';
+import { dynamic } from '../../lib/duration';
+import { Duration } from '../types';
 
 export interface CircleExpandProps extends CollectorChildrenProps {
   /**
@@ -24,7 +27,7 @@ export interface CircleExpandProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
-  duration: number;
+  duration: Duration;
 
   /**
    * zIndex to be applied to the moving element.
@@ -43,7 +46,7 @@ export interface CircleExpandProps extends CollectorChildrenProps {
  */
 export default class CircleExpand extends React.Component<CircleExpandProps> {
   static defaultProps = {
-    duration: 500,
+    duration: 'dynamic',
     zIndex: zIndexStack.circleExpand,
   };
 
@@ -51,40 +54,46 @@ export default class CircleExpand extends React.Component<CircleExpandProps> {
     const { duration, background, zIndex } = this.props;
 
     // Scroll could have changed between unmount and this prepare step, let's recalculate just in case.
-    const fromTargetSizeLocation = recalculateElementBoundingBoxFromScroll(
+    const originBoundingBox = recalculateElementBoundingBoxFromScroll(
       data.origin.elementBoundingBox
     );
-    const minSize = Math.min(fromTargetSizeLocation.size.width, fromTargetSizeLocation.size.height);
-    const fromTargetHypotenuse = calculateHypotenuse(fromTargetSizeLocation.size);
-    const fromTargetCenterInViewport = calculateElementCenterInViewport(fromTargetSizeLocation);
+    const minSize = Math.min(originBoundingBox.size.width, originBoundingBox.size.height);
+    const fromTargetHypotenuse = calculateHypotenuse(originBoundingBox.size);
+    const fromTargetCenterInViewport = calculateElementCenterInViewport(originBoundingBox);
     const viewportCenter = calculateWindowCentre();
-    const windowHypotenuse = calculateHypotenuse({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
+    const windowDimensions = getWindowDimensions();
+    const windowHypotenuse = calculateHypotenuse(windowDimensions);
     const difference = {
       width: viewportCenter.left - fromTargetCenterInViewport.left,
       height: viewportCenter.top - fromTargetCenterInViewport.top,
     };
     const hypotenuseDifference = calculateHypotenuse(difference);
     const scale = Math.ceil((windowHypotenuse + hypotenuseDifference) / minSize);
+    const calculatedDuration =
+      duration === 'dynamic'
+        ? dynamic(originBoundingBox, {
+            location: { left: 0, top: 0 },
+            size: windowDimensions,
+            raw: {} as any,
+          })
+        : duration;
 
     return (
       <SimpleKeyframe
         style={{
           zIndex,
           left:
-            fromTargetSizeLocation.location.left -
-            (fromTargetHypotenuse - fromTargetSizeLocation.size.width) / 2,
+            originBoundingBox.location.left -
+            (fromTargetHypotenuse - originBoundingBox.size.width) / 2,
           top:
-            fromTargetSizeLocation.location.top -
-            (fromTargetHypotenuse - fromTargetSizeLocation.size.height) / 2,
+            originBoundingBox.location.top -
+            (fromTargetHypotenuse - originBoundingBox.size.height) / 2,
           width: fromTargetHypotenuse,
           height: fromTargetHypotenuse,
           borderRadius: '50%',
           position: 'absolute',
           background,
-          transition: `transform ${accelerate()} ${duration}ms, opacity ${standard()} ${duration /
+          transition: `transform ${accelerate()} ${calculatedDuration}ms, opacity ${standard()} ${calculatedDuration /
             2}ms`,
           transform: 'scale(1)',
           willChange: 'transform',

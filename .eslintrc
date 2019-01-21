@@ -19,6 +19,7 @@
     "react/prefer-stateless-function": "never",
     "react/sort-comp": "off",
     "react/destructuring-assignment": "never",
+    "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": [
       "error",
       { "devDependencies": ["**/*test.tsx", "**/*stories.tsx"] }

@@ -10,12 +10,14 @@ import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
 import noop from '../../lib/noop';
 import { standard } from '../../lib/curves';
 import { zIndexStack } from '../../lib/style';
+import { dynamic } from '../../lib/duration';
+import { Duration } from '../types';
 
 export interface ConcealMoveProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
-  duration: number;
+  duration: Duration;
 
   /**
    * zIndex to be applied to the moving element.
@@ -37,10 +39,12 @@ export interface ConcealMoveProps extends CollectorChildrenProps {
  */
 export default class ConcealMove extends React.Component<ConcealMoveProps> {
   static defaultProps = {
-    duration: 500,
+    duration: 'dynamic',
     timingFunction: standard(),
     zIndex: zIndexStack.concealMove,
   };
+
+  calculatedDuration: number = 0;
 
   renderAnimation = (
     data: AnimationData,
@@ -56,14 +60,20 @@ targetElement was missing.`);
     const fromTargetSizeLocation = recalculateElementBoundingBoxFromScroll(
       data.origin.elementBoundingBox
     );
+    this.calculatedDuration =
+      duration === 'dynamic'
+        ? dynamic(fromTargetSizeLocation, data.destination.elementBoundingBox)
+        : duration;
 
     return data.origin.render({
       ref: noop,
       style: {
         zIndex,
         opacity: options.fadeOut ? 0 : 1,
-        transition: `transform ${duration}ms ${timingFunction}, height ${duration}ms ${timingFunction}, width ${duration}ms ${timingFunction}, opacity ${duration /
-          2}ms ${timingFunction}`,
+        transition: `transform ${this.calculatedDuration}ms ${timingFunction}, height ${
+          this.calculatedDuration
+        }ms ${timingFunction}, width ${this.calculatedDuration}ms ${timingFunction}, opacity ${this
+          .calculatedDuration / 2}ms ${timingFunction}`,
         position: 'absolute',
         transformOrigin: '0 0',
         willChange: 'transform, height, width',
@@ -85,7 +95,7 @@ targetElement was missing.`);
       className: options.moveToTarget
         ? css`
             > * {
-              transition: transform ${duration}ms ${timingFunction};
+              transition: transform ${this.calculatedDuration}ms ${timingFunction};
               transform: translate3d(
                 -${data.origin.focalTargetElementBoundingBox.location.left - data.origin.elementBoundingBox.location.left}px,
                 -${data.origin.focalTargetElementBoundingBox.location.top - data.origin.elementBoundingBox.location.top}px,
@@ -103,9 +113,7 @@ targetElement was missing.`);
   };
 
   animate: AnimationCallback = (data, onFinish) => {
-    const { duration } = this.props;
-
-    setTimeout(onFinish, duration);
+    setTimeout(onFinish, this.calculatedDuration);
 
     return this.renderAnimation(data, { moveToTarget: true });
   };

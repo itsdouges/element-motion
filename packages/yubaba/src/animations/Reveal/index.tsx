@@ -7,12 +7,14 @@ import Collector, {
 } from '../../Collector';
 import { standard } from '../../lib/curves';
 import { combine } from '../../lib/style';
+import { dynamic } from '../../lib/duration';
+import { Duration } from '../types';
 
 export interface RevealProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
-  duration: number;
+  duration: Duration;
 
   /**
    * zIndex to be applied to the moving element.
@@ -49,7 +51,7 @@ export interface RevealProps extends CollectorChildrenProps {
  */
 export default class Reveal extends React.Component<RevealProps> {
   static defaultProps = {
-    duration: 500,
+    duration: 'dynamic',
     timingFunction: standard(),
     childrenTransformX: true,
     childrenTransformY: true,
@@ -111,6 +113,10 @@ targetElement was missing.`);
 
   animate: AnimationCallback = (data, onFinish, setChildProps) => {
     const { timingFunction, duration, useClipPath } = this.props;
+    const calculatedDuration =
+      duration === 'dynamic'
+        ? dynamic(data.origin.elementBoundingBox, data.destination.elementBoundingBox)
+        : duration;
 
     const revealStyles = useClipPath
       ? {
@@ -126,19 +132,19 @@ targetElement was missing.`);
         ...prevStyles,
         ...revealStyles,
         transition: combine(
-          `height ${duration}ms ${timingFunction}, width ${duration}ms ${timingFunction}, clip-path ${duration}ms ${timingFunction}`
+          `height ${calculatedDuration}ms ${timingFunction}, width ${calculatedDuration}ms ${timingFunction}, clip-path ${calculatedDuration}ms ${timingFunction}`
         )(prevStyles.transition),
       }),
       className: () =>
         css({
           '> *': {
             transform: `translate3d(0, 0, 0)`,
-            transition: `transform ${duration}ms ${timingFunction}`,
+            transition: `transform ${calculatedDuration}ms ${timingFunction}`,
           },
         }),
     });
 
-    setTimeout(() => onFinish(), duration);
+    setTimeout(() => onFinish(), calculatedDuration);
   };
 
   render() {

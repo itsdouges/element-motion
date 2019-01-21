@@ -10,12 +10,14 @@ import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
 import noop from '../../lib/noop';
 import { standard } from '../../lib/curves';
 import { zIndexStack } from '../../lib/style';
+import { dynamic } from '../../lib/duration';
+import { Duration } from '../types';
 
 export interface FadeMoveProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
-  duration: number;
+  duration: Duration;
 
   /**
    * zIndex to be applied to the moving element.
@@ -42,10 +44,12 @@ export interface FadeMoveProps extends CollectorChildrenProps {
  */
 export default class FadeMove extends React.Component<FadeMoveProps> {
   static defaultProps = {
-    duration: 500,
+    duration: 'dynamic',
     timingFunction: standard(),
     zIndex: zIndexStack.fadeMove,
   };
+
+  calculatedDuration: number = 0;
 
   renderAnimation = (data: AnimationData, options: { moveToTarget?: boolean } = {}) => {
     const { timingFunction, duration, zIndex } = this.props;
@@ -58,14 +62,18 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
       data.destination.elementBoundingBox.location.left - fromTargetSizeLocation.location.left;
     const fromEndYOffset =
       data.destination.elementBoundingBox.location.top - fromTargetSizeLocation.location.top;
+    this.calculatedDuration =
+      duration === 'dynamic'
+        ? dynamic(fromTargetSizeLocation, data.destination.elementBoundingBox)
+        : duration;
 
     return data.origin.render({
       ref: noop,
       style: {
         ...fromTargetSizeLocation.location,
         zIndex,
-        transition: `transform ${duration}ms ${timingFunction}, opacity ${duration /
-          2}ms ${timingFunction}`,
+        transition: `transform ${this.calculatedDuration}ms ${timingFunction}, opacity ${this
+          .calculatedDuration / 2}ms ${timingFunction}`,
         position: 'absolute',
         transformOrigin: '0 0',
         transform: 'translate3d(0, 0, 0) scale3d(1, 1, 1)',
@@ -96,8 +104,7 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
   };
 
   animate: AnimationCallback = (data, onFinish) => {
-    const { duration } = this.props;
-    setTimeout(onFinish, duration);
+    setTimeout(onFinish, this.calculatedDuration);
     return this.renderAnimation(data, { moveToTarget: true });
   };
 
