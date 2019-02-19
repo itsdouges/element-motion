@@ -5,7 +5,7 @@
   "author": "Michael Dougall",
   "license": "MIT",
   "main": "dist/cjs/packages/yubaba/src/index.js",
-  "module": "dist/es6/packages/yubaba/src/index.js",
+  "module": "dist/esm/packages/yubaba/src/index.js",
   "sideEffects": false,
   "description": "is an element animation orchestrator for React.js ✨",
   "keywords": [
@@ -19,13 +19,13 @@
     "material-transition"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.cjs.json && tsc -p ./tsconfig.es6.json && cp ../../README.md README.md",
+    "build": "rm -rf dist && tsc -p ./tsconfig.cjs.json && tsc -p ./tsconfig.esm.json && cp ../../README.md README.md",
     "size": "size-limit"
   },
   "size-limit": [
     {
       "limit": "5.7 KB",
-      "path": "dist/es6/packages/yubaba/src/index.js"
+      "path": "dist/esm/packages/yubaba/src/index.js"
     }
   ],
   "peerDependencies": {
