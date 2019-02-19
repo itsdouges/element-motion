@@ -23,14 +23,34 @@ export function cover(
   };
 }
 
-const porabola = (vertex: Point, point: Point) => (percent: number): Point => {
-  const [x0, y0] = vertex;
-  const [x1, y1] = point;
-  const y = ((y0 - y1) / (x0 - x1)) * (1 - percent / 100) + y1;
-  const x = percent * ((x1 - x0) / 100) + x0;
-  console.log(percent, [x, y]);
-  return [x, y];
-};
+type BezierPoint = [number, number];
+
+/**
+ * Taken from https://github.com/thibauts/bezier-curve.
+ */
+function bezier(time: number, p: [BezierPoint, BezierPoint, BezierPoint, BezierPoint]) {
+  const order = p.length - 1; // curve order is number of control point - 1
+  const d = p[0].length; // control point dimensionality
+
+  // create a source vector array copy that will be
+  // used to store intermediate results
+  const v = p.map(point => {
+    return point.slice();
+  });
+
+  // for each order reduce the control point array by updating
+  // each control point with its linear interpolation to the next
+  for (let i = order; i > 0; i -= 1) {
+    for (let j = 0; j < order; j += 1) {
+      // interpolate each component
+      for (let k = 0; k < d; k += 1) {
+        v[j][k] = (1 - time) * v[j][k] + time * v[j + 1][k];
+      }
+    }
+  }
+
+  return v[0];
+}
 
 export function arcLeft(
   origin: ElementBoundingBox,
