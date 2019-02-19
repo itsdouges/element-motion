@@ -7,6 +7,17 @@
   "main": "dist/cjs/packages/yubaba/src/index.js",
   "module": "dist/es6/packages/yubaba/src/index.js",
   "sideEffects": false,
+  "description": "is an element animation orchestrator for React.js ✨",
+  "keywords": [
+    "react",
+    "flip",
+    "animation",
+    "transition",
+    "magic-move",
+    "reactjs",
+    "element-to-element",
+    "material-transition"
+  ],
   "scripts": {
     "build": "rm -rf dist && tsc -p ./tsconfig.cjs.json && tsc -p ./tsconfig.es6.json && cp ../../README.md README.md",
     "size": "size-limit"
@@ -18,9 +29,9 @@
     }
   ],
   "peerDependencies": {
-    "emotion": "^9.2.9",
-    "react": "^16.4.x",
-    "react-dom": "^16.4.x"
+    "emotion": "~9",
+    "react": "~16.4",
+    "react-dom": "~16.4"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.10",

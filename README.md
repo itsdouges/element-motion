@@ -1,6 +1,6 @@
 # yubaba
 
-is an element to element animation orchestrator for React.js ✨
+is an element animation orchestrator for React.js ✨
 
 [![npm](https://img.shields.io/npm/v/yubaba.svg)](https://www.npmjs.com/package/yubaba)
 [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/yubaba.svg)](https://bundlephobia.com/result?p=yubaba)
@@ -9,27 +9,29 @@ is an element to element animation orchestrator for React.js ✨
 
 [![Example animation using yubaba](https://github.com/madou/yubaba/raw/master/test/images/intro.gif)](https://yubaba.netlify.com/?selectedKind=yubaba-examples%2FParentChild%2FEmailThreads&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)
 
+## Why yubaba?
+
+`yubaba` is as much of a _platform_ as it is an **orchestrator**.
+It comes with prebuilt animations you can drop in and start using immediately,
+such as [ConcealMove](https://yubaba.netlify.com/?selectedKind=yubaba%2FConcealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel) and [RevealMove](https://yubaba.netlify.com/?selectedKind=yubaba%2FRevealMove&selectedStory=TargetHeight&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel) which together can [create an awesome user experience](https://yubaba.netlify.com/?selectedKind=yubaba-examples%2FParentChild%2FEmailThreads&selectedStory=Default&full=0&addons=1&stories=1&panelRight=1&addonPanel=storybook%2Fnotes%2Fpanel)!
+
+But even better you can create _custom_ animations!
+Using the same [internals](#collector) the [prebuilt animations use](https://github.com/madou/yubaba/tree/master/packages/yubaba/src/animations),
+it comes with a first class customization experience for you to do,
+well,
+anything!
+
 ## Installation
 
 ```bash
-npm install yubaba --save
+npm install yubaba emotion --save
 ```
 
 or
 
 ```bash
-yarn add yubaba
+yarn add yubaba emotion
 ```
-
-## Motivation
-
-Complex page transitions are becoming more common on the web but we're still at a point where we need to write a lot of boilerplate to make it happen,
-worse yet disjointed parts of our apps needing to know about each other to make it all work.
-
-Yubaba tries to solve this by allowing disjointed parts of your app define what animations they want to happen when a matching partner is found,
-without explicit knowledge of each other.
-
-See usage and examples for a deeper look at this.
 
 ## Examples
 
@@ -161,7 +163,7 @@ import Baba from 'yubaba';
 
 Used to explicitly mark the focal element,
 only a handful of animations require this component to be used,
-for example [Reveal](#reveal)`.
+for example [Reveal](#reveal).
 
 ```jsx
 import Baba, { FocalTarget } from 'yubaba';
