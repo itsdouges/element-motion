@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/madou/yubaba/compare/v2.0.2...v2.1.0) (2019-02-19)
+
+**Note:** Version bump only for package yubaba-common
+
+
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/madou/yubaba/compare/v1.4.1...v2.0.0) (2018-12-11)
 
