@@ -5,7 +5,7 @@ is an element animation orchestrator for React.js ✨
 [![npm](https://img.shields.io/npm/v/yubaba.svg)](https://www.npmjs.com/package/yubaba)
 [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/yubaba.svg)](https://bundlephobia.com/result?p=yubaba)
 
-[![Example animation using yubaba](https://github.com/madou/yubaba/raw/master/test/images/intro.gif)](https://yubabajs.com/advanced-usage)
+[![Example animation using yubaba](https://user-images.githubusercontent.com/6801309/55383683-87894b80-5574-11e9-80ef-7394eb6eca63.gif)](https://yubabajs.com/advanced-usage)
 
 ## Why yubaba
 
