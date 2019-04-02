@@ -1,0 +1,50 @@
+---
+name: Move
+route: /move
+---
+
+import { Playground, PropsTable } from 'docz';
+import * as Common from 'yubaba-common';
+import Baba from '../../../Baba';
+import Move from '../index';
+import * as Styled from './styled';
+
+# Move
+
+Useful for animating an element moving from one position to another,
+works best when the element has **very little visual difference**.
+This animation uses the FLIP technique so it is very performant.
+
+## Usage
+
+```js
+import { Move } from 'yubaba';
+```
+
+<Playground>
+  <Common.Toggler>
+    {({ shown, toggle }) =>
+      shown ? (
+        <Baba name="move" key="1">
+          <Move>
+            {({ ref, style }) => (
+              <Styled.Box onClick={() => toggle()} style={style} innerRef={ref} />
+            )}
+          </Move>
+        </Baba>
+      ) : (
+        <Baba name="move" key="2">
+          <Move>
+            {({ ref, style }) => (
+              <Styled.Box style={style} innerRef={ref} onClick={() => toggle()} alignRight />
+            )}
+          </Move>
+        </Baba>
+      )
+    }
+  </Common.Toggler>
+</Playground>
+
+## Props
+
+<PropsTable of={Move} />

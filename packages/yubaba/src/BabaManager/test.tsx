@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
-import Baba from '../Baba';
-import BabaManager from '../BabaManager';
+import { WrappedBaba as Baba } from '../Baba';
+import { WrappedBabaManager as BabaManager } from '../BabaManager';
 import * as utils from '../__tests__/utils';
 import defer from '../lib/defer';
 
@@ -21,7 +21,7 @@ describe('<BabaManager />', () => {
       </BabaManager>
     );
 
-    expect(wrapper.find('span')).toHaveProp('style', { visibility: 'visible' });
+    expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'visible' });
   });
 
   it('should hide manager children if animation is already in flight', () => {
@@ -51,7 +51,7 @@ describe('<BabaManager />', () => {
     });
     wrapper.update();
 
-    expect(wrapper.find('span')).toHaveProp('style', { visibility: 'hidden' });
+    expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'hidden' });
   });
 
   it('should show manager children when animation is finished', async () => {
@@ -85,7 +85,7 @@ describe('<BabaManager />', () => {
     await deferred.promise;
     wrapper.update();
 
-    expect(wrapper.find('span')).toHaveProp('style', { visibility: 'visible' });
+    expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'visible' });
   });
 
   it('should hide all nested manager children if animation is already in flight', async () => {
@@ -123,8 +123,8 @@ describe('<BabaManager />', () => {
     });
     wrapper.update();
 
-    expect(wrapper.find('#parent1')).toHaveProp('style', { visibility: 'hidden' });
-    expect(wrapper.find('#parent2')).toHaveProp('style', { visibility: 'hidden' });
+    expect(wrapper.find('#parent1').prop('style')).toEqual({ visibility: 'hidden' });
+    expect(wrapper.find('#parent2').prop('style')).toEqual({ visibility: 'hidden' });
   });
 
   it('should show all nested manager children when animation is finished', async () => {
@@ -166,7 +166,7 @@ describe('<BabaManager />', () => {
     await deferred.promise;
     wrapper.update();
 
-    expect(wrapper.find('#parent1')).toHaveProp('style', { visibility: 'visible' });
-    expect(wrapper.find('#parent2')).toHaveProp('style', { visibility: 'visible' });
+    expect(wrapper.find('#parent1').prop('style')).toEqual({ visibility: 'visible' });
+    expect(wrapper.find('#parent2').prop('style')).toEqual({ visibility: 'visible' });
   });
 });

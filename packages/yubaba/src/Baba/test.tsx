@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import 'jest-enzyme';
-import { Baba } from '../Baba';
+import { WrappedBaba as Baba } from '../Baba';
 import Target from '../FocalTarget';
 import { getElementBoundingBox } from '../lib/dom';
 import defer from '../lib/defer';

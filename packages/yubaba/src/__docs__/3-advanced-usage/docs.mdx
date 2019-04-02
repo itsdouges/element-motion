@@ -1,0 +1,285 @@
+---
+name: 3. Advanced usage
+route: /advanced-usage
+order: 1
+---
+
+import { Playground } from 'docz';
+import * as Common from 'yubaba-common';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import MoreVert from '@material-ui/icons/MoreVert';
+import ImageIcon from '@material-ui/icons/Image';
+import StarIcon from '@material-ui/icons/StarBorder';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { findDOMNode } from 'react-dom';
+import { MemoryRouter, Switch, Route } from 'react-router-dom';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  List,
+  Avatar,
+  ListItem,
+  ListItemText,
+  Divider,
+} from '@material-ui/core';
+import * as Styled from './styled';
+import { WrappedBaba as Baba } from '../../Baba';
+import { WrappedBabaManager as BabaManager } from '../../BabaManager';
+import CircleExpand from '../../animations/CircleExpand';
+import RevealMove from '../../animations/RevealMove';
+import ConcealMove from '../../animations/ConcealMove';
+import FocalTarget from '../../FocalTarget';
+import Move from '../../animations/Move';
+import CircleShrink from '../../animations/CircleShrink';
+import ovi from './images/ovechkin.jpg';
+
+# Advanced usage
+
+## Delay showing content until all animations have finished
+
+Occasionally when initiating an animation we can have some secondary content we want to keep hidden until the animation has finished.
+Luckily [BabaManager](/baba-manager) exists to do just that!
+Make it a parent of any [Baba](/baba) and it will show its content only when the animation has finished.
+
+> **Tip -** If you have multiple child [Baba](/baba) you can pass [BabaManager](/baba-manager) a `name` prop to target a specific [Baba](/baba).
+
+## Using supporting animations
+
+While movement is a large part of `yubaba` we can do so much more!
+When building a great user experience its also useful to have supporting animation to help seamlessly transition from one state to another.
+
+Two extra tools we have to do this is [CircleExpand](/circle-expand) and [CircleShrink](/circle-shrink) animations,
+used together can produce a really cool transition between states.
+
+<Playground>
+  <Styled.Center>
+    <Common.SmallViewport>
+      <Common.Toggler>
+        {({ shown, toggle }) => (
+          <div id="yo">
+            {!shown ? (
+              <Styled.Container>
+                <Baba name="circle-expand-square" key="1">
+                  <CircleExpand background="#fea3aa">
+                    {({ ref, style }) => (
+                      <Styled.Root onClick={() => toggle()} style={style} innerRef={ref} />
+                    )}
+                  </CircleExpand>
+                </Baba>
+              </Styled.Container>
+            ) : (
+              <BabaManager>
+                {props => (
+                  <Styled.Container
+                    onClick={() => toggle()}
+                    style={{ cursor: 'pointer', background: '#005aff', ...props.style }}
+                  >
+                    <Baba name="circle-expand-square" key="2">
+                      <CircleShrink background="#005aff">
+                        {({ ref, style }) => <div style={style} ref={ref} />}
+                      </CircleShrink>
+                    </Baba>
+                  </Styled.Container>
+                )}
+              </BabaManager>
+            )}
+          </div>
+        )}
+      </Common.Toggler>
+    </Common.SmallViewport>
+  </Styled.Center>
+</Playground>
+
+> **Tip -** [BabaManager](/baba-manager) has been used as well to hide the next contents until the animation has finished,
+> resulting in that crisp transition.
+
+## Wait for the previous animation to finish before starting the next
+
+Depending on the animations chosen you'll want to defer starting one until the previous has finished.
+Luckily the [Wait](/wait) component has been made for that!
+
+> **Tip -** Animations are executed from top to bottom.
+> The parent-most animation will be executed first and then continue execution inwards.
+
+## Moving using a focal target
+
+At times we want to move all content at once but have it originate from a focal point.
+The [FocalTarget](/focal-target) component exists to mark the focal element so animations who care can use it.
+Two examples of animations who can use it are [Move](/move), [ConcealMove](/conceal-move).
+
+<Playground>
+  {() => {
+    const home = (props) => (
+      <React.Fragment>
+        <Typography
+          gutterBottom
+          variant="subheading"
+          color="inherit"
+          style={{ marginTop: 20, marginLeft: 22 }}
+        >
+          Today
+        </Typography>
+
+        <List>
+          {Styled.data.map((email, index) => (
+            <React.Fragment key={index}>
+              <Baba name={`card-${index}`} in={props.in}>
+                <RevealMove duration={600}>
+                  {baba => (
+                    <div {...baba}>
+                    <ListItem
+                      button
+                    >
+                      <Avatar>
+                        <ImageIcon />
+                      </Avatar>
+                      <ListItemText
+                        primary={email.title}
+                        secondary={`${email.recipients} - ${email.body}`}
+                        secondaryTypographyProps={{ noWrap: true }}
+                      />
+                      <Styled.StyledLink to={`/screen/${index}`} />
+                    </ListItem>
+                    </div>
+                  )}
+                </RevealMove>
+              </Baba>
+              <Divider variant="inset" component="li" />
+            </React.Fragment>
+          ))}
+        </List>
+      </React.Fragment>
+    );
+
+    const screen = (props) => (
+      <Baba name={`card-${props.index}`}>
+        <ConcealMove>
+          {baba => (
+            <Styled.Screen
+              innerRef={baba.ref}
+              style={baba.style}
+              className={baba.className}
+              {...props}
+            >
+              <ListItem>
+                <Typography variant="h6">{Styled.data[props.index].title}</Typography>
+                <IconButton
+                  color="inherit"
+                  aria-label="Menu"
+                  style={{ marginLeft: 'auto', marginRight: '-10px' }}
+                >
+                  <StarIcon />
+                </IconButton>
+              </ListItem>
+
+              <Divider />
+
+              <FocalTarget>
+                {targetProps => (
+                  <div ref={targetProps.ref}>
+                  <ListItem>
+                    <Avatar>
+                      <ImageIcon />
+                    </Avatar>
+                    <ListItemText
+                      primary={Styled.data[props.index].title}
+                      secondary={Styled.data[props.index].recipients}
+                    />
+                  </ListItem>
+                  </div>
+                )}
+              </FocalTarget>
+
+              <ListItem>
+                <Typography variant="body1">{Styled.data[props.index].body}</Typography>
+              </ListItem>
+            </Styled.Screen>
+          )}
+        </ConcealMove>
+      </Baba>
+    );
+
+    const appBarActions = () => (
+      <Switch>
+        <Route
+          render={() => (
+            <Styled.LightLink to="/">
+              <IconButton
+                color="inherit"
+                aria-label="Menu"
+                style={{ marginLeft: '-15px', marginRight: 20 }}
+              >
+                <BackIcon />
+              </IconButton>
+            </Styled.LightLink>
+          )}
+          path="/screen/:index"
+        />
+
+        <Route
+          path="*"
+          render={() => (
+            <React.Fragment>
+              <IconButton
+                color="inherit"
+                aria-label="Menu"
+                style={{ marginLeft: '-15px', marginRight: 20 }}
+              >
+                <MenuIcon />
+              </IconButton>
+
+              <Typography variant="h6" color="inherit">
+                Inbox
+              </Typography>
+            </React.Fragment>
+          )}
+        />
+      </Switch>
+    );
+
+    return (
+      <Styled.Center>
+      <MemoryRouter>
+        <Common.SmallViewport
+          invertColor
+          appBar={
+            <AppBar
+              position="static"
+              style={{ paddingTop: 26, background: 'rgb(97, 0, 236)', zIndex: 1 }}
+            >
+              <Toolbar>
+                {appBarActions()}
+
+                <IconButton color="inherit" aria-label="Menu" style={{ marginLeft: 'auto' }}>
+                  <SearchIcon />
+                </IconButton>
+
+                <IconButton color="inherit" aria-label="Menu" style={{ marginRight: '-15px' }}>
+                  <MoreVert />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+          }
+        >
+          <Route
+            render={props => screen({ index: props.match.params.index })}
+            path="/screen/:index"
+          />
+
+          <Route path="/" exact>
+            {props => home({ in: !!props.match, 'aria-hidden': !props.match })}
+          </Route>
+        </Common.SmallViewport>
+      </MemoryRouter>
+      </Styled.Center>
+    );
+
+}}
+
+</Playground>
+
+> **Tip -** Have a cool idea for an animation but you haven't seen any available yet?
+> Check out [Custom animations](/custom-animations) to see how you can build your own!

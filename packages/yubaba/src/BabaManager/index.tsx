@@ -10,73 +10,31 @@ export interface BabaManangerProps extends InjectedProps {
   children: (props: { style: InlineStyles }) => React.ReactNode;
 
   /**
-   * Optional name to target a specific child `<Baba />`.
+   * Optional name to target a specific child Baba.
    */
   name?: string;
 }
 
-/**
- * @hidden
- */
 export interface State {
   style: InlineStyles;
 }
 
-/**
- * @hidden
- */
 export interface InjectedProps {
+  /**
+   * Internal context, ignore this.
+   */
   context?: BabaManagerContext;
 }
 
-/**
- * @hidden
- */
 export type OnFinishHandler = (opts: { name: string }) => void;
 
-/**
- * @hidden
- */
 export interface BabaManagerContext {
   onFinish: OnFinishHandler;
 }
 
-/**
- * @hidden
- */
 export const BabaContext = React.createContext<BabaManagerContext | undefined>(undefined);
 
-/**
- * ## BabaManager
- *
- * Used to hide contents before an animation is complete triggered from a child `<Baba />` component.
- * If there is more than one child `<Baba />` you can use an optional `name` prop which should match the appropriate `<Baba />` component.
- *
- * If it is the initial mount it will immediately be shown.
- *
- * You can also nest `<BabaManager />`'s and they will all be notified from the appropriate child `<Baba />`.
- *
- * We use visibility over opacity as it can show nested children even if the parent is `visibility: hidden`.
- * This greatly simplifies code we need to write.
- * It will be up to consumers to handle their own fade-in behaviour.
- *
- * ### Usage
- *
- * ```
- * const MyApp = () => (
- * <BabaManager name="my-anim">
- *    {(props) => (
- *      <div {...props}>
- *        <Baba name="my-anim">
- *          {(props) => <div {...props} />}
- *        </Baba>
- *      </div>
- *    )}
- *   </BabaManager>
- * );
- * ```
- */
-export class BabaManager extends React.Component<BabaManangerProps, State> {
+export default class BabaManager extends React.Component<BabaManangerProps, State> {
   state: State = {
     style: {
       visibility: 'hidden',
@@ -113,9 +71,6 @@ export class BabaManager extends React.Component<BabaManangerProps, State> {
   }
 }
 
-/**
- * @hidden
- */
 export const withBabaManagerContext = <
   TComponent extends React.ComponentType<InjectedProps & ExtractProps<TComponent>>
 >(
@@ -139,14 +94,14 @@ export const withBabaManagerContext = <
 
       return (
         <BabaContext.Consumer>
-          {context => <CoercedWrappedComponent context={context} {...this.props} />}
+          {context => (
+            // @ts-ignore
+            <CoercedWrappedComponent context={context} {...this.props} />
+          )}
         </BabaContext.Consumer>
       );
     }
   };
 };
 
-/**
- * @hidden
- */
-export default withBabaManagerContext(BabaManager);
+export const WrappedBabaManager = withBabaManagerContext(BabaManager);

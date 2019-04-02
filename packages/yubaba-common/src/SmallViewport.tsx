@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
 const PixelContainer = styled.div`
@@ -79,15 +79,21 @@ const Triangle = styled(Square)`
   border-top: 12px solid ${props => (props.invertColor ? '#fff' : '#000')};
 `;
 
-const RelativeContainer = styled.div`
+const RelativeContainer = styled.div<{ appBarOffset: boolean }>`
   position: relative;
-  /* Hack to align contents to container taking off header height */
-  height: calc(100% - 82px);
 
-  @media (min-width: 584px) {
-    /* Hack to align contents to container taking off header height */
-    height: calc(100% - 90px);
-  }
+  ${props =>
+    props.appBarOffset
+      ? css`
+          /* Hack to align contents to container taking off header height */
+          height: calc(100% - 82px);
+
+          @media (min-width: 584px) {
+            /* Hack to align contents to container taking off header height */
+            height: calc(100% - 90px);
+          }
+        `
+      : ''};
 `;
 
 interface SmallViewportProps {
@@ -123,7 +129,7 @@ export default class SmallViewport extends React.Component<SmallViewportProps> {
             {appBar}
           </ToolbarContainer>
 
-          <RelativeContainer>
+          <RelativeContainer appBarOffset={!!appBar}>
             <OverflowContainer>{children}</OverflowContainer>
           </RelativeContainer>
         </PixelContainer>

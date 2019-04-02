@@ -1,15 +1,9 @@
 import * as React from 'react';
 
-/**
- * @hidden
- */
 export interface Style {
   [key: string]: string | number | undefined;
 }
 
-/**
- * @hidden
- */
 export interface Props {
   duration: number;
   from: Style;
@@ -18,16 +12,10 @@ export interface Props {
   start?: boolean;
 }
 
-/**
- * @hidden
- */
 export interface State {
   state: 'from' | 'to';
 }
 
-/**
- * @hidden
- */
 export default class SimpleTween extends React.Component<Props, State> {
   started: boolean = false;
 

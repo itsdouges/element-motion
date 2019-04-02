@@ -22,7 +22,7 @@ export interface RevealProps extends CollectorChildrenProps {
   zIndex?: number;
 
   /**
-   * Timing function to be used in the transition, see: https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
+   * Timing function to be used in the transition.
    */
   timingFunction: string;
 
@@ -46,9 +46,6 @@ export interface RevealProps extends CollectorChildrenProps {
   useClipPath?: boolean;
 }
 
-/**
- * ## Reveal
- */
 export default class Reveal extends React.Component<RevealProps> {
   static defaultProps = {
     duration: 'dynamic',
@@ -60,7 +57,7 @@ export default class Reveal extends React.Component<RevealProps> {
   beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
     if (!data.destination.focalTargetElementBoundingBox) {
       throw new Error(`yubaba
-targetElement was missing.`);
+<FocalTarget /> was not found, if you haven't defined one make sure to add one as a descendant of your target Baba.`);
     }
 
     const { childrenTransformX, childrenTransformY, useClipPath } = this.props;

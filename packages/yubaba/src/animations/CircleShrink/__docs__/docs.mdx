@@ -1,0 +1,51 @@
+---
+name: CircleShrink
+route: /circle-shrink
+---
+
+import { Playground, PropsTable } from 'docz';
+import * as Common from 'yubaba-common';
+import Baba from '../../../Baba';
+import * as Styled from './styled';
+import CircleShrink from '../index';
+
+# CircleShrink
+
+Will animate a circle from the viewport to destination element,
+and then fade out.
+
+Generally you should use [CircleExpand](/circle-expand) and [CricleShrink](/circle-shrink) together to seamlessly transition the background between pages.
+
+## Usage
+
+```js
+import { CircleShrink } from 'yubaba';
+```
+
+<Playground>
+  <Common.Toggler>
+    {({ shown, toggle }) =>
+      shown ? (
+        <Styled.Container>
+          <Baba name="circle-shrink" key="1">
+            {({ ref, style }) => (
+              <Styled.Button onClick={() => toggle()} style={style} innerRef={ref} />
+            )}
+          </Baba>
+        </Styled.Container>
+      ) : (
+        <Styled.Container onClick={() => toggle()} interactive>
+          <Baba name="circle-shrink" key="2">
+            <CircleShrink background="#ff5e6d">
+              {({ ref, style }) => <div style={style} ref={ref} />}
+            </CircleShrink>
+          </Baba>
+        </Styled.Container>
+      )
+    }
+  </Common.Toggler>
+</Playground>
+
+## Props
+
+<PropsTable of={CircleShrink} />

@@ -10,7 +10,7 @@ interface FocalTargetProps {
   children: (props: FocalTargetChildProps) => React.ReactNode;
 }
 
-export default class Target extends React.Component<FocalTargetProps> {
+export default class FocalTarget extends React.Component<FocalTargetProps> {
   render() {
     return (
       <CollectorContext.Consumer>

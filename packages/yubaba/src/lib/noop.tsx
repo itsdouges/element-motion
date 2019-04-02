@@ -1,4 +1,2 @@
-/**
- * @hidden
- */
+
 export default () => undefined;

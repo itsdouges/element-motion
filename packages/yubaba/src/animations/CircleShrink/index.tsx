@@ -34,15 +34,6 @@ export interface CircleShrinkProps extends CollectorChildrenProps {
   zIndex: number;
 }
 
-/**
- * ## CircleShrink
- *
- * CircleShrink will animate a circle from the entire window
- * to cover end target, and then fade out.
- *
- * Generally you will use CircleShrink and CircleExpand together
- * to seamlessly transition the background between pages.
- */
 export default class CircleShrink extends React.Component<CircleShrinkProps> {
   static defaultProps = {
     duration: 'dynamic',

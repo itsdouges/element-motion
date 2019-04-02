@@ -1,6 +1,6 @@
 // Primary components
-export { default } from './Baba';
-export { default as BabaManager } from './BabaManager';
+export { WrappedBaba as default } from './Baba';
+export { WrappedBabaManager as BabaManager } from './BabaManager';
 
 // Animation components
 export { default as Wait } from './Wait';

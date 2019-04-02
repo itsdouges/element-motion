@@ -1,6 +1,4 @@
-/**
- * @hidden
- */
+
 export function getDocumentScroll() {
   const scrollTop =
     document.documentElement && document.documentElement.scrollTop
@@ -18,16 +16,12 @@ export function getDocumentScroll() {
   };
 }
 
-/**
- * @hidden
- */
+
 export interface ElementBoundingBoxOpts {
   useOffsetSize?: boolean;
 }
 
-/**
- * @hidden
- */
+
 export interface ElementBoundingBox {
   size: {
     width: number;
@@ -44,9 +38,7 @@ export interface ElementBoundingBox {
   };
 }
 
-/**
- * @hidden
- */
+
 export function getElementBoundingBox(
   element: HTMLElement,
   options: ElementBoundingBoxOpts = {}
@@ -73,9 +65,7 @@ export function getElementBoundingBox(
   };
 }
 
-/**
- * @hidden
- */
+
 export function calculateElementCenterInViewport(elementBoundingBox: ElementBoundingBox) {
   return {
     top: elementBoundingBox.location.top + Math.ceil(elementBoundingBox.size.width / 2),
@@ -83,9 +73,7 @@ export function calculateElementCenterInViewport(elementBoundingBox: ElementBoun
   };
 }
 
-/**
- * @hidden
- */
+
 export function getWindowDimensions() {
   return {
     width: window.innerWidth,
@@ -93,9 +81,7 @@ export function getWindowDimensions() {
   };
 }
 
-/**
- * @hidden
- */
+
 export function calculateWindowCentre() {
   return {
     left: Math.ceil(window.innerWidth / 2),
@@ -103,9 +89,7 @@ export function calculateWindowCentre() {
   };
 }
 
-/**
- * @hidden
- */
+
 export function recalculateElementBoundingBoxFromScroll(
   elementBoundingBox: ElementBoundingBox
 ): ElementBoundingBox {
