@@ -10,8 +10,11 @@
   "scripts": {
     "build": "rm -rf dist && tsc -p ./tsconfig.json"
   },
-  "peerDependencies": {
+  "dependencies": {
     "@material-ui/core": "^3.1.0",
+    "@material-ui/icons": "^3.0.2"
+  },
+  "peerDependencies": {
     "react": "^16.4.x",
     "react-dom": "^16.4.x",
     "styled-components": "^3.4.5"

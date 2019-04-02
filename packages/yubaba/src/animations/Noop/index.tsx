@@ -5,9 +5,6 @@ interface NoopProps extends CollectorChildrenProps {
   duration: number;
 }
 
-/**
- * @hidden
- */
 export default class Noop extends React.Component<NoopProps> {
   static defaultProps = {
     duration: 0,

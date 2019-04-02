@@ -21,14 +21,10 @@ import noop from '../lib/noop';
 import * as babaStore from '../lib/babaStore';
 import { InjectedProps, withBabaManagerContext } from '../BabaManager';
 
-/**
- * @hidden
- */
+
 export type AnimationFunc = () => Promise<void>;
 
-/**
- * @hidden
- */
+
 export interface MappedAnimation {
   animate: AnimationFunc;
   beforeAnimate: AnimationFunc;
@@ -36,22 +32,16 @@ export interface MappedAnimation {
   cleanup: () => void;
 }
 
-/**
- * @hidden
- */
+
 export type AnimationBlock = MappedAnimation[];
 
-/**
- * @hidden
- */
+
 export interface ChildProps {
   style?: InlineStyles;
   className?: string;
 }
 
-/**
- * @hidden
- */
+
 export interface State {
   shown: boolean;
   childProps: ChildProps;
@@ -64,7 +54,7 @@ export interface BabaProps extends CollectorChildrenProps, InjectedProps {
   name: string;
 
   /**
-   * Used alternatively to the implicit animation triggering via unmounting/mounting of Baba components.
+   * Used alternatively to the implicit animation triggering via unmounting or mounting of Baba components.
    * Only use `in` if your component is expected to persist through the entire lifecyle of the app.
    * When you transition to the "next page" make sure to set your "in" to false. When you transition
    * back to the original page set the "in" prop back to true. This lets the Baba components know when to
@@ -83,48 +73,21 @@ export interface BabaProps extends CollectorChildrenProps, InjectedProps {
    * Defaults to 50ms, might want to bump it up if loading something that was code split.
    */
   timeToWaitForNextBaba: number;
+
+  /**
+   * HTMLElement container used when creating elements for animations,
+   * generally only supporting animations will need this.
+   */
+  container: HTMLElement | (() => HTMLElement);
 }
 
-/**
- * ## Baba
- *
- * This is the primary component in `yubaba`.
- * When rendering it will be given all of the animation data from its children.
- * When unmounting or flipping the prop `in` from `true` to `false`,
- * it will execute all the animations `top to bottom` below it if a matching `<Baba />` pair is found within 50ms.
- *
- * ### Usage
- *
- * ```
- * import Baba, { CrossFadeMove } from 'yubaba';
- *
- * const MyApp = ({ shown, show }) => (
- *  <div>
- *    {shown || (
- *      <Baba name="my-anim">
- *        <CrossFadeMove>
- *          {({ ref, style }) => <div onClick={() => show(false)} ref={ref} style={style}>starting point</div>}
- *        </CrossFadeMove>
- *      </Baba>
- *    )}
- *
- *    {shown && (
- *      <Baba name="my-anim">
- *        <CrossFadeMove>
- *          {({ ref, style }) => <div onClick={() => show(true)} ref={ref} style={style}>ending point</div>}
- *        </CrossFadeMove>
- *      </Baba>
- *    )}
- *  </div>
- * );
- * ```
- */
-export class Baba extends React.PureComponent<BabaProps, State> {
+export default class Baba extends React.PureComponent<BabaProps, State> {
   static displayName = 'Baba';
 
   static defaultProps = {
     onFinish: noop,
     timeToWaitForNextBaba: 50,
+    container: document.body,
   };
 
   state: State = {
@@ -265,7 +228,8 @@ If it's an image, try and have the image loaded before mounting, or set a static
   }
 
   executeAnimations = () => {
-    const { name } = this.props;
+    const { name, container: getContainer } = this.props;
+    const container = typeof getContainer === 'function' ? getContainer() : getContainer;
     const fromTarget = babaStore.get(name);
 
     if (fromTarget) {
@@ -290,31 +254,34 @@ If it's an image, try and have the image loaded before mounting, or set a static
       const actions = collectorData.map(targetData => {
         if (targetData.action === CollectorActions.animation) {
           // Element will be lazily instantiated if we need to add something to the DOM.
-          let elementToMountChildren: HTMLElement;
+          let elementToMountChildren: HTMLElement | null = null;
 
           const mount = (jsx: React.ReactNode) => {
             if (!elementToMountChildren) {
               elementToMountChildren = document.createElement('div');
               // We insert the new element at the beginning of the body to ensure correct
               // stacking context.
-              document.body.insertBefore(elementToMountChildren, document.body.firstChild);
+              container.insertBefore(elementToMountChildren, container.firstChild);
             }
 
             // This ensures that if there was an update to the jsx that is animating,
             // it changes next frame. Resulting in the transition _actually_ happening.
-            requestAnimationFrame(() =>
-              renderSubtreeIntoContainer(
-                this,
-                jsx as React.ReactElement<{}>,
-                elementToMountChildren
-              )
+            requestAnimationFrame(
+              () =>
+                elementToMountChildren &&
+                renderSubtreeIntoContainer(
+                  this,
+                  jsx as React.ReactElement<{}>,
+                  elementToMountChildren
+                )
             );
           };
 
           const unmount = () => {
             if (elementToMountChildren) {
               unmountComponentAtNode(elementToMountChildren);
-              document.body.removeChild(elementToMountChildren);
+              container.removeChild(elementToMountChildren);
+              elementToMountChildren = null;
             }
           };
 
@@ -530,7 +497,5 @@ If it's an image, try and have the image loaded before mounting, or set a static
   }
 }
 
-/**
- * @hidden
- */
-export default withBabaManagerContext(Baba);
+
+export const WrappedBaba = withBabaManagerContext(Baba);

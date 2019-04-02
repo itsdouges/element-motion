@@ -1,0 +1,46 @@
+---
+name: FocalTarget
+route: /focal-target
+---
+
+import { Playground, PropsTable } from 'docz';
+import FocalTarget from '../index';
+
+# FocalTarget
+
+Used to explicitly mark the focal element,
+only a handful of animations require this component to be used,
+for example [ConcealMove](/conceal-move).
+
+> **Tip -** See [Moving using a focal target](/advanced-usage#moving-using-a-focal-target) for more information on how to use this component.
+
+## Usage
+
+```js
+import { FocalTarget, ConcealMove } from 'yubaba';
+
+const ItemDetails = ({ title, recipients, body, index }) => (
+  <Baba name={`item-${index}`}>
+    <ConcealMove>
+      {baba => (
+        <div {...baba}>
+          <FocalTarget>
+            {({ ref }) => (
+              <div ref={ref}>
+                {title}
+                {recipients}
+              </div>
+            )}
+          </FocalTarget>
+
+          {body}
+        </div>
+      )}
+    </ConcealMove>
+  </Baba>
+);
+```
+
+## Props
+
+<PropsTable of={FocalTarget} />

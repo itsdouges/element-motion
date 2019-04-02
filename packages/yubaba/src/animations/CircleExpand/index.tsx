@@ -35,15 +35,6 @@ export interface CircleExpandProps extends CollectorChildrenProps {
   zIndex: number;
 }
 
-/**
- * ## CircleExpand
- *
- * CircleExpand will animate a circle from the entire window
- * to cover end target, and then fade out.
- *
- * Generally you will use CircleExpand and CircleShrink together
- * to seamlessly transition the background between pages.
- */
 export default class CircleExpand extends React.Component<CircleExpandProps> {
   static defaultProps = {
     duration: 'dynamic',

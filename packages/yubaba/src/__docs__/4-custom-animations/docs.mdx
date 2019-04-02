@@ -1,0 +1,350 @@
+---
+name: 4. Custom animations
+route: /custom-animations
+order: 1
+---
+
+import { Playground } from 'docz';
+import { Toggler } from 'yubaba-common';
+import { WrappedBaba as Baba } from '../../Baba';
+import Move from '../../animations/Move';
+import OneFullRotation from './OneFullRotation';
+import SupportingAnimation from './SupportingAnimation';
+import * as Styled from './styled';
+
+# Custom animations
+
+Everything is a custom animation in `yubaba` - all animations available out of the box will use the same methods to make them as you will.
+There are two types of animations you can build with `yubaba`.
+
+## Lifecyle of an animation
+
+There are three lifecycles of an animation which you will see in the next few examples.
+
+1. `beforeAnimate()` - useful for prepping any animations or elements.
+2. `animate()` - primary step for an animation.
+3. `afterAnimate()` - useful for performing any extra animations after all primary animations have completed.
+
+Each lifecyle method has the same type signature:
+
+```js
+(elements, onFinish, setChildProps) => JSX.Element | void;
+```
+
+> **Tip -** Notice you can return JSX elements.
+> If you do it will be created for that lifecycle - and reconciled from the result of every following lifecycle.
+> This means if you return JSX elements in `beforeAnimate()`, but not in `animate()` or `afterAnimate()` - it will be removed!
+
+### elements
+
+This contains snapshot data for the origin and destination elements.
+Use this for doing any dynamic calculation for your animation.
+
+```js
+{
+  origin: {
+    element: HTMLElement;
+    elementBoundingBox: ElementBoundingBox;
+    focalTargetElement: HTMLElement | null | undefined;
+    focalTargetElementBoundingBox: ElementBoundingBox | undefined;
+    render: CollectorChildrenAsFunction;
+  },
+  destination: {
+    element: HTMLElement;
+    elementBoundingBox: ElementBoundingBox;
+    focalTargetElement: HTMLElement | null | undefined;
+    focalTargetElementBoundingBox: ElementBoundingBox | undefined;
+    render: CollectorChildrenAsFunction;
+  }
+}
+```
+
+> **Tip -** You'll notice there is a `render` prop in there - this is the render prop
+> that consumers pass through which you can use to create the same element if needed!
+> You can also use the destination `element` to set style/classNames directly if needing that extra perf boost.
+
+### onFinish() arg
+
+Call this method when you've completed the lifecycle.
+Animations will not continue to the next stage until all animations finish the current lifecycle.
+
+### setChildProps() arg
+
+This will set the wrapped child props.
+
+```
+setChildProps({
+  style?: (prevStyles: InlineStyles) => InlineStyles | undefined;
+  className?: (prevClass: string | undefined) => string | undefined;
+});
+```
+
+## Focal animations
+
+The first is a focal animation - which means animating the wrapped element.
+We are going to make a custom animation that makes the target element _do one full 360deg rotation_.
+
+```js
+import React, { Component } from 'react';
+import { Collector } from 'yubaba';
+
+export default class OneFullRotation extends Component {
+  // Before animate is used to set up the animation.
+  // Think of it as prepping the environment to efficiently start the animations
+  // during the animate phase.
+  beforeAnimate = (elements, onFinish, setChildProps) => {
+    setChildProps({
+      style: prevStyle => ({
+        ...prevStyle,
+        opacity: 1,
+        transformOrigin: 'center',
+        // We set up the initial state of the animation.
+        // Here we are using the FLIP technique of priming the animation
+        // first and then removing it so the animates into its destination position.
+        transform: 'rotate(360deg)',
+      }),
+      // className is also available for more advanced styles.
+      // className: (prevClassName) => 'new-class-name',
+      // Interally we use emotion for this for a few animations.
+    });
+
+    onFinish();
+  };
+
+  // This is the primary phase of an animation.
+  // Call onFinish() when the animation has completed.
+  animate = (elements, onFinish, setChildProps) => {
+    setTimeout(onFinish, 400);
+
+    setChildProps({
+      style: prevStyle => ({
+        ...prevStyle,
+        transition: 'transform 400ms',
+        transform: 'none',
+      }),
+    });
+  };
+
+  render() {
+    const { children } = this.props;
+
+    return (
+      // The collector component passes all data up to the
+      // nearest Baba parent.
+      <Collector
+        data={{
+          // Animation is the only allowed action.
+          action: 'animation',
+          payload: {
+            beforeAnimate: this.beforeAnimate,
+            animate: this.animate,
+            // afterAnimate() is also available for any cleanup or extra animations
+            // post the primary animation.
+          },
+        }}
+      >
+        {children}
+      </Collector>
+    );
+  }
+}
+```
+
+<Styled.Container>
+  <Toggler>
+    {toggler => (
+      <Baba key={toggler.shown} name="element-animation-1">
+        <OneFullRotation>
+          {({ ref, ...props }) => (
+            <Styled.InlineBlock
+              alignSelf="flex-start"
+              {...props}
+              innerRef={ref}
+              onClick={() => toggler.toggle()}
+            >
+              click me
+            </Styled.InlineBlock>
+          )}
+        </OneFullRotation>
+      </Baba>
+    )}
+  </Toggler>
+</Styled.Container>
+
+> **Tip -** Animations are fired from the destination `Baba` element using the origin animations,
+> this allows us to have fine control over what animation should happen for the particular destination.
+> Depending where we are in our application we can have different animations occur to the same destination.
+
+### Composing animations
+
+Another amazing feature of `yubaba` is the ability to compose animations - with a small change we can compose the two.
+If we introduce [Move](/move) we can make the element rotate and move to the new destination.
+
+```diff
+beforeAnimate = (elements, onFinish, setChildProps) => {
+  setChildProps({
+    style: prevStyle => ({
+      ...prevStyle,
+      opacity: 1,
+      transformOrigin: 'center',
+-      transform: 'rotate(360deg)',
++      transform: `${prevStyle.transfrom} rotate(360deg)`,
+    }),
+  });
+
+  onFinish();
+};
+```
+
+<Styled.Container>
+  <Toggler>
+    {toggler => (
+      <Baba key={toggler.shown} name="element-animation-2">
+        <Move>
+          <OneFullRotation>
+            {({ ref, ...props }) => (
+              <Styled.InlineBlock
+                alignSelf={toggler.shown ? 'flex-end' : 'flex-start'}
+                {...props}
+                innerRef={ref}
+                onClick={() => toggler.toggle()}
+              >
+                click me
+              </Styled.InlineBlock>
+            )}
+          </OneFullRotation>
+        </Move>
+      </Baba>
+    )}
+  </Toggler>
+</Styled.Container>
+
+## Supporting animations
+
+Sometimes we want _extra_ things to happen during an animation,
+for example the [Swipe](/swipe) animation creates a new element that swipes over the screen.
+
+This is different to a regular focal animation because it _creates_ new elements through the animation lifecycle.
+We can do this by _returning elements_ from the animation lifecycle methods.
+
+For this example let's make something similar to swipe except it starts from the middle of the screen.
+
+```js
+import React from 'react';
+import { Collector } from 'yubaba';
+
+export default class SupportingAnimation extends React.Component {
+  beforeAnimate = (elements, onFinish, setChildProps) => {
+    onFinish();
+
+    // Again emphasizing the FLIP technique, we prep the "final" position
+    // of this supporting element first and prep the animation, in the case
+    // the scaleX(0) transform.
+    return (
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'black',
+          zIndex: 9999999,
+          transform: 'scaleX(0)',
+        }}
+      />
+    );
+  };
+
+  animate = (elements, onFinish, setChildProps) => {
+    setTimeout(onFinish, 400);
+
+    // We then set the transition style and remove the transform, starting the animation.
+    // We call onFinish() after 400ms.
+    return (
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'black',
+          zIndex: 9999999,
+          transform: 'none',
+          transition: 'transform 400ms',
+        }}
+      />
+    );
+  };
+
+  afterAnimate = (elements, onFinish, setChildProps) => {
+    setTimeout(onFinish, 200);
+
+    // After animations have finished we "fade out" the supplementary animation.
+    // It will be cleaned up (removed) after this lifecycle event.
+    return (
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'black',
+          zIndex: 9999999,
+          transform: 'none',
+          transition: 'opacity 200ms',
+          opacity: 0,
+        }}
+      />
+    );
+  };
+
+  render() {
+    const { children } = this.props;
+
+    return (
+      <Collector
+        data={{
+          action: 'animation',
+          payload: {
+            beforeAnimate: this.beforeAnimate,
+            animate: this.animate,
+            afterAnimate: this.afterAnimate,
+          },
+        }}
+      >
+        {children}
+      </Collector>
+    );
+  }
+}
+```
+
+<Styled.Container>
+  <Toggler>
+    {toggler => (
+      <Baba key={toggler.shown} name="supporting-animation-1">
+        <SupportingAnimation>
+          {({ ref, ...props }) => (
+            <Styled.InlineBlock
+              alignSelf="flex-start"
+              {...props}
+              innerRef={ref}
+              onClick={() => toggler.toggle()}
+            >
+              click me
+            </Styled.InlineBlock>
+          )}
+        </SupportingAnimation>
+      </Baba>
+    )}
+  </Toggler>
+</Styled.Container>
+
+> **Tip -** Having some trouble using `yubaba`?
+> Check out [Troubleshooting](/troubleshooting) - there may some help for you there.

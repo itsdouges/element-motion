@@ -1,0 +1,10 @@
+[build]
+  base = "/"
+  publish = "docs/"
+  command = "yarn build-docs"
+  environment = { YARN_VERSION = "1.9.4" }
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

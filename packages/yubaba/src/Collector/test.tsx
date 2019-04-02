@@ -21,7 +21,14 @@ describe('<Collector />', () => {
   it('should collect ref from direct child', () => {
     const callback = jest.fn();
 
-    render(<Collector receiveRef={callback}>{({ ref }) => ref(element) || <div />}</Collector>);
+    render(
+      <Collector receiveRef={callback}>
+        {({ ref }) => {
+          ref(element);
+          return <div />;
+        }}
+      </Collector>
+    );
 
     expect(callback).toBeCalledWith(element);
   });
@@ -31,7 +38,12 @@ describe('<Collector />', () => {
 
     render(
       <Collector receiveRef={callback}>
-        <Collector>{({ ref }) => ref(element) || <div />}</Collector>
+        <Collector>
+          {({ ref }) => {
+            ref(element);
+            return <div />;
+          }}
+        </Collector>
       </Collector>
     );
 
@@ -46,7 +58,12 @@ describe('<Collector />', () => {
         <Collector>
           <Collector>
             <Collector>
-              <Collector>{({ ref }) => ref(element) || <div />}</Collector>
+              <Collector>
+                {({ ref }) => {
+                  ref(element);
+                  return <div />;
+                }}
+              </Collector>
             </Collector>
           </Collector>
         </Collector>
@@ -64,7 +81,12 @@ describe('<Collector />', () => {
     render(
       <Collector receiveRef={callback1}>
         <Collector receiveRef={callback2}>
-          <Collector receiveRef={callback3}>{({ ref }) => ref(element) || <div />}</Collector>
+          <Collector receiveRef={callback3}>
+            {({ ref }) => {
+              ref(element);
+              return <div />;
+            }}
+          </Collector>
         </Collector>
       </Collector>
     );
@@ -101,7 +123,12 @@ describe('<Collector />', () => {
 
     render(
       <Collector receiveData={callback}>
-        <Collector data={data}>{({ ref }) => ref(element) || <div />}</Collector>
+        <Collector data={data}>
+          {({ ref }) => {
+            ref(element);
+            return <div />;
+          }}
+        </Collector>
       </Collector>
     );
 
@@ -118,7 +145,12 @@ describe('<Collector />', () => {
           <Collector>
             <Collector>
               <Collector>
-                <Collector data={data}>{({ ref }) => ref(element) || <div />}</Collector>
+                <Collector data={data}>
+                  {({ ref }) => {
+                    ref(element);
+                    return <div />;
+                  }}
+                </Collector>
               </Collector>
             </Collector>
           </Collector>
@@ -141,7 +173,12 @@ describe('<Collector />', () => {
       <Collector receiveData={callback3}>
         <Collector receiveData={callback2} data={data1}>
           <Collector receiveData={callback1} data={data2}>
-            <Collector data={data3}>{({ ref }) => ref(element) || <div />}</Collector>
+            <Collector data={data3}>
+              {({ ref }) => {
+                ref(element);
+                return <div />;
+              }}
+            </Collector>
           </Collector>
         </Collector>
       </Collector>
@@ -162,7 +199,12 @@ describe('<Collector />', () => {
       <Collector receiveData={callback}>
         <Collector data={data1}>
           <Collector data={wait}>
-            <Collector data={data2}>{({ ref }) => ref(element) || <div />}</Collector>
+            <Collector data={data2}>
+              {({ ref }) => {
+                ref(element);
+                return <div />;
+              }}
+            </Collector>
           </Collector>
         </Collector>
       </Collector>
@@ -230,7 +272,7 @@ describe('<Collector />', () => {
           {({ ref }) => (
             <div ref={ref}>
               <CollectorContext.Consumer>
-                {collect => <span ref={collect.focalTargetRef} />}
+                {collect => <span ref={collect && collect.focalTargetRef} />}
               </CollectorContext.Consumer>
             </div>
           )}

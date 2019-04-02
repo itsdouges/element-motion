@@ -1,0 +1,440 @@
+---
+name: 2. Getting started
+route: /getting-started
+order: 1
+---
+
+import { Playground } from 'docz';
+import { Toggler } from 'yubaba-common';
+import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
+import * as Common from 'yubaba-common';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import MicIcon from '@material-ui/icons/Mic';
+import { IconButton } from '@material-ui/core';
+import Select from 'react-select';
+import { MemoryRouter, Link, Switch, Route } from 'react-router-dom';
+import { WrappedBaba as Baba } from '../../Baba';
+import { WrappedBabaManager as BabaManager } from '../../BabaManager';
+import Move from '../../animations/Move';
+import CrossFadeMove from '../../animations/CrossFadeMove';
+import * as Styled from './styled';
+import img1 from './images/1.png';
+import img2 from './images/2.jpeg';
+import img3 from './images/3.jpeg';
+import img4 from './images/4.png';
+import img5 from './images/5.png';
+import img6 from './images/6.jpeg';
+import johnny from './images/jg.jpg';
+
+# Getting started
+
+The bread and butter animation in `yubaba` is moving an element.
+Simple enough - after a state change we can automatically have the element animate into the its new position.
+
+> **Tip -** Make sure to look at the code after playing with the examples 😋
+
+## Moving to another element
+
+For a simple move we can use the [Baba](/baba) and [Move](/move) components.
+[Move](/move) is good when the elements are visually very similar.
+For this example we are animating from one element to another over a state change.
+
+<Playground>
+  <Styled.SelectContainer>
+    <Toggler>
+      {({ shown, toggle }) =>
+        shown ? (
+          <Baba name={`item-${shown}`}>
+            <Move>
+              {baba => (
+                <div {...baba}>
+                  <Select
+                    autoFocus
+                    isSearchable={false}
+                    value={{}}
+                    styles={{
+                      singleValue: () => ({}),
+                    }}
+                    isClearable
+                    onChange={() => toggle()}
+                    formatOptionLabel={() => (
+                      <Styled.Value>
+                        {Styled.data[shown].title}
+                        <Styled.Description>{Styled.data[shown].description}</Styled.Description>
+                      </Styled.Value>
+                    )}
+                  />
+                </div>
+              )}
+            </Move>
+          </Baba>
+        ) : (
+          <Styled.List>
+            {Styled.data.map((item, index) => (
+              <Baba key={index} name={`item-${index}`}>
+                <Move>
+                  {baba => (
+                    <Styled.Value
+                      onClick={() => toggle(`${index}`)}
+                      style={baba.style}
+                      innerRef={baba.ref}
+                    >
+                      {item.title}
+                      <Styled.Description>{item.description}</Styled.Description>
+                    </Styled.Value>
+                  )}
+                </Move>
+              </Baba>
+            ))}
+          </Styled.List>
+        )
+      }
+    </Toggler>
+  </Styled.SelectContainer>
+</Playground>
+
+> **Tip -** In `yubaba` animations are triggered by state changes.
+> This can occur either by mounting/unmounting or changing the `in` prop of [Baba](/baba) elements.
+
+## Moving to the same element
+
+Sometimes we want to animate over the same element after a state change,
+for example expanding a thumbnail to a large image.
+To do that we can abuse how `key`'s work in react - we just update the key at the same time as the state change.
+
+<Playground>
+  <Styled.Container>
+    <Toggler>
+      {({ shown, toggle }) => (
+        <Baba name="same-move" key={shown}>
+          <Move>
+            {({ ref, style }) => (
+              <Styled.ImageModal
+                style={style}
+                onClick={() => toggle()}
+                innerRef={ref}
+                appearance={shown ? 'big' : 'small'}
+                src={johnny}
+              />
+            )}
+          </Move>
+        </Baba>
+      )}
+    </Toggler>
+  </Styled.Container>
+</Playground>
+
+> **Tip -** You may be thinking why not just use regular CSS transitions for this?
+> Well under the hood that's what `yubaba` is using!
+> Using `yubaba` you can animate between different css `position`s,
+> the above goes from `static` to `fixed` while increasing in size - and it works with very little effort!
+
+## Moving to another distinct element
+
+Sometimes we can't have the affordances of two elements visually looking the same,
+for that we can use the [CrossFadeMove](/cross-fade-move) animation to transition between them.
+
+<Playground>
+  <Styled.Center>
+  <Common.Toggler>
+    {({ shown, toggle }) => (
+      <Common.SmallViewport>
+        {shown || (
+          <Baba name="google-searchbar">
+            <CrossFadeMove>
+              {({ ref, style }) => (
+                <Styled.FloatingSearchBar onClick={() => toggle()} innerRef={ref} style={style}>
+                  <IconButton color="default" aria-label="Menu" style={{ marginLeft: 'auto ' }}>
+                    <MicIcon colorRendering="blue" />
+                  </IconButton>
+                </Styled.FloatingSearchBar>
+              )}
+            </CrossFadeMove>
+          </Baba>
+        )}
+
+        {shown && (
+          <Baba name="google-searchbar">
+            <CrossFadeMove>
+              {({ ref, style }) => (
+                <Styled.FixedSearchBar innerRef={ref} style={style}>
+                  <IconButton color="default" aria-label="Menu" onClick={() => toggle()}>
+                    <BackIcon color="inherit" />
+                  </IconButton>
+
+                  <Styled.Input autoFocus placeholder="Search or type URL" />
+
+                  <IconButton color="default" aria-label="Menu">
+                    <MicIcon colorRendering="blue" />
+                  </IconButton>
+                </Styled.FixedSearchBar>
+              )}
+            </CrossFadeMove>
+          </Baba>
+        )}
+      </Common.SmallViewport>
+    )}
+
+  </Common.Toggler>
+  </Styled.Center>
+</Playground>
+
+> **Tip -** Only use this animation when your elements are very different from each other,
+> it is more expensive than a regular [Move](/move) animation.
+
+## Animating route transitions
+
+Remember that `yubaba` animations are triggered after a state change,
+and if you're using a router the state is just kept at a higher level.
+Here we have the above example re-written with [react-router](https://reacttraining.com/react-router/).
+
+<Playground>
+  <Styled.Center>
+    <Common.SmallViewport>
+      <MemoryRouter>
+        <Switch>
+          <Route
+            path="/search"
+            render={() => (
+              <div>
+                <Baba name="searchbar">
+                  <CrossFadeMove>
+                    {({ ref, style }) => (
+                      <Styled.FixedSearchBar innerRef={ref} style={style}>
+                        <Link to="/">
+                          <IconButton color="default" aria-label="Menu">
+                            <BackIcon color="inherit" />
+                          </IconButton>
+                        </Link>
+
+                        <Styled.Input autoFocus placeholder="Search or type URL" />
+
+                        <IconButton color="default" aria-label="Menu">
+                          <MicIcon colorRendering="blue" />
+                        </IconButton>
+                      </Styled.FixedSearchBar>
+                    )}
+                  </CrossFadeMove>
+                </Baba>
+              </div>
+            )}
+          />
+
+          <Route
+            path="/"
+            render={() => (
+              <Baba name="searchbar">
+                <CrossFadeMove>
+                  {({ ref, style }) => (
+                    <Link to="/search">
+                      <Styled.FloatingSearchBar innerRef={ref} style={style}>
+                        <IconButton
+                          color="default"
+                          aria-label="Menu"
+                          style={{ marginLeft: 'auto ' }}
+                        >
+                          <MicIcon colorRendering="blue" />
+                        </IconButton>
+                      </Styled.FloatingSearchBar>
+                    </Link>
+                  )}
+                </CrossFadeMove>
+              </Baba>
+            )}
+          />
+        </Switch>
+      </MemoryRouter>
+    </Common.SmallViewport>
+
+  </Styled.Center>
+</Playground>
+
+## Moving from a persisted element
+
+Sometimes it's useful to animate between two elements where one is never removed,
+for example if we show a modal over the top of screen content.
+To make this possible the [Baba](/baba) component can be controlled via the `in` prop.
+Set it to `true` when you consider it to be shown,
+and `false` when you consider it to be hidden.
+
+<Playground>
+  <Styled.Center>
+  <Common.Toggler>
+    {({ toggle, shown }) => {
+      const image = ({ src, title, from, onClick, in: inn }) => (
+        <Styled.Root>
+          <Styled.ImageContainer>
+            <Baba name={src} in={inn}>
+              <Move>
+                {({ ref, style }) => (
+                  <Styled.Img
+                    src={src}
+                    onClick={onClick}
+                    innerRef={ref}
+                    style={{ ...style, opacity: !inn ? 0 : style.opacity }}
+                  />
+                )}
+              </Move>
+            </Baba>
+
+            <Styled.ImageBack />
+          </Styled.ImageContainer>
+
+          <Styled.ImageTitle>{title}</Styled.ImageTitle>
+          <Styled.ImageFrom>{from}</Styled.ImageFrom>
+        </Styled.Root>
+      );
+
+      const details = ({ src, title, onClick }) => (
+        <BabaManager name={src}>
+          {props => (
+            <Styled.ImagePageRoot {...props}>
+              <div>
+                <IconButton
+                  color="default"
+                  aria-label="Menu"
+                  style={{ top: 26, left: 0, position: 'absolute' }}
+                  onClick={onClick}
+                >
+                  <CloseIcon color="inherit" />
+                </IconButton>
+              </div>
+
+              <Baba name={src}>
+                <Move>
+                  {({ ref, style }) => <Styled.PageImage src={src} innerRef={ref} style={style} />}
+                </Move>
+              </Baba>
+
+              <Styled.ContentContainer>
+                <Styled.FadeIn in={props.style.visibility !== 'hidden'}>
+                  <Styled.MetaRoot>
+                    <Styled.PageTitle>{title}</Styled.PageTitle>
+                    <Styled.Copyright>Images may be subject to copyright.</Styled.Copyright>
+                  </Styled.MetaRoot>
+
+                  <Styled.Images>
+                    <Styled.Related>Related images</Styled.Related>
+                    <Styled.Related>See more</Styled.Related>
+                  </Styled.Images>
+
+                  <Styled.Images>
+                    <Styled.Column>
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                    </Styled.Column>
+                    <Styled.Column>
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                    </Styled.Column>
+                  </Styled.Images>
+                </Styled.FadeIn>
+              </Styled.ContentContainer>
+            </Styled.ImagePageRoot>
+          )}
+        </BabaManager>
+      );
+
+      return (
+        <Common.SmallViewport>
+          <Styled.Header>
+            <IconButton color="default" aria-label="Menu" style={{ marginRight: '10px' }}>
+              <MenuIcon />
+            </IconButton>
+
+            <Styled.Logo />
+          </Styled.Header>
+
+          <Styled.Images>
+            <Styled.Column>
+              {image({
+                src: img1,
+                title: 'Official Washington Capitals Website | NHL.com',
+                from: 'nhl.com',
+                onClick: () => toggle(img1),
+                in: shown !== img1,
+              })}
+              {image({
+                src: img3,
+                title: 'Washington Capitals: 2017 Season Preview, Predictions',
+                from: 'puckprose.com',
+                onClick: () => toggle(img3),
+                in: shown !== img3,
+              })}
+              {image({
+                src: img6,
+                title: 'The Washington Capitals are up to their old tricks again ...',
+                from: 'nhl.nbcsports.com',
+                onClick: () => toggle(img6),
+                in: shown !== img6,
+              })}
+            </Styled.Column>
+            <Styled.Column>
+              {image({
+                src: img4,
+                title: 'Washington Capitals - Wikipedia',
+                from: 'en.wikipedia.org',
+                onClick: () => toggle(img4),
+                in: shown !== img4,
+              })}
+              {image({
+                src: img5,
+                title: 'Washington Capitals - Home | Facebook',
+                from: 'facebook.com',
+                onClick: () => toggle(img5),
+                in: shown !== img5,
+              })}
+              {image({
+                src: img2,
+                title: 'Capitals Announce 2017-18 Preseason Schedule',
+                from: 'nhl.com',
+                onClick: () => toggle(img2),
+                in: shown !== img2,
+              })}
+            </Styled.Column>
+          </Styled.Images>
+
+          {shown &&
+            details({
+              src: shown,
+              title: 'Washington Capitals - Wikipedia',
+              from: 'en.wikipedia.org',
+              onClick: () => toggle(),
+            })}
+        </Common.SmallViewport>
+      );
+    }}
+
+  </Common.Toggler>
+  </Styled.Center>
+</Playground>
+
+> **Tip -** After clicking on an image you'll notice the content is shown after the animation has completed,
+> check out [Advanced usage](/advanced-usage) for more info!

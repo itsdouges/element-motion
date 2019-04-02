@@ -1,15 +1,9 @@
 import * as React from 'react';
 
-/**
- * @hidden
- */
 export interface Style {
   [key: string]: string | number | undefined;
 }
 
-/**
- * @hidden
- */
 export interface Props {
   style: Style;
   keyframes: Style[];
@@ -17,9 +11,6 @@ export interface Props {
   step?: number;
 }
 
-/**
- * @hidden
- */
 export default class SimpleKeyframe extends React.Component<Props> {
   state = {
     started: false,

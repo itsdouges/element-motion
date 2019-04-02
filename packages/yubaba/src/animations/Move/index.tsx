@@ -23,7 +23,7 @@ export interface MoveProps extends CollectorChildrenProps {
   zIndex: number;
 
   /**
-   * Timing function to be used in the transition, see: https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
+   * Timing function to be used in the transition.
    */
   timingFunction: string;
 
@@ -46,18 +46,6 @@ export interface MoveProps extends CollectorChildrenProps {
   transformY?: boolean;
 }
 
-/**
- * ## Move
- *
- * Move will animate the end target from the start target, to the end position.
- * It will match both size and position of the start target.
- *
- * Note that it will not fade between elements, so this animation really only looks good
- * when transitioning the same (or very similar) element.
- *
- * If you want to transition distinct elements I'd suggestion using CrossFadeMove, however
- * it is slightly more expensive to animate.
- */
 export default class Move extends React.Component<MoveProps> {
   static defaultProps = {
     duration: 'dynamic',
@@ -73,7 +61,7 @@ export default class Move extends React.Component<MoveProps> {
 
     if (useFocalTarget && !data.destination.focalTargetElementBoundingBox) {
       throw new Error(`yubaba
-targetElement was missing.`);
+<FocalTarget /> was not found, if you haven't defined one make sure to add one as a descendant of your target Baba.`);
     }
 
     // Scroll could have changed between unmount and this prepare step.
@@ -97,13 +85,15 @@ targetElement was missing.`);
         transformOrigin: '0 0',
         visibility: 'visible',
         willChange: combine('transform')(prevStyles.willChange),
-        transform: `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
-          originTarget.size.width,
-          destinationTarget.size.width
-        )}, ${math.percentageDifference(
-          originTarget.size.height,
-          destinationTarget.size.height
-        )}, 1)`,
+        transform: combine((prevStyles.transform as string) || '', '')(
+          `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
+            originTarget.size.width,
+            destinationTarget.size.width
+          )}, ${math.percentageDifference(
+            originTarget.size.height,
+            destinationTarget.size.height
+          )}, 1)`
+        ),
       }),
     });
 
@@ -125,7 +115,7 @@ targetElement was missing.`);
           `transform ${calculatedDuration}ms ${timingFunction}, opacity ${calculatedDuration /
             2}ms ${timingFunction}`
         )(prevStyles.transition),
-        transform: 'translate3d(0, 0, 0) scale3d(1, 1, 1)',
+        transform: 'none',
       }),
     });
 

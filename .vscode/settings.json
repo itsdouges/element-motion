@@ -3,7 +3,8 @@
   "search.exclude": {
     "**/node_modules": true,
     "**/bower_components": true,
-    "**/docs/**": true
+    "**/docs/**": true,
+    ".docz": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]

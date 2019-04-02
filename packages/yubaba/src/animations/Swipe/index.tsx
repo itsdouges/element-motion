@@ -6,6 +6,7 @@ import Collector, {
 } from '../../Collector';
 import SimpleKeyframe from '../SimpleKeyframe';
 import { standard, decelerate } from '../../lib/curves';
+import { zIndexStack } from '../../lib/style';
 
 export interface SwipeProps extends CollectorChildrenProps {
   /**
@@ -22,20 +23,21 @@ export interface SwipeProps extends CollectorChildrenProps {
    * How long the animation should take over {duration}ms.
    */
   duration: number;
+
+  /**
+   * zIndex to be applied to the moving element.
+   */
+  zIndex: number;
 }
 
-/**
- * ## Swipe
- *
- * Swipe will animate a block swiping over the viewport.
- */
 export default class Swipe extends React.Component<SwipeProps> {
   static defaultProps = {
     duration: 500,
+    zIndex: zIndexStack.swipe,
   };
 
   renderAnimation = (options: { step: number | undefined; onFinish: () => void }) => {
-    const { duration, background, direction } = this.props;
+    const { duration, background, direction, zIndex } = this.props;
 
     const directionMap = {
       left: '100%, 0, 0',
@@ -48,6 +50,7 @@ export default class Swipe extends React.Component<SwipeProps> {
       <SimpleKeyframe
         step={options.step}
         style={{
+          zIndex,
           position: 'fixed',
           top: 0,
           left: 0,

@@ -21,7 +21,7 @@ export type setChildProps = (props: TargetPropsFunc) => void;
  * call setChildProps() if you want to update the target props.
  */
 export type AnimationCallback = (
-  data: AnimationData,
+  elements: AnimationData,
   onFinish: () => void,
   setChildProps: setChildProps
 ) => React.ReactNode | undefined | void;
@@ -49,27 +49,16 @@ export type CollectorData = AnimationAction | WaitAction;
 
 export type SupplyRefHandler = (ref: HTMLElement | null) => void;
 
-/**
- * @hidden
- */
 export type SupplyRenderChildrenHandler = (reactNode: CollectorChildrenAsFunction) => void;
 
-/**
- * @hidden
- */
 export type SupplyDataHandler = (data: CollectorData[]) => void;
 
-export type CollectorChildrenAsFunction = (
-  props: {
-    ref: SupplyRefHandler;
-    style: InlineStyles;
-    className?: string;
-  }
-) => React.ReactNode;
+export type CollectorChildrenAsFunction = (props: {
+  ref: SupplyRefHandler;
+  style: InlineStyles;
+  className?: string;
+}) => React.ReactNode;
 
-/**
- * @hidden
- */
 export interface AnimationData {
   origin: ElementData;
   destination: ElementData;
@@ -79,9 +68,6 @@ export interface InlineStyles {
   [key: string]: string | number | undefined;
 }
 
-/**
- * @hidden
- */
 export interface ElementData {
   element: HTMLElement;
   elementBoundingBox: ElementBoundingBox;
@@ -94,11 +80,6 @@ export interface CollectorChildrenProps {
   children: CollectorChildrenAsFunction | React.ReactElement<CollectorProps>;
 }
 
-/**
- * ## CollectorProps
- *
- * Props for the Collector which will eventually be passed to the parent `<Baba />`.
- */
 export interface CollectorProps extends CollectorChildrenProps {
   receiveRef?: SupplyRefHandler;
   receiveFocalTargetRef?: SupplyRefHandler;
@@ -109,9 +90,6 @@ export interface CollectorProps extends CollectorChildrenProps {
   className?: string;
 }
 
-/**
- * @hidden
- */
 export interface Collect {
   ref: SupplyRefHandler;
   /**
@@ -127,38 +105,6 @@ export interface Collect {
 
 export const CollectorContext = React.createContext<Collect | undefined>(undefined);
 
-/**
- * ## Collector
- *
- * Used as the glue for all `yubaba` components.
- * It is purely an internal component which will collect and pass all props up to the parent `<Baba />` component.
- *
- * ### Usage
- *
- * ```
- *  const Noop = ({
- *    children,
- *    duration,
- *  }) => (
- *    <Collector
- *      data={{
- *        action: 'animation',
- *        payload: {
- *          abort: () => {},
- *          cleanup: () => {},
- *          afterAnimate: () => Promise.resolve(),
- *          animate: () => new Promise(resolve => setTimeout(resolve, duration)),
- *          beforeAnimate: () => Promise.resolve(),
- *        },
- *      }}
- *    >
- *      {children}
- *    </Collector>
- *  );
- * ```
- *
- * For example usage look inside `Baba.tsx` or any component in the `animations` folder.
- */
 export default class Collector extends React.Component<CollectorProps> {
   render() {
     const {

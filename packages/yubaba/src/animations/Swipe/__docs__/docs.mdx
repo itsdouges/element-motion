@@ -1,0 +1,38 @@
+---
+name: Swipe
+route: /swipe
+---
+
+import { Playground, PropsTable } from 'docz';
+import * as Common from 'yubaba-common';
+import Baba from '../../../Baba';
+import Swipe from '../index';
+import * as Styled from './styled';
+
+# Swipe
+
+Will animate a square swiping over the viewport.
+
+## Usage
+
+```js
+import { Swipe } from 'yubaba';
+```
+
+<Playground>
+  <Common.Toggler>
+    {({ shown, toggle }) => (
+      <Styled.Container onClick={() => toggle()} interactive>
+        <Baba name="swipe" key={shown}>
+          <Swipe background="#ff5e6d" direction={shown ? 'left' : 'right'}>
+            {({ ref, style }) => <div style={style} ref={ref} />}
+          </Swipe>
+        </Baba>
+      </Styled.Container>
+    )}
+  </Common.Toggler>
+</Playground>
+
+## Props
+
+<PropsTable of={Swipe} />

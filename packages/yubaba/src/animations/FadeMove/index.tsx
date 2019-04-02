@@ -25,23 +25,11 @@ export interface FadeMoveProps extends CollectorChildrenProps {
   zIndex: number;
 
   /**
-   * Timing function to be used in the transition, see: https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
+   * Timing function to be used in the transition.
    */
   timingFunction: string;
 }
 
-/**
- * ## FadeMove
- *
- * FadeMove will create two new elements (positioned absolutely in the body),
- * position them at the start element and then cross fade move them to the end element.
- *
- * This animation works best if you have two elements that aren't the same, but you'd like
- * to transition them to each other.
- *
- * If you're transitioning the same element I'd suggest using Move, as it is a cheaper
- * animation.
- */
 export default class FadeMove extends React.Component<FadeMoveProps> {
   static defaultProps = {
     duration: 'dynamic',

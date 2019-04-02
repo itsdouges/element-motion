@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Collector, { CollectorActions, CollectorChildrenProps } from '../Collector';
 import noop from '../lib/noop';
-import { GetElementSizeLocationReturnValue } from '../lib/dom';
+import { ElementBoundingBox } from '../lib/dom';
 
 /**
  * Pass function in for `from` or `start` and it will always be rendered.
@@ -75,7 +75,7 @@ export const createTestAnimation = ({
   </Collector>
 );
 
-export const domData = (): GetElementSizeLocationReturnValue => ({
+export const domData = (): ElementBoundingBox => ({
   size: {
     width: 100,
     height: 200,

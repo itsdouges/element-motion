@@ -1,0 +1,202 @@
+---
+name: ConcealMove
+route: /conceal-move
+---
+
+import { Playground, PropsTable } from 'docz';
+import StarIcon from '@material-ui/icons/StarBorder';
+import { MemoryRouter, Link, Route, Switch } from 'react-router-dom';
+import {
+  Card,
+  IconButton,
+  Table,
+  TableCell,
+  TableRow,
+  TableHead,
+  TableBody,
+} from '@material-ui/core';
+import PlayButton from '@material-ui/icons/PlayArrow';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import MoreVert from '@material-ui/icons/MoreVert';
+import { lighten } from 'polished';
+import ConcealMove from '../index';
+import Noop from '../../Noop';
+import Baba from '../../../Baba';
+import FocalTarget from '../../../FocalTarget';
+import * as Styled from './styled';
+import albumArt from './images/foster.jpg';
+
+# ConcealMove
+
+Useful for transitioning from a child to a parent,
+will shrink from the container to the focal element.
+Requires the use of the [FocalTarget](/focal-target) component to specify the focal element.
+
+## Usage
+
+```js
+import Baba, { ConcealMove, FocalTarget } from 'yubaba';
+```
+
+<Playground>
+  {() => {
+    const revealingImage = ({ albumArt }) => (
+      <Baba name="conceal-move">
+        {({ ref, style }) => (
+          <Link to="/details">
+            <Styled.BackgroundImage src={albumArt} style={style} innerRef={ref} />
+          </Link>
+        )}
+      </Baba>
+    );
+
+    const album = ({ albumArt, color, artist, onClick, name, expand }) => (
+      <Styled.Root color={color}>
+        {revealingImage({ albumArt })}
+
+        <Styled.Text>
+          <Styled.Title>
+            {name}
+            <Styled.Subtitle>{artist}</Styled.Subtitle>
+          </Styled.Title>
+
+          <Styled.StarContainer>
+            <IconButton color="inherit" aria-label="Menu">
+              <StarIcon />
+            </IconButton>
+          </Styled.StarContainer>
+        </Styled.Text>
+      </Styled.Root>
+    );
+
+    const albumDetails = ({ color, albumArt, name, artist, songs }) => (
+      <Baba name="conceal-move">
+        <ConcealMove>
+          {(baba) => (
+            <div {...baba}>
+              <Styled.DetailsRoot color={color}>
+                <Styled.Page raised elevation={20} style={{ minHeight: '90vh', overflow: 'visible' }}>
+                  <Styled.Data color={color}>
+                    <Styled.BackLink to="/">
+                      <IconButton color="inherit">
+                        <BackIcon />
+                      </IconButton>
+                    </Styled.BackLink>
+
+                    <FocalTarget>
+                      {({ ref }) => <Styled.Image src={albumArt} innerRef={ref} />}
+                    </FocalTarget>
+
+                    <Styled.AlbumInfo>
+                      <Styled.Actions>
+                        <IconButton color="inherit" aria-label="Menu">
+                          <StarIcon />
+                        </IconButton>
+
+                        <IconButton color="inherit" aria-label="Menu">
+                          <MoreVert />
+                        </IconButton>
+                      </Styled.Actions>
+
+                      <div>
+                        <Styled.Name>{name}</Styled.Name>
+                        <Styled.Artist>{artist}</Styled.Artist>
+                      </div>
+                    </Styled.AlbumInfo>
+
+                    <Styled.ReleasedBar color={lighten(0.1)(color)}>
+                      Released March, 2013
+                      <Styled.PlayContainer>
+                        <IconButton>
+                          <PlayButton />
+                        </IconButton>
+                      </Styled.PlayContainer>
+                    </Styled.ReleasedBar>
+                  </Styled.Data>
+
+                  <Table style={{ marginLeft: '5%', width: '92%' }}>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>
+                          <strong>Track</strong>
+                        </TableCell>
+                        <TableCell>
+                          <strong>Artist</strong>
+                        </TableCell>
+                        <TableCell numeric>
+                          <strong>Time</strong>
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {songs.map((song, index) => (
+                        <TableRow>
+                          <TableCell>
+                            <Styled.SongNumber>{index + 1}</Styled.SongNumber> {song.name}
+                          </TableCell>
+                          <TableCell>{artist}</TableCell>
+                          <TableCell numeric>{song.time}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Styled.Page>
+              </Styled.DetailsRoot>
+            </div>
+          )}
+        </ConcealMove>
+      </Baba>
+    );
+
+    return (
+      <MemoryRouter initialEntries={['/details']}>
+        <Switch>
+          <Route
+            path="/details"
+            render={() =>
+              albumDetails({
+                albumArt,
+                name: 'Supermodel',
+                artist: 'Foster the People',
+                color: '#265968',
+                songs: [
+                  { name: 'Are You What You Want to Be?', time: '4:30' },
+                  { name: 'Ask Yourself', time: '4:23' },
+                  { name: 'Coming of Age', time: '4:40' },
+                  { name: 'Nevermind', time: '5:17' },
+                  { name: 'Pseudologia Fantastica', time: '5:31' },
+                  { name: 'The Angelic Welcome of Mr. Jones', time: '0:33' },
+                  { name: 'Best Friend', time: '4:28' },
+                  { name: "A Beginner's Guide to Destroying the Moon", time: '5:09' },
+                  { name: 'The Truth', time: '4:22' },
+                  { name: 'Fire Escape', time: '4:29' },
+                ],
+              })
+            }
+          />
+          <Route
+            path="/"
+            render={() =>
+              album({
+                albumArt,
+                name: 'Supermodel',
+                artist: 'Foster the People',
+                color: '#265968',
+              })
+            }
+          />
+        </Switch>
+      </MemoryRouter>
+    );
+
+}}
+
+</Playground>
+
+## Props
+
+<PropsTable of={ConcealMove} />
+
+## Troubleshooting
+
+Your root element needs a fixed `font-size`, else when the animation is firing it could inherit the global body `font-size` instead.

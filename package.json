@@ -12,18 +12,18 @@
     "build": "lerna run build",
     "lint": "eslint --ext .tsx .",
     "test": "jest",
-    "size": "lerna exec --ignore yubaba-common --ignore yubaba-examples -- yarn size",
+    "size": "lerna exec --ignore yubaba-common -- yarn size",
     "pre-cut-version": "yarn test",
     "postinstall": "yarn build && lerna link",
     "cut-version": "yarn pre-cut-version && lerna publish --conventional-commits --skip-npm && yarn post-cut-version",
     "cut-version-beta": "yarn pre-cut-version && lerna publish --skip-npm --npm-tag beta && yarn post-cut-version",
     "post-cut-version": "git push && git push --tags",
-    "push-to-npm": "lerna exec --ignore yubaba-common --ignore yubaba-examples -- npm publish",
+    "push-to-npm": "lerna exec --ignore yubaba-common -- npm publish",
     "codecov": "echo \"not implemented\"",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook --output-dir docs",
     "fix-duplicates": "yarn-tools fix-duplicates yarn.lock > fixed-yarn.lock && rm yarn.lock && mv fixed-yarn.lock yarn.lock && yarn install",
-    "build-docs": "npx typedoc --out docs/typedoc packages/yubaba/src/index.tsx --mode file --exclude packages/yubaba/src/lib --exclude packages/yubaba/src/components/SimpleKeyframe.tsx --exclude packages/yubaba/src/components/SimpleTween.tsx --theme minimal --hideGenerator --readme README.md"
+    "docz": "docz dev",
+    "build-docs": "docz build"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.13",
@@ -39,6 +39,8 @@
     "@types/storybook__react": "^3.0.9",
     "babel-core": "^6.26.3",
     "css-loader": "^1.0.0",
+    "docz": "^0.13.7",
+    "docz-theme-default": "^0.13.7",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "enzyme-matchers": "^6.0.4",
@@ -65,6 +67,13 @@
     "webpack-dev-server": "^3.1.8",
     "webpack-merge": "^4.1.4",
     "yarn-tools": "^0.4.1"
+  },
+  "resolutions": {
+    "ansi-styles": "^3.2.0"
+  },
+  "engines": {
+    "node": "^10.x.x",
+    "yarn": "^1.9.x"
   },
   "workspaces": [
     "packages/*"

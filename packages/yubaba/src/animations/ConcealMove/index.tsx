@@ -25,18 +25,11 @@ export interface ConcealMoveProps extends CollectorChildrenProps {
   zIndex: number;
 
   /**
-   * Timing function to be used in the transition, see: https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
+   * Timing function to be used in the transition.
    */
   timingFunction: string;
 }
 
-/**
- * ## ConcealMove
- *
- * Flex centering makes things difficult.
- * For vertically aligned items consider either wrapping your element inside another div or turning on skipInitialTransformOffset.
- * For horizontally aligned items it's little bit tricker. Try turning on skipInitialTransformOffset.
- */
 export default class ConcealMove extends React.Component<ConcealMoveProps> {
   static defaultProps = {
     duration: 'dynamic',
@@ -52,7 +45,7 @@ export default class ConcealMove extends React.Component<ConcealMoveProps> {
   ) => {
     if (!data.origin.focalTargetElementBoundingBox) {
       throw new Error(`yubaba
-targetElement was missing.`);
+<FocalTarget /> was not found, if you haven't defined one make sure to add one as a descendant of your target Baba.`);
     }
 
     const { duration, timingFunction, zIndex } = this.props;
