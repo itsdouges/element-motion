@@ -219,4 +219,8 @@ starting from the [FocalTarget](/focal-target) element.
 Because of this is trashes layout as well as affects other elements on the screen,
 if the element you're revealing doesn't have a fixed width it will look _bad_.
 
-One way of getting around this is by using the `useClipPath` prop - however it is not supported in IE11.
+It will also mean that if the target elements are vertically or horizontally centered -
+they will affect the flow of the page and elements will start moving around.
+Not great!
+
+One way of getting around both of these is by using the `useClipPath` prop - however it is not supported in IE11.

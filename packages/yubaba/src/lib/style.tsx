@@ -1,4 +1,4 @@
-export const combine = (t1: string, delimeter = ',') => (t2?: string | number) => {
+export const combine = (t1: string = '', delimeter = ',') => (t2?: string | number) => {
   if (t2) {
     return `${t1}${delimeter} ${t2}`;
   }

@@ -15,7 +15,7 @@ module.exports = {
         test: /\.tsx$/,
         loader: 'ts-loader',
         include: path.resolve(__dirname, '../packages'),
-        exclude: ['node_modules'],
+        exclude: /node_modules/,
         options: {
           transpileOnly: true,
         },
@@ -24,7 +24,7 @@ module.exports = {
         test: /\.(jpg|gif|png|jpeg|webp)$/,
         loader: 'file-loader',
         include: path.resolve(__dirname, '../packages'),
-        exclude: ['node_modules'],
+        exclude: /node_modules/,
       },
     ],
   },

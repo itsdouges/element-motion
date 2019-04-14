@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { ElementBoundingBox } from '../lib/dom';
 
+export type InlineStyles = React.CSSProperties;
+
 export interface TargetProps {
   style: InlineStyles;
   className?: string;
@@ -62,10 +64,6 @@ export type CollectorChildrenAsFunction = (props: {
 export interface AnimationData {
   origin: ElementData;
   destination: ElementData;
-}
-
-export interface InlineStyles {
-  [key: string]: string | number | undefined;
 }
 
 export interface ElementData {
