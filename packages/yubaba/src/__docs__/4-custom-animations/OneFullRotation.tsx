@@ -13,7 +13,7 @@ export default class OneFullRotation extends React.Component<CollectorChildrenPr
         ...prevStyle,
         opacity: 1,
         transformOrigin: 'center',
-        transform: combine((prevStyle.transform as string) || '', '')('rotate(360deg)'),
+        transform: combine(prevStyle.transform, '')('rotate(360deg)'),
       }),
     });
 

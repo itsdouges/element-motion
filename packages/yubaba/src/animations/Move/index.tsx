@@ -85,7 +85,7 @@ export default class Move extends React.Component<MoveProps> {
         transformOrigin: '0 0',
         visibility: 'visible',
         willChange: combine('transform')(prevStyles.willChange),
-        transform: combine((prevStyles.transform as string) || '', '')(
+        transform: combine(prevStyles.transform, '')(
           `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
             originTarget.size.width,
             destinationTarget.size.width
