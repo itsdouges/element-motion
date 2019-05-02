@@ -86,6 +86,7 @@ export interface CollectorProps extends CollectorChildrenProps {
   data?: CollectorData;
   style?: InlineStyles;
   className?: string;
+  topMostCollector?: boolean;
 }
 
 export interface Collect {
@@ -113,6 +114,7 @@ export default class Collector extends React.Component<CollectorProps> {
       receiveRenderChildren,
       receiveRef,
       receiveData,
+      topMostCollector,
     } = this.props;
 
     if (typeof children !== 'function') {
@@ -126,7 +128,7 @@ export default class Collector extends React.Component<CollectorProps> {
                     receiveRef(ref);
                   }
 
-                  if (collect) {
+                  if (!topMostCollector && collect) {
                     collect.ref(ref);
                   }
                 },
@@ -136,13 +138,13 @@ export default class Collector extends React.Component<CollectorProps> {
                     receiveFocalTargetRef(ref);
                   }
 
-                  if (collect) {
+                  if (!topMostCollector && collect) {
                     collect.focalTargetRef(ref);
                   }
                 },
                 data: childData => {
                   const collectedData = data ? [data].concat(childData) : childData;
-                  if (collect) {
+                  if (!topMostCollector && collect) {
                     collect.data(collectedData);
                   }
 
@@ -151,7 +153,7 @@ export default class Collector extends React.Component<CollectorProps> {
                   }
                 },
                 renderChildren: node => {
-                  if (collect) {
+                  if (!topMostCollector && collect) {
                     collect.renderChildren(node);
                   }
 
@@ -161,9 +163,10 @@ export default class Collector extends React.Component<CollectorProps> {
                 },
                 style: {
                   ...style,
-                  ...(collect ? collect.style : {}),
+                  ...(collect && !topMostCollector ? collect.style : {}),
                 },
-                className: className || (collect ? collect.className : undefined),
+                className:
+                  className || (collect && !topMostCollector ? collect.className : undefined),
               }}
             >
               {children}
@@ -177,7 +180,7 @@ export default class Collector extends React.Component<CollectorProps> {
       <CollectorContext.Consumer>
         {collect => {
           if (typeof children === 'function') {
-            if (collect) {
+            if (!topMostCollector && collect) {
               const collectedData = data ? [data] : [];
               collect.renderChildren(children);
               collect.data(collectedData);
@@ -189,9 +192,10 @@ export default class Collector extends React.Component<CollectorProps> {
 
             return React.Children.only(
               children({
-                className: className || (collect ? collect.className : undefined),
+                className:
+                  className || (collect && !topMostCollector ? collect.className : undefined),
                 ref: (ref: HTMLElement) => {
-                  if (collect) {
+                  if (!topMostCollector && collect) {
                     collect.ref(ref);
                   }
 
@@ -199,7 +203,7 @@ export default class Collector extends React.Component<CollectorProps> {
                     receiveRef(ref);
                   }
                 },
-                style: collect ? { ...style, ...collect.style } : style || {},
+                style: collect && !topMostCollector ? { ...style, ...collect.style } : style || {},
               })
             );
           }

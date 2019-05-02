@@ -14,6 +14,8 @@ export { default as CircleShrink } from './animations/CircleShrink';
 export { default as Reveal } from './animations/Reveal';
 export { default as RevealMove } from './animations/RevealMove';
 export { default as ConcealMove } from './animations/ConcealMove';
+export { default as ReshapingContainer } from './animations/ReshapingContainer';
+export { default as SimpleReveal } from './animations/SimpleReveal';
 
 // Utility stuff
 export * from './Collector';
