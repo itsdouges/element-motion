@@ -1,7 +1,7 @@
 ---
 name: 3. Advanced usage
 route: /advanced-usage
-order: 1
+order: 3
 ---
 
 import { Playground } from 'docz';
@@ -35,6 +35,7 @@ import FocalTarget from '../../FocalTarget';
 import Move from '../../animations/Move';
 import CircleShrink from '../../animations/CircleShrink';
 import ovi from './images/ovechkin.jpg';
+import EmailChain from './EmailChain';
 
 # Advanced usage
 
@@ -111,174 +112,9 @@ The [FocalTarget](/focal-target) component exists to mark the focal element so a
 Two examples of animations who can use it are [Move](/move), [ConcealMove](/conceal-move).
 
 <Playground>
-  {() => {
-    const home = (props) => (
-      <React.Fragment>
-        <Typography
-          gutterBottom
-          variant="subheading"
-          color="inherit"
-          style={{ marginTop: 20, marginLeft: 22 }}
-        >
-          Today
-        </Typography>
-
-        <List>
-          {Styled.data.map((email, index) => (
-            <React.Fragment key={index}>
-              <Baba name={`card-${index}`} in={props.in}>
-                <RevealMove duration={600}>
-                  {baba => (
-                    <div {...baba}>
-                    <ListItem
-                      button
-                    >
-                      <Avatar>
-                        <ImageIcon />
-                      </Avatar>
-                      <ListItemText
-                        primary={email.title}
-                        secondary={`${email.recipients} - ${email.body}`}
-                        secondaryTypographyProps={{ noWrap: true }}
-                      />
-                      <Styled.StyledLink to={`/screen/${index}`} />
-                    </ListItem>
-                    </div>
-                  )}
-                </RevealMove>
-              </Baba>
-              <Divider variant="inset" component="li" />
-            </React.Fragment>
-          ))}
-        </List>
-      </React.Fragment>
-    );
-
-    const screen = (props) => (
-      <Baba name={`card-${props.index}`}>
-        <ConcealMove>
-          {baba => (
-            <Styled.Screen
-              innerRef={baba.ref}
-              style={baba.style}
-              className={baba.className}
-              {...props}
-            >
-              <ListItem>
-                <Typography variant="h6">{Styled.data[props.index].title}</Typography>
-                <IconButton
-                  color="inherit"
-                  aria-label="Menu"
-                  style={{ marginLeft: 'auto', marginRight: '-10px' }}
-                >
-                  <StarIcon />
-                </IconButton>
-              </ListItem>
-
-              <Divider />
-
-              <FocalTarget>
-                {targetProps => (
-                  <div ref={targetProps.ref}>
-                  <ListItem>
-                    <Avatar>
-                      <ImageIcon />
-                    </Avatar>
-                    <ListItemText
-                      primary={Styled.data[props.index].title}
-                      secondary={Styled.data[props.index].recipients}
-                    />
-                  </ListItem>
-                  </div>
-                )}
-              </FocalTarget>
-
-              <ListItem>
-                <Typography variant="body1">{Styled.data[props.index].body}</Typography>
-              </ListItem>
-            </Styled.Screen>
-          )}
-        </ConcealMove>
-      </Baba>
-    );
-
-    const appBarActions = () => (
-      <Switch>
-        <Route
-          render={() => (
-            <Styled.LightLink to="/">
-              <IconButton
-                color="inherit"
-                aria-label="Menu"
-                style={{ marginLeft: '-15px', marginRight: 20 }}
-              >
-                <BackIcon />
-              </IconButton>
-            </Styled.LightLink>
-          )}
-          path="/screen/:index"
-        />
-
-        <Route
-          path="*"
-          render={() => (
-            <React.Fragment>
-              <IconButton
-                color="inherit"
-                aria-label="Menu"
-                style={{ marginLeft: '-15px', marginRight: 20 }}
-              >
-                <MenuIcon />
-              </IconButton>
-
-              <Typography variant="h6" color="inherit">
-                Inbox
-              </Typography>
-            </React.Fragment>
-          )}
-        />
-      </Switch>
-    );
-
-    return (
-      <Styled.Center>
-      <MemoryRouter>
-        <Common.SmallViewport
-          invertColor
-          appBar={
-            <AppBar
-              position="static"
-              style={{ paddingTop: 26, background: 'rgb(97, 0, 236)', zIndex: 1 }}
-            >
-              <Toolbar>
-                {appBarActions()}
-
-                <IconButton color="inherit" aria-label="Menu" style={{ marginLeft: 'auto' }}>
-                  <SearchIcon />
-                </IconButton>
-
-                <IconButton color="inherit" aria-label="Menu" style={{ marginRight: '-15px' }}>
-                  <MoreVert />
-                </IconButton>
-              </Toolbar>
-            </AppBar>
-          }
-        >
-          <Route
-            render={props => screen({ index: props.match.params.index })}
-            path="/screen/:index"
-          />
-
-          <Route path="/" exact>
-            {props => home({ in: !!props.match, 'aria-hidden': !props.match })}
-          </Route>
-        </Common.SmallViewport>
-      </MemoryRouter>
-      </Styled.Center>
-    );
-
-}}
-
+  <Styled.Center>
+    <EmailChain />
+  </Styled.Center>
 </Playground>
 
 > **Tip -** Have a cool idea for an animation but you haven't seen any available yet?
