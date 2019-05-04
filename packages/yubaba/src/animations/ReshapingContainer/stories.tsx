@@ -29,6 +29,7 @@ storiesOf('yubaba/ReshapingContainer', module)
             padding="16px"
             maxWidth="500px"
             margin="0 auto"
+            background="rgba(32, 33, 36, 0.2)"
           >
             {props => (
               <Container style={props.style} className={props.className} innerRef={props.ref}>

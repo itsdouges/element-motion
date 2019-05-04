@@ -11,13 +11,17 @@ interface ReshapingContainerProps {
    */
   id: string;
 
+  /**
+   * Children as function.
+   * Will receive an object with className, style, and ref.
+   */
   children: CollectorChildrenAsFunction;
 
   /**
    * Defaults to "div".
    * Any valid HTML tag allowed.
    */
-  as: keyof JSX.IntrinsicElements;
+  as: string;
 
   /**
    * Used the same as the CSS property.
@@ -33,7 +37,7 @@ interface ReshapingContainerProps {
    * Padding.
    * Use only px values, otherwise same as the CSS property.
    */
-  padding?: string;
+  padding: string;
 
   /**
    * Used the same as the CSS property.
@@ -88,6 +92,7 @@ export default class ReshapingContainer extends React.PureComponent<
 > {
   static defaultProps = {
     as: 'div',
+    padding: '',
   };
 
   state: ReshapingContainerState = {
@@ -98,7 +103,7 @@ export default class ReshapingContainer extends React.PureComponent<
    * Incremeent render count every time a render occurs.
    * We're abusing react "key" to trigger animations for now.
    */
-  static getDerivedStateFromProps(_, state) {
+  static getDerivedStateFromProps(_: ReshapingContainerProps, state: ReshapingContainerState) {
     return {
       renderCount: state.renderCount + 1,
     };
@@ -106,7 +111,9 @@ export default class ReshapingContainer extends React.PureComponent<
 
   componentDidMount() {
     if (this.props.padding.indexOf('em') >= 0 || this.props.padding.indexOf('%') >= 0) {
-      throw new Error(`Only px values are supported for props.padding in ${this.displayName}`);
+      throw new Error(
+        `Only px values are supported for props.padding in ${ReshapingContainer.name}`
+      );
     }
   }
 
@@ -118,6 +125,9 @@ export default class ReshapingContainer extends React.PureComponent<
     const parts = this.props.padding.split(' ').map(p => -Number(p.replace('px', '')));
 
     switch (parts.length) {
+      case 0:
+        return undefined;
+
       case 1:
         parts.push(parts[0]);
         parts.push(parts[0]);
@@ -138,7 +148,7 @@ export default class ReshapingContainer extends React.PureComponent<
         break;
     }
 
-    return parts;
+    return parts as [number, number, number, number];
   }
 
   render() {
@@ -158,12 +168,13 @@ export default class ReshapingContainer extends React.PureComponent<
       timingFunction,
       ...rest
     } = this.props;
+    const ComponentAs = rest.as as any;
 
     return (
       <Baba name={`${id}-container`} key={this.state.renderCount}>
         <Move duration={duration} timingFunction={timingFunction}>
           {baba => (
-            <rest.as
+            <ComponentAs
               ref={baba.ref}
               style={{
                 position: 'relative',
@@ -193,16 +204,16 @@ export default class ReshapingContainer extends React.PureComponent<
                 }}
               />
 
-              <Baba
-                name={`${id}-children`}
-                key={this.state.renderCount}
-                timingFunction={timingFunction}
-              >
-                <SimpleReveal duration={duration} offset={this.getInversePaddingParts()}>
+              <Baba name={`${id}-children`} key={this.state.renderCount}>
+                <SimpleReveal
+                  duration={duration}
+                  offset={this.getInversePaddingParts()}
+                  timingFunction={timingFunction}
+                >
                   {props => children(props)}
                 </SimpleReveal>
               </Baba>
-            </rest.as>
+            </ComponentAs>
           )}
         </Move>
       </Baba>

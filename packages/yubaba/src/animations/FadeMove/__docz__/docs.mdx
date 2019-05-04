@@ -1,0 +1,56 @@
+---
+name: FadeMove
+route: /fade-move
+menu: Focal Animations
+---
+
+import { Playground, PropsTable } from 'docz';
+import * as Common from 'yubaba-common';
+import Baba from '../../../Baba';
+import FadeMove from '../index';
+import * as Styled from './styled';
+
+# FadeMove
+
+Will clone the origin element and position it absolutely then animate it ontop of the destination element,
+while fading out.
+
+Generally you'd want to use [Move](/move) or [CrossFadeMove](/cross-fade-move) over this.
+
+## Usage
+
+```js
+import { FadeMove } from 'yubaba';
+```
+
+<Playground>
+  <Common.Toggler>
+    {({ shown, toggle }) =>
+      shown ? (
+        <Baba name="fade-move" key="1">
+          <FadeMove>
+            {({ ref, style }) => (
+              <Styled.Box onClick={() => toggle()} style={style} innerRef={ref}>
+                Hello, world!
+              </Styled.Box>
+            )}
+          </FadeMove>
+        </Baba>
+      ) : (
+        <Baba name="fade-move" key="2">
+          <FadeMove>
+            {({ ref, style }) => (
+              <Styled.Box style={style} innerRef={ref} onClick={() => toggle()} alignRight>
+                Hello, world!
+              </Styled.Box>
+            )}
+          </FadeMove>
+        </Baba>
+      )
+    }
+  </Common.Toggler>
+</Playground>
+
+## Props
+
+<PropsTable of={FadeMove} />
