@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/madou/yubaba/compare/v2.1.1...v2.2.0) (2019-05-05)
+
+
+### Bug Fixes
+
+* fixes ordering of docs, adds extra content to introduction ([2fddeba](https://github.com/madou/yubaba/commit/2fddeba))
+
+
+### Features
+
+* adds reshaping container composite component ([485d259](https://github.com/madou/yubaba/commit/485d259))
+* adds reveal reshaping container composite component ([b8d711b](https://github.com/madou/yubaba/commit/b8d711b))
+
+
+
+
+
 ## [2.1.1](https://github.com/madou/yubaba/compare/v2.1.0...v2.1.1) (2019-04-02)
 
 **Note:** Version bump only for package yubaba
