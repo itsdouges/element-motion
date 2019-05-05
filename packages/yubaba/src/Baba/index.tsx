@@ -21,9 +21,7 @@ import noop from '../lib/noop';
 import * as babaStore from '../lib/babaStore';
 import { InjectedProps, withBabaManagerContext } from '../BabaManager';
 
-
 export type AnimationFunc = () => Promise<void>;
-
 
 export interface MappedAnimation {
   animate: AnimationFunc;
@@ -32,15 +30,12 @@ export interface MappedAnimation {
   cleanup: () => void;
 }
 
-
 export type AnimationBlock = MappedAnimation[];
-
 
 export interface ChildProps {
   style?: InlineStyles;
   className?: string;
 }
-
 
 export interface State {
   shown: boolean;
@@ -481,6 +476,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
 
     return (
       <Collector
+        topMostCollector
         receiveData={this.setData}
         receiveRenderChildren={this.setReactNode}
         receiveRef={this.setRef}
@@ -496,6 +492,5 @@ If it's an image, try and have the image loaded before mounting, or set a static
     );
   }
 }
-
 
 export const WrappedBaba = withBabaManagerContext(Baba);

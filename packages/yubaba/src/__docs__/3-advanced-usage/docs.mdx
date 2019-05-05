@@ -1,5 +1,5 @@
 ---
-name: 3. Advanced usage
+name: 3. Advanced usage 😲
 route: /advanced-usage
 order: 3
 ---
@@ -29,7 +29,7 @@ import * as Styled from './styled';
 import { WrappedBaba as Baba } from '../../Baba';
 import { WrappedBabaManager as BabaManager } from '../../BabaManager';
 import CircleExpand from '../../animations/CircleExpand';
-import RevealMove from '../../animations/RevealMove';
+import FocalRevealMove from '../../animations/FocalRevealMove';
 import ConcealMove from '../../animations/ConcealMove';
 import FocalTarget from '../../FocalTarget';
 import Move from '../../animations/Move';
@@ -39,11 +39,108 @@ import EmailChain from './EmailChain';
 
 # Advanced usage
 
+## Controlling in what order animations should execute
+
+Animations are executed from top to bottom.
+The parent-most animation will be executed first and then continue execution inwards.
+
+So if we had two animations, Move and CrossFade:
+
+```js
+<Baba name="move-first">
+  <Move>
+    <CrossFade>{props => <div {...props} />}</CrossFade>
+  </Move>
+</Baba>
+```
+
+When executed the order would look like:
+
+1. Move **beforeAnimate** fired
+1. CrossFade **beforeAnimate** fired
+1. Move **animate** fired
+1. CrossFade **animate** fired
+1. Move **afterAnimate** fired
+1. CrossFade **afterAnimate** fired
+
+<br />
+
+If we placed CrossFade first:
+
+```js
+<Baba name="cross-fade-first">
+  <CrossFade>
+    <Move>{props => <div {...props} />}</Move>
+  </CrossFade>
+</Baba>
+```
+
+Then their order would be inversed:
+
+1. CrossFade **beforeAnimate** fired
+1. Move **beforeAnimate** fired
+1. CrossFade **animate** fired
+1. Move **animate** fired
+1. CrossFade **afterAnimate** fired
+1. Move **afterAnimate** fired
+
+## Wait for the previous animation to finish before starting the next
+
+Depending on the animations chosen you'll want to defer starting one until the previous has finished.
+Luckily the [Wait](/wait) component has been made for that!
+
+Continuing the example above,
+if we introduce the Wait component:
+
+```js
+import { Wait } from 'yubaba';
+
+<Baba name="wait">
+  <CrossFade>
+    <Wait>
+      <Move>{props => <div {...props} />}</Move>
+    </Wait>
+  </CrossFade>
+</Baba>;
+```
+
+Then the Move animation will wait for the CrossFade animation to complete finish before starting,
+the order then becoming:
+
+1. CrossFade **beforeAnimate** fired
+1. CrossFade **animate** fired
+1. Move **beforeAnimate** fired
+1. Move **animate** fired
+1. CrossFade **afterAnimate** fired
+1. Move **afterAnimate** fired
+
+> **Tip -** Notice that afterAnimate's are always called the the same regardless of Wait usage.
+
 ## Delay showing content until all animations have finished
 
 Occasionally when initiating an animation we can have some secondary content we want to keep hidden until the animation has finished.
 Luckily [BabaManager](/baba-manager) exists to do just that!
 Make it a parent of any [Baba](/baba) and it will show its content only when the animation has finished.
+
+```js
+import { BabaManager } from 'yubaba';
+
+<BabaManager>
+  {manager => (
+    <div>
+      <Baba name="hide-children-until-animations-have-finished">
+        <CrossFade>
+          <Move>{props => <div {...props} />}</Move>
+        </CrossFade>
+      </Baba>
+
+      <span {...manager}>Children content</span>
+    </div>
+  )}
+</BabaManager>;
+```
+
+Children content will be shown after **all** animations have completed.
 
 > **Tip -** If you have multiple child [Baba](/baba) you can pass [BabaManager](/baba-manager) a `name` prop to target a specific [Baba](/baba).
 
@@ -96,14 +193,6 @@ used together can produce a really cool transition between states.
 
 > **Tip -** [BabaManager](/baba-manager) has been used as well to hide the next contents until the animation has finished,
 > resulting in that crisp transition.
-
-## Wait for the previous animation to finish before starting the next
-
-Depending on the animations chosen you'll want to defer starting one until the previous has finished.
-Luckily the [Wait](/wait) component has been made for that!
-
-> **Tip -** Animations are executed from top to bottom.
-> The parent-most animation will be executed first and then continue execution inwards.
 
 ## Moving using a focal target
 
