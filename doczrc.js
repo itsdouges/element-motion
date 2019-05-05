@@ -1,7 +1,7 @@
 const pkg = require('./packages/yubaba/package.json');
 
 module.exports = {
-  title: 'yubaba docs',
+  title: 'yubaba 🧙✨',
   description: `yubaba ${pkg.description}`,
   typescript: true,
   dest: '/docs',

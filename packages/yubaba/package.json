@@ -7,7 +7,7 @@
   "main": "dist/cjs/packages/yubaba/src/index.js",
   "module": "dist/esm/packages/yubaba/src/index.js",
   "sideEffects": false,
-  "description": "is an element animation orchestrator for React.js ✨",
+  "description": "easy to use animations with powerful orchestration for React.js 🧙",
   "keywords": [
     "react",
     "flip",

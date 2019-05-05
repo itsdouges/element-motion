@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from 'yubaba-common';
-import ReshapingContainer from './index';
+import RevealReshapingContainer from './index';
 
 const FixedContainer = styled.div`
   position: fixed;
@@ -18,12 +18,12 @@ const Container = styled.div`
   display: flex;
 `;
 
-storiesOf('yubaba/ReshapingContainer', module)
+storiesOf('yubaba/RevealReshapingContainer', module)
   .add('HeightOnly', () => (
     <FixedContainer>
       <Toggler>
         {toggler => (
-          <ReshapingContainer
+          <RevealReshapingContainer
             id="dialog-move"
             boxShadow="0 1px 50px rgba(32, 33, 36, 0.1)"
             padding="16px"
@@ -50,7 +50,7 @@ storiesOf('yubaba/ReshapingContainer', module)
                 </div>
               </Container>
             )}
-          </ReshapingContainer>
+          </RevealReshapingContainer>
         )}
       </Toggler>
     </FixedContainer>
@@ -59,7 +59,7 @@ storiesOf('yubaba/ReshapingContainer', module)
     <FixedContainer>
       <Toggler>
         {toggler => (
-          <ReshapingContainer
+          <RevealReshapingContainer
             id="dialog-width"
             boxShadow="0 1px 50px rgba(32, 33, 36, 0.1)"
             padding="16px"
@@ -68,7 +68,7 @@ storiesOf('yubaba/ReshapingContainer', module)
             display="inline-block"
           >
             {props => (
-              <Container {...props}>
+              <Container style={props.style} className={props.className} innerRef={props.ref}>
                 <div>
                   {toggler.shown ? (
                     <>
@@ -94,7 +94,7 @@ storiesOf('yubaba/ReshapingContainer', module)
                 </div>
               </Container>
             )}
-          </ReshapingContainer>
+          </RevealReshapingContainer>
         )}
       </Toggler>
     </FixedContainer>

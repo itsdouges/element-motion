@@ -1,7 +1,7 @@
 ---
 name: ReshapingContainer
 route: /reshaping-container
-menu: Composite Components
+menu: Composite components
 ---
 
 import { Playground, PropsTable } from 'docz';
@@ -11,8 +11,13 @@ import * as Styled from './styled';
 
 # ReshapingContainer
 
-A composite component that is made up of [SimpleReveal](/simple-reveal) and [Move](/move).
+A composite component that is made up of the [Move](/move) animation.
 It has been made to be able to efficiently have the parent container resize around its children after state changes.
+
+This is useful for anything where you want the background to nicely reshape itself around its children,
+for example a hover menu!
+
+> **Tip -** When we say _efficiently_ we seriously mean it 🙌! _Only_ `transform` is utilised.
 
 ## Usage
 
@@ -20,7 +25,103 @@ It has been made to be able to efficiently have the parent container resize arou
 import { ReshapingContainer } from 'yubaba';
 ```
 
-<Playground>hey</Playground>
+Hover or focus on the links 💯
+
+<Playground>
+  <Common.Toggler>
+    {toggler => (
+      <Styled.Container>
+        <Styled.Background />
+
+        <Styled.Header>
+          <span>tripe 🥩</span>
+
+          <Styled.MenuLink
+            href="#"
+            onMouseEnter={() => toggler.toggle('1')}
+            onFocus={() => toggler.toggle('1')}
+            onMouseLeave={() => toggler.toggle()}
+            onBlur={() => toggler.toggle()}
+          >
+            Products
+          </Styled.MenuLink>
+          <Styled.MenuLink
+            href="#"
+            onMouseEnter={() => toggler.toggle('2')}
+            onFocus={() => toggler.toggle('2')}
+            onMouseLeave={() => toggler.toggle()}
+            onBlur={() => toggler.toggle()}
+          >
+            Developers
+          </Styled.MenuLink>
+          <Styled.MenuLink
+            href="#"
+            onMouseEnter={() => toggler.toggle('3')}
+            onFocus={() => toggler.toggle('3')}
+            onMouseLeave={() => toggler.toggle()}
+            onBlur={() => toggler.toggle()}
+          >
+            Company
+          </Styled.MenuLink>
+        </Styled.Header>
+
+        {toggler.shown && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 100,
+              right: toggler.shown === '1' ? 200 : toggler.shown === '2' ? 100 : 20,
+            }}
+          >
+            <ReshapingContainer
+              id="reshaping-example"
+              boxShadow="0 50px 100px -20px rgba(50,50,93,.25), 0 30px 60px -30px rgba(0,0,0,.3), 0 -18px 60px -10px rgba(0,0,0,.025)"
+              background="#fff"
+              maxWidth="500px"
+              borderRadius="3px"
+              padding="16px"
+            >
+              {props => (
+                <Styled.Menu style={props.style}>
+                  {toggler.shown === '1' ? (
+                    <>
+                      <Styled.MenuItem>
+                        Pricing
+                        <small>Find out how much tripe you can buy for $100</small>
+                      </Styled.MenuItem>
+                      <Styled.MenuItem>
+                        Billing
+                        <small>Need an invoice? Look in here</small>
+                      </Styled.MenuItem>
+                      <Styled.MenuItem>
+                        Connect
+                        <small>Find other tripe enthusiasts? Check here first</small>
+                      </Styled.MenuItem>
+                    </>
+                  ) : toggler.shown === '2' ? (
+                    <>
+                      <Styled.MenuItem>
+                        Recipes
+                        <small>Find the best way to cook it</small>
+                      </Styled.MenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <Styled.MenuItem>About Tripe</Styled.MenuItem>
+                      <Styled.MenuItem>Customers</Styled.MenuItem>
+                      <Styled.MenuItem>Jobs</Styled.MenuItem>
+                    </>
+                  )}
+                </Styled.Menu>
+              )}
+            </ReshapingContainer>
+          </div>
+        )}
+      </Styled.Container>
+    )}
+
+  </Common.Toggler>
+</Playground>
 
 ## Props
 

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Baba from '../../Baba';
 import Move from '../Move';
-import { CollectorChildrenAsFunction } from '../../Collector';
-import SimpleReveal from '../SimpleReveal';
+import { InlineStyles } from '../../Collector';
 import { Duration } from '../types';
 
-interface ReshapingContainerProps {
+export interface ReshapingContainerProps {
   /**
    * This should be a unique identifier across your whole app.
    */
@@ -15,7 +14,7 @@ interface ReshapingContainerProps {
    * Children as function.
    * Will receive an object with className, style, and ref.
    */
-  children: CollectorChildrenAsFunction;
+  children: (opts: { style: InlineStyles }) => React.ReactNode;
 
   /**
    * Defaults to "div".
@@ -25,42 +24,56 @@ interface ReshapingContainerProps {
 
   /**
    * Used the same as the CSS property.
+   * E.g. "3px"
+   */
+  borderRadius?: string;
+
+  /**
+   * Used the same as the CSS property.
+   * E.g. "rgba(0, 0, 0, 0.5)"
    */
   background?: string;
 
   /**
    * Used the same as the CSS property.
+   * E.g. "0 1px 50px rgba(32, 33, 36, 0.1)"
    */
   boxShadow?: string;
 
   /**
    * Padding.
    * Use only px values, otherwise same as the CSS property.
+   * E.g. "10px"
    */
   padding: string;
 
   /**
    * Used the same as the CSS property.
+   * E.g. "500px"
    */
   maxWidth?: string;
 
   /**
    * Used the same as the CSS property.
+   * * E.g. "500px"
    */
   maxHeight?: string;
 
   /**
    * Used the same as the CSS property.
+   * * E.g. "500px"
    */
   minWidth?: string;
 
   /**
    * Used the same as the CSS property.
+   * * E.g. "500px"
    */
   minHeight?: string;
 
   /**
    * Used the same as the CSS property.
+   * E.g. "20px auto"
    */
   margin?: string;
 
@@ -73,8 +86,15 @@ interface ReshapingContainerProps {
 
   /**
    * Used the same as the CSS property.
+   * Defaults to what the "as" prop is.
    */
   display?: string;
+
+  /**
+   * Used the same as the CSS property.
+   * E.g. "relative"
+   */
+  position?: string;
 
   /**
    * Timing function to be used in the transition.
@@ -92,7 +112,6 @@ export default class ReshapingContainer extends React.PureComponent<
 > {
   static defaultProps = {
     as: 'div',
-    padding: '',
   };
 
   state: ReshapingContainerState = {
@@ -107,48 +126,6 @@ export default class ReshapingContainer extends React.PureComponent<
     return {
       renderCount: state.renderCount + 1,
     };
-  }
-
-  componentDidMount() {
-    if (this.props.padding.indexOf('em') >= 0 || this.props.padding.indexOf('%') >= 0) {
-      throw new Error(
-        `Only px values are supported for props.padding in ${ReshapingContainer.name}`
-      );
-    }
-  }
-
-  /**
-   * We're using this to increase the clip-path box of the Reveal animation so the children contents
-   * line up with the parent container in this component.
-   */
-  getInversePaddingParts() {
-    const parts = this.props.padding.split(' ').map(p => -Number(p.replace('px', '')));
-
-    switch (parts.length) {
-      case 0:
-        return undefined;
-
-      case 1:
-        parts.push(parts[0]);
-        parts.push(parts[0]);
-        parts.push(parts[0]);
-        break;
-
-      case 2:
-        parts.push(parts[0]);
-        parts.push(parts[1]);
-        break;
-
-      case 3:
-        parts.push(parts[1]);
-        break;
-
-      case 4:
-      default:
-        break;
-    }
-
-    return parts as [number, number, number, number];
   }
 
   render() {
@@ -166,6 +143,7 @@ export default class ReshapingContainer extends React.PureComponent<
       id,
       display,
       timingFunction,
+      borderRadius,
       ...rest
     } = this.props;
     const ComponentAs = rest.as as any;
@@ -185,6 +163,7 @@ export default class ReshapingContainer extends React.PureComponent<
                 margin,
                 padding,
                 display,
+                borderRadius,
               }}
             >
               <div
@@ -194,25 +173,19 @@ export default class ReshapingContainer extends React.PureComponent<
                   ...baba.style,
                   background,
                   boxShadow,
+                  borderRadius,
                   position: 'absolute',
                   top: 0,
                   left: 0,
                   right: 0,
                   bottom: 0,
                   pointerEvents: 'none',
-                  zIndex: -1,
+                  zIndex: 1,
                 }}
               />
 
-              <Baba name={`${id}-children`} key={this.state.renderCount}>
-                <SimpleReveal
-                  duration={duration}
-                  offset={this.getInversePaddingParts()}
-                  timingFunction={timingFunction}
-                >
-                  {props => children(props)}
-                </SimpleReveal>
-              </Baba>
+              {/* Position relative/zIndex needed to position this above the floating background. */}
+              {children({ style: { position: 'relative', zIndex: 2 } })}
             </ComponentAs>
           )}
         </Move>

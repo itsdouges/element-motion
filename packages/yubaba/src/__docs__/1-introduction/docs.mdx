@@ -1,5 +1,5 @@
 ---
-name: 1. Introduction
+name: 1. Introduction 📖
 route: /
 order: 5
 ---
@@ -8,36 +8,41 @@ import EmailChain from '../3-advanced-usage/EmailChain';
 
 # yubaba
 
-is an element animation orchestrator for React.js ✨
+easy to use animations with powerful orchestration for React.js 🧙✨
 
 [![npm](https://img.shields.io/npm/v/yubaba.svg)](https://www.npmjs.com/package/yubaba) [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/yubaba.svg)](https://bundlephobia.com/result?p=yubaba)
 
 <EmailChain />
 
-## Why yubaba?
+## What is yubaba???
 
-`yubaba` is as much of a _platform_ as much as it is an **orchestrator**.
-It can control when, where, and how to start animations and comes with prebuilt animations you can drop in and start using immediately,
-such as [ConcealMove](/conceal-move) and [RevealMove](/reveal-move)!
+It's all about **animation** 🧙✨ - it can help with:
 
-Even better you can create _custom_ animations!
-Using the same [internals](/collector) the [prebuilt animations use](https://github.com/madou/yubaba/tree/master/packages/yubaba/src/animations),
-it comes with a first class customization experience for you to do,
-well,
-anything!
+- [Moving an element](/move) from one position to another
+- [Revealing elements](/reveal-move) like you see above
+- [Supporting animations](/circle-expand) by obstructing elements in view; and
+- [Hiding children elements](/baba-manager) until animations have completed to trick users 🤫
+- [Orchestrating](/advanced-usage#wait-for-the-previous-animation-to-finish-before-starting-the-next) when animations should happen and [in what order](/advanced-usage#controlling-in-what-order-animations-should-execute)
+- Composing animations together to create [composite animations](/cross-fade-move)
+- [Anything you can imagine](/custom-animations), seriously 🤩
 
 ## Installation
 
 `yubaba` has a peer dependency on [emotion](https://emotion.sh/docs/introduction) for some of the more advanced animations.
 
 ```bash
-npm install yubaba emotion@9.x.x --save
+npm install yubaba react@^16.4.x react-dom@^16.4.x emotion@^9.x.x --save
 ```
 
 or
 
 ```bash
-yarn add yubaba emotion@9.x.x
+yarn add yubaba react@^16.4.x react-dom@^16.4.x emotion@^9.x.x
 ```
 
-> **Tip -** After installing head over to [Getting started](/getting-started) to start learning the basics!
+## Next steps
+
+- **First time** here? After installing head over to [Getting started](/getting-started) to start learning the basics
+- Interested in **animating an element**? Check out [Focal animations](/focal-animations)
+- For **ready made experiences** check out [Composite components](/composite-components), just grab them and go!
+- Having **trouble**? Maybe [Troubleshooting](/troubleshooting) has your answers
