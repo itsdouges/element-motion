@@ -5,7 +5,7 @@ import { Toggler } from 'yubaba-common';
 import Baba from '../../Baba';
 import Noop from '../Noop';
 import Target from '../../FocalTarget';
-import RevealMove from './index';
+import FocalRevealMove from './index';
 
 type Appearance = 'left' | 'center' | 'right';
 
@@ -93,7 +93,7 @@ const build = (
         {shown || (
           <List appearance={appearance}>
             <Baba name={`reveal-move-${orientation}-${appearance}-${useClipPath}`}>
-              <RevealMove
+              <FocalRevealMove
                 childrenTransformX={useClipPath || orientation === 'vertical'}
                 childrenTransformY={useClipPath || orientation === 'horizontal'}
                 transformX={useClipPath || appearance !== 'center'}
@@ -109,7 +109,7 @@ const build = (
                     height={height}
                   />
                 )}
-              </RevealMove>
+              </FocalRevealMove>
             </Baba>
           </List>
         )}
@@ -146,7 +146,7 @@ const build = (
   </Toggler>
 );
 
-storiesOf('yubaba/RevealMove', module)
+storiesOf('yubaba/FocalRevealMove', module)
   .add('RevealHeight/Left', () => build(200, 200, 'vertical', 'left'))
   .add('RevealWidth/Left', () => build(200, 200, 'horizontal', 'left'))
   .add('RevealBoth/Left', () => build(200, 200, 'both', 'left'))

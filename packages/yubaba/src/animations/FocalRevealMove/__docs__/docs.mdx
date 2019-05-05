@@ -1,6 +1,6 @@
 ---
-name: RevealMove
-route: /reveal-move
+name: FocalRevealMove
+route: /focal-reveal-move
 menu: Focal animations
 ---
 
@@ -20,14 +20,14 @@ import PlayButton from '@material-ui/icons/PlayArrow';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import MoreVert from '@material-ui/icons/MoreVert';
 import { lighten } from 'polished';
-import RevealMove from '../index';
+import FocalRevealMove from '../index';
 import Noop from '../../Noop';
 import Baba from '../../../Baba';
 import FocalTarget from '../../../FocalTarget';
 import * as Styled from './styled';
 import albumArt from './images/halcyda.png';
 
-# RevealMove
+# FocalRevealMove
 
 Is a composite animation of Reveal and [Move](/move).
 Useful for transitioning from a parent to a child,
@@ -37,20 +37,20 @@ Requires the use of the [FocalTarget](/focal-target) component to specify the fo
 ## Usage
 
 ```js
-import Baba, { RevealMove, FocalTarget } from 'yubaba';
+import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
 ```
 
 <Playground>
   {() => {
     const revealingImage = ({ albumArt }) => (
       <Baba name="reveal-move">
-        <RevealMove useClipPath>
+        <FocalRevealMove useClipPath>
           {({ ref, style }) => (
             <Link to="/details">
               <Styled.BackgroundImage src={albumArt} style={style} innerRef={ref} />
             </Link>
           )}
-        </RevealMove>
+        </FocalRevealMove>
       </Baba>
     );
 
@@ -211,7 +211,7 @@ import Baba, { RevealMove, FocalTarget } from 'yubaba';
 
 ## Props
 
-<PropsTable of={RevealMove} />
+<PropsTable of={FocalRevealMove} />
 
 ## Caveats
 

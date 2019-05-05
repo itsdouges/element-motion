@@ -11,7 +11,7 @@ easy to use animations with powerful orchestration for React.js 🧙✨
 It's all about **animation** 🧙✨ - it can help with:
 
 - [Moving an element](https://yubabajs.com/move) from one position to another
-- [Revealing elements](https://yubabajs.com/reveal-move) like you see above
+- [Revealing elements](https://yubabajs.com/focal-reveal-move) like you see above
 - [Supporting animations](https://yubabajs.com/supporting-animations) by obstructing elements in view; and
 - [Hiding children elements](https://yubabajs.com/advanced-usage#delay-showing-content-until-all-animations-have-finished) until animations have completed to trick users 🤫
 - [Orchestrating](https://yubabajs.com/advanced-usage#wait-for-the-previous-animation-to-finish-before-starting-the-next) when animations should happen and [in what order](https://yubabajs.com/advanced-usage#controlling-in-what-order-animations-should-execute)

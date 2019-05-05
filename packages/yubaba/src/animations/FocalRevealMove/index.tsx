@@ -1,21 +1,21 @@
 import * as React from 'react';
-import Reveal, { RevealProps } from '../Reveal';
+import FocalReveal, { FocalRevealProps } from '../FocalReveal';
 import Move, { MoveProps } from '../Move';
 
-export default class RevealMove extends React.Component<RevealProps & MoveProps> {
+export default class FocalRevealMove extends React.Component<FocalRevealProps & MoveProps> {
   static defaultProps = {
-    ...Reveal.defaultProps,
+    ...FocalReveal.defaultProps,
     ...Move.defaultProps,
   };
 
   render() {
     const { children, ...props } = this.props;
     return (
-      <Reveal {...props}>
+      <FocalReveal {...props}>
         <Move {...props} useFocalTarget>
           {children}
         </Move>
-      </Reveal>
+      </FocalReveal>
     );
   }
 }

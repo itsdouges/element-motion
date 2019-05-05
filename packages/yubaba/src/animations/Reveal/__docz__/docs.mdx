@@ -1,6 +1,6 @@
 ---
-name: SimpleReveal
-route: /simple-reveal
+name: Reveal
+route: /reveal
 menu: Focal animations
 ---
 
@@ -10,11 +10,7 @@ import Reveal from '../index';
 
 # Reveal
 
-Will reveal a container around a marked focal element using `width` and `height`,
-or alternatively `clip-path`.
-See [RevealMove](/reveal-move) for what this looks like.
-
-This component requires the use of a [FocalTarget](/focal-target) to mark the focal element.
+Will reveal the destination element from the origin size to the destination size using `clip-path` only which will not work for IE11.
 
 ## Usage
 
@@ -25,3 +21,10 @@ import { Reveal } from 'yubaba';
 ## Props
 
 <PropsTable of={Reveal} />
+
+## Caveats
+
+Be careful of collapsing margins when utilising this animation,
+they will make the destination element jump around,
+probably.
+If you're seeing some odd behavior - maybe try a flex container instead.

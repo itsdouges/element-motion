@@ -11,12 +11,12 @@ export { default as Move } from './animations/Move';
 export { default as Swipe } from './animations/Swipe';
 export { default as CircleExpand } from './animations/CircleExpand';
 export { default as CircleShrink } from './animations/CircleShrink';
-export { default as Reveal } from './animations/Reveal';
-export { default as RevealMove } from './animations/RevealMove';
+export { default as FocalReveal } from './animations/FocalReveal';
+export { default as RevealMove, default as FocalRevealMove } from './animations/FocalRevealMove';
 export { default as ConcealMove } from './animations/ConcealMove';
 export { default as ReshapingContainer } from './animations/ReshapingContainer';
 export { default as RevealReshapingContainer } from './animations/RevealReshapingContainer';
-export { default as SimpleReveal } from './animations/SimpleReveal';
+export { default as Reveal } from './animations/Reveal';
 
 // Utility stuff
 export * from './Collector';

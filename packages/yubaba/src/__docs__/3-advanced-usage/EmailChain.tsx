@@ -21,7 +21,7 @@ import {
 } from '@material-ui/core';
 import * as Styled from './styled';
 import { WrappedBaba as Baba } from '../../Baba';
-import RevealMove from '../../animations/RevealMove';
+import FocalRevealMove from '../../animations/FocalRevealMove';
 import ConcealMove from '../../animations/ConcealMove';
 import FocalTarget from '../../FocalTarget';
 
@@ -41,7 +41,7 @@ const EmailChain = () => {
         {Styled.data.map((email, index) => (
           <React.Fragment key={index}>
             <Baba name={`card-${index}`} in={props.in}>
-              <RevealMove duration={600}>
+              <FocalRevealMove duration={600}>
                 {baba => (
                   <div {...baba}>
                     <ListItem button>
@@ -57,7 +57,7 @@ const EmailChain = () => {
                     </ListItem>
                   </div>
                 )}
-              </RevealMove>
+              </FocalRevealMove>
             </Baba>
             <Divider variant="inset" />
           </React.Fragment>

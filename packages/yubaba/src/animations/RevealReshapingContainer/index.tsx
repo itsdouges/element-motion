@@ -2,7 +2,7 @@ import * as React from 'react';
 import Baba from '../../Baba';
 import { CollectorChildrenAsFunction } from '../../Collector';
 import ReshapingContainer, { ReshapingContainerProps } from '../ReshapingContainer';
-import SimpleReveal from '../SimpleReveal';
+import Reveal from '../Reveal';
 
 interface RevealReshapingContainerProps extends ReshapingContainerProps {
   /**
@@ -89,7 +89,7 @@ export default class RevealReshapingContainer extends React.PureComponent<
       <ReshapingContainer {...this.props}>
         {reshaping => (
           <Baba name={`${id}-children`} key={this.state.renderCount}>
-            <SimpleReveal
+            <Reveal
               duration={duration}
               offset={this.getInversePaddingParts()}
               timingFunction={timingFunction}
@@ -103,7 +103,7 @@ export default class RevealReshapingContainer extends React.PureComponent<
                   },
                 })
               }
-            </SimpleReveal>
+            </Reveal>
           </Baba>
         )}
       </ReshapingContainer>
