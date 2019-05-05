@@ -93,13 +93,15 @@ Continuing the example above,
 if we introduce the Wait component:
 
 ```js
+import { Wait } from 'yubaba';
+
 <Baba name="wait">
   <CrossFade>
     <Wait>
       <Move>{props => <div {...props} />}</Move>
     </Wait>
   </CrossFade>
-</Baba>
+</Baba>;
 ```
 
 Then the Move animation will wait for the CrossFade animation to complete finish before starting,
@@ -121,6 +123,8 @@ Luckily [BabaManager](/baba-manager) exists to do just that!
 Make it a parent of any [Baba](/baba) and it will show its content only when the animation has finished.
 
 ```js
+import { BabaManager } from 'yubaba';
+
 <BabaManager>
   {manager => (
     <div>
@@ -133,7 +137,7 @@ Make it a parent of any [Baba](/baba) and it will show its content only when the
       <span {...manager}>Children content</span>
     </div>
   )}
-</BabaManager>
+</BabaManager>;
 ```
 
 Children content will be shown after **all** animations have completed.

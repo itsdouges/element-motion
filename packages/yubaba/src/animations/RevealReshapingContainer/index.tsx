@@ -29,6 +29,7 @@ export default class RevealReshapingContainer extends React.PureComponent<
   /**
    * Incremeent render count every time a render occurs.
    * We're abusing react "key" to trigger animations for now.
+   * See: https://github.com/madou/yubaba/issues/100
    */
   static getDerivedStateFromProps(
     _: RevealReshapingContainerProps,

@@ -1,0 +1,27 @@
+---
+name: SimpleReveal
+route: /simple-reveal
+menu: Focal animations
+---
+
+import { Playground, PropsTable } from 'docz';
+import * as Common from 'yubaba-common';
+import Reveal from '../index';
+
+# Reveal
+
+Will reveal a container around a marked focal element using `width` and `height`,
+or alternatively `clip-path`.
+See [RevealMove](/reveal-move) for what this looks like.
+
+This component requires the use of a [FocalTarget](/focal-target) to mark the focal element.
+
+## Usage
+
+```js
+import { Reveal } from 'yubaba';
+```
+
+## Props
+
+<PropsTable of={Reveal} />
