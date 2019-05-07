@@ -19,7 +19,7 @@ storiesOf('yubaba/Reveal', module).add('ChildrenHeightChanging', () => (
   <Container>
     <Toggler>
       {toggler => (
-        <Baba name="simple-reveal" key={`${toggler.shown}`}>
+        <Baba name="reveal" key={`${toggler.shown}`}>
           <Reveal>
             {baba => (
               <div {...baba}>
