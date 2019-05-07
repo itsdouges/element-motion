@@ -29,9 +29,9 @@
     }
   ],
   "peerDependencies": {
-    "emotion": "~9",
-    "react": "~16.4",
-    "react-dom": "~16.4"
+    "emotion": ">=9",
+    "react": ">=16.4",
+    "react-dom": ">=16.4"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.10",
@@ -39,7 +39,7 @@
     "@storybook/addon-notes": "^3.4.10",
     "@storybook/addon-options": "^3.4.10",
     "@storybook/react": "4.0.0-alpha.2",
-    "emotion": "^9.2.9",
+    "emotion": "^10.0.9",
     "enzyme": "^3.6.0",
     "enzyme-matchers": "^7.0.1",
     "jest-enzyme": "^6.0.4",
