@@ -7,7 +7,7 @@
   "main": "dist/cjs/packages/yubaba/src/index.js",
   "module": "dist/esm/packages/yubaba/src/index.js",
   "sideEffects": false,
-  "description": "easy to use animations with powerful orchestration for React.js 🧙",
+  "description": "/juːba:ba/ out of the box animated experiences for React.js 🧙✨",
   "keywords": [
     "react",
     "flip",

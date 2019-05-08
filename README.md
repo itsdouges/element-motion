@@ -1,35 +1,53 @@
-# yubaba
+# yubaba 🧙✨
 
-easy to use animations with powerful orchestration for React.js 🧙✨
+/juːba:ba/ out of the box animated experiences for React.js 🧙✨
 
 [![npm](https://img.shields.io/npm/v/yubaba.svg)](https://www.npmjs.com/package/yubaba) [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/yubaba.svg)](https://bundlephobia.com/result?p=yubaba)
 
-[![Example animation using yubaba](https://user-images.githubusercontent.com/6801309/55383683-87894b80-5574-11e9-80ef-7394eb6eca63.gif)](https://yubabajs.com/advanced-usage)
+<a href="https://yubabajs.com/getting-started#moving-from-a-persisted-element"><img src="https://user-images.githubusercontent.com/6801309/57364146-eff7c800-71c5-11e9-9ddd-98ec510a6002.gif" height="500" alt="Moving from a persisted element" /></a>
+<a href="https://yubabajs.com/getting-started#moving-to-another-distinct-element"><img src="https://user-images.githubusercontent.com/6801309/57364968-88db1300-71c7-11e9-8a51-b45b45eb64ab.gif" height="500" alt="Moving to another distinct element" /></a>
+<a href="https://yubabajs.com/advanced-usage#moving-using-a-focal-target"><img src="https://user-images.githubusercontent.com/6801309/57364297-3cdb9e80-71c6-11e9-9a5f-e69ad9a7184b.gif" height="500" alt="Moving using a focal target" /></a>
 
 ## What is yubaba???
 
-It's all about **animation** 🧙✨ - it can help with:
+It's all about ✨**animation over state transitions** ✨it can help with:
 
-- [Moving an element](https://yubabajs.com/move) from one position to another
-- [Revealing elements](https://yubabajs.com/focal-reveal-move) like you see above
-- [Supporting animations](https://yubabajs.com/supporting-animations) by obstructing elements in view; and
-- [Hiding children elements](https://yubabajs.com/advanced-usage#delay-showing-content-until-all-animations-have-finished) until animations have completed to trick users 🤫
-- [Orchestrating](https://yubabajs.com/advanced-usage#wait-for-the-previous-animation-to-finish-before-starting-the-next) when animations should happen and [in what order](https://yubabajs.com/advanced-usage#controlling-in-what-order-animations-should-execute)
-- Composing animations together to create composite animations, for example [CrossFadeMove](https://yubabajs.com/cross-fade-move)
-- [Anything you can imagine](https://yubabajs.com/custom-animations), seriously 🤩
+- 🚚 [Moving an element](https://yubabajs.com/move) from one location to another
+- 💨 [Revealing elements](https://yubabajs.com/focal-reveal-move) inside another element
+- 📴 Enabling animations to be possible between disconnected leaf nodes in the React tree
+- 👓 [Supporting animations](https://yubabajs.com/supporting-animations) by obstructing elements in view
+- 🤫 [Hiding children elements](https://yubabajs.com/advanced-usage#delay-showing-content-until-all-animations-have-finished) until animations have completed to trick users
+- 🔢 [Orchestrating](https://yubabajs.com/advanced-usage#wait-for-the-previous-animation-to-finish-before-starting-the-next) when animations should start and [in what order](https://yubabajs.com/advanced-usage#controlling-in-what-order-animations-should-execute)
+- 📝 Composing animations together to create composite animations, for example [CrossFadeMove](https://yubabajs.com/cross-fade-move)
+- 🤯 [Anything you can imagine](https://yubabajs.com/custom-animations), seriously
 
 ## Installation
 
 `yubaba` has a peer dependency on [emotion](https://emotion.sh/docs/introduction) for some of the more advanced animations.
 
 ```bash
-npm install yubaba react@^16.4.x react-dom@^16.4.x emotion@^9.x.x --save
+npm install yubaba react@^16.4.x react-dom@^16.4.x emotion@^10.x.x --save
 ```
 
 or
 
 ```bash
-yarn add yubaba react@^16.4.x react-dom@^16.4.x emotion@^9.x.x
+yarn add yubaba react@^16.4.x react-dom@^16.4.x emotion@^10.x.x
+```
+
+### Usage
+
+[Function as children](https://reactpatterns.com/#function-as-children) is a common pattern in `yubaba`!
+Here's the most basic usage which will animate between `small` and `large`:
+
+```js
+import Baba, { Move } from 'yubaba';
+
+({ isLarge }) => (
+  <Baba name="my-first-baba" key={isLarge}>
+    {baba => <div {...baba} className={isLarge ? 'large' : 'small'} />}
+  </Baba>
+);
 ```
 
 ## Next steps
