@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Baba from '../../Baba';
+import { WrappedBaba as Baba } from '../../Baba';
 import Move from '../Move';
 import { InlineStyles } from '../../Collector';
 import { Duration } from '../types';
@@ -9,6 +9,13 @@ export interface ReshapingContainerProps {
    * This should be a unique identifier across your whole app.
    */
   id: string;
+
+  /**
+   * Will trigger the animation when this key changes.
+   * Change this when you want the animations to trigger,
+   * ideally when the children JSX has changed.
+   */
+  triggerKey: string;
 
   /**
    * Children as function.
@@ -102,32 +109,10 @@ export interface ReshapingContainerProps {
   timingFunction?: string;
 }
 
-interface ReshapingContainerState {
-  renderCount: number;
-}
-
-export default class ReshapingContainer extends React.PureComponent<
-  ReshapingContainerProps,
-  ReshapingContainerState
-> {
+export default class ReshapingContainer extends React.PureComponent<ReshapingContainerProps> {
   static defaultProps = {
     as: 'div',
   };
-
-  state: ReshapingContainerState = {
-    renderCount: 0,
-  };
-
-  /**
-   * Incremeent render count every time a render occurs.
-   * We're abusing react "key" to trigger animations for now.
-   * See: https://github.com/madou/yubaba/issues/100
-   */
-  static getDerivedStateFromProps(_: ReshapingContainerProps, state: ReshapingContainerState) {
-    return {
-      renderCount: state.renderCount + 1,
-    };
-  }
 
   render() {
     const {
@@ -145,12 +130,13 @@ export default class ReshapingContainer extends React.PureComponent<
       display,
       timingFunction,
       borderRadius,
+      triggerKey,
       ...rest
     } = this.props;
     const ComponentAs = rest.as as any;
 
     return (
-      <Baba name={`${id}-container`} key={this.state.renderCount}>
+      <Baba name={`${id}-container`} key={triggerKey}>
         <Move duration={duration} timingFunction={timingFunction}>
           {baba => (
             <ComponentAs

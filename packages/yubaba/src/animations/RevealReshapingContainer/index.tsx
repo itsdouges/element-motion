@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Baba from '../../Baba';
+import { WrappedBaba as Baba } from '../../Baba';
 import { CollectorChildrenAsFunction } from '../../Collector';
 import ReshapingContainer, { ReshapingContainerProps } from '../ReshapingContainer';
 import Reveal from '../Reveal';
@@ -12,36 +12,16 @@ interface RevealReshapingContainerProps extends ReshapingContainerProps {
   children: CollectorChildrenAsFunction;
 }
 
-interface RevealReshapingContainerState {
-  renderCount: number;
-}
-
 export default class RevealReshapingContainer extends React.PureComponent<
-  RevealReshapingContainerProps,
-  RevealReshapingContainerState
+  RevealReshapingContainerProps
 > {
   static defaultProps = ReshapingContainer.defaultProps;
 
-  state: RevealReshapingContainerState = {
-    renderCount: 0,
-  };
-
-  /**
-   * Incremeent render count every time a render occurs.
-   * We're abusing react "key" to trigger animations for now.
-   * See: https://github.com/madou/yubaba/issues/100
-   */
-  static getDerivedStateFromProps(
-    _: RevealReshapingContainerProps,
-    state: RevealReshapingContainerState
-  ) {
-    return {
-      renderCount: state.renderCount + 1,
-    };
-  }
-
   componentDidMount() {
-    if (this.props.padding.indexOf('em') >= 0 || this.props.padding.indexOf('%') >= 0) {
+    if (
+      (process.env.NODE_ENV === 'development' && this.props.padding.indexOf('em') >= 0) ||
+      this.props.padding.indexOf('%') >= 0
+    ) {
       throw new Error(
         `Only px values are supported for props.padding in ${ReshapingContainer.name}`
       );
@@ -83,12 +63,12 @@ export default class RevealReshapingContainer extends React.PureComponent<
   }
 
   render() {
-    const { children, duration, id, timingFunction } = this.props;
+    const { children, duration, id, timingFunction, triggerKey } = this.props;
 
     return (
       <ReshapingContainer {...this.props}>
         {reshaping => (
-          <Baba name={`${id}-children`} key={this.state.renderCount}>
+          <Baba name={`${id}-children`} key={triggerKey}>
             <Reveal
               duration={duration}
               offset={this.getInversePaddingParts()}
