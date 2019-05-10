@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled, { css } from 'styled-components';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
-const PixelContainer = styled.div`
+const PixelContainer = styled.div<{ display: string }>`
   height: 100vh;
   max-width: 411px;
   max-height: 731px;
@@ -14,7 +14,7 @@ const PixelContainer = styled.div`
   user-select: none;
   position: relative;
   overflow: hidden;
-  display: flex;
+  display: ${props => props.display};
   flex-direction: column;
 
   * {
@@ -100,9 +100,14 @@ interface SmallViewportProps {
   children: React.ReactNode;
   invertColor?: boolean;
   appBar?: React.ReactNode;
+  display: string;
 }
 
 export default class SmallViewport extends React.Component<SmallViewportProps> {
+  static defaultProps = {
+    display: 'flex',
+  };
+
   theme = createMuiTheme({
     palette: {
       primary: {
@@ -115,10 +120,10 @@ export default class SmallViewport extends React.Component<SmallViewportProps> {
   });
 
   render() {
-    const { invertColor, children, appBar } = this.props;
+    const { invertColor, children, appBar, display } = this.props;
     return (
       <MuiThemeProvider theme={this.theme}>
-        <PixelContainer>
+        <PixelContainer display={display}>
           <ToolbarContainer>
             <Toolbar>
               <Square invertColor={!!invertColor} />

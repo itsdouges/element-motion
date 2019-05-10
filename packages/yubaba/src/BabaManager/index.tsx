@@ -13,6 +13,13 @@ export interface BabaManangerProps extends InjectedProps {
    * Optional name to target a specific child Baba.
    */
   name?: string;
+
+  /**
+   * Set to "true" if should be shown immediately on mount.
+   * "false" if should wait for an animation first.
+   * Defaults to false.
+   */
+  isInitiallyVisible?: boolean;
 }
 
 export interface State {
@@ -26,10 +33,11 @@ export interface InjectedProps {
   context?: BabaManagerContext;
 }
 
-export type OnFinishHandler = (opts: { name: string }) => void;
+export type Handler = (opts: { name: string }) => void;
 
 export interface BabaManagerContext {
-  onFinish: OnFinishHandler;
+  onFinish: Handler;
+  onStart: Handler;
 }
 
 export const BabaContext = React.createContext<BabaManagerContext | undefined>(undefined);
@@ -37,11 +45,31 @@ export const BabaContext = React.createContext<BabaManagerContext | undefined>(u
 export default class BabaManager extends React.Component<BabaManangerProps, State> {
   state: State = {
     style: {
-      visibility: 'hidden',
+      visibility: this.props.isInitiallyVisible ? 'visible' : 'hidden',
     },
   };
 
-  onFinish: OnFinishHandler = opts => {
+  onStart: Handler = opts => {
+    const { context, name } = this.props;
+
+    if (context && context.onFinish) {
+      context.onStart(opts);
+    }
+
+    if (name && opts.name !== name) {
+      return;
+    }
+
+    if (this.state.style.visibility === 'visible') {
+      this.setState({
+        style: {
+          visibility: 'hidden',
+        },
+      });
+    }
+  };
+
+  onFinish: Handler = opts => {
     const { context, name } = this.props;
 
     if (context && context.onFinish) {
@@ -64,7 +92,7 @@ export default class BabaManager extends React.Component<BabaManangerProps, Stat
     const { style } = this.state;
 
     return (
-      <BabaContext.Provider value={{ onFinish: this.onFinish }}>
+      <BabaContext.Provider value={{ onFinish: this.onFinish, onStart: this.onStart }}>
         {children({ style })}
       </BabaContext.Provider>
     );
