@@ -6,7 +6,7 @@ import * as utils from '../__tests__/utils';
 import defer from '../lib/defer';
 
 describe('<BabaManager />', () => {
-  it('should show manager content when waiting for animation', () => {
+  it('should be visible after start animation has been mounted', () => {
     const Animation = utils.createTestAnimation();
 
     const wrapper = mount(
@@ -20,8 +20,53 @@ describe('<BabaManager />', () => {
         )}
       </BabaManager>
     );
+    wrapper.update();
 
     expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'visible' });
+  });
+
+  it('should be hidden on initial mount', () => {
+    const wrapper = mount(<BabaManager>{props => <span {...props} />}</BabaManager>);
+    wrapper.update();
+
+    expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'hidden' });
+  });
+
+  it('should be visible on initial mount', () => {
+    const wrapper = mount(
+      <BabaManager isInitiallyVisible>{props => <span {...props} />}</BabaManager>
+    );
+    wrapper.update();
+
+    expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'visible' });
+  });
+
+  it('should be hidden during animation', () => {
+    const Animation = utils.createTestAnimation();
+    const wrapper = mount(
+      <utils.BabaUnderTest
+        from={shown => (
+          <BabaManager isInitiallyVisible>
+            {props => (
+              <span {...props}>
+                <Baba name="aaa" key={`${shown}`}>
+                  <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
+                </Baba>
+              </span>
+            )}
+          </BabaManager>
+        )}
+        to={null}
+        start={false}
+      />
+    );
+
+    wrapper.setProps({
+      start: true,
+    });
+    wrapper.update();
+
+    expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'hidden' });
   });
 
   it('should hide manager children if animation is already in flight', () => {

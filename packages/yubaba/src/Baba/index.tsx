@@ -223,7 +223,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
   }
 
   executeAnimations = () => {
-    const { name, container: getContainer } = this.props;
+    const { name, container: getContainer, context } = this.props;
     const container = typeof getContainer === 'function' ? getContainer() : getContainer;
     const fromTarget = babaStore.get(name);
 
@@ -399,6 +399,11 @@ If it's an image, try and have the image loaded before mounting, or set a static
           : Promise.resolve()
       );
 
+      // If a BabaManager is a parent somewhere, notify them that we're starting animating.
+      if (context) {
+        context.onStart({ name });
+      }
+
       Promise.all(beforeAnimatePromises)
         .then(() => {
           // Wait two animation frames before triggering animations.
@@ -424,8 +429,6 @@ If it's an image, try and have the image loaded before mounting, or set a static
                 this.setState({
                   shown: true,
                 });
-
-                const { context } = this.props;
 
                 // If a BabaManager is a parent somewhere, notify them that we're finished animating.
                 if (context) {
