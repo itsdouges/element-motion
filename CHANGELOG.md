@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/madou/yubaba/compare/v2.2.1...v2.3.0) (2019-05-11)
+
+
+### Bug Fixes
+
+* **reshaping-container:** adds triggerKey for triggering animation for composite components ([0f1ec5f](https://github.com/madou/yubaba/commit/0f1ec5f))
+* **reshaping-container:** passes down max height to children ([1d31e94](https://github.com/madou/yubaba/commit/1d31e94))
+
+
+### Features
+
+* **baba-manager:** adds ability for baba manager to hide visibility when an animation is about to start ([4a73cf7](https://github.com/madou/yubaba/commit/4a73cf7))
+* **focal-conceal-move:** renames to focal conceal move from conceal move ([039ef9a](https://github.com/madou/yubaba/commit/039ef9a))
+* **visibility-manager:** renames baba manager to visibility manager ([b283d09](https://github.com/madou/yubaba/commit/b283d09))
+
+
+
+
+
 ## [2.2.1](https://github.com/madou/yubaba/compare/v2.2.0...v2.2.1) (2019-05-07)
 
 
