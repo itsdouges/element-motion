@@ -30,7 +30,7 @@ import { WrappedBaba as Baba } from '../../Baba';
 import { WrappedVisibilityManager as VisibilityManager } from '../../VisibilityManager';
 import CircleExpand from '../../animations/CircleExpand';
 import FocalRevealMove from '../../animations/FocalRevealMove';
-import ConcealMove from '../../animations/ConcealMove';
+import FocalConcealMove from '../../animations/FocalConcealMove';
 import FocalTarget from '../../FocalTarget';
 import Move from '../../animations/Move';
 import CircleShrink from '../../animations/CircleShrink';
@@ -211,7 +211,7 @@ used together can produce a really cool transition between states.
 
 At times we want to move all content at once but have it originate from a focal point.
 The [FocalTarget](/focal-target) component exists to mark the focal element so animations who care can use it.
-Two examples of animations who can use it are [Move](/move), [ConcealMove](/conceal-move).
+Two examples of animations who can use it are [Move](/move), [FocalConcealMove](/focal-conceal-move).
 
 <Playground>
   <Styled.Center>

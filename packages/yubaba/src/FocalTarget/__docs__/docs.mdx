@@ -11,18 +11,18 @@ import FocalTarget from '../index';
 
 Used to explicitly mark the focal element,
 only a handful of animations require this component to be used,
-for example [ConcealMove](/conceal-move).
+for example [FocalConcealMove](/focal-conceal-move).
 
 > **Tip -** See [Moving using a focal target](/advanced-usage#moving-using-a-focal-target) for more information on how to use this component.
 
 ## Usage
 
 ```js
-import { FocalTarget, ConcealMove } from 'yubaba';
+import { FocalTarget, FocalConcealMove } from 'yubaba';
 
 const ItemDetails = ({ title, recipients, body, index }) => (
   <Baba name={`item-${index}`}>
-    <ConcealMove>
+    <FocalConcealMove>
       {baba => (
         <div {...baba}>
           <FocalTarget>
@@ -37,7 +37,7 @@ const ItemDetails = ({ title, recipients, body, index }) => (
           {body}
         </div>
       )}
-    </ConcealMove>
+    </FocalConcealMove>
   </Baba>
 );
 ```

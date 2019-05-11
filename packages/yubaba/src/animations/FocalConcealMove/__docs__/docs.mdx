@@ -1,6 +1,6 @@
 ---
-name: ConcealMove
-route: /conceal-move
+name: FocalConcealMove
+route: /focal-conceal-move
 menu: Focal animations
 ---
 
@@ -20,14 +20,14 @@ import PlayButton from '@material-ui/icons/PlayArrow';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import MoreVert from '@material-ui/icons/MoreVert';
 import { lighten } from 'polished';
-import ConcealMove from '../index';
+import FocalConcealMove from '../index';
 import Noop from '../../Noop';
 import Baba from '../../../Baba';
 import FocalTarget from '../../../FocalTarget';
 import * as Styled from './styled';
 import albumArt from './images/foster.jpg';
 
-# ConcealMove
+# FocalConcealMove
 
 Useful for transitioning from a child to a parent,
 will shrink from the container to the focal element.
@@ -36,7 +36,7 @@ Requires the use of the [FocalTarget](/focal-target) component to specify the fo
 ## Usage
 
 ```js
-import Baba, { ConcealMove, FocalTarget } from 'yubaba';
+import Baba, { FocalConcealMove, FocalTarget } from 'yubaba';
 ```
 
 > **Tip -** Click the back button in the album art to conceal it.
@@ -44,7 +44,7 @@ import Baba, { ConcealMove, FocalTarget } from 'yubaba';
 <Playground>
   {() => {
     const revealingImage = ({ albumArt }) => (
-      <Baba name="conceal-move">
+      <Baba name="focal-conceal-move">
         {({ ref, style }) => (
           <Link to="/details">
             <Styled.BackgroundImage src={albumArt} style={style} innerRef={ref} />
@@ -73,8 +73,8 @@ import Baba, { ConcealMove, FocalTarget } from 'yubaba';
     );
 
     const albumDetails = ({ color, albumArt, name, artist, songs }) => (
-      <Baba name="conceal-move">
-        <ConcealMove>
+      <Baba name="focal-conceal-move">
+        <FocalConcealMove>
           {(baba) => (
             <div {...baba}>
               <Styled.DetailsRoot color={color}>
@@ -147,7 +147,7 @@ import Baba, { ConcealMove, FocalTarget } from 'yubaba';
               </Styled.DetailsRoot>
             </div>
           )}
-        </ConcealMove>
+        </FocalConcealMove>
       </Baba>
     );
 
@@ -200,7 +200,7 @@ import Baba, { ConcealMove, FocalTarget } from 'yubaba';
 
 ## Props
 
-<PropsTable of={ConcealMove} />
+<PropsTable of={FocalConcealMove} />
 
 ## Troubleshooting
 

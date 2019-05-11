@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Toggler } from 'yubaba-common';
 import Baba from '../../Baba';
 import Target from '../../FocalTarget';
-import ConcealMove from './index';
+import FocalConcealMove from './index';
 
 const Container = styled.div`
   margin: 100px auto;
@@ -76,7 +76,7 @@ const build = (width: number, height: number, orientation: Orientation) => (
     {({ shown, toggle }) => (
       <React.Fragment>
         {shown && (
-          <Baba name={`conceal-move-${orientation}`}>
+          <Baba name={`focal-conceal-move-${orientation}`}>
             {baba => (
               <ListItem
                 onClick={() => toggle()}
@@ -91,8 +91,8 @@ const build = (width: number, height: number, orientation: Orientation) => (
         )}
 
         {shown || (
-          <Baba name={`conceal-move-${orientation}`}>
-            <ConcealMove>
+          <Baba name={`focal-conceal-move-${orientation}`}>
+            <FocalConcealMove>
               {baba => (
                 // We use a wrapper div here because the child centers it's children via flexbox.
                 // Since it centers it with flexbox when we transition it around our assumptions change
@@ -112,7 +112,7 @@ const build = (width: number, height: number, orientation: Orientation) => (
                   </TallListItem>
                 </div>
               )}
-            </ConcealMove>
+            </FocalConcealMove>
           </Baba>
         )}
       </React.Fragment>
@@ -120,7 +120,7 @@ const build = (width: number, height: number, orientation: Orientation) => (
   </Toggler>
 );
 
-storiesOf('yubaba/ConcealMove', module)
+storiesOf('yubaba/FocalConcealMove', module)
   .addDecorator(story => <Container>{story()}</Container>)
   .add('TargetHeight', () => build(200, 200, 'vertical'))
   .add('TargetWidth', () => build(200, 200, 'horizontal'))

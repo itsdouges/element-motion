@@ -13,7 +13,7 @@ import { zIndexStack } from '../../lib/style';
 import { dynamic } from '../../lib/duration';
 import { Duration } from '../types';
 
-export interface ConcealMoveProps extends CollectorChildrenProps {
+export interface FocalConcealMoveProps extends CollectorChildrenProps {
   /**
    * How long the animation should take over {duration}ms.
    */
@@ -30,7 +30,7 @@ export interface ConcealMoveProps extends CollectorChildrenProps {
   timingFunction: string;
 }
 
-export default class ConcealMove extends React.Component<ConcealMoveProps> {
+export default class FocalConcealMove extends React.Component<FocalConcealMoveProps> {
   static defaultProps = {
     duration: 'dynamic',
     timingFunction: standard(),

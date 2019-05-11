@@ -22,7 +22,7 @@ import {
 import * as Styled from './styled';
 import { WrappedBaba as Baba } from '../../Baba';
 import FocalRevealMove from '../../animations/FocalRevealMove';
-import ConcealMove from '../../animations/ConcealMove';
+import FocalConcealMove from '../../animations/FocalConcealMove';
 import FocalTarget from '../../FocalTarget';
 
 const EmailChain = () => {
@@ -68,7 +68,7 @@ const EmailChain = () => {
 
   const screen = (props: any) => (
     <Baba name={`card-${props.index}`}>
-      <ConcealMove>
+      <FocalConcealMove>
         {baba => (
           <Styled.Screen
             innerRef={baba.ref}
@@ -110,7 +110,7 @@ const EmailChain = () => {
             </ListItem>
           </Styled.Screen>
         )}
-      </ConcealMove>
+      </FocalConcealMove>
     </Baba>
   );
 
