@@ -172,7 +172,7 @@ export default class ReshapingContainer extends React.PureComponent<ReshapingCon
               />
 
               {/* Position relative/zIndex needed to position this above the floating background. */}
-              {children({ style: { position: 'relative', zIndex: 2 } })}
+              {children({ style: { position: 'relative', zIndex: 2, maxHeight } })}
             </ComponentAs>
           )}
         </Move>
