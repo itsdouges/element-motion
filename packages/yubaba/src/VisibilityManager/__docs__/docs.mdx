@@ -1,0 +1,42 @@
+---
+name: VisibilityManager
+route: /visibility-manager
+menu: Utility helpers
+---
+
+import { Playground, PropsTable } from 'docz';
+import VisibilityManager from '../index';
+
+# VisibilityManager
+
+Used to hide contents before an animation is complete after being triggered from a child [Baba](/baba) component.
+If there is more than one child [Baba](/baba) you can use an optional name prop which should match the appropriate [Baba](/baba) component.
+
+If it is the initial mount it will be shown **after** its child animation has finished unless you set `isInitiallyVisible`.
+
+> **Tip -** See [Delay showing content until all animations have finished](/advanced-usage#delay-showing-content-until-all-animations-have-finished) for more information on how to use this component.
+
+## Usage
+
+```js
+import Baba, { VisibilityManager } from 'yubaba';
+
+const ItemDetails = ({ description }) => (
+  <VisibilityManager>
+    {({ style }) => (
+      <React.Fragment>
+        <Baba name={`item-${index}`}>{props => <div {...props} />}</Baba>
+
+        <div style={style}>{description}</div>
+      </React.Fragment>
+    )}
+  </VisibilityManager>
+);
+```
+
+> **Tip -** We used `visibility` over `opacity` because it allows us to have fine grained control for hiding elements.
+> You can hide the container around an animating element and the animating element will still be visible for example.
+
+## Props
+
+<PropsTable of={VisibilityManager} />

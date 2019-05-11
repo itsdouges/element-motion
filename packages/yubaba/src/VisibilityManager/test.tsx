@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { WrappedBaba as Baba } from '../Baba';
-import { WrappedBabaManager as BabaManager } from '../BabaManager';
+import { WrappedVisibilityManager as VisibilityManager } from '../VisibilityManager';
 import * as utils from '../__tests__/utils';
 import defer from '../lib/defer';
 
-describe('<BabaManager />', () => {
+describe('<VisibilityManager />', () => {
   it('should be visible after start animation has been mounted', () => {
     const Animation = utils.createTestAnimation();
 
     const wrapper = mount(
-      <BabaManager>
+      <VisibilityManager>
         {props => (
           <span {...props}>
             <Baba name="fff">
@@ -18,7 +18,7 @@ describe('<BabaManager />', () => {
             </Baba>
           </span>
         )}
-      </BabaManager>
+      </VisibilityManager>
     );
     wrapper.update();
 
@@ -26,7 +26,7 @@ describe('<BabaManager />', () => {
   });
 
   it('should be hidden on initial mount', () => {
-    const wrapper = mount(<BabaManager>{props => <span {...props} />}</BabaManager>);
+    const wrapper = mount(<VisibilityManager>{props => <span {...props} />}</VisibilityManager>);
     wrapper.update();
 
     expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'hidden' });
@@ -34,7 +34,7 @@ describe('<BabaManager />', () => {
 
   it('should be visible on initial mount', () => {
     const wrapper = mount(
-      <BabaManager isInitiallyVisible>{props => <span {...props} />}</BabaManager>
+      <VisibilityManager isInitiallyVisible>{props => <span {...props} />}</VisibilityManager>
     );
     wrapper.update();
 
@@ -46,7 +46,7 @@ describe('<BabaManager />', () => {
     const wrapper = mount(
       <utils.BabaUnderTest
         from={shown => (
-          <BabaManager isInitiallyVisible>
+          <VisibilityManager isInitiallyVisible>
             {props => (
               <span {...props}>
                 <Baba name="aaa" key={`${shown}`}>
@@ -54,7 +54,7 @@ describe('<BabaManager />', () => {
                 </Baba>
               </span>
             )}
-          </BabaManager>
+          </VisibilityManager>
         )}
         to={null}
         start={false}
@@ -79,13 +79,13 @@ describe('<BabaManager />', () => {
           </Baba>
         }
         to={
-          <BabaManager>
+          <VisibilityManager>
             {props => (
               <span {...props}>
                 <Baba name="aaa">{({ ref, style }) => <div ref={ref} style={style} />}</Baba>
               </span>
             )}
-          </BabaManager>
+          </VisibilityManager>
         }
         start={false}
       />
@@ -110,7 +110,7 @@ describe('<BabaManager />', () => {
           </Baba>
         }
         to={
-          <BabaManager>
+          <VisibilityManager>
             {props => (
               <span {...props}>
                 <Baba name="eee" onFinish={deferred.resolve}>
@@ -118,7 +118,7 @@ describe('<BabaManager />', () => {
                 </Baba>
               </span>
             )}
-          </BabaManager>
+          </VisibilityManager>
         }
         start={false}
       />
@@ -143,21 +143,21 @@ describe('<BabaManager />', () => {
           </Baba>
         }
         to={
-          <BabaManager>
+          <VisibilityManager>
             {topProps => (
               <div>
                 <div id="parent1" {...topProps} />
 
-                <BabaManager>
+                <VisibilityManager>
                   {innerProps => (
                     <div id="parent2" {...innerProps}>
                       <Baba name="eee">{({ ref, style }) => <div ref={ref} style={style} />}</Baba>
                     </div>
                   )}
-                </BabaManager>
+                </VisibilityManager>
               </div>
             )}
-          </BabaManager>
+          </VisibilityManager>
         }
         start={false}
       />
@@ -183,12 +183,12 @@ describe('<BabaManager />', () => {
           </Baba>
         }
         to={
-          <BabaManager>
+          <VisibilityManager>
             {topProps => (
               <div>
                 <div id="parent1" {...topProps} />
 
-                <BabaManager>
+                <VisibilityManager>
                   {innerProps => (
                     <div id="parent2" {...innerProps}>
                       <Baba name="eee" onFinish={deferred.resolve}>
@@ -196,10 +196,10 @@ describe('<BabaManager />', () => {
                       </Baba>
                     </div>
                   )}
-                </BabaManager>
+                </VisibilityManager>
               </div>
             )}
-          </BabaManager>
+          </VisibilityManager>
         }
         start={false}
       />

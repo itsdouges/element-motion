@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
-import Baba, { BabaManager, Noop } from '../../src';
+import Baba, { VisibilityManager, Noop } from '../../src';
 import { Toggler } from 'yubaba-common';
 
 const StyledBody = styled(BodyClassName)`
@@ -43,7 +43,7 @@ const TextContainer = styled.div`
   text-align: center;
 `;
 
-storiesOf('yubaba/BabaManager', module)
+storiesOf('yubaba/VisibilityManager', module)
   .add('NoManager', () => (
     <Toggler>
       {({ shown, toggle }) => (
@@ -67,7 +67,7 @@ storiesOf('yubaba/BabaManager', module)
                 This text was displayed immediately, which might not be what we want!
                 <br />
                 <br />
-                Thanks to BabaManager we can hide elements until all animations have finished.
+                Thanks to VisibilityManager we can hide elements until all animations have finished.
               </TextContainer>
 
               <Baba name="manager-example-1" key="2">
@@ -103,12 +103,12 @@ storiesOf('yubaba/BabaManager', module)
               </Baba>
             </Container>
           ) : (
-            <BabaManager>
+            <VisibilityManager>
               {props => (
                 <Container {...props} color="#b2cefe">
                   <TextContainer>
                     This text and container were hidden until the animation completed thanks to
-                    BabaManager.
+                    VisibilityManager.
                   </TextContainer>
 
                   <Baba name="manager-example-2" key="2">
@@ -122,7 +122,7 @@ storiesOf('yubaba/BabaManager', module)
                   </Baba>
                 </Container>
               )}
-            </BabaManager>
+            </VisibilityManager>
           )}
         </div>
       )}

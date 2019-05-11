@@ -19,7 +19,7 @@ import { getElementBoundingBox } from '../lib/dom';
 import defer from '../lib/defer';
 import noop from '../lib/noop';
 import * as babaStore from '../lib/babaStore';
-import { InjectedProps, withBabaManagerContext } from '../BabaManager';
+import { InjectedProps, withVisibilityManagerContext } from '../VisibilityManager';
 
 export type AnimationFunc = () => Promise<void>;
 
@@ -170,7 +170,7 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
       shown: true,
     });
 
-    // If a BabaManager is a parent up the tree context will be available.
+    // If a VisibilityManager is a parent up the tree context will be available.
     // Notify them that we're finished getting ready.
     if (context) {
       context.onFinish({ name });
@@ -399,7 +399,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
           : Promise.resolve()
       );
 
-      // If a BabaManager is a parent somewhere, notify them that we're starting animating.
+      // If a VisibilityManager is a parent somewhere, notify them that we're starting animating.
       if (context) {
         context.onStart({ name });
       }
@@ -430,7 +430,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
                   shown: true,
                 });
 
-                // If a BabaManager is a parent somewhere, notify them that we're finished animating.
+                // If a VisibilityManager is a parent somewhere, notify them that we're finished animating.
                 if (context) {
                   context.onFinish({ name });
                 }
@@ -496,4 +496,4 @@ If it's an image, try and have the image loaded before mounting, or set a static
   }
 }
 
-export const WrappedBaba = withBabaManagerContext(Baba);
+export const WrappedBaba = withVisibilityManagerContext(Baba);

@@ -1,8 +1,5 @@
-// Primary components
 export { WrappedBaba as default } from './Baba';
-export { WrappedBabaManager as BabaManager } from './BabaManager';
 
-// Animation components
 export { default as Wait } from './Wait';
 export { default as Noop } from './animations/Noop';
 export { default as CrossFadeMove } from './animations/CrossFadeMove';
@@ -18,7 +15,8 @@ export { default as ReshapingContainer } from './animations/ReshapingContainer';
 export { default as RevealReshapingContainer } from './animations/RevealReshapingContainer';
 export { default as Reveal } from './animations/Reveal';
 
-// Utility stuff
+export { WrappedVisibilityManager as VisibilityManager } from './VisibilityManager';
+export { WrappedVisibilityManager as BabaManager } from './VisibilityManager';
 export * from './Collector';
 export { default as Collector } from './Collector';
 export { default as FocalTarget } from './FocalTarget';

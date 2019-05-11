@@ -16,7 +16,7 @@ import Select from 'react-select';
 import { MemoryRouter, Link, Switch, Route } from 'react-router-dom';
 import { WrappedBaba as Baba } from '../../Baba';
 import ReshapingContainer from '../../animations/ReshapingContainer';
-import { WrappedBabaManager as BabaManager } from '../../BabaManager';
+import { WrappedVisibilityManager as VisibilityManager } from '../../VisibilityManager';
 import Move from '../../animations/Move';
 import CrossFadeMove from '../../animations/CrossFadeMove';
 import * as Styled from './styled';
@@ -104,13 +104,13 @@ For this example we are animating from one element to another over a state chang
 
 One powerful aspect of `yubaba` is being able to compose different animations and behaviours together.
 Taking some inspiration from [Facebook Messenger](http://messenger.com) -
-here is their message notification pill made using [ReshapingContainer](/reshaping-container) and [BabaManager](/baba-manager).
+here is their message notification pill made using [ReshapingContainer](/reshaping-container) and [VisibilityManager](/visibility-manager).
 
 <Playground>
   <Styled.AlignCenter>
     <Common.Toggler interval onIntervalSet={val => val + 1}>
       {toggler => (
-        <BabaManager isInitiallyVisible>
+        <VisibilityManager isInitiallyVisible>
           {visibility => (
             <ReshapingContainer
               id="messenger-pill"
@@ -135,7 +135,7 @@ here is their message notification pill made using [ReshapingContainer](/reshapi
               )}
             </ReshapingContainer>
           )}
-        </BabaManager>
+        </VisibilityManager>
       )}
     </Common.Toggler>
   </Styled.AlignCenter>
@@ -338,7 +338,7 @@ and `false` when you consider it to be hidden.
       );
 
       const details = ({ src, title, onClick }) => (
-        <BabaManager name={src}>
+        <VisibilityManager name={src}>
           {props => (
             <Styled.ImagePageRoot {...props}>
               <div>
@@ -410,7 +410,7 @@ and `false` when you consider it to be hidden.
               </Styled.ContentContainer>
             </Styled.ImagePageRoot>
           )}
-        </BabaManager>
+        </VisibilityManager>
       );
 
       return (

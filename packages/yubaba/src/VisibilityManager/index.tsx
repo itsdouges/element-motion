@@ -2,7 +2,7 @@ import * as React from 'react';
 import { InlineStyles } from '../Collector';
 import { ExtractProps, Omit } from '../lib/types';
 
-export interface BabaManangerProps extends InjectedProps {
+export interface VisibilityManagerProps extends InjectedProps {
   /**
    * Children as function which passes down style,
    * add this to the elements you want to hide until all child animations have finished.
@@ -30,19 +30,19 @@ export interface InjectedProps {
   /**
    * Internal context, ignore this.
    */
-  context?: BabaManagerContext;
+  context?: VisibilityManagerContext;
 }
 
 export type Handler = (opts: { name: string }) => void;
 
-export interface BabaManagerContext {
+export interface VisibilityManagerContext {
   onFinish: Handler;
   onStart: Handler;
 }
 
-export const BabaContext = React.createContext<BabaManagerContext | undefined>(undefined);
+export const BabaContext = React.createContext<VisibilityManagerContext | undefined>(undefined);
 
-export default class BabaManager extends React.Component<BabaManangerProps, State> {
+export default class VisibilityManager extends React.Component<VisibilityManagerProps, State> {
   state: State = {
     style: {
       visibility: this.props.isInitiallyVisible ? 'visible' : 'hidden',
@@ -99,19 +99,21 @@ export default class BabaManager extends React.Component<BabaManangerProps, Stat
   }
 }
 
-export const withBabaManagerContext = <
+export const withVisibilityManagerContext = <
   TComponent extends React.ComponentType<InjectedProps & ExtractProps<TComponent>>
 >(
   WrappedComponent: TComponent
 ) => {
-  type WithBabaManagerContextProps = JSX.LibraryManagedAttributes<
+  type WithVisibilityManagerContextProps = JSX.LibraryManagedAttributes<
     TComponent,
     ExtractProps<TComponent>
   >;
 
   // eslint-disable-next-line react/no-multi-comp
-  return class extends React.Component<Omit<WithBabaManagerContextProps, keyof InjectedProps>> {
-    static displayName = `babaManagerContext(${WrappedComponent.displayName})`;
+  return class extends React.Component<
+    Omit<WithVisibilityManagerContextProps, keyof InjectedProps>
+  > {
+    static displayName = `VisibilityManagerContext(${WrappedComponent.displayName})`;
 
     render() {
       // WrappedComponent isn't considered to be a proper element for JSX, need to understand why.
@@ -132,4 +134,4 @@ export const withBabaManagerContext = <
   };
 };
 
-export const WrappedBabaManager = withBabaManagerContext(BabaManager);
+export const WrappedVisibilityManager = withVisibilityManagerContext(VisibilityManager);
