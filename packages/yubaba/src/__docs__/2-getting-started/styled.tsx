@@ -195,10 +195,20 @@ export const ImageModal = styled.img<{ appearance: 'big' | 'small' }>`
           width: 90%;
 
           @media screen and (min-width: 1120px) {
-            width: 60%;
+            width: calc(90% - 280px);
           }
         `
       : ''};
+`;
+
+export const Blanket = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(26, 31, 37, 0.78);
+  z-index: 90;
 `;
 
 export const Center = styled.div`

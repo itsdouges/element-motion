@@ -39,7 +39,7 @@ Requires the use of the [FocalTarget](/focal-target) component to specify the fo
 import Baba, { ConcealMove, FocalTarget } from 'yubaba';
 ```
 
-Click the back button in the album art.
+> **Tip -** Click the back button in the album art to conceal it.
 
 <Playground>
   {() => {
@@ -81,7 +81,7 @@ Click the back button in the album art.
                 <Styled.Page raised elevation={20} style={{ minHeight: '90vh', overflow: 'visible' }}>
                   <Styled.Data color={color}>
                     <Styled.BackLink to="/">
-                      <IconButton color="inherit">
+                      <IconButton color="inherit" style={{ background: 'rgba(0,0,0,0.3)', color: 'white', opacity: 0.8 }}>
                         <BackIcon />
                       </IconButton>
                     </Styled.BackLink>
@@ -152,44 +152,46 @@ Click the back button in the album art.
     );
 
     return (
-      <MemoryRouter initialEntries={['/details']}>
-        <Switch>
-          <Route
-            path="/details"
-            render={() =>
-              albumDetails({
-                albumArt,
-                name: 'Supermodel',
-                artist: 'Foster the People',
-                color: '#265968',
-                songs: [
-                  { name: 'Are You What You Want to Be?', time: '4:30' },
-                  { name: 'Ask Yourself', time: '4:23' },
-                  { name: 'Coming of Age', time: '4:40' },
-                  { name: 'Nevermind', time: '5:17' },
-                  { name: 'Pseudologia Fantastica', time: '5:31' },
-                  { name: 'The Angelic Welcome of Mr. Jones', time: '0:33' },
-                  { name: 'Best Friend', time: '4:28' },
-                  { name: "A Beginner's Guide to Destroying the Moon", time: '5:09' },
-                  { name: 'The Truth', time: '4:22' },
-                  { name: 'Fire Escape', time: '4:29' },
-                ],
-              })
-            }
-          />
-          <Route
-            path="/"
-            render={() =>
-              album({
-                albumArt,
-                name: 'Supermodel',
-                artist: 'Foster the People',
-                color: '#265968',
-              })
-            }
-          />
-        </Switch>
-      </MemoryRouter>
+      <Styled.PageContainer>
+        <MemoryRouter initialEntries={['/details']}>
+          <Switch>
+            <Route
+              path="/details"
+              render={() =>
+                albumDetails({
+                  albumArt,
+                  name: 'Supermodel',
+                  artist: 'Foster the People',
+                  color: '#265968',
+                  songs: [
+                    { name: 'Are You What You Want to Be?', time: '4:30' },
+                    { name: 'Ask Yourself', time: '4:23' },
+                    { name: 'Coming of Age', time: '4:40' },
+                    { name: 'Nevermind', time: '5:17' },
+                    { name: 'Pseudologia Fantastica', time: '5:31' },
+                    { name: 'The Angelic Welcome of Mr. Jones', time: '0:33' },
+                    { name: 'Best Friend', time: '4:28' },
+                    { name: "A Beginner's Guide to Destroying the Moon", time: '5:09' },
+                    { name: 'The Truth', time: '4:22' },
+                    { name: 'Fire Escape', time: '4:29' },
+                  ],
+                })
+              }
+            />
+            <Route
+              path="/"
+              render={() =>
+                album({
+                  albumArt,
+                  name: 'Supermodel',
+                  artist: 'Foster the People',
+                  color: '#265968',
+                })
+              }
+            />
+          </Switch>
+        </MemoryRouter>
+      </Styled.PageContainer>
     );
 
 }}

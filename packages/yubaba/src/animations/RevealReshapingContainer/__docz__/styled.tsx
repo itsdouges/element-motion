@@ -33,6 +33,7 @@ export const ModalDialog = styled.ul`
   position: relative;
   padding: 0 20px;
   margin: 0;
+  overflow: auto;
 `;
 
 export const Button = styled.button`

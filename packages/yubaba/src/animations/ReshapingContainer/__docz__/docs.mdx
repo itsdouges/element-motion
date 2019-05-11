@@ -28,7 +28,7 @@ import { ReshapingContainer } from 'yubaba';
 Hover or focus on the links 💯
 
 <Playground>
-  <Common.Toggler>
+  <Common.Toggler interval onIntervalSet={val => `${(val + 1) % 3}`}>
     {toggler => (
       <Styled.Container>
         <Styled.Background />
@@ -38,28 +38,28 @@ Hover or focus on the links 💯
 
           <Styled.MenuLink
             href="#"
-            onMouseEnter={() => toggler.toggle('1')}
-            onFocus={() => toggler.toggle('1')}
-            onMouseLeave={() => toggler.toggle()}
-            onBlur={() => toggler.toggle()}
+            onMouseEnter={() => toggler.set('1')}
+            onFocus={() => toggler.set('1')}
+            onMouseLeave={() => toggler.set()}
+            onBlur={() => toggler.set()}
           >
             Products
           </Styled.MenuLink>
           <Styled.MenuLink
             href="#"
-            onMouseEnter={() => toggler.toggle('2')}
-            onFocus={() => toggler.toggle('2')}
-            onMouseLeave={() => toggler.toggle()}
-            onBlur={() => toggler.toggle()}
+            onMouseEnter={() => toggler.set('2')}
+            onFocus={() => toggler.set('2')}
+            onMouseLeave={() => toggler.set()}
+            onBlur={() => toggler.set()}
           >
             Developers
           </Styled.MenuLink>
           <Styled.MenuLink
             href="#"
-            onMouseEnter={() => toggler.toggle('3')}
-            onFocus={() => toggler.toggle('3')}
-            onMouseLeave={() => toggler.toggle()}
-            onBlur={() => toggler.toggle()}
+            onMouseEnter={() => toggler.set('3')}
+            onFocus={() => toggler.set('3')}
+            onMouseLeave={() => toggler.set()}
+            onBlur={() => toggler.set()}
           >
             Company
           </Styled.MenuLink>

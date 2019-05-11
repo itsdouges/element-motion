@@ -48,7 +48,7 @@ const Toolbar = styled.div`
 `;
 
 const ToolbarContainer = styled.div`
-  z-index: 999999999;
+  z-index: 90;
 `;
 
 interface SquareProps {

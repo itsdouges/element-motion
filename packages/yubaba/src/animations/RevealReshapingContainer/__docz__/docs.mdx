@@ -6,7 +6,7 @@ menu: Composite components
 
 import { Playground, PropsTable } from 'docz';
 import * as Common from 'yubaba-common';
-import ReshapingContainer from '../index';
+import RevealReshapingContainer from '../index';
 import * as Styled from './styled';
 
 # RevealReshapingContainer
@@ -24,20 +24,19 @@ For example a modal dialog!
 import { RevealReshapingContainer } from 'yubaba';
 ```
 
-Click the next button!
-
 <Playground>
-  <Common.Toggler>
+  <Common.Toggler interval onIntervalSet={cur => (cur + 1) % 3}>
     {toggler => (
       <Styled.Container>
         <Styled.Background />
 
-        <ReshapingContainer
+        <RevealReshapingContainer
           triggerKey={toggler.shown}
-          id="reshaping-example"
+          id="reveal-reshaping-example"
           boxShadow="0 50px 100px -20px rgba(50,50,93,.25), 0 30px 60px -30px rgba(0,0,0,.3), 0 -18px 60px -10px rgba(0,0,0,.025)"
           background="#fff"
           maxWidth="500px"
+          maxHeight="450px"
           borderRadius="3px"
           padding="16px"
           margin="0 auto"
@@ -68,7 +67,7 @@ Click the next button!
               </p>
             </Styled.ModalDialog>
           )}
-        </ReshapingContainer>
+        </RevealReshapingContainer>
       </Styled.Container>
     )}
 
@@ -77,7 +76,7 @@ Click the next button!
 
 ## Props
 
-<PropsTable of={ReshapingContainer} />
+<PropsTable of={RevealReshapingContainer} />
 
 ## Caveats
 

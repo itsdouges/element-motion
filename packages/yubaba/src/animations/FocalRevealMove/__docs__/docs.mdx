@@ -78,10 +78,10 @@ import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
         <Noop>
           {({ ref, style, className }) => (
             <Styled.DetailsRoot color={color} innerRef={ref} style={style} className={className}>
-              <Styled.Page raised elevation={20} style={{ minHeight: '90vh', overflow: 'visible' }}>
+              <Styled.Page raised elevation={20} style={{ minHeight: '730px', overflow: 'visible' }}>
                 <Styled.Data color={color}>
                   <Styled.BackLink to="/">
-                    <IconButton color="inherit">
+                    <IconButton color="inherit" style={{ background: 'rgba(0,0,0,0.3)', color: 'white', opacity: 0.8 }}>
                       <BackIcon />
                     </IconButton>
                   </Styled.BackLink>
@@ -151,58 +151,41 @@ import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
     );
 
     return (
-      <MemoryRouter>
-        <Switch>
-          <Route
-            path="/details"
-            render={() =>
-              albumDetails({
-                albumArt,
-                name: 'Halcyon Days',
-                artist: 'Ellie Goulding',
-                color: '#78014f',
-                songs: [
-                  { name: "Don't Say a Word", time: '4:07' },
-                  { name: 'My Blood', time: '3:54' },
-                  { name: 'Anything Could Happen', time: '4:47' },
-                  { name: 'Only You', time: '3:51' },
-                  { name: 'Halcyon', time: '3:25' },
-                  { name: 'Figure 8', time: '4:08' },
-                  { name: 'Joy', time: '3:14' },
-                  { name: 'Hanging On', time: '3:22' },
-                  { name: 'Explosions', time: '4:03' },
-                  { name: 'I Know You Care', time: '3:26' },
-                  { name: 'Atlantis', time: '3:53' },
-                  { name: 'Dead in the Water', time: '4:44' },
-                  {
-                    name: 'I Need Your Love (Calvin Harris featuring Ellie Goulding) (bonus track)',
-                    time: '3:58',
-                  },
-                  { name: 'Burn', time: '3:51' },
-                  { name: 'Goodness Gracious', time: '3:46' },
-                  { name: 'You My Everything', time: '3:29' },
-                  { name: 'Hearts Without Chains', time: '3:45' },
-                  { name: 'Stay Awake (with Madeon)', time: '3:26' },
-                  { name: 'Under Control', time: '4:06' },
-                  { name: 'Flashlight (with DJ Fresh)', time: '3:33' },
-                  { name: 'How Long Will I Love You (bonus track)', time: '2:34' },
-                ],
-              })
-            }
-          />
-          <Route
-            path="/"
-            render={() =>
-              album({
-                albumArt,
-                name: 'Halcyon Days',
-                artist: 'Ellie Goulding',
-                color: '#78014f',
-              })
-            }
-          />
-        </Switch>
-      </MemoryRouter>
+      <Styled.ContainerHeight>
+        <MemoryRouter>
+          <Switch>
+            <Route
+              path="/details"
+              render={() =>
+                albumDetails({
+                  albumArt,
+                  name: 'Halcyon Days',
+                  artist: 'Ellie Goulding',
+                  color: '#78014f',
+                  songs: [
+                    { name: "Don't Say a Word", time: '4:07' },
+                    { name: 'My Blood', time: '3:54' },
+                    { name: 'Anything Could Happen', time: '4:47' },
+                    { name: 'Only You', time: '3:51' },
+                    { name: 'Halcyon', time: '3:25' },
+                  ],
+                })
+              }
+            />
+            <Route
+              path="/"
+              render={() =>
+                album({
+                  albumArt,
+                  name: 'Halcyon Days',
+                  artist: 'Ellie Goulding',
+                  color: '#78014f',
+                })
+              }
+            />
+          </Switch>
+        </MemoryRouter>
+      </Styled.ContainerHeight>
     );
 
 }}

@@ -151,7 +151,7 @@ export default class OneFullRotation extends Component {
 ```
 
 <Styled.Container>
-  <Toggler>
+  <Toggler interval>
     {toggler => (
       <Baba key={toggler.shown} name="element-animation-1">
         <OneFullRotation>
@@ -197,7 +197,7 @@ beforeAnimate = (elements, onFinish, setChildProps) => {
 ```
 
 <Styled.Container>
-  <Toggler>
+  <Toggler interval>
     {toggler => (
       <Baba key={toggler.shown} name="element-animation-2">
         <Move>

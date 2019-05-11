@@ -7,6 +7,10 @@ interface RootProps {
   color?: string;
 }
 
+export const ContainerHeight = styled.div`
+  min-height: 740px;
+`;
+
 export const Root = styled.div`
   position: relative;
   width: ${(props: RootProps) => (props.emphasis ? '100%' : '250px')};

@@ -1,5 +1,5 @@
 ---
-name: 2. Getting started 🏃
+name: 2. Getting started 🚶
 route: /getting-started
 order: 4
 ---
@@ -34,7 +34,9 @@ import johnny from './images/jg.jpg';
 The bread and butter animation in `yubaba` is moving an element.
 Simple enough - after a state change we can automatically have the element animate into the its new position.
 
-> **Tip -** Make sure to look at the code after playing with the examples 😋
+> **Tip -** You can interact with any examples!
+> When you do they will stop auto playing.
+> Make sure to look at the code after playing with the examples 😋
 
 ## Moving to another element
 
@@ -44,7 +46,7 @@ For this example we are animating from one element to another over a state chang
 
 <Playground>
   <Styled.SelectContainer>
-    <Toggler>
+    <Toggler interval onIntervalSet={curVal => (curVal ? undefined : 1)}>
       {({ shown, toggle }) =>
         shown ? (
           <Baba name={`item-${shown}`}>
@@ -52,7 +54,6 @@ For this example we are animating from one element to another over a state chang
               {baba => (
                 <div {...baba}>
                   <Select
-                    autoFocus
                     isSearchable={false}
                     value={{}}
                     styles={{
@@ -156,13 +157,16 @@ To do that we can abuse how `key`'s work in react - we just update the key at th
         <Baba name="same-move" key={shown}>
           <Move>
             {({ ref, style }) => (
-              <Styled.ImageModal
-                style={style}
-                onClick={() => toggle()}
-                innerRef={ref}
-                appearance={shown ? 'big' : 'small'}
-                src={johnny}
-              />
+              <>
+                {shown && <Styled.Blanket onClick={() => toggle()} />}
+                <Styled.ImageModal
+                  style={style}
+                  onClick={() => toggle()}
+                  innerRef={ref}
+                  appearance={shown ? 'big' : 'small'}
+                  src={johnny}
+                />
+              </>
             )}
           </Move>
         </Baba>
@@ -183,7 +187,7 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
 
 <Playground>
   <Styled.Center>
-  <Common.Toggler>
+  <Common.Toggler interval>
     {({ shown, toggle }) => (
       <Common.SmallViewport>
         {shown || (
@@ -209,7 +213,7 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
                     <BackIcon color="inherit" />
                   </IconButton>
 
-                  <Styled.Input autoFocus placeholder="Search or type URL" />
+                  <Styled.Input placeholder="Search or type URL" />
 
                   <IconButton color="default" aria-label="Menu">
                     <MicIcon colorRendering="blue" />
@@ -233,7 +237,7 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
 
 Remember that `yubaba` animations are triggered after a state change,
 and if you're using a router the state is just kept at a higher level.
-Here we have the above example re-written with [react-router](https://reacttraining.com/react-router/).
+Here we have the above example re-written with [React Router](https://reacttraining.com/react-router/).
 
 <Playground>
   <Styled.Center>
@@ -254,7 +258,7 @@ Here we have the above example re-written with [react-router](https://reacttrain
                           </IconButton>
                         </Link>
 
-                        <Styled.Input autoFocus placeholder="Search or type URL" />
+                        <Styled.Input placeholder="Search or type URL" />
 
                         <IconButton color="default" aria-label="Menu">
                           <MicIcon colorRendering="blue" />
@@ -304,9 +308,11 @@ To make this possible the [Baba](/baba) component can be controlled via the `in`
 Set it to `true` when you consider it to be shown,
 and `false` when you consider it to be hidden.
 
+> **Tip -** After opening an image press on the top left button to close.
+
 <Playground>
   <Styled.Center>
-  <Common.Toggler>
+  <Common.Toggler interval onIntervalSet={curVal => curVal ? undefined : img4}>
     {({ toggle, shown }) => {
       const image = ({ src, title, from, onClick, in: inn }) => (
         <Styled.Root>
@@ -340,7 +346,7 @@ and `false` when you consider it to be hidden.
                 <IconButton
                   color="default"
                   aria-label="Menu"
-                  style={{ top: 26, left: 0, position: 'absolute' }}
+                  style={{ top: 26, left: 0, position: 'absolute', background: 'rgba(0,0,0,0.3)', color: 'white', opacity: 0.8 }}
                   onClick={onClick}
                 >
                   <CloseIcon color="inherit" />

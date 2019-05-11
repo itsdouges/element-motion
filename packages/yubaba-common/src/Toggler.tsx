@@ -18,7 +18,7 @@ interface State {
 export default class Toggler extends React.Component<Props, State> {
   static defaultProps = {
     interval: false,
-    intervalMs: 3000,
+    intervalMs: 2000,
     onIntervalSet: () => {},
   };
 
