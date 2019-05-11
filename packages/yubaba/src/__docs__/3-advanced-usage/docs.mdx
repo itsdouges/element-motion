@@ -41,17 +41,24 @@ import EmailChain from './EmailChain';
 
 ## Controlling in what order animations should execute
 
+> **Tip -** Animations have three phases,
+> `beforeAnimate`,
+> `animate` and `afterAnimate`.
+> Don't worry if you're confused we will go over them in detail in [Custom Animations](/custom-animations).
+
 Animations are executed from top to bottom.
 The parent-most animation will be executed first and then continue execution inwards.
 
 So if we had two animations, Move and CrossFade:
 
 ```js
-<Baba name="move-first">
-  <Move>
-    <CrossFade>{props => <div {...props} />}</CrossFade>
-  </Move>
-</Baba>
+() => (
+  <Baba name="move-first">
+    <Move>
+      <CrossFade>{props => <div {...props} />}</CrossFade>
+    </Move>
+  </Baba>
+);
 ```
 
 When executed the order would look like:
@@ -68,11 +75,13 @@ When executed the order would look like:
 If we placed CrossFade first:
 
 ```js
-<Baba name="cross-fade-first">
-  <CrossFade>
-    <Move>{props => <div {...props} />}</Move>
-  </CrossFade>
-</Baba>
+() => (
+  <Baba name="cross-fade-first">
+    <CrossFade>
+      <Move>{props => <div {...props} />}</Move>
+    </CrossFade>
+  </Baba>
+);
 ```
 
 Then their order would be inversed:
@@ -95,13 +104,15 @@ if we introduce the Wait component:
 ```js
 import { Wait } from 'yubaba';
 
-<Baba name="wait">
-  <CrossFade>
-    <Wait>
-      <Move>{props => <div {...props} />}</Move>
-    </Wait>
-  </CrossFade>
-</Baba>;
+() => (
+  <Baba name="wait">
+    <CrossFade>
+      <Wait>
+        <Move>{props => <div {...props} />}</Move>
+      </Wait>
+    </CrossFade>
+  </Baba>
+);
 ```
 
 Then the Move animation will wait for the CrossFade animation to complete finish before starting,
@@ -125,19 +136,21 @@ Make it a parent of any [Baba](/baba) and it will show its content only when the
 ```js
 import { BabaManager } from 'yubaba';
 
-<BabaManager>
-  {manager => (
-    <div>
-      <Baba name="hide-children-until-animations-have-finished">
-        <CrossFade>
-          <Move>{props => <div {...props} />}</Move>
-        </CrossFade>
-      </Baba>
+() => (
+  <BabaManager>
+    {manager => (
+      <div>
+        <Baba name="hide-children-until-animations-have-finished">
+          <CrossFade>
+            <Move>{props => <div {...props} />}</Move>
+          </CrossFade>
+        </Baba>
 
-      <span {...manager}>Children content</span>
-    </div>
-  )}
-</BabaManager>;
+        <span {...manager}>Children content</span>
+      </div>
+    )}
+  </BabaManager>
+);
 ```
 
 Children content will be shown after **all** animations have completed.

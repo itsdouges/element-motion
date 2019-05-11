@@ -38,7 +38,7 @@ export default class SupportingAnimation extends React.Component<CollectorChildr
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'black',
+          backgroundColor: '#468cee',
           zIndex: 9999999,
           transform: 'none',
           transition: 'transform 400ms',

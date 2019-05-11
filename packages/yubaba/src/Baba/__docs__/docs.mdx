@@ -8,10 +8,9 @@ import Baba from '../index';
 
 # Baba
 
-This is the primary component in yubaba.
-When rendering it will be given all of the animation data from its children.
+This is the brains component.
 When unmounting or flipping the `in` prop from `true` to `false`,
-it will execute all the animations **top to bottom** if a matching Baba pair is found within `50ms`.
+it will execute all the animations **top to bottom** if a matching Baba pair (either itself or another Baba element) is found within `50ms`.
 
 > **Tip -** See [Getting started](/getting-started) for more information on how to use this component.
 

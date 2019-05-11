@@ -1,6 +1,6 @@
 # yubaba 🧙✨
 
-/juːba:ba/ out of the box animated experiences for React.js 🧙✨
+/juːba:ba/ out of the box animated experiences for [React.js](https://reactjs.org/) 🧙✨
 
 [![npm](https://img.shields.io/npm/v/yubaba.svg)](https://www.npmjs.com/package/yubaba) [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/yubaba.svg)](https://bundlephobia.com/result?p=yubaba)
 
@@ -35,17 +35,15 @@ or
 yarn add yubaba react@^16.4.x react-dom@^16.4.x emotion@^10.x.x
 ```
 
-### Usage
-
-[Function as children](https://reactpatterns.com/#function-as-children) is a common pattern in `yubaba`!
-Here's the most basic usage which will animate between `small` and `large`:
+[Function as children](https://reactpatterns.com/#function-as-children) is a common pattern here.
+The most basic usage could animate an element between `small` and `large` states.
 
 ```js
 import Baba, { Move } from 'yubaba';
 
 ({ isLarge }) => (
   <Baba name="my-first-baba" key={isLarge}>
-    {baba => <div {...baba} className={isLarge ? 'large' : 'small'} />}
+    <Move>{baba => <div {...baba} className={isLarge ? 'large' : 'small'} />}</Move>
   </Baba>
 );
 ```
