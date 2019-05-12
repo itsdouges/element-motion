@@ -54,7 +54,7 @@ storiesOf('yubaba/VisibilityManager', module)
               <Baba name="manager-example-1" key="1">
                 <Noop duration={500}>
                   {({ ref, style }) => (
-                    <Button style={style} innerRef={ref} onClick={() => toggle()}>
+                    <Button style={style} ref={ref} onClick={() => toggle()}>
                       Click me and I'll render the next page and start the animation
                     </Button>
                   )}
@@ -72,7 +72,7 @@ storiesOf('yubaba/VisibilityManager', module)
 
               <Baba name="manager-example-1" key="2">
                 {({ ref, style }) => (
-                  <Button style={style} innerRef={ref} onClick={() => toggle()}>
+                  <Button style={style} ref={ref} onClick={() => toggle()}>
                     This button was shown after the animation completed.
                     <br />
                     Click me and I'll render the previous page!
@@ -95,7 +95,7 @@ storiesOf('yubaba/VisibilityManager', module)
               <Baba name="manager-example-2" key="1">
                 <Noop duration={500}>
                   {({ ref, style }) => (
-                    <Button style={style} innerRef={ref} onClick={() => toggle()}>
+                    <Button style={style} ref={ref} onClick={() => toggle()}>
                       Click me and I'll render the next page and start the animation
                     </Button>
                   )}
@@ -113,7 +113,7 @@ storiesOf('yubaba/VisibilityManager', module)
 
                   <Baba name="manager-example-2" key="2">
                     {({ ref, style }) => (
-                      <Button style={style} innerRef={ref} onClick={() => toggle()}>
+                      <Button style={style} ref={ref} onClick={() => toggle()}>
                         This button was shown after the animation completed.
                         <br />
                         Click me and I'll render the previous page!

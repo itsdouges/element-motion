@@ -4,7 +4,7 @@ route: /cross-fade-move
 menu: Focal animations
 ---
 
-import { Playground, PropsTable } from 'docz';
+import { Playground, Props } from 'docz';
 import * as Common from 'yubaba-common';
 import Baba from '../../../Baba';
 import CrossFadeMove from '../index';
@@ -28,7 +28,7 @@ import { CrossFadeMove } from 'yubaba';
         <Baba name="cross-fade-move" key="1">
           <CrossFadeMove>
             {({ ref, style }) => (
-              <Styled.Box onClick={() => toggle()} style={style} innerRef={ref}>
+              <Styled.Box onClick={() => toggle()} style={style} ref={ref}>
                 Hello, world!
               </Styled.Box>
             )}
@@ -38,7 +38,7 @@ import { CrossFadeMove } from 'yubaba';
         <Baba name="cross-fade-move" key="2">
           <CrossFadeMove>
             {({ ref, style }) => (
-              <Styled.Box style={style} innerRef={ref} onClick={() => toggle()} alignRight />
+              <Styled.Box style={style} ref={ref} onClick={() => toggle()} alignRight />
             )}
           </CrossFadeMove>
         </Baba>
@@ -49,4 +49,4 @@ import { CrossFadeMove } from 'yubaba';
 
 ## Props
 
-<PropsTable of={CrossFadeMove} />
+<Props of={CrossFadeMove} />

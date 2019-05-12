@@ -4,7 +4,7 @@ route: /focal-reveal-move
 menu: Focal animations
 ---
 
-import { Playground, PropsTable } from 'docz';
+import { Playground, Props } from 'docz';
 import StarIcon from '@material-ui/icons/StarBorder';
 import { MemoryRouter, Link, Route, Switch } from 'react-router-dom';
 import {
@@ -47,7 +47,7 @@ import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
         <FocalRevealMove useClipPath>
           {({ ref, style }) => (
             <Link to="/details">
-              <Styled.BackgroundImage src={albumArt} style={style} innerRef={ref} />
+              <Styled.BackgroundImage src={albumArt} style={style} ref={ref} />
             </Link>
           )}
         </FocalRevealMove>
@@ -77,7 +77,7 @@ import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
       <Baba name="reveal-move">
         <Noop>
           {({ ref, style, className }) => (
-            <Styled.DetailsRoot color={color} innerRef={ref} style={style} className={className}>
+            <Styled.DetailsRoot color={color} ref={ref} style={style} className={className}>
               <Styled.Page raised elevation={20} style={{ minHeight: '730px', overflow: 'visible' }}>
                 <Styled.Data color={color}>
                   <Styled.BackLink to="/">
@@ -87,7 +87,7 @@ import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
                   </Styled.BackLink>
 
                   <FocalTarget>
-                    {({ ref }) => <Styled.Image src={albumArt} innerRef={ref} />}
+                    {({ ref }) => <Styled.Image src={albumArt} ref={ref} />}
                   </FocalTarget>
 
                   <Styled.AlbumInfo>
@@ -194,7 +194,7 @@ import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
 
 ## Props
 
-<PropsTable of={FocalRevealMove} />
+<Props of={FocalRevealMove} />
 
 ## Caveats
 

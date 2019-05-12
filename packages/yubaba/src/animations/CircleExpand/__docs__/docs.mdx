@@ -4,7 +4,7 @@ route: /circle-expand
 menu: Supporting animations
 ---
 
-import { Playground, PropsTable } from 'docz';
+import { Playground, Props } from 'docz';
 import * as Common from 'yubaba-common';
 import Baba from '../../../Baba';
 import CircleExpand from '../index';
@@ -31,7 +31,7 @@ import { CircleExpand } from 'yubaba';
           <Baba name="circle-expand" key="1">
             <CircleExpand background="#ff5e6d">
               {({ ref, style }) => (
-                <Styled.Button onClick={() => toggle()} style={style} innerRef={ref} />
+                <Styled.Button onClick={() => toggle()} style={style} ref={ref} />
               )}
             </CircleExpand>
           </Baba>
@@ -49,4 +49,4 @@ import { CircleExpand } from 'yubaba';
 
 ## Props
 
-<PropsTable of={CircleExpand} />
+<Props of={CircleExpand} />

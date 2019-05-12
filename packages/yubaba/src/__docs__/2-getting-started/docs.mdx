@@ -81,7 +81,7 @@ For this example we are animating from one element to another over a state chang
                     <Styled.Value
                       onClick={() => toggle(`${index}`)}
                       style={baba.style}
-                      innerRef={baba.ref}
+                      ref={baba.ref}
                     >
                       {item.title}
                       <Styled.Description>{item.description}</Styled.Description>
@@ -123,7 +123,7 @@ here is their message notification pill made using [ReshapingContainer](/reshapi
             >
               {({ style, ref }) => (
                 <Styled.MessageNotification
-                  innerRef={ref}
+                  ref={ref}
                   style={{ ...style, ...visibility.style }}
                   onClick={() => toggler.set(toggler.shown + 1)}
                 >
@@ -162,7 +162,7 @@ To do that we can abuse how `key`'s work in react - we just update the key at th
                 <Styled.ImageModal
                   style={style}
                   onClick={() => toggle()}
-                  innerRef={ref}
+                  ref={ref}
                   appearance={shown ? 'big' : 'small'}
                   src={johnny}
                 />
@@ -193,7 +193,7 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
           <Baba name="google-searchbar">
             <CrossFadeMove>
               {({ ref, style }) => (
-                <Styled.FloatingSearchBar onClick={() => toggle()} innerRef={ref} style={style}>
+                <Styled.FloatingSearchBar onClick={() => toggle()} ref={ref} style={style}>
                   <IconButton color="default" aria-label="Menu" style={{ marginLeft: 'auto ' }}>
                     <MicIcon colorRendering="blue" />
                   </IconButton>
@@ -207,7 +207,7 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
           <Baba name="google-searchbar">
             <CrossFadeMove>
               {({ ref, style }) => (
-                <Styled.FixedSearchBar innerRef={ref} style={style}>
+                <Styled.FixedSearchBar ref={ref} style={style}>
                   <IconButton color="default" aria-label="Menu" onClick={() => toggle()}>
                     <BackIcon color="inherit" />
                   </IconButton>
@@ -250,7 +250,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
                 <Baba name="searchbar">
                   <CrossFadeMove>
                     {({ ref, style }) => (
-                      <Styled.FixedSearchBar innerRef={ref} style={style}>
+                      <Styled.FixedSearchBar ref={ref} style={style}>
                         <Link to="/">
                           <IconButton color="default" aria-label="Menu">
                             <BackIcon color="inherit" />
@@ -277,7 +277,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
                 <CrossFadeMove>
                   {({ ref, style }) => (
                     <Link to="/search">
-                      <Styled.FloatingSearchBar innerRef={ref} style={style}>
+                      <Styled.FloatingSearchBar ref={ref} style={style}>
                         <IconButton
                           color="default"
                           aria-label="Menu"
@@ -322,7 +322,7 @@ and `false` when you consider it to be hidden.
                   <Styled.Img
                     src={src}
                     onClick={onClick}
-                    innerRef={ref}
+                    ref={ref}
                     style={{ ...style, opacity: !inn ? 0 : style.opacity }}
                   />
                 )}
@@ -354,7 +354,7 @@ and `false` when you consider it to be hidden.
 
               <Baba name={src}>
                 <Move>
-                  {({ ref, style }) => <Styled.PageImage src={src} innerRef={ref} style={style} />}
+                  {({ ref, style }) => <Styled.PageImage src={src} ref={ref} style={style} />}
                 </Move>
               </Baba>
 

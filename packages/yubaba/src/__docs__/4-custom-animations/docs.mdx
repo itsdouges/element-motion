@@ -163,7 +163,7 @@ export default class OneFullRotation extends Component {
             <Styled.InlineBlock
               alignSelf="flex-start"
               {...props}
-              innerRef={ref}
+              ref={ref}
               onClick={() => toggler.toggle()}
             >
               click me
@@ -210,7 +210,7 @@ beforeAnimate = (elements, onFinish, setChildProps) => {
               <Styled.InlineBlock
                 alignSelf={toggler.shown ? 'flex-end' : 'flex-start'}
                 {...props}
-                innerRef={ref}
+                ref={ref}
                 onClick={() => toggler.toggle()}
               >
                 click me
@@ -338,7 +338,7 @@ export default class SupportingAnimation extends React.Component {
             <Styled.InlineBlock
               alignSelf="flex-start"
               {...props}
-              innerRef={ref}
+              ref={ref}
               onClick={() => toggler.toggle()}
             >
               click me

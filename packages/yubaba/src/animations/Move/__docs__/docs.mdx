@@ -4,7 +4,7 @@ route: /move
 menu: Focal animations
 ---
 
-import { Playground, PropsTable } from 'docz';
+import { Playground, Props } from 'docz';
 import * as Common from 'yubaba-common';
 import Baba from '../../../Baba';
 import Move from '../index';
@@ -28,16 +28,14 @@ import { Move } from 'yubaba';
       shown ? (
         <Baba name="move" key="1">
           <Move>
-            {({ ref, style }) => (
-              <Styled.Box onClick={() => toggle()} style={style} innerRef={ref} />
-            )}
+            {({ ref, style }) => <Styled.Box onClick={() => toggle()} style={style} ref={ref} />}
           </Move>
         </Baba>
       ) : (
         <Baba name="move" key="2">
           <Move>
             {({ ref, style }) => (
-              <Styled.Box style={style} innerRef={ref} onClick={() => toggle()} alignRight />
+              <Styled.Box style={style} ref={ref} onClick={() => toggle()} alignRight />
             )}
           </Move>
         </Baba>
@@ -48,4 +46,4 @@ import { Move } from 'yubaba';
 
 ## Props
 
-<PropsTable of={Move} />
+<Props of={Move} />

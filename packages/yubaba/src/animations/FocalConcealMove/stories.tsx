@@ -82,7 +82,7 @@ const build = (width: number, height: number, orientation: Orientation) => (
                 onClick={() => toggle()}
                 style={baba.style}
                 className={baba.className}
-                innerRef={baba.ref}
+                ref={baba.ref}
                 width={width}
                 height={height}
               />
@@ -105,7 +105,7 @@ const build = (width: number, height: number, orientation: Orientation) => (
                           width={width}
                           height={height}
                           onClick={() => toggle()}
-                          innerRef={target.ref}
+                          ref={target.ref}
                         />
                       )}
                     </Target>
