@@ -55,7 +55,7 @@ storiesOf('yubaba/CircleShrink', module)
           ) : (
             <Container background="white">
               <Baba name="circle-shrink-square" key="2">
-                {({ ref, style }) => <Root onClick={() => toggle()} style={style} innerRef={ref} />}
+                {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
               </Baba>
             </Container>
           )}
@@ -74,7 +74,7 @@ storiesOf('yubaba/CircleShrink', module)
               <Padding />
               <Baba name="page-with-different-scroll-shrink" key="1">
                 <CircleShrink background="#faf884">
-                  {({ ref, style }) => <Root style={style} innerRef={ref} />}
+                  {({ ref, style }) => <Root style={style} ref={ref} />}
                 </CircleShrink>
               </Baba>
               <Padding />
@@ -84,7 +84,7 @@ storiesOf('yubaba/CircleShrink', module)
               <Padding />
               <Padding />
               <Baba name="page-with-different-scroll-shrink" key="2">
-                {({ ref, style }) => <Root onClick={() => toggle()} style={style} innerRef={ref} />}
+                {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
               </Baba>
               <Padding />
               <Padding />

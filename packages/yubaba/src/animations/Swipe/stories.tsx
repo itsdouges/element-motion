@@ -33,7 +33,7 @@ const makeStory = (direction: string) => (
           <Container>
             <Baba name={`swipe-${direction}`} key="1">
               <Swipe background="#f8b88b" direction={direction as any}>
-                {({ ref, style }) => <Root onClick={() => toggle()} style={style} innerRef={ref} />}
+                {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
               </Swipe>
             </Baba>
           </Container>

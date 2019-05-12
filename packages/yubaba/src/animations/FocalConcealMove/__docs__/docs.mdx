@@ -4,7 +4,7 @@ route: /focal-conceal-move
 menu: Focal animations
 ---
 
-import { Playground, PropsTable } from 'docz';
+import { Playground, Props } from 'docz';
 import StarIcon from '@material-ui/icons/StarBorder';
 import { MemoryRouter, Link, Route, Switch } from 'react-router-dom';
 import {
@@ -47,7 +47,7 @@ import Baba, { FocalConcealMove, FocalTarget } from 'yubaba';
       <Baba name="focal-conceal-move">
         {({ ref, style }) => (
           <Link to="/details">
-            <Styled.BackgroundImage src={albumArt} style={style} innerRef={ref} />
+            <Styled.BackgroundImage src={albumArt} style={style} ref={ref} />
           </Link>
         )}
       </Baba>
@@ -87,7 +87,7 @@ import Baba, { FocalConcealMove, FocalTarget } from 'yubaba';
                     </Styled.BackLink>
 
                     <FocalTarget>
-                      {({ ref }) => <Styled.Image src={albumArt} innerRef={ref} />}
+                      {({ ref }) => <Styled.Image src={albumArt} ref={ref} />}
                     </FocalTarget>
 
                     <Styled.AlbumInfo>
@@ -200,7 +200,7 @@ import Baba, { FocalConcealMove, FocalTarget } from 'yubaba';
 
 ## Props
 
-<PropsTable of={FocalConcealMove} />
+<Props of={FocalConcealMove} />
 
 ## Troubleshooting
 

@@ -18,6 +18,7 @@ import Collector, {
 import { getElementBoundingBox } from '../lib/dom';
 import defer from '../lib/defer';
 import noop from '../lib/noop';
+import { precondition, warn } from '../lib/log';
 import * as babaStore from '../lib/babaStore';
 import { InjectedProps, withVisibilityManagerContext } from '../VisibilityManager';
 
@@ -142,8 +143,9 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
       process.env.NODE_ENV === 'development' &&
       (isIn === undefined || prevProps.in === undefined)
     ) {
-      console.warn(`yubaba
-You're switching between controlled and uncontrolled, don't do this. Either always set the "in" prop as true or false, or keep as undefined.`);
+      warn(
+        `You're switching between controlled and uncontrolled, don't do this. Either always set the "in" prop as true or false, or keep as undefined.`
+      );
     }
 
     if (isIn) {
@@ -191,14 +193,25 @@ You're switching between controlled and uncontrolled, don't do this. Either alwa
     // If there is only a Baba target and no child animations
     // data will be undefined, which means there are no animations to store.
     if (this.data) {
+      if (process.env.NODE_ENV === 'development') {
+        precondition(
+          this.element,
+          `The ref was not set when trying to store data, check that a child element has a ref passed. This needs to be set so we can take a snapshot of the origin DOM element.
+
+<${Baba.displayName} name="${this.props.name}">
+  {props => <div ref={props.ref} />}
+</${Baba.displayName}>
+`
+        );
+      }
+
       const elementBoundingBox = getElementBoundingBox(this.element as HTMLElement);
       const focalTargetElementBoundingBox = this.focalTargetElement
         ? getElementBoundingBox(this.focalTargetElement)
         : undefined;
 
       if (process.env.NODE_ENV === 'development' && elementBoundingBox.size.height === 0) {
-        console.warn(`yubaba
-Your target child had a height of zero when capturing it's DOM data. This may affect the animation.
+        warn(`Your target child had a height of zero when capturing it's DOM data. This may affect the animation.
 If it's an image, try and have the image loaded before mounting, or set a static height.`);
       }
 

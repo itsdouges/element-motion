@@ -42,8 +42,8 @@ import EmailChain from './EmailChain';
 ## Controlling in what order animations should execute
 
 > **Tip -** Animations have three phases,
-> `beforeAnimate`,
-> `animate` and `afterAnimate`.
+> `beforeAnimate()`,
+> `animate()` and `afterAnimate()`.
 > Don't worry if you're confused we will go over them in detail in [Custom Animations](/custom-animations).
 
 Animations are executed from top to bottom.
@@ -63,12 +63,12 @@ So if we had two animations, Move and CrossFade:
 
 When executed the order would look like:
 
-1. Move **beforeAnimate** fired
-1. CrossFade **beforeAnimate** fired
-1. Move **animate** fired
-1. CrossFade **animate** fired
-1. Move **afterAnimate** fired
-1. CrossFade **afterAnimate** fired
+1. Move `beforeAnimate()` fired
+1. CrossFade `beforeAnimate()` fired
+1. Move `animate()` fired
+1. CrossFade `animate()` fired
+1. Move `afterAnimate()` fired
+1. CrossFade `afterAnimate()` fired
 
 <br />
 
@@ -86,12 +86,12 @@ If we placed CrossFade first:
 
 Then their order would be inversed:
 
-1. CrossFade **beforeAnimate** fired
-1. Move **beforeAnimate** fired
-1. CrossFade **animate** fired
-1. Move **animate** fired
-1. CrossFade **afterAnimate** fired
-1. Move **afterAnimate** fired
+1. CrossFade `beforeAnimate()` fired
+1. Move `beforeAnimate()` fired
+1. CrossFade `animate()` fired
+1. Move `animate()` fired
+1. CrossFade `afterAnimate()` fired
+1. Move `afterAnimate()` fired
 
 ## Wait for the previous animation to finish before starting the next
 
@@ -118,12 +118,12 @@ import { Wait } from 'yubaba';
 Then the Move animation will wait for the CrossFade animation to complete finish before starting,
 the order then becoming:
 
-1. CrossFade **beforeAnimate** fired
-1. CrossFade **animate** fired
-1. Move **beforeAnimate** fired
-1. Move **animate** fired
-1. CrossFade **afterAnimate** fired
-1. Move **afterAnimate** fired
+1. CrossFade `beforeAnimate()` fired
+1. CrossFade `animate()` fired
+1. Move `beforeAnimate()` fired
+1. Move `animate()` fired
+1. CrossFade `afterAnimate()` fired
+1. Move `afterAnimate()` fired
 
 > **Tip -** Notice that afterAnimate's are always called the the same regardless of Wait usage.
 
@@ -176,7 +176,7 @@ used together can produce a really cool transition between states.
                 <Baba name="circle-expand-square" key="1">
                   <CircleExpand background="#fea3aa">
                     {({ ref, style }) => (
-                      <Styled.Root onClick={() => toggle()} style={style} innerRef={ref} />
+                      <Styled.Root onClick={() => toggle()} style={style} ref={ref} />
                     )}
                   </CircleExpand>
                 </Baba>

@@ -6,6 +6,8 @@ module.exports = {
   typescript: true,
   dest: '/docs',
   codeSandbox: false,
+  notUseSpecifiers: true,
+  filterComponents: files => files.filter(filepath => /([^d]\.tsx?)$/.test(filepath)),
   themeConfig: {
     colors: {
       primary: '#468cee',

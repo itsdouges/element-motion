@@ -4,7 +4,7 @@ route: /reveal-reshaping-container
 menu: Composite components
 ---
 
-import { Playground, PropsTable } from 'docz';
+import { Playground, Props } from 'docz';
 import * as Common from 'yubaba-common';
 import RevealReshapingContainer from '../index';
 import * as Styled from './styled';
@@ -44,7 +44,7 @@ import { RevealReshapingContainer } from 'yubaba';
           {props => (
             <Styled.ModalDialog
               style={props.style}
-              innerRef={props.ref}
+              ref={props.ref}
               className={props.className}
             >
               <Styled.Header>tripe facts 🥩</Styled.Header>
@@ -76,7 +76,7 @@ import { RevealReshapingContainer } from 'yubaba';
 
 ## Props
 
-<PropsTable of={RevealReshapingContainer} />
+<Props of={RevealReshapingContainer} />
 
 ## Caveats
 

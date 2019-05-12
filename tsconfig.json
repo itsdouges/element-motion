@@ -18,7 +18,9 @@
     "rootDir": ".",
     "baseUrl": ".",
     "experimentalDecorators": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "types": ["react", "jest", "node"],
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules",

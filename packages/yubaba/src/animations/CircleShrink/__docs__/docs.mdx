@@ -4,7 +4,7 @@ route: /circle-shrink
 menu: Supporting animations
 ---
 
-import { Playground, PropsTable } from 'docz';
+import { Playground, Props } from 'docz';
 import * as Common from 'yubaba-common';
 import Baba from '../../../Baba';
 import * as Styled from './styled';
@@ -29,9 +29,7 @@ import { CircleShrink } from 'yubaba';
       shown ? (
         <Styled.Container>
           <Baba name="circle-shrink" key="1">
-            {({ ref, style }) => (
-              <Styled.Button onClick={() => toggle()} style={style} innerRef={ref} />
-            )}
+            {({ ref, style }) => <Styled.Button onClick={() => toggle()} style={style} ref={ref} />}
           </Baba>
         </Styled.Container>
       ) : (
@@ -49,4 +47,4 @@ import { CircleShrink } from 'yubaba';
 
 ## Props
 
-<PropsTable of={CircleShrink} />
+<Props of={CircleShrink} />

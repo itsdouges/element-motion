@@ -70,12 +70,7 @@ const EmailChain = () => {
     <Baba name={`card-${props.index}`}>
       <FocalConcealMove>
         {baba => (
-          <Styled.Screen
-            innerRef={baba.ref}
-            style={baba.style}
-            className={baba.className}
-            {...props}
-          >
+          <Styled.Screen ref={baba.ref} style={baba.style} className={baba.className} {...props}>
             <ListItem>
               <Typography variant="h6">{Styled.data[props.index].title}</Typography>
               <IconButton

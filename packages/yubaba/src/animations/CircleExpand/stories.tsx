@@ -38,9 +38,7 @@ storiesOf('yubaba/CircleExpand', module)
             <Container>
               <Baba name="circle-expand-square" key="1">
                 <CircleExpand background="#fea3aa">
-                  {({ ref, style }) => (
-                    <Root onClick={() => toggle()} style={style} innerRef={ref} />
-                  )}
+                  {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
                 </CircleExpand>
               </Baba>
             </Container>
@@ -66,9 +64,7 @@ storiesOf('yubaba/CircleExpand', module)
 
               <Baba name="page-with-different-scroll" key="1">
                 <CircleExpand background="#fea3aa">
-                  {({ ref, style }) => (
-                    <Root onClick={() => toggle()} style={style} innerRef={ref} />
-                  )}
+                  {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
                 </CircleExpand>
               </Baba>
 
