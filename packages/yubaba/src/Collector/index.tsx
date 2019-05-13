@@ -104,113 +104,111 @@ export interface Collect {
 
 export const CollectorContext = React.createContext<Collect | undefined>(undefined);
 
-export default class Collector extends React.Component<CollectorProps> {
-  render() {
-    const {
-      children,
-      style,
-      className,
-      data,
-      receiveRenderChildren,
-      receiveRef,
-      receiveData,
-      topMostCollector,
-    } = this.props;
-
-    if (typeof children !== 'function') {
-      return (
-        <CollectorContext.Consumer>
-          {collect => (
-            <CollectorContext.Provider
-              value={{
-                ref: ref => {
-                  if (receiveRef) {
-                    receiveRef(ref);
-                  }
-
-                  if (!topMostCollector && collect) {
-                    collect.ref(ref);
-                  }
-                },
-                focalTargetRef: ref => {
-                  const { receiveFocalTargetRef } = this.props;
-                  if (receiveFocalTargetRef) {
-                    receiveFocalTargetRef(ref);
-                  }
-
-                  if (!topMostCollector && collect) {
-                    collect.focalTargetRef(ref);
-                  }
-                },
-                data: childData => {
-                  const collectedData = data ? [data].concat(childData) : childData;
-                  if (!topMostCollector && collect) {
-                    collect.data(collectedData);
-                  }
-
-                  if (receiveData) {
-                    receiveData(childData);
-                  }
-                },
-                renderChildren: node => {
-                  if (!topMostCollector && collect) {
-                    collect.renderChildren(node);
-                  }
-
-                  if (receiveRenderChildren) {
-                    receiveRenderChildren(node);
-                  }
-                },
-                style: {
-                  ...style,
-                  ...(collect && !topMostCollector ? collect.style : {}),
-                },
-                className:
-                  className || (collect && !topMostCollector ? collect.className : undefined),
-              }}
-            >
-              {children}
-            </CollectorContext.Provider>
-          )}
-        </CollectorContext.Consumer>
-      );
-    }
-
+const Collector: React.FC<CollectorProps> = ({
+  children,
+  style,
+  className,
+  data,
+  receiveRenderChildren,
+  receiveRef,
+  receiveData,
+  topMostCollector,
+  receiveFocalTargetRef,
+}: CollectorProps) => {
+  if (typeof children !== 'function') {
     return (
       <CollectorContext.Consumer>
-        {collect => {
-          if (typeof children === 'function') {
-            if (!topMostCollector && collect) {
-              const collectedData = data ? [data] : [];
-              collect.renderChildren(children);
-              collect.data(collectedData);
-            }
+        {collect => (
+          <CollectorContext.Provider
+            value={{
+              ref: ref => {
+                if (receiveRef) {
+                  receiveRef(ref);
+                }
 
-            if (receiveRenderChildren) {
-              receiveRenderChildren(children);
-            }
+                if (!topMostCollector && collect) {
+                  collect.ref(ref);
+                }
+              },
+              focalTargetRef: ref => {
+                if (receiveFocalTargetRef) {
+                  receiveFocalTargetRef(ref);
+                }
 
-            return React.Children.only(
-              children({
-                className:
-                  className || (collect && !topMostCollector ? collect.className : undefined),
-                ref: (ref: HTMLElement) => {
-                  if (!topMostCollector && collect) {
-                    collect.ref(ref);
-                  }
+                if (!topMostCollector && collect) {
+                  collect.focalTargetRef(ref);
+                }
+              },
+              data: childData => {
+                const collectedData = data ? [data].concat(childData) : childData;
+                if (!topMostCollector && collect) {
+                  collect.data(collectedData);
+                }
 
-                  if (receiveRef) {
-                    receiveRef(ref);
-                  }
-                },
-                style: collect && !topMostCollector ? { ...style, ...collect.style } : style || {},
-              })
-            );
-          }
+                if (receiveData) {
+                  receiveData(childData);
+                }
+              },
+              renderChildren: node => {
+                if (!topMostCollector && collect) {
+                  collect.renderChildren(node);
+                }
 
-          throw new Error('Children is guaranteed to be a function. Impossible condition.');
-        }}
+                if (receiveRenderChildren) {
+                  receiveRenderChildren(node);
+                }
+              },
+              style: {
+                ...style,
+                ...(collect && !topMostCollector ? collect.style : {}),
+              },
+              className:
+                className || (collect && !topMostCollector ? collect.className : undefined),
+            }}
+          >
+            {children}
+          </CollectorContext.Provider>
+        )}
       </CollectorContext.Consumer>
     );
   }
-}
+
+  return (
+    <CollectorContext.Consumer>
+      {collect => {
+        if (typeof children === 'function') {
+          if (!topMostCollector && collect) {
+            const collectedData = data ? [data] : [];
+            collect.renderChildren(children);
+            collect.data(collectedData);
+          }
+
+          if (receiveRenderChildren) {
+            receiveRenderChildren(children);
+          }
+
+          return React.Children.only(
+            children({
+              className:
+                className || (collect && !topMostCollector ? collect.className : undefined),
+              ref: (ref: HTMLElement) => {
+                if (!topMostCollector && collect) {
+                  collect.ref(ref);
+                }
+
+                if (receiveRef) {
+                  receiveRef(ref);
+                }
+              },
+              style: collect && !topMostCollector ? { ...style, ...collect.style } : style || {},
+            })
+          );
+        }
+
+        return null;
+      }}
+    </CollectorContext.Consumer>
+  );
+};
+
+export default Collector;

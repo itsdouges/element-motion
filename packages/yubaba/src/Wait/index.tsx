@@ -1,12 +1,14 @@
 import * as React from 'react';
-import Collector, { CollectorChildrenProps, CollectorActions, CollectorData } from '../Collector';
+import Collector, { CollectorChildrenProps, CollectorActions } from '../Collector';
 
-export default class Wait extends React.Component<CollectorChildrenProps> {
-  data: CollectorData = {
-    action: CollectorActions.wait,
-  };
+const Wait: React.FC<CollectorChildrenProps> = (props: CollectorChildrenProps) => (
+  <Collector
+    data={{
+      action: CollectorActions.wait,
+    }}
+  >
+    {props.children}
+  </Collector>
+);
 
-  render() {
-    return <Collector data={this.data}>{this.props.children}</Collector>;
-  }
-}
+export default Wait;

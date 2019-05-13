@@ -1,22 +1,26 @@
 import { CollectorData, ElementData } from '../Collector';
 
-
 export interface BabaData {
   elementData: ElementData;
   collectorData: CollectorData[];
 }
 
+interface BabaStore {
+  [key: string]: BabaData;
+}
 
-const store = new Map<string, BabaData>();
+const store: BabaStore = {};
 
+export const set = (key: string, value: BabaData) => {
+  store[key] = value;
+};
 
-export const set = (key: string, value: BabaData) => store.set(key, value);
+export const get = (key: string): BabaData => {
+  return store[key];
+};
 
+export const has = (key: string): boolean => !!get(key);
 
-export const get = (key: string) => store.get(key);
-
-
-export const has = (key: string) => store.has(key);
-
-
-export const remove = (key: string) => store.delete(key);
+export const remove = (key: string) => {
+  delete store[key];
+};

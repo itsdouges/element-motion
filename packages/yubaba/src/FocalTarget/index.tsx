@@ -10,14 +10,12 @@ interface FocalTargetProps {
   children: (props: FocalTargetChildProps) => React.ReactNode;
 }
 
-export default class FocalTarget extends React.Component<FocalTargetProps> {
-  render() {
-    return (
-      <CollectorContext.Consumer>
-        {collect => {
-          return this.props.children({ ref: collect ? collect.focalTargetRef : noop });
-        }}
-      </CollectorContext.Consumer>
-    );
-  }
-}
+const FocalTarget: React.FC<FocalTargetProps> = (props: FocalTargetProps) => (
+  <CollectorContext.Consumer>
+    {collect => {
+      return props.children({ ref: collect ? collect.focalTargetRef : noop });
+    }}
+  </CollectorContext.Consumer>
+);
+
+export default FocalTarget;
