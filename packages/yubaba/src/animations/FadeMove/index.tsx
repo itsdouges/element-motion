@@ -86,14 +86,33 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
     });
   };
 
-  beforeAnimate: AnimationCallback = (data, onFinish) => {
+  beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
+    setChildProps({
+      style: prevStyle => ({
+        ...prevStyle,
+        opacity: 0,
+      }),
+    });
+
     onFinish();
+
     return this.renderAnimation(data);
   };
 
   animate: AnimationCallback = (data, onFinish) => {
     setTimeout(onFinish, this.calculatedDuration);
     return this.renderAnimation(data, { moveToTarget: true });
+  };
+
+  afterAnimate: AnimationCallback = (_, onFinish, setChildProps) => {
+    setChildProps({
+      style: prevStyle => ({
+        ...prevStyle,
+        opacity: 1,
+      }),
+    });
+
+    onFinish();
   };
 
   render() {
@@ -106,6 +125,7 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
           payload: {
             beforeAnimate: this.beforeAnimate,
             animate: this.animate,
+            afterAnimate: this.afterAnimate,
           },
         }}
       >

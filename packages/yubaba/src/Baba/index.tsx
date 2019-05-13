@@ -39,7 +39,6 @@ export interface ChildProps {
 }
 
 export interface State {
-  shown: boolean;
   childProps: ChildProps;
 }
 
@@ -87,7 +86,6 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
   };
 
   state: State = {
-    shown: false,
     childProps: {},
   };
 
@@ -167,10 +165,6 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
 
   showSelfAndNotifyManager() {
     const { context, name } = this.props;
-
-    this.setState({
-      shown: true,
-    });
 
     // If a VisibilityManager is a parent up the tree context will be available.
     // Notify them that we're finished getting ready.
@@ -438,11 +432,6 @@ If it's an image, try and have the image loaded before mounting, or set a static
                 Promise.resolve()
               )
               .then(() => {
-                // We're finished all the transitions! Show the child element.
-                this.setState({
-                  shown: true,
-                });
-
                 // If a VisibilityManager is a parent somewhere, notify them that we're finished animating.
                 if (context) {
                   context.onFinish({ name });
@@ -487,7 +476,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
   };
 
   render() {
-    const { childProps, shown } = this.state;
+    const { childProps } = this.state;
     const { children } = this.props;
 
     return (
@@ -497,10 +486,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
         receiveRenderChildren={this.setReactNode}
         receiveRef={this.setRef}
         receiveFocalTargetRef={this.setTargetRef}
-        style={{
-          opacity: shown ? 1 : 0,
-          ...childProps.style,
-        }}
+        style={childProps.style}
         className={childProps.className}
       >
         {typeof children === 'function' ? children : React.Children.only(children)}

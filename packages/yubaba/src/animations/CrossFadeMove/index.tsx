@@ -6,9 +6,9 @@ export default class CrossFadeMove extends React.Component<FadeMoveProps & MoveP
   render() {
     const { children, ...props } = this.props;
     return (
-      <Move {...props}>
-        <FadeMove {...props}>{children}</FadeMove>
-      </Move>
+      <FadeMove {...props}>
+        <Move {...props}>{children}</Move>
+      </FadeMove>
     );
   }
 }

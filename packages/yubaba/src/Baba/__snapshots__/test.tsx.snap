@@ -25,9 +25,7 @@ Array [
       "render": undefined,
     },
     "origin": Object {
-      "element": <div
-        style="opacity: 1;"
-      />,
+      "element": <div />,
       "elementBoundingBox": Object {
         "location": Object {
           "left": 0,
@@ -76,9 +74,7 @@ Array [
       "render": undefined,
     },
     "origin": Object {
-      "element": <div
-        style="opacity: 1;"
-      />,
+      "element": <div />,
       "elementBoundingBox": Object {
         "location": Object {
           "left": 0,
