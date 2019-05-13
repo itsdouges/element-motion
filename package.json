@@ -27,33 +27,33 @@
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.13",
-    "@types/jest": "^23.3.2",
+    "@types/jest": "^24.0.12",
     "@types/react": "^16.8.17",
     "@types/react-body-classname": "^1.1.5",
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.3.1",
-    "@types/storybook__react": "^3.0.9",
+    "@types/storybook__react": "^4.0.1",
     "@types/styled-components": "^4.1.14",
     "docz": "^1.2.0",
     "docz-theme-default": "^1.2.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
-    "enzyme-matchers": "^6.0.4",
+    "enzyme-matchers": "^7.0.2",
     "enzyme-to-json": "^3.3.3",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.1.0",
+    "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
-    "eslint-plugin-typescript": "^0.12.0",
-    "jest": "^23.5.0",
-    "jest-enzyme": "^6.0.4",
+    "eslint-plugin-typescript": "^0.14.0",
+    "jest": "^24.8.0",
+    "jest-enzyme": "^7.0.2",
     "lerna": "^3.3.0",
-    "ts-jest": "^23.1.4",
-    "ts-loader": "^5.0.0",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^6.0.0",
     "typescript": "^3.1.1",
-    "typescript-eslint-parser": "^18.0.0"
+    "typescript-eslint-parser": "^22.0.0"
   },
   "resolutions": {
     "ansi-styles": "^3.2.0"
@@ -69,7 +69,9 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "setupTestFrameworkScriptFile": "<rootDir>test/setup.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>test/setup.js"
+    ],
     "testRegex": "(/__tests__/.*.test*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": [
       "ts",
