@@ -115,3 +115,113 @@ Object {
   },
 }
 `;
+
+exports[`<Baba /> should render markup in a portal created by multiple animations 1`] = `
+Array [
+  <Portal
+    containerInfo={
+      <div>
+        <div>
+          hello world
+        </div>
+      </div>
+    }
+  >
+    <div>
+      hello world
+    </div>
+  </Portal>,
+  <Portal
+    containerInfo={
+      <div>
+        <span>
+          number two
+        </span>
+      </div>
+    }
+  >
+    <span>
+      number two
+    </span>
+  </Portal>,
+]
+`;
+
+exports[`<Baba /> should render markup in a portal created in an animation 1`] = `
+<Portal
+  containerInfo={
+    <div>
+      <div>
+        hello world
+      </div>
+    </div>
+  }
+>
+  <div>
+    hello world
+  </div>
+</Portal>
+`;
+
+exports[`<Baba /> should update markup created in an animation in after animate phase 1`] = `
+<Portal
+  containerInfo={
+    <div>
+      <div>
+        after animate phase
+      </div>
+    </div>
+  }
+>
+  <div>
+    after animate phase
+  </div>
+</Portal>
+`;
+
+exports[`<Baba /> should update markup created in an animation in animate phase 1`] = `
+<Portal
+  containerInfo={
+    <div>
+      <div>
+        animate phase
+      </div>
+    </div>
+  }
+>
+  <div>
+    animate phase
+  </div>
+</Portal>
+`;
+
+exports[`<Baba /> should update markup in a portal created by multiple animations in animate phase 1`] = `
+Array [
+  <Portal
+    containerInfo={
+      <div>
+        <div>
+          updated
+        </div>
+      </div>
+    }
+  >
+    <div>
+      updated
+    </div>
+  </Portal>,
+  <Portal
+    containerInfo={
+      <div>
+        <span>
+          number two
+        </span>
+      </div>
+    }
+  >
+    <span>
+      number two
+    </span>
+  </Portal>,
+]
+`;
