@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/madou/yubaba/compare/v2.3.1...v2.3.2) (2019-05-14)
+
+
+### Bug Fixes
+
+* **baba:** replaces usage of render subtree with create portal to pass new context through ([cb67a58](https://github.com/madou/yubaba/commit/cb67a58))
+
+
+
+
+
 ## [2.3.1](https://github.com/madou/yubaba/compare/v2.3.0...v2.3.1) (2019-05-13)
 
 
