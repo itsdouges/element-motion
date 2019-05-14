@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {
-  unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer,
-  unmountComponentAtNode,
-} from 'react-dom';
+import { createPortal } from 'react-dom';
 import Collector, {
   SupplyDataHandler,
   SupplyRenderChildrenHandler,
@@ -14,6 +11,7 @@ import Collector, {
   InlineStyles,
   TargetPropsFunc,
   AnimationData,
+  AnimationCallback,
 } from '../Collector';
 import { getElementBoundingBox } from '../lib/dom';
 import defer from '../lib/defer';
@@ -40,6 +38,7 @@ export interface ChildProps {
 
 export interface State {
   childProps: ChildProps;
+  animationsMarkup: React.ReactPortal[];
 }
 
 export interface BabaProps extends CollectorChildrenProps, InjectedProps {
@@ -86,6 +85,7 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
   };
 
   state: State = {
+    animationsMarkup: [],
     childProps: {},
   };
 
@@ -253,121 +253,97 @@ If it's an image, try and have the image loaded before mounting, or set a static
       };
 
       // Loads each action up in an easy-to-execute format.
-      const actions = collectorData.map(targetData => {
-        if (targetData.action === CollectorActions.animation) {
-          // Element will be lazily instantiated if we need to add something to the DOM.
-          let elementToMountChildren: HTMLElement | null = null;
-
-          const mount = (jsx: React.ReactNode) => {
-            if (!elementToMountChildren) {
-              elementToMountChildren = document.createElement('div');
-              // We insert the new element at the beginning of the body to ensure correct
-              // stacking context.
-              container.insertBefore(elementToMountChildren, container.firstChild);
-            }
-
-            // This ensures that if there was an update to the jsx that is animating,
-            // it changes next frame. Resulting in the transition _actually_ happening.
-            requestAnimationFrame(
-              () =>
-                elementToMountChildren &&
-                renderSubtreeIntoContainer(
-                  this,
-                  jsx as React.ReactElement<{}>,
-                  elementToMountChildren
-                )
-            );
-          };
-
-          const unmount = () => {
-            if (elementToMountChildren) {
-              unmountComponentAtNode(elementToMountChildren);
-              container.removeChild(elementToMountChildren);
-              elementToMountChildren = null;
-            }
-          };
-
-          const setChildProps = (props: TargetPropsFunc | null) => {
-            if (props) {
-              this.setState(prevState => ({
-                childProps: {
-                  style: props.style
-                    ? props.style(prevState.childProps.style || {})
-                    : prevState.childProps.style,
-                  className: props.className
-                    ? props.className(prevState.childProps.className)
-                    : prevState.childProps.className,
-                },
-              }));
-            } else {
-              this.setState({
-                childProps: {},
-              });
-            }
-          };
-
-          return {
-            action: CollectorActions.animation,
-            payload: {
-              beforeAnimate: () => {
-                if (targetData.payload.beforeAnimate) {
-                  const deferred = defer();
-                  const jsx = targetData.payload.beforeAnimate(
-                    animationData,
-                    deferred.resolve,
-                    setChildProps
-                  );
-
-                  if (jsx) {
-                    mount(jsx);
-                  }
-
-                  return deferred.promise;
-                }
-
-                return Promise.resolve();
-              },
-              animate: () => {
-                const deferred = defer();
-                const jsx = targetData.payload.animate(
-                  animationData,
-                  deferred.resolve,
-                  setChildProps
-                );
-
-                if (jsx) {
-                  mount(jsx);
-                }
-
-                return deferred.promise;
-              },
-              afterAnimate: () => {
-                if (targetData.payload.afterAnimate) {
-                  const deferred = defer();
-                  const jsx = targetData.payload.afterAnimate(
-                    animationData,
-                    deferred.resolve,
-                    setChildProps
-                  );
-
-                  if (jsx) {
-                    mount(jsx);
-                  }
-
-                  return deferred.promise;
-                }
-
-                return Promise.resolve();
-              },
-              cleanup: () => {
-                unmount();
-                setChildProps(null);
-              },
-            },
-          };
+      const actions = collectorData.map((targetData, index) => {
+        if (targetData.action !== CollectorActions.animation) {
+          return targetData;
         }
 
-        return targetData;
+        // Element will be lazily instantiated if we need to add something to the DOM.
+        let elementToMountChildren: HTMLElement | null = null;
+
+        const mount = (jsx: React.ReactNode) => {
+          if (!elementToMountChildren) {
+            elementToMountChildren = document.createElement('div');
+            // We insert the new element at the beginning of the body to ensure correct stacking context.
+            container.insertBefore(elementToMountChildren, container.firstChild);
+          }
+
+          // This ensures that if there was an update to the jsx that is animating it changes next frame.
+          // Resulting in the transition _actually_ happening.
+          requestAnimationFrame(() => {
+            if (elementToMountChildren) {
+              this.setState(prevState => {
+                const newAnimationsMarkup = prevState.animationsMarkup.concat();
+                newAnimationsMarkup[index] = createPortal(jsx, elementToMountChildren!);
+                return {
+                  animationsMarkup: newAnimationsMarkup,
+                };
+              });
+            }
+          });
+        };
+
+        const setChildProps = (props: TargetPropsFunc | null) => {
+          if (this.unmounting) {
+            return;
+          }
+
+          if (props) {
+            this.setState(prevState => ({
+              childProps: {
+                style: props.style
+                  ? props.style(prevState.childProps.style || {})
+                  : prevState.childProps.style,
+                className: props.className
+                  ? props.className(prevState.childProps.className)
+                  : prevState.childProps.className,
+              },
+            }));
+          } else {
+            this.setState({
+              childProps: {},
+            });
+          }
+        };
+
+        const generatePhase = (cb: AnimationCallback | undefined) => () => {
+          if (cb) {
+            const deferred = defer();
+            const jsx = cb(animationData, deferred.resolve, setChildProps);
+
+            if (jsx) {
+              mount(jsx);
+            }
+
+            return deferred.promise;
+          }
+
+          return Promise.resolve();
+        };
+
+        return {
+          action: CollectorActions.animation,
+          payload: {
+            beforeAnimate: generatePhase(targetData.payload.beforeAnimate),
+            animate: generatePhase(targetData.payload.animate),
+            afterAnimate: generatePhase(targetData.payload.afterAnimate),
+            cleanup: () => {
+              if (elementToMountChildren && container.contains(elementToMountChildren)) {
+                container.removeChild(elementToMountChildren);
+              }
+
+              if (this.unmounting) {
+                return;
+              }
+
+              this.setState({
+                animationsMarkup: [],
+              });
+
+              setChildProps(null);
+            },
+          },
+        };
       });
 
       const blocks = actions.reduce<AnimationBlock[]>(
@@ -476,21 +452,24 @@ If it's an image, try and have the image loaded before mounting, or set a static
   };
 
   render() {
-    const { childProps } = this.state;
+    const { childProps, animationsMarkup } = this.state;
     const { children } = this.props;
 
     return (
-      <Collector
-        topMostCollector
-        receiveData={this.setData}
-        receiveRenderChildren={this.setReactNode}
-        receiveRef={this.setRef}
-        receiveFocalTargetRef={this.setTargetRef}
-        style={childProps.style}
-        className={childProps.className}
-      >
-        {typeof children === 'function' ? children : React.Children.only(children)}
-      </Collector>
+      <React.Fragment>
+        {animationsMarkup}
+        <Collector
+          topMostCollector
+          receiveData={this.setData}
+          receiveRenderChildren={this.setReactNode}
+          receiveRef={this.setRef}
+          receiveFocalTargetRef={this.setTargetRef}
+          style={childProps.style}
+          className={childProps.className}
+        >
+          {typeof children === 'function' ? children : React.Children.only(children)}
+        </Collector>
+      </React.Fragment>
     );
   }
 }

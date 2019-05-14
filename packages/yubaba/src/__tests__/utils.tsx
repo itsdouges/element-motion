@@ -58,6 +58,7 @@ export const createTestAnimation = ({
           if (animateTargetProps) {
             setChildProps(animateTargetProps);
           }
+
           return animateJsx;
         },
         afterAnimate: (data, onFinish, setChildProps) => {
