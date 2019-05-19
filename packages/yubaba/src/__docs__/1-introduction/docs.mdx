@@ -48,12 +48,12 @@ yarn add yubaba react@^16.4.x react-dom@^16.4.x emotion@^10.x.x
 ## Usage
 
 ```js
-import Baba, { Move } from 'yubaba';
+import Animator, { Move } from 'yubaba';
 
 ({ isLarge }) => (
-  <Baba name="my-first-baba" key={isLarge}>
-    <Move>{baba => <div {...baba} className={isLarge ? 'large' : 'small'} />}</Move>
-  </Baba>
+  <Animator name="my-first-baba" key={isLarge}>
+    <Move>{anim => <div {...anim} className={isLarge ? 'large' : 'small'} />}</Move>
+  </Animator>
 );
 ```
 

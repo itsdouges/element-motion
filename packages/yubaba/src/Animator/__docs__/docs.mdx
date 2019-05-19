@@ -1,31 +1,31 @@
 ---
-name: Baba
-route: /baba
+name: Animator
+route: /animator
 ---
 
 import { Playground, Props } from 'docz';
-import Baba from '../index';
+import Animator from '../index';
 
-# Baba
+# Animator
 
 This is the brains component.
 When unmounting or flipping the `in` prop from `true` to `false`,
-it will execute all the animations **top to bottom** if a matching Baba pair (either itself or another Baba element) is found within `50ms`.
+it will execute all the animations **top to bottom** if a matching Animator pair (either itself or another Animator element) is found within `50ms`.
 
 > **Tip -** See [Getting started](/getting-started) for more information on how to use this component.
 
 ## Usage
 
 ```js
-import Baba from 'yubaba';
+import Animator from 'yubaba';
 
 const ListItem = ({ index }) => (
-  <Baba name={`item-${index}`}>
+  <Animator name={`item-${index}`}>
     {({ ref, style, className }) => <div ref={ref} style={style} className={className} />}
-  </Baba>
+  </Animator>
 );
 ```
 
 ## Props
 
-<Props of={Baba} />
+<Props of={Animator} />

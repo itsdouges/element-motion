@@ -21,10 +21,10 @@ for example [FocalConcealMove](/focal-conceal-move).
 import { FocalTarget, FocalConcealMove } from 'yubaba';
 
 const ItemDetails = ({ title, recipients, body, index }) => (
-  <Baba name={`item-${index}`}>
+  <Animator name={`item-${index}`}>
     <FocalConcealMove>
-      {baba => (
-        <div {...baba}>
+      {anim => (
+        <div {...anim}>
           <FocalTarget>
             {({ ref }) => (
               <div ref={ref}>
@@ -38,7 +38,7 @@ const ItemDetails = ({ title, recipients, body, index }) => (
         </div>
       )}
     </FocalConcealMove>
-  </Baba>
+  </Animator>
 );
 ```
 

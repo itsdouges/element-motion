@@ -6,7 +6,7 @@ menu: Supporting animations
 
 import { Playground, Props } from 'docz';
 import * as Common from 'yubaba-common';
-import Baba from '../../../Baba';
+import Animator from '../../../Animator';
 import * as Styled from './styled';
 import CircleShrink from '../index';
 
@@ -28,17 +28,17 @@ import { CircleShrink } from 'yubaba';
     {({ shown, toggle }) =>
       shown ? (
         <Styled.Container>
-          <Baba name="circle-shrink" key="1">
+          <Animator name="circle-shrink" key="1">
             {({ ref, style }) => <Styled.Button onClick={() => toggle()} style={style} ref={ref} />}
-          </Baba>
+          </Animator>
         </Styled.Container>
       ) : (
         <Styled.Container onClick={() => toggle()} interactive>
-          <Baba name="circle-shrink" key="2">
+          <Animator name="circle-shrink" key="2">
             <CircleShrink background="#ff5e6d">
               {({ ref, style }) => <div style={style} ref={ref} />}
             </CircleShrink>
-          </Baba>
+          </Animator>
         </Styled.Container>
       )
     }

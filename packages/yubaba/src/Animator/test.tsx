@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme'; // eslint-disable-line import/no-extraneous-dependencies
 import { MemoryRouter, Link } from 'react-router-dom';
-import { WrappedBaba as Baba } from '../Baba';
+import { WrappedAnimator as Animator } from '../Animator';
 import Target from '../FocalTarget';
 import { getElementBoundingBox } from '../lib/dom';
 import defer from '../lib/defer';
@@ -30,20 +30,20 @@ const startAnimation = (wrapper: ReactWrapper) => {
   wrapper.update();
 };
 
-describe('<Baba />', () => {
+describe('<Animator />', () => {
   it('should callback when animation has finished', done => {
     const Animation = utils.createTestAnimation();
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="anim-0">
+          <Animator name="anim-0">
             <Animation>{props => <div {...props} />}</Animation>
-          </Baba>
+          </Animator>
         }
         to={
-          <Baba name="anim-0" onFinish={done}>
+          <Animator name="anim-0" onFinish={done}>
             <div />
-          </Baba>
+          </Animator>
         }
         start={false}
       />
@@ -61,16 +61,16 @@ describe('<Baba />', () => {
       onAnimate: callback,
     });
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="anim-1">
+          <Animator name="anim-1">
             <Animation>{props => <div {...props} />}</Animation>
-          </Baba>
+          </Animator>
         }
         to={
-          <Baba name="anim-1" onFinish={deferred.resolve}>
+          <Animator name="anim-1" onFinish={deferred.resolve}>
             <div />
-          </Baba>
+          </Animator>
         }
         start={false}
       />
@@ -91,16 +91,16 @@ describe('<Baba />', () => {
       onAnimate: callback,
     });
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={start => (
-          <Baba name="anim-aa" in={!start}>
+          <Animator name="anim-aa" in={!start}>
             <Animation>{props => <div {...props} />}</Animation>
-          </Baba>
+          </Animator>
         )}
         to={
-          <Baba name="anim-aa" onFinish={deferred.resolve}>
+          <Animator name="anim-aa" onFinish={deferred.resolve}>
             <div />
-          </Baba>
+          </Animator>
         }
         start={false}
       />
@@ -121,14 +121,14 @@ describe('<Baba />', () => {
       onAnimate: callback,
     });
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="anim-bb">
+          <Animator name="anim-bb">
             <Animation>{props => <div {...props} />}</Animation>
-          </Baba>
+          </Animator>
         }
         to={
-          <Baba name="anim-bb" onFinish={deferred.resolve}>
+          <Animator name="anim-bb" onFinish={deferred.resolve}>
             <Animation>
               {animProps => (
                 <Target>
@@ -140,7 +140,7 @@ describe('<Baba />', () => {
                 </Target>
               )}
             </Animation>
-          </Baba>
+          </Animator>
         }
         start={false}
       />
@@ -157,13 +157,13 @@ describe('<Baba />', () => {
       beforeAnimateJsx: <div>hello world</div>,
     });
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="pass-through-context">
+          <Animator name="pass-through-context">
             <Animation>{props => <div {...props} />}</Animation>
-          </Baba>
+          </Animator>
         }
-        to={<Baba name="pass-through-context">{props => <main {...props} />}</Baba>}
+        to={<Animator name="pass-through-context">{props => <main {...props} />}</Animator>}
         start={false}
       />
     );
@@ -177,15 +177,15 @@ describe('<Baba />', () => {
     const Animation = utils.createTestAnimation({ beforeAnimateJsx: <div>hello world</div> });
     const AnimationTwo = utils.createTestAnimation({ beforeAnimateJsx: <span>number two</span> });
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="pass-through-context">
+          <Animator name="pass-through-context">
             <Animation>
               <AnimationTwo>{props => <div {...props} />}</AnimationTwo>
             </Animation>
-          </Baba>
+          </Animator>
         }
-        to={<Baba name="pass-through-context">{props => <main {...props} />}</Baba>}
+        to={<Animator name="pass-through-context">{props => <main {...props} />}</Animator>}
         start={false}
       />
     );
@@ -204,17 +204,17 @@ describe('<Baba />', () => {
     const AnotherAnimation = utils.createTestAnimation();
     const AnimationTwo = utils.createTestAnimation({ beforeAnimateJsx: <span>number two</span> });
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="pass-through-context">
+          <Animator name="pass-through-context">
             <Animation>
               <AnotherAnimation>
                 <AnimationTwo>{props => <div {...props} />}</AnimationTwo>
               </AnotherAnimation>
             </Animation>
-          </Baba>
+          </Animator>
         }
-        to={<Baba name="pass-through-context">{props => <main {...props} />}</Baba>}
+        to={<Animator name="pass-through-context">{props => <main {...props} />}</Animator>}
         start={false}
       />
     );
@@ -233,13 +233,13 @@ describe('<Baba />', () => {
       afterAnimateJsx: <div>after animate phase</div>,
     });
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="pass-through-context">
+          <Animator name="pass-through-context">
             <Animation>{props => <div {...props} />}</Animation>
-          </Baba>
+          </Animator>
         }
-        to={<Baba name="pass-through-context">{props => <main {...props} />}</Baba>}
+        to={<Animator name="pass-through-context">{props => <main {...props} />}</Animator>}
         start={false}
       />
     );
@@ -258,13 +258,13 @@ describe('<Baba />', () => {
       afterAnimateJsx: <div>after animate phase</div>,
     });
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="pass-through-context">
+          <Animator name="pass-through-context">
             <Animation>{props => <div {...props} />}</Animation>
-          </Baba>
+          </Animator>
         }
-        to={<Baba name="pass-through-context">{props => <main {...props} />}</Baba>}
+        to={<Animator name="pass-through-context">{props => <main {...props} />}</Animator>}
         start={false}
       />
     );
@@ -281,17 +281,17 @@ describe('<Baba />', () => {
       beforeAnimateJsx: <Link to="/">hello, world</Link>,
     });
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
           <MemoryRouter>
-            <Baba name="pass-through-context">
+            <Animator name="pass-through-context">
               <Animation>{props => <div {...props} />}</Animation>
-            </Baba>
+            </Animator>
           </MemoryRouter>
         }
         to={
           <MemoryRouter>
-            <Baba name="pass-through-context">{props => <main {...props} />}</Baba>
+            <Animator name="pass-through-context">{props => <main {...props} />}</Animator>
           </MemoryRouter>
         }
         start={false}

@@ -1,10 +1,10 @@
 import { storiesOf } from '@storybook/react';
 import { createMoveExamples } from 'yubaba-common';
-import Baba from '../../Baba';
+import Animator from '../../Animator';
 import FadeMove from './index';
 
 const Examples = createMoveExamples({ namePrefix: 'FadeMove', useDistinctEnd: true })(
-  Baba,
+  Animator,
   FadeMove
 );
 

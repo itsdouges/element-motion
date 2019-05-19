@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Baba /> should pass dom data to child animation 1`] = `
+exports[`<Animator /> should pass dom data to child animation 1`] = `
 Array [
   Object {
     "destination": Object {
@@ -49,7 +49,7 @@ Array [
 ]
 `;
 
-exports[`<Baba /> should pass dom data to child animation when using in prop 1`] = `
+exports[`<Animator /> should pass dom data to child animation when using in prop 1`] = `
 Array [
   Object {
     "destination": Object {
@@ -98,7 +98,7 @@ Array [
 ]
 `;
 
-exports[`<Baba /> should pass target dom data to child animation 1`] = `
+exports[`<Animator /> should pass target dom data to child animation 1`] = `
 Object {
   "location": Object {
     "left": 0,
@@ -116,7 +116,7 @@ Object {
 }
 `;
 
-exports[`<Baba /> should render markup in a portal created by multiple animations 1`] = `
+exports[`<Animator /> should render markup in a portal created by multiple animations 1`] = `
 Array [
   <Portal
     containerInfo={
@@ -147,7 +147,7 @@ Array [
 ]
 `;
 
-exports[`<Baba /> should render markup in a portal created in an animation 1`] = `
+exports[`<Animator /> should render markup in a portal created in an animation 1`] = `
 <Portal
   containerInfo={
     <div>
@@ -163,7 +163,7 @@ exports[`<Baba /> should render markup in a portal created in an animation 1`] =
 </Portal>
 `;
 
-exports[`<Baba /> should update markup created in an animation in after animate phase 1`] = `
+exports[`<Animator /> should update markup created in an animation in after animate phase 1`] = `
 <Portal
   containerInfo={
     <div>
@@ -179,7 +179,7 @@ exports[`<Baba /> should update markup created in an animation in after animate 
 </Portal>
 `;
 
-exports[`<Baba /> should update markup created in an animation in animate phase 1`] = `
+exports[`<Animator /> should update markup created in an animation in animate phase 1`] = `
 <Portal
   containerInfo={
     <div>
@@ -195,7 +195,7 @@ exports[`<Baba /> should update markup created in an animation in animate phase 
 </Portal>
 `;
 
-exports[`<Baba /> should update markup in a portal created by multiple animations in animate phase 1`] = `
+exports[`<Animator /> should update markup in a portal created by multiple animations in animate phase 1`] = `
 Array [
   <Portal
     containerInfo={

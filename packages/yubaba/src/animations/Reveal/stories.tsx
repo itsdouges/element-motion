@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from 'yubaba-common';
-import { WrappedBaba as Baba } from '../../Baba';
+import { WrappedAnimator as Animator } from '../../Animator';
 import Reveal from './index';
 
 const Container = styled.div`
@@ -19,10 +19,10 @@ storiesOf('yubaba/Reveal', module).add('ChildrenHeightChanging', () => (
   <Container>
     <Toggler>
       {toggler => (
-        <Baba name="reveal" key={`${toggler.shown}`}>
+        <Animator name="reveal" key={`${toggler.shown}`}>
           <Reveal>
-            {baba => (
-              <div {...baba}>
+            {anim => (
+              <div {...anim}>
                 {toggler.shown ? (
                   <>
                     <Header>Details</Header>
@@ -39,7 +39,7 @@ storiesOf('yubaba/Reveal', module).add('ChildrenHeightChanging', () => (
               </div>
             )}
           </Reveal>
-        </Baba>
+        </Animator>
       )}
     </Toggler>
   </Container>

@@ -9,8 +9,8 @@ import VisibilityManager from '../index';
 
 # VisibilityManager
 
-Used to hide contents before an animation is complete after being triggered from a child [Baba](/baba) component.
-If there is more than one child [Baba](/baba) you can use an optional name prop which should match the appropriate [Baba](/baba) component.
+Used to hide contents before an animation is complete after being triggered from a child [Animator](/animator) component.
+If there is more than one child [Animator](/animator) you can use an optional name prop which should match the appropriate [Animator](/animator) component.
 
 If it is the initial mount it will be shown **after** its child animation has finished unless you set `isInitiallyVisible`.
 
@@ -19,13 +19,13 @@ If it is the initial mount it will be shown **after** its child animation has fi
 ## Usage
 
 ```js
-import Baba, { VisibilityManager } from 'yubaba';
+import Animator, { VisibilityManager } from 'yubaba';
 
 const ItemDetails = ({ description }) => (
   <VisibilityManager>
     {({ style }) => (
       <React.Fragment>
-        <Baba name={`item-${index}`}>{props => <div {...props} />}</Baba>
+        <Animator name={`item-${index}`}>{anim => <div {...anim} />}</Animator>
 
         <div style={style}>{description}</div>
       </React.Fragment>

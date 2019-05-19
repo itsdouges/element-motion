@@ -1,21 +1,21 @@
 import { CollectorData, ElementData } from '../Collector';
 
-export interface BabaData {
+export interface AnimatorData {
   elementData: ElementData;
   collectorData: CollectorData[];
 }
 
-interface BabaStore {
-  [key: string]: BabaData;
+interface AnimatorStore {
+  [key: string]: AnimatorData;
 }
 
-const store: BabaStore = {};
+const store: AnimatorStore = {};
 
-export const set = (key: string, value: BabaData) => {
+export const set = (key: string, value: AnimatorData) => {
   store[key] = value;
 };
 
-export const get = (key: string): BabaData => {
+export const get = (key: string): AnimatorData => {
   return store[key];
 };
 

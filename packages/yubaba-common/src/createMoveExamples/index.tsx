@@ -5,7 +5,7 @@ import * as Styled from './styled';
 const RestoreScrollOnMount = Common.createRestoreScrollOnMount();
 
 export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefix: string }) => (
-  Baba: React.ComponentType<{ name: string; in?: boolean }>,
+  Animator: React.ComponentType<{ name: string; in?: boolean }>,
   Animation: React.ComponentType<{ [key: string]: any; children: (opts: any) => React.ReactNode }>
 ) => ({
   Default: () => (
@@ -13,15 +13,15 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
       {({ shown, toggle }) => (
         <div>
           {!shown ? (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItem ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           ) : (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItemFloatingRight
@@ -32,7 +32,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
         </div>
       )}
@@ -45,15 +45,15 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
         <div>
           <Styled.Padding />
           {!shown ? (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.RelativeListItem ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           ) : (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.AbsoluteListItem
@@ -64,7 +64,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
           <Styled.Padding />
         </div>
@@ -78,15 +78,15 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
         <div>
           <Styled.Padding />
           {!shown ? (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.RelativeListItem ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           ) : (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.FixedListItem
@@ -97,7 +97,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
           <Styled.Padding />
         </div>
@@ -110,15 +110,15 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
       {({ shown, toggle }) => (
         <div>
           {!shown ? (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItem ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           ) : (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItemFloatingRight
@@ -130,7 +130,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
         </div>
       )}
@@ -142,15 +142,15 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
       {({ shown, toggle }) => (
         <div>
           {!shown ? (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItem ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           ) : (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItemFloatingRight
@@ -162,7 +162,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
         </div>
       )}
@@ -174,15 +174,15 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
       {({ shown, toggle }) => (
         <div>
           {!shown ? (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItem margin={20} ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           ) : (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItemFloatingRight
@@ -195,7 +195,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
         </div>
       )}
@@ -207,15 +207,15 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
       {({ shown, toggle }) => (
         <div>
           {!shown ? (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItem ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           ) : (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItemFloatingRight
@@ -227,7 +227,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
         </div>
       )}
@@ -239,15 +239,15 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
       {({ shown, toggle }) => (
         <div>
           {!shown ? (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItem ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           ) : (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItemFloatingRight
@@ -259,7 +259,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
         </div>
       )}
@@ -273,16 +273,16 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
           {!shown ? (
             <div>
               <Styled.Padding />
-              <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+              <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
                 <Animation>
                   {({ ref, ...props }) => (
                     <Styled.ListItem ref={ref} onClick={() => toggle()} {...props} />
                   )}
                 </Animation>
-              </Baba>
+              </Animator>
             </div>
           ) : (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItemFloatingRight
@@ -293,7 +293,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
         </div>
       )}
@@ -305,17 +305,17 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
       {({ shown, toggle }) => (
         <div>
           {!shown ? (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItem ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           ) : (
             <div>
               <Styled.Padding />
-              <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+              <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
                 <Animation>
                   {({ ref, ...props }) => (
                     <Styled.ListItemFloatingRight
@@ -326,7 +326,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                     />
                   )}
                 </Animation>
-              </Baba>
+              </Animator>
             </div>
           )}
         </div>
@@ -339,16 +339,16 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
       {({ shown, toggle }) => (
         <div>
           {!shown ? (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItem ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           ) : (
             <Styled.ContainerFloatingRight>
-              <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+              <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
                 <Animation>
                   {({ ref, ...props }) => (
                     <Styled.ListItemFillSpace
@@ -359,7 +359,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                     />
                   )}
                 </Animation>
-              </Baba>
+              </Animator>
             </Styled.ContainerFloatingRight>
           )}
         </div>
@@ -374,16 +374,16 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
           {!shown ? (
             <Styled.LongContainer>
               <RestoreScrollOnMount />
-              <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
+              <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-1`}>
                 <Animation>
                   {({ ref, ...props }) => (
                     <Styled.ListItem ref={ref} onClick={() => toggle()} {...props} />
                   )}
                 </Animation>
-              </Baba>
+              </Animator>
             </Styled.LongContainer>
           ) : (
-            <Baba name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
+            <Animator name={`${options.namePrefix}-anim`} key={`${options.namePrefix}-2`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItemFloatingRight
@@ -394,7 +394,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
         </div>
       )}
@@ -405,7 +405,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
     <Common.Toggler>
       {({ shown, toggle }) => (
         <div>
-          <Baba name={`${options.namePrefix}-default`} in={!shown}>
+          <Animator name={`${options.namePrefix}-default`} in={!shown}>
             <Animation>
               {({ ref, style, ...props }) => (
                 <Styled.ListItem
@@ -418,10 +418,10 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                 />
               )}
             </Animation>
-          </Baba>
+          </Animator>
 
           {shown && (
-            <Baba name={`${options.namePrefix}-default`}>
+            <Animator name={`${options.namePrefix}-default`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItemFloatingRight
@@ -432,7 +432,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                   />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
         </div>
       )}
@@ -444,16 +444,16 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
       {({ shown, toggle }) => (
         <div>
           {!shown && (
-            <Baba name={`${options.namePrefix}-default`}>
+            <Animator name={`${options.namePrefix}-default`}>
               <Animation>
                 {({ ref, ...props }) => (
                   <Styled.ListItem ref={ref} onClick={() => toggle()} {...props} />
                 )}
               </Animation>
-            </Baba>
+            </Animator>
           )}
 
-          <Baba name={`${options.namePrefix}-default`} in={!!shown}>
+          <Animator name={`${options.namePrefix}-default`} in={!!shown}>
             <Animation>
               {({ ref, style, ...props }) => (
                 <Styled.ListItemFloatingRight
@@ -467,7 +467,7 @@ export const createMoveExamples = (options: { useDistinctEnd: boolean; namePrefi
                 />
               )}
             </Animation>
-          </Baba>
+          </Animator>
         </div>
       )}
     </Common.Toggler>

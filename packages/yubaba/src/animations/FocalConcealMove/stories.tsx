@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from 'yubaba-common';
-import Baba from '../../Baba';
+import Animator from '../../Animator';
 import Target from '../../FocalTarget';
 import FocalConcealMove from './index';
 
@@ -76,28 +76,28 @@ const build = (width: number, height: number, orientation: Orientation) => (
     {({ shown, toggle }) => (
       <React.Fragment>
         {shown && (
-          <Baba name={`focal-conceal-move-${orientation}`}>
-            {baba => (
+          <Animator name={`focal-conceal-move-${orientation}`}>
+            {anim => (
               <ListItem
                 onClick={() => toggle()}
-                style={baba.style}
-                className={baba.className}
-                ref={baba.ref}
+                style={anim.style}
+                className={anim.className}
+                ref={anim.ref}
                 width={width}
                 height={height}
               />
             )}
-          </Baba>
+          </Animator>
         )}
 
         {shown || (
-          <Baba name={`focal-conceal-move-${orientation}`}>
+          <Animator name={`focal-conceal-move-${orientation}`}>
             <FocalConcealMove>
-              {baba => (
+              {anim => (
                 // We use a wrapper div here because the child centers it's children via flexbox.
                 // Since it centers it with flexbox when we transition it around our assumptions change
                 // when it's height changes.
-                <div {...baba}>
+                <div {...anim}>
                   <TallListItem width={width} height={height} orientation={orientation}>
                     <Target>
                       {target => (
@@ -113,7 +113,7 @@ const build = (width: number, height: number, orientation: Orientation) => (
                 </div>
               )}
             </FocalConcealMove>
-          </Baba>
+          </Animator>
         )}
       </React.Fragment>
     )}

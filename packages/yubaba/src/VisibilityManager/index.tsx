@@ -10,7 +10,7 @@ export interface VisibilityManagerProps extends InjectedProps {
   children: (props: { style: InlineStyles }) => React.ReactNode;
 
   /**
-   * Optional name to target a specific child Baba.
+   * Optional name to target a specific child Animator.
    */
   name?: string;
 
@@ -40,7 +40,7 @@ export interface VisibilityManagerContext {
   onStart: Handler;
 }
 
-export const BabaContext = React.createContext<VisibilityManagerContext | undefined>(undefined);
+export const AnimatorContext = React.createContext<VisibilityManagerContext | undefined>(undefined);
 
 export default class VisibilityManager extends React.Component<VisibilityManagerProps, State> {
   state: State = {
@@ -92,9 +92,9 @@ export default class VisibilityManager extends React.Component<VisibilityManager
     const { style } = this.state;
 
     return (
-      <BabaContext.Provider value={{ onFinish: this.onFinish, onStart: this.onStart }}>
+      <AnimatorContext.Provider value={{ onFinish: this.onFinish, onStart: this.onStart }}>
         {children({ style })}
-      </BabaContext.Provider>
+      </AnimatorContext.Provider>
     );
   }
 }
@@ -123,12 +123,12 @@ export const withVisibilityManagerContext = <
       >;
 
       return (
-        <BabaContext.Consumer>
+        <AnimatorContext.Consumer>
           {context => (
             // @ts-ignore
             <CoercedWrappedComponent context={context} {...this.props} />
           )}
-        </BabaContext.Consumer>
+        </AnimatorContext.Consumer>
       );
     }
   };

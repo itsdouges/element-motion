@@ -1,12 +1,4 @@
-export { WrappedBaba as default } from './Baba';
-
-/**
- * Nexst major version TODO
- * - Remove FocalMove
- * - Remove ConcealMove
- * - Remove BabaManager
- */
-
+export { WrappedAnimator as default } from './Animator';
 export { default as Wait } from './Wait';
 export { default as Noop } from './animations/Noop';
 export { default as CrossFadeMove } from './animations/CrossFadeMove';
@@ -22,9 +14,8 @@ export { default as FocalFocalConcealMove } from './animations/FocalConcealMove'
 export { default as ReshapingContainer } from './animations/ReshapingContainer';
 export { default as RevealReshapingContainer } from './animations/RevealReshapingContainer';
 export { default as Reveal } from './animations/Reveal';
-
 export { WrappedVisibilityManager as VisibilityManager } from './VisibilityManager';
-export { WrappedVisibilityManager as BabaManager } from './VisibilityManager';
+export { WrappedVisibilityManager as AnimatorManager } from './VisibilityManager';
 export * from './Collector';
 export { default as Collector } from './Collector';
 export { default as FocalTarget } from './FocalTarget';

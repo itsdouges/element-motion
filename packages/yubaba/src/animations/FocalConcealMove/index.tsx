@@ -45,7 +45,7 @@ export default class FocalConcealMove extends React.Component<FocalConcealMovePr
   ) => {
     if (!data.origin.focalTargetElementBoundingBox) {
       throw new Error(`yubaba
-<FocalTarget /> was not found, if you haven't defined one make sure to add one as a descendant of your target Baba.`);
+<FocalTarget /> was not found, if you haven't defined one make sure to add one as a descendant of your target Animator.`);
     }
 
     const { duration, timingFunction, zIndex } = this.props;

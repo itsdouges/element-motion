@@ -17,7 +17,7 @@ import { getElementBoundingBox } from '../lib/dom';
 import defer from '../lib/defer';
 import noop from '../lib/noop';
 import { precondition, warn } from '../lib/log';
-import * as babaStore from '../lib/babaStore';
+import * as store from '../lib/animatorStore';
 import { InjectedProps, withVisibilityManagerContext } from '../VisibilityManager';
 
 export type AnimationFunc = () => Promise<void>;
@@ -41,23 +41,23 @@ export interface State {
   animationsMarkup: React.ReactPortal[];
 }
 
-export interface BabaProps extends CollectorChildrenProps, InjectedProps {
+export interface AnimatorProps extends CollectorChildrenProps, InjectedProps {
   /**
-   * Name of the yubaba animation, this should match the target yubaba.
+   * Name of the animator, this should match the target animator.
    */
   name: string;
 
   /**
-   * Used alternatively to the implicit animation triggering via unmounting or mounting of Baba components.
+   * Used alternatively to the implicit animation triggering via unmounting or mounting of Animator components.
    * Only use `in` if your component is expected to persist through the entire lifecyle of the app.
    * When you transition to the "next page" make sure to set your "in" to false. When you transition
-   * back to the original page set the "in" prop back to true. This lets the Baba components know when to
+   * back to the original page set the "in" prop back to true. This lets the Animator components know when to
    * execute the animations.
    */
   in?: boolean;
 
   /**
-   * Callback called when all animations have finished and been cleaned up. Fired from the triggering Baba
+   * Callback called when all animations have finished and been cleaned up. Fired from the triggering Animator
    * component.
    */
   onFinish: () => void;
@@ -66,7 +66,7 @@ export interface BabaProps extends CollectorChildrenProps, InjectedProps {
    * Time this component will wait until it throws away the animation.
    * Defaults to 50ms, might want to bump it up if loading something that was code split.
    */
-  timeToWaitForNextBaba: number;
+  timeToWaitForNextAnimator: number;
 
   /**
    * HTMLElement container used when creating elements for animations,
@@ -75,12 +75,12 @@ export interface BabaProps extends CollectorChildrenProps, InjectedProps {
   container: HTMLElement | (() => HTMLElement);
 }
 
-export default class Baba extends React.PureComponent<BabaProps, State> {
-  static displayName = 'Baba';
+export default class Animator extends React.PureComponent<AnimatorProps, State> {
+  static displayName = 'Animator';
 
   static defaultProps = {
     onFinish: noop,
-    timeToWaitForNextBaba: 50,
+    timeToWaitForNextAnimator: 50,
     container: document.body,
   };
 
@@ -106,7 +106,7 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
   componentDidMount() {
     const { in: componentIn, name } = this.props;
 
-    if (componentIn === undefined && babaStore.has(name)) {
+    if (componentIn === undefined && store.has(name)) {
       // A child has already been stored, so this is probably the matching pair.
       this.executeAnimations();
       return;
@@ -114,22 +114,22 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
 
     if (componentIn === undefined || componentIn) {
       // Ok nothing is there yet, show ourself and store DOM data for later.
-      // We'll be waiting for another Baba to mount.
+      // We'll be waiting for another Animator to mount.
       this.showSelfAndNotifyManager();
     }
   }
 
-  componentWillUpdate(prevProps: BabaProps) {
+  componentWillUpdate(prevProps: AnimatorProps) {
     const { in: isIn } = this.props;
     if (prevProps.in === false && isIn === true) {
       // We're being removed from "in". Let's recalculate our DOM position.
       this.storeDOMData();
-      this.delayedClearBabaStore();
+      this.delayedClearStore();
       this.abortAnimations();
     }
   }
 
-  componentDidUpdate(prevProps: BabaProps) {
+  componentDidUpdate(prevProps: AnimatorProps) {
     const { in: isIn, name } = this.props;
 
     if (isIn === prevProps.in) {
@@ -147,7 +147,7 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
     }
 
     if (isIn) {
-      if (babaStore.has(name)) {
+      if (store.has(name)) {
         this.executeAnimations();
         return;
       }
@@ -158,7 +158,7 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
 
   componentWillUnmount() {
     this.storeDOMData();
-    this.delayedClearBabaStore();
+    this.delayedClearStore();
     this.abortAnimations();
     this.unmounting = true;
   }
@@ -173,10 +173,10 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
     }
   }
 
-  delayedClearBabaStore() {
-    const { name, timeToWaitForNextBaba } = this.props;
+  delayedClearStore() {
+    const { name, timeToWaitForNextAnimator } = this.props;
 
-    setTimeout(() => babaStore.remove(name), timeToWaitForNextBaba);
+    setTimeout(() => store.remove(name), timeToWaitForNextAnimator);
   }
 
   storeDOMData() {
@@ -184,7 +184,7 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
       return;
     }
 
-    // If there is only a Baba target and no child animations
+    // If there is only a Animator target and no child animations
     // data will be undefined, which means there are no animations to store.
     if (this.data) {
       if (process.env.NODE_ENV === 'development') {
@@ -192,9 +192,9 @@ export default class Baba extends React.PureComponent<BabaProps, State> {
           this.element,
           `The ref was not set when trying to store data, check that a child element has a ref passed. This needs to be set so we can take a snapshot of the origin DOM element.
 
-<${Baba.displayName} name="${this.props.name}">
+<${Animator.displayName} name="${this.props.name}">
   {props => <div ref={props.ref} />}
-</${Baba.displayName}>
+</${Animator.displayName}>
 `
         );
       }
@@ -214,7 +214,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
       // NOTE: Currently in react 16.3 if the parent being unmounted is a Fragment
       // there is a chance for sibling elements to be removed from the DOM first
       // resulting in inaccurate calculations of location. Watch out!
-      const data: babaStore.BabaData = {
+      const data: store.AnimatorData = {
         elementData: {
           element: this.element as HTMLElement,
           elementBoundingBox,
@@ -225,14 +225,14 @@ If it's an image, try and have the image loaded before mounting, or set a static
         collectorData: this.data,
       };
 
-      babaStore.set(name, data);
+      store.set(name, data);
     }
   }
 
   executeAnimations = () => {
     const { name, container: getContainer, context } = this.props;
     const container = typeof getContainer === 'function' ? getContainer() : getContainer;
-    const fromTarget = babaStore.get(name);
+    const fromTarget = store.get(name);
 
     if (fromTarget) {
       const { collectorData, elementData } = fromTarget;
@@ -474,4 +474,4 @@ If it's an image, try and have the image loaded before mounting, or set a static
   }
 }
 
-export const WrappedBaba = withVisibilityManagerContext(Baba);
+export const WrappedAnimator = withVisibilityManagerContext(Animator);

@@ -26,7 +26,7 @@ import {
   Divider,
 } from '@material-ui/core';
 import * as Styled from './styled';
-import { WrappedBaba as Baba } from '../../Baba';
+import { WrappedAnimator as Animator } from '../../Animator';
 import { WrappedVisibilityManager as VisibilityManager } from '../../VisibilityManager';
 import CircleExpand from '../../animations/CircleExpand';
 import TripeHoverMenu from '../../animations/ReshapingContainer/__docz__/TripeHoverMenu';
@@ -81,9 +81,9 @@ Here we use Popmotion to do the animating.
 <Playground>
   <Common.Toggler interval>
     {toggler => (
-      <Baba name="popmotion-right" key={toggler.shown}>
+      <Animator name="popmotion-right" key={toggler.shown}>
         <PopmotionMoveRight>{anim => <Styled.Root {...anim} />}</PopmotionMoveRight>
-      </Baba>
+      </Animator>
     )}
   </Common.Toggler>
 </Playground>
@@ -136,11 +136,11 @@ So if we had two animations, Move and CrossFade:
 
 ```js
 () => (
-  <Baba name="move-first">
+  <Animator name="move-first">
     <Move>
       <CrossFade>{props => <div {...props} />}</CrossFade>
     </Move>
-  </Baba>
+  </Animator>
 );
 ```
 
@@ -159,11 +159,11 @@ If we placed CrossFade first:
 
 ```js
 () => (
-  <Baba name="cross-fade-first">
+  <Animator name="cross-fade-first">
     <CrossFade>
       <Move>{props => <div {...props} />}</Move>
     </CrossFade>
-  </Baba>
+  </Animator>
 );
 ```
 
@@ -188,13 +188,13 @@ if we introduce the Wait component:
 import { Wait } from 'yubaba';
 
 () => (
-  <Baba name="wait">
+  <Animator name="wait">
     <CrossFade>
       <Wait>
         <Move>{props => <div {...props} />}</Move>
       </Wait>
     </CrossFade>
-  </Baba>
+  </Animator>
 );
 ```
 
@@ -214,7 +214,7 @@ the order then becoming:
 
 Occasionally when initiating an animation we can have some secondary content we want to keep hidden until the animation has finished.
 Luckily [VisibilityManager](/visibility-manager) exists to do just that!
-Make it a parent of any [Baba](/baba) and it will show its content only when the animation has finished.
+Make it a parent of any [Animator](/animator) and it will show its content only when the animation has finished.
 
 ```js
 import { VisibilityManager } from 'yubaba';
@@ -223,11 +223,11 @@ import { VisibilityManager } from 'yubaba';
   <VisibilityManager>
     {manager => (
       <div>
-        <Baba name="hide-children-until-animations-have-finished">
+        <Animator name="hide-children-until-animations-have-finished">
           <CrossFade>
             <Move>{props => <div {...props} />}</Move>
           </CrossFade>
-        </Baba>
+        </Animator>
 
         <span {...manager}>Children content</span>
       </div>
@@ -238,7 +238,7 @@ import { VisibilityManager } from 'yubaba';
 
 Children content will be shown after **all** animations have completed.
 
-> **Tip -** If you have multiple child [Baba](/baba) you can pass [VisibilityManager](/visibility-manager) a `name` prop to target a specific [Baba](/baba).
+> **Tip -** If you have multiple child [Animator](/animator) you can pass [VisibilityManager](/visibility-manager) a `name` prop to target a specific [Animator](/animator).
 
 ## Using supporting animations
 
@@ -256,13 +256,13 @@ used together can produce a really cool transition between states.
           <div id="yo">
             {!shown ? (
               <Styled.Container>
-                <Baba name="circle-expand-square" key="1">
+                <Animator name="circle-expand-square" key="1">
                   <CircleExpand background="#fea3aa">
                     {({ ref, style }) => (
                       <Styled.Root onClick={() => toggle()} style={style} ref={ref} />
                     )}
                   </CircleExpand>
-                </Baba>
+                </Animator>
               </Styled.Container>
             ) : (
               <VisibilityManager>
@@ -271,11 +271,11 @@ used together can produce a really cool transition between states.
                     onClick={() => toggle()}
                     style={{ cursor: 'pointer', background: '#005aff', ...props.style }}
                   >
-                    <Baba name="circle-expand-square" key="2">
+                    <Animator name="circle-expand-square" key="2">
                       <CircleShrink background="#005aff">
                         {({ ref, style }) => <div style={style} ref={ref} />}
                       </CircleShrink>
-                    </Baba>
+                    </Animator>
                   </Styled.Container>
                 )}
               </VisibilityManager>

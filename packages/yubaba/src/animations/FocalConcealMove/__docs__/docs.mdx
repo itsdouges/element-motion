@@ -22,7 +22,7 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import { lighten } from 'polished';
 import FocalConcealMove from '../index';
 import Noop from '../../Noop';
-import Baba from '../../../Baba';
+import Animator from '../../../Animator';
 import FocalTarget from '../../../FocalTarget';
 import * as Styled from './styled';
 import albumArt from './images/foster.jpg';
@@ -36,7 +36,7 @@ Requires the use of the [FocalTarget](/focal-target) component to specify the fo
 ## Usage
 
 ```js
-import Baba, { FocalConcealMove, FocalTarget } from 'yubaba';
+import Animator, { FocalConcealMove, FocalTarget } from 'yubaba';
 ```
 
 > **Tip -** Click the back button in the album art to conceal it.
@@ -44,13 +44,13 @@ import Baba, { FocalConcealMove, FocalTarget } from 'yubaba';
 <Playground>
   {() => {
     const revealingImage = ({ albumArt }) => (
-      <Baba name="focal-conceal-move">
+      <Animator name="focal-conceal-move">
         {({ ref, style }) => (
           <Link to="/details">
             <Styled.BackgroundImage src={albumArt} style={style} ref={ref} />
           </Link>
         )}
-      </Baba>
+      </Animator>
     );
 
     const album = ({ albumArt, color, artist, onClick, name, expand }) => (
@@ -73,10 +73,10 @@ import Baba, { FocalConcealMove, FocalTarget } from 'yubaba';
     );
 
     const albumDetails = ({ color, albumArt, name, artist, songs }) => (
-      <Baba name="focal-conceal-move">
+      <Animator name="focal-conceal-move">
         <FocalConcealMove>
-          {(baba) => (
-            <div {...baba}>
+          {(anim) => (
+            <div {...anim}>
               <Styled.DetailsRoot color={color}>
                 <Styled.Page raised elevation={20} style={{ minHeight: '90vh', overflow: 'visible' }}>
                   <Styled.Data color={color}>
@@ -148,7 +148,7 @@ import Baba, { FocalConcealMove, FocalTarget } from 'yubaba';
             </div>
           )}
         </FocalConcealMove>
-      </Baba>
+      </Animator>
     );
 
     return (

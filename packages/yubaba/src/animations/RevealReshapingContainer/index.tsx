@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { WrappedBaba as Baba } from '../../Baba';
+import { WrappedAnimator as Animator } from '../../Animator';
 import { CollectorChildrenAsFunction } from '../../Collector';
 import ReshapingContainer, { ReshapingContainerProps } from '../ReshapingContainer';
 import Reveal from '../Reveal';
@@ -68,23 +68,23 @@ export default class RevealReshapingContainer extends React.PureComponent<
     return (
       <ReshapingContainer {...this.props}>
         {reshaping => (
-          <Baba name={`${id}-children`} key={triggerKey}>
+          <Animator name={`${id}-children`} key={triggerKey}>
             <Reveal
               duration={duration}
               offset={this.getInversePaddingParts()}
               timingFunction={timingFunction}
             >
-              {baba =>
+              {anim =>
                 children({
-                  ...baba,
+                  ...anim,
                   style: {
-                    ...baba.style,
+                    ...anim.style,
                     ...reshaping.style,
                   },
                 })
               }
             </Reveal>
-          </Baba>
+          </Animator>
         )}
       </ReshapingContainer>
     );

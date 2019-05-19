@@ -6,7 +6,7 @@ import { ElementBoundingBox } from '../lib/dom';
 /**
  * Pass function in for `from` or `start` and it will always be rendered.
  */
-export const BabaUnderTest = ({
+export const AnimatorUnderTest = ({
   from,
   to,
   start,

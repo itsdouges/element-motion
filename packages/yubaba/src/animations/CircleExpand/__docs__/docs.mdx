@@ -6,7 +6,7 @@ menu: Supporting animations
 
 import { Playground, Props } from 'docz';
 import * as Common from 'yubaba-common';
-import Baba from '../../../Baba';
+import Animator from '../../../Animator';
 import CircleExpand from '../index';
 import * as Styled from './styled';
 
@@ -28,19 +28,19 @@ import { CircleExpand } from 'yubaba';
     {({ shown, toggle }) =>
       !shown ? (
         <Styled.Container>
-          <Baba name="circle-expand" key="1">
+          <Animator name="circle-expand" key="1">
             <CircleExpand background="#ff5e6d">
               {({ ref, style }) => (
                 <Styled.Button onClick={() => toggle()} style={style} ref={ref} />
               )}
             </CircleExpand>
-          </Baba>
+          </Animator>
         </Styled.Container>
       ) : (
         <Styled.Container onClick={() => toggle()} interactive>
-          <Baba name="circle-expand" key="2">
+          <Animator name="circle-expand" key="2">
             {({ ref, style }) => <div style={style} ref={ref} />}
-          </Baba>
+          </Animator>
         </Styled.Container>
       )
     }
