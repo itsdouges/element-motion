@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
-import Baba, { CircleShrink } from '../../../src';
+import Animator, { CircleShrink } from '../../../src';
 import { Toggler } from 'yubaba-common';
 
 const Root = styled.div`
@@ -46,17 +46,17 @@ storiesOf('yubaba/CircleShrink', module)
 
           {!shown ? (
             <Container background="#faf884" onClick={() => toggle()} style={{ cursor: 'pointer' }}>
-              <Baba name="circle-shrink-square" key="1">
+              <Animator name="circle-shrink-square" key="1">
                 <CircleShrink background="#faf884">
                   {({ ref, style }) => <div style={style} ref={ref} />}
                 </CircleShrink>
-              </Baba>
+              </Animator>
             </Container>
           ) : (
             <Container background="white">
-              <Baba name="circle-shrink-square" key="2">
+              <Animator name="circle-shrink-square" key="2">
                 {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
-              </Baba>
+              </Animator>
             </Container>
           )}
         </div>
@@ -72,20 +72,20 @@ storiesOf('yubaba/CircleShrink', module)
           {!shown ? (
             <Container background="#faf884" onClick={() => toggle()} style={{ cursor: 'pointer' }}>
               <Padding />
-              <Baba name="page-with-different-scroll-shrink" key="1">
+              <Animator name="page-with-different-scroll-shrink" key="1">
                 <CircleShrink background="#faf884">
                   {({ ref, style }) => <Root style={style} ref={ref} />}
                 </CircleShrink>
-              </Baba>
+              </Animator>
               <Padding />
             </Container>
           ) : (
             <Container>
               <Padding />
               <Padding />
-              <Baba name="page-with-different-scroll-shrink" key="2">
+              <Animator name="page-with-different-scroll-shrink" key="2">
                 {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
-              </Baba>
+              </Animator>
               <Padding />
               <Padding />
             </Container>

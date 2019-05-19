@@ -22,7 +22,7 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import { lighten } from 'polished';
 import FocalRevealMove from '../index';
 import Noop from '../../Noop';
-import Baba from '../../../Baba';
+import Animator from '../../../Animator';
 import FocalTarget from '../../../FocalTarget';
 import * as Styled from './styled';
 import albumArt from './images/halcyda.png';
@@ -37,13 +37,13 @@ Requires the use of the [FocalTarget](/focal-target) component to specify the fo
 ## Usage
 
 ```js
-import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
+import Animator, { FocalRevealMove, FocalTarget } from 'yubaba';
 ```
 
 <Playground>
   {() => {
     const revealingImage = ({ albumArt }) => (
-      <Baba name="reveal-move">
+      <Animator name="reveal-move">
         <FocalRevealMove useClipPath>
           {({ ref, style }) => (
             <Link to="/details">
@@ -51,7 +51,7 @@ import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
             </Link>
           )}
         </FocalRevealMove>
-      </Baba>
+      </Animator>
     );
 
     const album = ({ albumArt, color, artist, onClick, name, expand }) => (
@@ -74,7 +74,7 @@ import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
     );
 
     const albumDetails = ({ color, albumArt, name, artist, songs }) => (
-      <Baba name="reveal-move">
+      <Animator name="reveal-move">
         <Noop>
           {({ ref, style, className }) => (
             <Styled.DetailsRoot color={color} ref={ref} style={style} className={className}>
@@ -147,7 +147,7 @@ import Baba, { FocalRevealMove, FocalTarget } from 'yubaba';
             </Styled.DetailsRoot>
           )}
         </Noop>
-      </Baba>
+      </Animator>
     );
 
     return (

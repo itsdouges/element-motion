@@ -6,7 +6,7 @@ menu: Supporting animations
 
 import { Playground, Props } from 'docz';
 import * as Common from 'yubaba-common';
-import Baba from '../../../Baba';
+import Animator from '../../../Animator';
 import Swipe from '../index';
 import * as Styled from './styled';
 
@@ -24,11 +24,11 @@ import { Swipe } from 'yubaba';
   <Common.Toggler>
     {({ shown, toggle }) => (
       <Styled.Container onClick={() => toggle()} interactive>
-        <Baba name="swipe" key={shown}>
+        <Animator name="swipe" key={shown}>
           <Swipe background="#ff5e6d" direction={shown ? 'left' : 'right'}>
             {({ ref, style }) => <div style={style} ref={ref} />}
           </Swipe>
-        </Baba>
+        </Animator>
       </Styled.Container>
     )}
   </Common.Toggler>

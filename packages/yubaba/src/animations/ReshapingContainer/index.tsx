@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { WrappedBaba as Baba } from '../../Baba';
+import { WrappedAnimator as Animator } from '../../Animator';
 import Move from '../Move';
 import { InlineStyles } from '../../Collector';
 import { Duration } from '../types';
@@ -136,11 +136,11 @@ export default class ReshapingContainer extends React.PureComponent<ReshapingCon
     const ComponentAs = rest.as as any;
 
     return (
-      <Baba name={`${id}-container`} key={triggerKey}>
+      <Animator name={`${id}-container`} key={triggerKey}>
         <Move duration={duration} timingFunction={timingFunction}>
-          {baba => (
+          {anim => (
             <ComponentAs
-              ref={baba.ref}
+              ref={anim.ref}
               style={{
                 position: 'relative',
                 minWidth,
@@ -155,9 +155,9 @@ export default class ReshapingContainer extends React.PureComponent<ReshapingCon
             >
               <div
                 aria-hidden="true"
-                className={baba.className}
+                className={anim.className}
                 style={{
-                  ...baba.style,
+                  ...anim.style,
                   background,
                   boxShadow,
                   borderRadius,
@@ -176,7 +176,7 @@ export default class ReshapingContainer extends React.PureComponent<ReshapingCon
             </ComponentAs>
           )}
         </Move>
-      </Baba>
+      </Animator>
     );
   }
 }

@@ -1,10 +1,10 @@
 import { storiesOf } from '@storybook/react';
-import Baba from '../../Baba';
+import Animator from '../../Animator';
 import CrossFadeMove from './index';
 import { createMoveExamples } from 'yubaba-common';
 
 const Examples = createMoveExamples({ namePrefix: 'CrossFadeMove', useDistinctEnd: true })(
-  Baba,
+  Animator,
   CrossFadeMove
 );
 

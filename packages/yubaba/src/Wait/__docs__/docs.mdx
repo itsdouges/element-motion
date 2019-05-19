@@ -15,15 +15,15 @@ Add it between two animations for the deeper descendant animation to start only 
 ## Usage
 
 ```js
-import Baba, { Wait, Move, CircleExpand } from 'yubaba';
+import Animator, { Wait, Move, CircleExpand } from 'yubaba';
 
 export const AnimatedListItem = ({ id, children }) => (
-  <Baba name={`list-item-${id}`}>
+  <Animator name={`list-item-${id}`}>
     <CircleExpand background="red">
       <Wait>
-        <Move>{baba => <li {...baba}>{children}</li>}</Move>
+        <Move>{anim => <li {...anim}>{children}</li>}</Move>
       </Wait>
     </CircleExpand>
-  </Baba>
+  </Animator>
 );
 ```

@@ -6,7 +6,7 @@ order: 2
 
 import { Playground } from 'docz';
 import { Toggler } from 'yubaba-common';
-import { WrappedBaba as Baba } from '../../Baba';
+import { WrappedAnimator as Animator } from '../../Animator';
 import Move from '../../animations/Move';
 import OneFullRotation from './OneFullRotation';
 import SupportingAnimation from './SupportingAnimation';
@@ -138,7 +138,7 @@ export default class OneFullRotation extends Component {
 
     return (
       // The collector component passes all data up to the
-      // nearest Baba parent.
+      // nearest Animator parent.
       <Collector
         data={{
           // Animation is the only allowed action.
@@ -161,7 +161,7 @@ export default class OneFullRotation extends Component {
 <Styled.Container>
   <Toggler interval>
     {toggler => (
-      <Baba key={toggler.shown} name="element-animation-1">
+      <Animator key={toggler.shown} name="element-animation-1">
         <OneFullRotation>
           {({ ref, ...props }) => (
             <Styled.InlineBlock
@@ -174,12 +174,12 @@ export default class OneFullRotation extends Component {
             </Styled.InlineBlock>
           )}
         </OneFullRotation>
-      </Baba>
+      </Animator>
     )}
   </Toggler>
 </Styled.Container>
 
-> **Tip -** Animations are fired from the destination `Baba` element using the origin animations,
+> **Tip -** Animations are fired from the destination `Animator` element using the origin animations,
 > this allows us to have fine control over what animation should happen for the particular destination.
 > Depending where we are in our application we can have different animations occur to the same destination.
 
@@ -207,7 +207,7 @@ beforeAnimate = (elements, onFinish, setChildProps) => {
 <Styled.Container>
   <Toggler interval>
     {toggler => (
-      <Baba key={toggler.shown} name="element-animation-2">
+      <Animator key={toggler.shown} name="element-animation-2">
         <Move>
           <OneFullRotation>
             {({ ref, ...props }) => (
@@ -222,7 +222,7 @@ beforeAnimate = (elements, onFinish, setChildProps) => {
             )}
           </OneFullRotation>
         </Move>
-      </Baba>
+      </Animator>
     )}
   </Toggler>
 </Styled.Container>
@@ -336,7 +336,7 @@ export default class SupportingAnimation extends React.Component {
 <Styled.Container>
   <Toggler>
     {toggler => (
-      <Baba key={toggler.shown} name="supporting-animation-1">
+      <Animator key={toggler.shown} name="supporting-animation-1">
         <SupportingAnimation>
           {({ ref, ...props }) => (
             <Styled.InlineBlock
@@ -349,7 +349,7 @@ export default class SupportingAnimation extends React.Component {
             </Styled.InlineBlock>
           )}
         </SupportingAnimation>
-      </Baba>
+      </Animator>
     )}
   </Toggler>
 </Styled.Container>

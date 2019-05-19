@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Baba from './index';
+import Animator from './index';
 import Noop from '../animations/Noop';
 
-interface BabaProfilerProps {
+interface AnimatorProfilerProps {
   iterations: number;
 }
 
-interface BabaProfilerState {
+interface AnimatorProfilerState {
   start: boolean;
   profiling: boolean;
   finished: boolean;
 }
 
-class BabaProfiler extends React.Component<BabaProfilerProps, BabaProfilerState> {
-  state: BabaProfilerState = BabaProfiler.getDefaultState();
+class AnimatorProfiler extends React.Component<AnimatorProfilerProps, AnimatorProfilerState> {
+  state: AnimatorProfilerState = AnimatorProfiler.getDefaultState();
 
   curStart: number = -1;
 
@@ -72,7 +72,7 @@ class BabaProfiler extends React.Component<BabaProfilerProps, BabaProfilerState>
     this.curEnd = -1;
     this.results = [];
     this.iteration = 1;
-    this.setState(BabaProfiler.getDefaultState(), this.start);
+    this.setState(AnimatorProfiler.getDefaultState(), this.start);
   };
 
   static getDefaultState() {
@@ -110,24 +110,24 @@ class BabaProfiler extends React.Component<BabaProfilerProps, BabaProfilerState>
     return (
       <div>
         {!this.state.start ? (
-          <Baba name="profiler">
+          <Animator name="profiler">
             <Noop>
-              {baba => (
-                <div {...baba}>
+              {anim => (
+                <div {...anim}>
                   <span>{this.iteration}</span>
                 </div>
               )}
             </Noop>
-          </Baba>
+          </Animator>
         ) : (
           <div>
-            <Baba name="profiler" onFinish={this.onNextIteration}>
-              {baba => (
-                <div {...baba}>
+            <Animator name="profiler" onFinish={this.onNextIteration}>
+              {anim => (
+                <div {...anim}>
                   <span>{this.iteration}</span>
                 </div>
               )}
-            </Baba>
+            </Animator>
           </div>
         )}
       </div>
@@ -135,8 +135,8 @@ class BabaProfiler extends React.Component<BabaProfilerProps, BabaProfilerState>
   }
 }
 
-storiesOf('yubaba/Baba', module)
-  .add('profiler (1)', () => <BabaProfiler iterations={1} />)
-  .add('profiler (10)', () => <BabaProfiler iterations={10} />)
-  .add('profiler (100)', () => <BabaProfiler iterations={100} />)
-  .add('profiler (1000)', () => <BabaProfiler iterations={1000} />);
+storiesOf('yubaba/Animator', module)
+  .add('profiler (1)', () => <AnimatorProfiler iterations={1} />)
+  .add('profiler (10)', () => <AnimatorProfiler iterations={10} />)
+  .add('profiler (100)', () => <AnimatorProfiler iterations={100} />)
+  .add('profiler (1000)', () => <AnimatorProfiler iterations={1000} />);

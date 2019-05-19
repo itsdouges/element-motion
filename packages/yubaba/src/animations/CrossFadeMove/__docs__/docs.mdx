@@ -6,7 +6,7 @@ menu: Focal animations
 
 import { Playground, Props } from 'docz';
 import * as Common from 'yubaba-common';
-import Baba from '../../../Baba';
+import Animator from '../../../Animator';
 import CrossFadeMove from '../index';
 import * as Styled from './styled';
 
@@ -25,7 +25,7 @@ import { CrossFadeMove } from 'yubaba';
   <Common.Toggler interval>
     {({ shown, toggle }) =>
       shown ? (
-        <Baba name="cross-fade-move" key="1">
+        <Animator name="cross-fade-move" key="1">
           <CrossFadeMove>
             {({ ref, style }) => (
               <Styled.Box onClick={() => toggle()} style={style} ref={ref}>
@@ -33,15 +33,15 @@ import { CrossFadeMove } from 'yubaba';
               </Styled.Box>
             )}
           </CrossFadeMove>
-        </Baba>
+        </Animator>
       ) : (
-        <Baba name="cross-fade-move" key="2">
+        <Animator name="cross-fade-move" key="2">
           <CrossFadeMove>
             {({ ref, style }) => (
               <Styled.Box style={style} ref={ref} onClick={() => toggle()} alignRight />
             )}
           </CrossFadeMove>
-        </Baba>
+        </Animator>
       )
     }
   </Common.Toggler>

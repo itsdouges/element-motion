@@ -57,7 +57,7 @@ export default class FocalReveal extends React.Component<FocalRevealProps> {
   beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
     if (!data.destination.focalTargetElementBoundingBox) {
       throw new Error(`yubaba
-<FocalTarget /> was not found, if you haven't defined one make sure to add one as a descendant of your target Baba.`);
+<FocalTarget /> was not found, if you haven't defined one make sure to add one as a descendant of your target Animator.`);
     }
 
     const { childrenTransformX, childrenTransformY, useClipPath } = this.props;

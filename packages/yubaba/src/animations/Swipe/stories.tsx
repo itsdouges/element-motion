@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Baba, { Swipe } from '../../../src';
+import Animator, { Swipe } from '../../../src';
 import * as Common from 'yubaba-common';
 
 const Root = styled.button`
@@ -31,17 +31,17 @@ const makeStory = (direction: string) => (
       <div>
         {!shown ? (
           <Container>
-            <Baba name={`swipe-${direction}`} key="1">
+            <Animator name={`swipe-${direction}`} key="1">
               <Swipe background="#f8b88b" direction={direction as any}>
                 {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
               </Swipe>
-            </Baba>
+            </Animator>
           </Container>
         ) : (
           <Container onClick={() => toggle()} interactive>
-            <Baba name={`swipe-${direction}`} key="2">
+            <Animator name={`swipe-${direction}`} key="2">
               {({ ref, style }) => <div style={style} ref={ref} />}
-            </Baba>
+            </Animator>
           </Container>
         )}
       </div>

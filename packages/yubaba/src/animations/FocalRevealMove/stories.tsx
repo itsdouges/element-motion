@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from 'yubaba-common';
-import Baba from '../../Baba';
+import Animator from '../../Animator';
 import Noop from '../Noop';
 import Target from '../../FocalTarget';
 import FocalRevealMove from './index';
@@ -92,39 +92,39 @@ const build = (
       <React.Fragment>
         {shown || (
           <List appearance={appearance}>
-            <Baba name={`reveal-move-${orientation}-${appearance}-${useClipPath}`}>
+            <Animator name={`reveal-move-${orientation}-${appearance}-${useClipPath}`}>
               <FocalRevealMove
                 childrenTransformX={useClipPath || orientation === 'vertical'}
                 childrenTransformY={useClipPath || orientation === 'horizontal'}
                 transformX={useClipPath || appearance !== 'center'}
                 useClipPath={useClipPath}
               >
-                {baba => (
+                {anim => (
                   <ListItem
                     onClick={() => toggle()}
-                    style={baba.style}
-                    className={baba.className}
-                    ref={baba.ref}
+                    style={anim.style}
+                    className={anim.className}
+                    ref={anim.ref}
                     width={width}
                     height={height}
                   />
                 )}
               </FocalRevealMove>
-            </Baba>
+            </Animator>
           </List>
         )}
 
         {shown && (
-          <Baba name={`reveal-move-${orientation}-${appearance}-${useClipPath}`}>
+          <Animator name={`reveal-move-${orientation}-${appearance}-${useClipPath}`}>
             <Noop>
-              {baba => (
+              {anim => (
                 <TallListItem
                   width={width}
                   height={height}
                   orientation={orientation}
-                  style={baba.style}
-                  className={baba.className}
-                  ref={baba.ref}
+                  style={anim.style}
+                  className={anim.className}
+                  ref={anim.ref}
                 >
                   <Target>
                     {target => (
@@ -139,7 +139,7 @@ const build = (
                 </TallListItem>
               )}
             </Noop>
-          </Baba>
+          </Animator>
         )}
       </React.Fragment>
     )}

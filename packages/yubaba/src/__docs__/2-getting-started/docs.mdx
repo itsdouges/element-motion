@@ -14,7 +14,7 @@ import MicIcon from '@material-ui/icons/Mic';
 import { IconButton } from '@material-ui/core';
 import Select from 'react-select';
 import { MemoryRouter, Link, Switch, Route } from 'react-router-dom';
-import { WrappedBaba as Baba } from '../../Baba';
+import { WrappedAnimator as Animator } from '../../Animator';
 import ReshapingContainer from '../../animations/ReshapingContainer';
 import { WrappedVisibilityManager as VisibilityManager } from '../../VisibilityManager';
 import Move from '../../animations/Move';
@@ -40,7 +40,7 @@ Simple enough - after a state change we can automatically have the element anima
 
 ## Moving to another element
 
-For a simple move we can use the [Baba](/baba) and [Move](/move) components.
+For a simple move we can use the [Animator](/animator) and [Move](/move) components.
 [Move](/move) is good when the elements are visually very similar.
 For this example we are animating from one element to another over a state change.
 
@@ -49,10 +49,10 @@ For this example we are animating from one element to another over a state chang
     <Toggler interval onIntervalSet={curVal => (curVal ? undefined : 1)}>
       {({ shown, toggle }) =>
         shown ? (
-          <Baba name={`item-${shown}`}>
+          <Animator name={`item-${shown}`}>
             <Move>
-              {baba => (
-                <div {...baba}>
+              {anim => (
+                <div {...anim}>
                   <Select
                     isSearchable={false}
                     value={{}}
@@ -71,24 +71,24 @@ For this example we are animating from one element to another over a state chang
                 </div>
               )}
             </Move>
-          </Baba>
+          </Animator>
         ) : (
           <Styled.List>
             {Styled.data.map((item, index) => (
-              <Baba key={index} name={`item-${index}`}>
+              <Animator key={index} name={`item-${index}`}>
                 <Move>
-                  {baba => (
+                  {anim => (
                     <Styled.Value
                       onClick={() => toggle(`${index}`)}
-                      style={baba.style}
-                      ref={baba.ref}
+                      style={anim.style}
+                      ref={anim.ref}
                     >
                       {item.title}
                       <Styled.Description>{item.description}</Styled.Description>
                     </Styled.Value>
                   )}
                 </Move>
-              </Baba>
+              </Animator>
             ))}
           </Styled.List>
         )
@@ -98,7 +98,7 @@ For this example we are animating from one element to another over a state chang
 </Playground>
 
 > **Tip -** In `yubaba` animations are triggered by state changes.
-> This can occur either by mounting/unmounting or changing the `in` prop of [Baba](/baba) elements.
+> This can occur either by mounting/unmounting or changing the `in` prop of [Animator](/animator) elements.
 
 ## Reshaping containers
 
@@ -154,7 +154,7 @@ To do that we can abuse how `key`'s work in react - we just update the key at th
   <Styled.Container>
     <Toggler>
       {({ shown, toggle }) => (
-        <Baba name="same-move" key={shown}>
+        <Animator name="same-move" key={shown}>
           <Move>
             {({ ref, style }) => (
               <>
@@ -169,7 +169,7 @@ To do that we can abuse how `key`'s work in react - we just update the key at th
               </>
             )}
           </Move>
-        </Baba>
+        </Animator>
       )}
     </Toggler>
   </Styled.Container>
@@ -190,7 +190,7 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
     {({ shown, toggle }) => (
       <Common.SmallViewport>
         {shown || (
-          <Baba name="google-searchbar">
+          <Animator name="google-searchbar">
             <CrossFadeMove>
               {({ ref, style }) => (
                 <Styled.FloatingSearchBar onClick={() => toggle()} ref={ref} style={style}>
@@ -200,11 +200,11 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
                 </Styled.FloatingSearchBar>
               )}
             </CrossFadeMove>
-          </Baba>
+          </Animator>
         )}
 
         {shown && (
-          <Baba name="google-searchbar">
+          <Animator name="google-searchbar">
             <CrossFadeMove>
               {({ ref, style }) => (
                 <Styled.FixedSearchBar ref={ref} style={style}>
@@ -220,7 +220,7 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
                 </Styled.FixedSearchBar>
               )}
             </CrossFadeMove>
-          </Baba>
+          </Animator>
         )}
       </Common.SmallViewport>
     )}
@@ -247,7 +247,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
             path="/search"
             render={() => (
               <div>
-                <Baba name="searchbar">
+                <Animator name="searchbar">
                   <CrossFadeMove>
                     {({ ref, style }) => (
                       <Styled.FixedSearchBar ref={ref} style={style}>
@@ -265,7 +265,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
                       </Styled.FixedSearchBar>
                     )}
                   </CrossFadeMove>
-                </Baba>
+                </Animator>
               </div>
             )}
           />
@@ -273,7 +273,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
           <Route
             path="/"
             render={() => (
-              <Baba name="searchbar">
+              <Animator name="searchbar">
                 <CrossFadeMove>
                   {({ ref, style }) => (
                     <Link to="/search">
@@ -289,7 +289,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
                     </Link>
                   )}
                 </CrossFadeMove>
-              </Baba>
+              </Animator>
             )}
           />
         </Switch>
@@ -303,7 +303,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
 
 Sometimes it's useful to animate between two elements where one is never removed,
 for example if we show a modal over the top of screen content.
-To make this possible the [Baba](/baba) component can be controlled via the `in` prop.
+To make this possible the [Animator](/animator) component can be controlled via the `in` prop.
 Set it to `true` when you consider it to be shown,
 and `false` when you consider it to be hidden.
 
@@ -316,7 +316,7 @@ and `false` when you consider it to be hidden.
       const image = ({ src, title, from, onClick, in: inn }) => (
         <Styled.Root>
           <Styled.ImageContainer>
-            <Baba name={src} in={inn}>
+            <Animator name={src} in={inn}>
               <Move>
                 {({ ref, style }) => (
                   <Styled.Img
@@ -327,7 +327,7 @@ and `false` when you consider it to be hidden.
                   />
                 )}
               </Move>
-            </Baba>
+            </Animator>
 
             <Styled.ImageBack />
           </Styled.ImageContainer>
@@ -352,11 +352,11 @@ and `false` when you consider it to be hidden.
                 </IconButton>
               </div>
 
-              <Baba name={src}>
+              <Animator name={src}>
                 <Move>
                   {({ ref, style }) => <Styled.PageImage src={src} ref={ref} style={style} />}
                 </Move>
-              </Baba>
+              </Animator>
 
               <Styled.ContentContainer>
                 <Styled.FadeIn in={props.style.visibility !== 'hidden'}>

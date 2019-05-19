@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
-import Baba, { VisibilityManager, Noop } from '../../src';
+import Animator, { VisibilityManager, Noop } from '../../src';
 import { Toggler } from 'yubaba-common';
 
 const StyledBody = styled(BodyClassName)`
@@ -51,7 +51,7 @@ storiesOf('yubaba/VisibilityManager', module)
           <StyledBody className="" />
           {!shown ? (
             <Container color="#f8b88b">
-              <Baba name="manager-example-1" key="1">
+              <Animator name="manager-example-1" key="1">
                 <Noop duration={500}>
                   {({ ref, style }) => (
                     <Button style={style} ref={ref} onClick={() => toggle()}>
@@ -59,7 +59,7 @@ storiesOf('yubaba/VisibilityManager', module)
                     </Button>
                   )}
                 </Noop>
-              </Baba>
+              </Animator>
             </Container>
           ) : (
             <Container color="#b2cefe">
@@ -70,7 +70,7 @@ storiesOf('yubaba/VisibilityManager', module)
                 Thanks to VisibilityManager we can hide elements until all animations have finished.
               </TextContainer>
 
-              <Baba name="manager-example-1" key="2">
+              <Animator name="manager-example-1" key="2">
                 {({ ref, style }) => (
                   <Button style={style} ref={ref} onClick={() => toggle()}>
                     This button was shown after the animation completed.
@@ -78,7 +78,7 @@ storiesOf('yubaba/VisibilityManager', module)
                     Click me and I'll render the previous page!
                   </Button>
                 )}
-              </Baba>
+              </Animator>
             </Container>
           )}
         </React.Fragment>
@@ -92,7 +92,7 @@ storiesOf('yubaba/VisibilityManager', module)
           <StyledBody className="" />
           {!shown ? (
             <Container color="#f8b88b">
-              <Baba name="manager-example-2" key="1">
+              <Animator name="manager-example-2" key="1">
                 <Noop duration={500}>
                   {({ ref, style }) => (
                     <Button style={style} ref={ref} onClick={() => toggle()}>
@@ -100,7 +100,7 @@ storiesOf('yubaba/VisibilityManager', module)
                     </Button>
                   )}
                 </Noop>
-              </Baba>
+              </Animator>
             </Container>
           ) : (
             <VisibilityManager>
@@ -111,7 +111,7 @@ storiesOf('yubaba/VisibilityManager', module)
                     VisibilityManager.
                   </TextContainer>
 
-                  <Baba name="manager-example-2" key="2">
+                  <Animator name="manager-example-2" key="2">
                     {({ ref, style }) => (
                       <Button style={style} ref={ref} onClick={() => toggle()}>
                         This button was shown after the animation completed.
@@ -119,7 +119,7 @@ storiesOf('yubaba/VisibilityManager', module)
                         Click me and I'll render the previous page!
                       </Button>
                     )}
-                  </Baba>
+                  </Animator>
                 </Container>
               )}
             </VisibilityManager>

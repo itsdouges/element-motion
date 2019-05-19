@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Baba, { CircleExpand } from '../../../src';
+import Animator, { CircleExpand } from '../../../src';
 import { Toggler } from 'yubaba-common';
 
 const Root = styled.div`
@@ -36,17 +36,17 @@ storiesOf('yubaba/CircleExpand', module)
         <div>
           {!shown ? (
             <Container>
-              <Baba name="circle-expand-square" key="1">
+              <Animator name="circle-expand-square" key="1">
                 <CircleExpand background="#fea3aa">
                   {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
                 </CircleExpand>
-              </Baba>
+              </Animator>
             </Container>
           ) : (
             <Container onClick={() => toggle()} style={{ cursor: 'pointer' }}>
-              <Baba name="circle-expand-square" key="2">
+              <Animator name="circle-expand-square" key="2">
                 {({ ref, style }) => <div style={style} ref={ref} />}
-              </Baba>
+              </Animator>
             </Container>
           )}
         </div>
@@ -62,11 +62,11 @@ storiesOf('yubaba/CircleExpand', module)
             <Container key="11">
               <Padding />
 
-              <Baba name="page-with-different-scroll" key="1">
+              <Animator name="page-with-different-scroll" key="1">
                 <CircleExpand background="#fea3aa">
                   {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
                 </CircleExpand>
-              </Baba>
+              </Animator>
 
               <Padding />
             </Container>
@@ -75,9 +75,9 @@ storiesOf('yubaba/CircleExpand', module)
             <Container key="22" onClick={() => toggle()} style={{ cursor: 'pointer' }}>
               <Padding />
               <Padding />
-              <Baba name="page-with-different-scroll" key="2">
+              <Animator name="page-with-different-scroll" key="2">
                 {({ ref, style }) => <div style={style} ref={ref} />}
-              </Baba>
+              </Animator>
               <Padding />
               <Padding />
             </Container>

@@ -10,7 +10,7 @@ import Collector from '../index';
 # Collector
 
 Used as the glue for all animation components,
-every animation component will use this internally to pass the data to the parent [Baba](/baba).
+every animation component will use this internally to pass the data to the parent [Animator](/animator).
 See [Custom animations](/custom-animations) for help.
 
 > **Tip -** See [Custom animations](/custom-animations) for more information on how to use this component.
@@ -18,7 +18,7 @@ See [Custom animations](/custom-animations) for help.
 ## Usage
 
 ```js
-import Baba, { Collector } from 'yubaba';
+import Animator, { Collector } from 'yubaba';
 
 const CustomAnimation = ({ children }) => {
   const beforeAnimation = () => {};
@@ -42,11 +42,11 @@ const CustomAnimation = ({ children }) => {
 };
 
 const ListItem = ({ index }) => (
-  <Baba name={`item-${index}`}>
+  <Animator name={`item-${index}`}>
     <CustomAnimation>
       {({ ref, style, className }) => <div ref={ref} style={style} className={className} />}
     </CustomAnimation>
-  </Baba>
+  </Animator>
 );
 ```
 

@@ -20,7 +20,7 @@ import {
   Divider,
 } from '@material-ui/core';
 import * as Styled from './styled';
-import { WrappedBaba as Baba } from '../../Baba';
+import { WrappedAnimator as Animator } from '../../Animator';
 import FocalRevealMove from '../../animations/FocalRevealMove';
 import FocalConcealMove from '../../animations/FocalConcealMove';
 import FocalTarget from '../../FocalTarget';
@@ -40,10 +40,10 @@ const EmailChain = () => {
       <List>
         {Styled.data.map((email, index) => (
           <React.Fragment key={index}>
-            <Baba name={`card-${index}`} in={props.in}>
+            <Animator name={`card-${index}`} in={props.in}>
               <FocalRevealMove duration={600}>
-                {baba => (
-                  <div {...baba}>
+                {anim => (
+                  <div {...anim}>
                     <ListItem button>
                       <Avatar>
                         <ImageIcon />
@@ -58,7 +58,7 @@ const EmailChain = () => {
                   </div>
                 )}
               </FocalRevealMove>
-            </Baba>
+            </Animator>
             <Divider variant="inset" />
           </React.Fragment>
         ))}
@@ -67,10 +67,10 @@ const EmailChain = () => {
   );
 
   const screen = (props: any) => (
-    <Baba name={`card-${props.index}`}>
+    <Animator name={`card-${props.index}`}>
       <FocalConcealMove>
-        {baba => (
-          <Styled.Screen ref={baba.ref} style={baba.style} className={baba.className} {...props}>
+        {anim => (
+          <Styled.Screen ref={anim.ref} style={anim.style} className={anim.className} {...props}>
             <ListItem>
               <Typography variant="h6">{Styled.data[props.index].title}</Typography>
               <IconButton
@@ -106,7 +106,7 @@ const EmailChain = () => {
           </Styled.Screen>
         )}
       </FocalConcealMove>
-    </Baba>
+    </Animator>
   );
 
   const appBarActions = () => (

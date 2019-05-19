@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { WrappedBaba as Baba } from '../Baba';
+import { WrappedAnimator as Animator } from '../Animator';
 import { WrappedVisibilityManager as VisibilityManager } from '../VisibilityManager';
 import * as utils from '../__tests__/utils';
 import defer from '../lib/defer';
@@ -13,9 +13,9 @@ describe('<VisibilityManager />', () => {
       <VisibilityManager>
         {props => (
           <span {...props}>
-            <Baba name="fff">
+            <Animator name="fff">
               <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-            </Baba>
+            </Animator>
           </span>
         )}
       </VisibilityManager>
@@ -44,14 +44,14 @@ describe('<VisibilityManager />', () => {
   it('should be hidden during animation', () => {
     const Animation = utils.createTestAnimation();
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={shown => (
           <VisibilityManager isInitiallyVisible>
             {props => (
               <span {...props}>
-                <Baba name="aaa" key={`${shown}`}>
+                <Animator name="aaa" key={`${shown}`}>
                   <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-                </Baba>
+                </Animator>
               </span>
             )}
           </VisibilityManager>
@@ -72,17 +72,19 @@ describe('<VisibilityManager />', () => {
   it('should hide manager children if animation is already in flight', () => {
     const Animation = utils.createTestAnimation();
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="aaa">
+          <Animator name="aaa">
             <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-          </Baba>
+          </Animator>
         }
         to={
           <VisibilityManager>
             {props => (
               <span {...props}>
-                <Baba name="aaa">{({ ref, style }) => <div ref={ref} style={style} />}</Baba>
+                <Animator name="aaa">
+                  {({ ref, style }) => <div ref={ref} style={style} />}
+                </Animator>
               </span>
             )}
           </VisibilityManager>
@@ -103,19 +105,19 @@ describe('<VisibilityManager />', () => {
     const deferred = defer();
     const Animation = utils.createTestAnimation();
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="eee">
+          <Animator name="eee">
             <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-          </Baba>
+          </Animator>
         }
         to={
           <VisibilityManager>
             {props => (
               <span {...props}>
-                <Baba name="eee" onFinish={deferred.resolve}>
+                <Animator name="eee" onFinish={deferred.resolve}>
                   {({ ref, style }) => <div ref={ref} style={style} />}
-                </Baba>
+                </Animator>
               </span>
             )}
           </VisibilityManager>
@@ -136,11 +138,11 @@ describe('<VisibilityManager />', () => {
   it('should hide all nested manager children if animation is already in flight', async () => {
     const Animation = utils.createTestAnimation();
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="eee">
+          <Animator name="eee">
             <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-          </Baba>
+          </Animator>
         }
         to={
           <VisibilityManager>
@@ -151,7 +153,9 @@ describe('<VisibilityManager />', () => {
                 <VisibilityManager>
                   {innerProps => (
                     <div id="parent2" {...innerProps}>
-                      <Baba name="eee">{({ ref, style }) => <div ref={ref} style={style} />}</Baba>
+                      <Animator name="eee">
+                        {({ ref, style }) => <div ref={ref} style={style} />}
+                      </Animator>
                     </div>
                   )}
                 </VisibilityManager>
@@ -176,11 +180,11 @@ describe('<VisibilityManager />', () => {
     const deferred = defer();
     const Animation = utils.createTestAnimation();
     const wrapper = mount(
-      <utils.BabaUnderTest
+      <utils.AnimatorUnderTest
         from={
-          <Baba name="eee">
+          <Animator name="eee">
             <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-          </Baba>
+          </Animator>
         }
         to={
           <VisibilityManager>
@@ -191,9 +195,9 @@ describe('<VisibilityManager />', () => {
                 <VisibilityManager>
                   {innerProps => (
                     <div id="parent2" {...innerProps}>
-                      <Baba name="eee" onFinish={deferred.resolve}>
+                      <Animator name="eee" onFinish={deferred.resolve}>
                         {({ ref, style }) => <div ref={ref} style={style} />}
-                      </Baba>
+                      </Animator>
                     </div>
                   )}
                 </VisibilityManager>
