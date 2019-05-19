@@ -1,5 +1,35 @@
 import styled from 'styled-components';
 
+const anim = {
+  entering: 'scale(0.75)',
+  entered: 'none',
+  exiting: 'scale(0.75)',
+};
+
+const opac = {
+  entering: 0,
+  entered: 1,
+  exiting: 0,
+};
+
+const pos = {
+  exiting: 'absolute',
+};
+
+export const InnerMenu = styled.div<{ state: string }>`
+  transition: transform 0.2, opacity 0.2;
+  opacity: ${props => opac[props.state]};
+  position: ${props => pos[props.state]};
+  top: 0;
+`;
+
+export const ContainerPositioning = styled.div<{ state: string }>`
+  transition: transform 0.2s, opacity 0.2s;
+  transform-origin: 50% 0;
+  transform: ${props => anim[props.state]};
+  opacity: ${props => opac[props.state]};
+`;
+
 export const Container = styled.div`
   padding: 50px;
   height: 300px;

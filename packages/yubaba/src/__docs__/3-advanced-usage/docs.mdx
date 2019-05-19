@@ -29,6 +29,7 @@ import * as Styled from './styled';
 import { WrappedBaba as Baba } from '../../Baba';
 import { WrappedVisibilityManager as VisibilityManager } from '../../VisibilityManager';
 import CircleExpand from '../../animations/CircleExpand';
+import TripeHoverMenu from '../../animations/ReshapingContainer/__docz__/TripeHoverMenu';
 import FocalRevealMove from '../../animations/FocalRevealMove';
 import FocalConcealMove from '../../animations/FocalConcealMove';
 import FocalTarget from '../../FocalTarget';
@@ -36,8 +37,90 @@ import Move from '../../animations/Move';
 import CircleShrink from '../../animations/CircleShrink';
 import ovi from './images/ovechkin.jpg';
 import EmailChain from './EmailChain';
+import PopmotionMoveRight from './PopmotionMoveRight';
 
 # Advanced usage
+
+## Use with other libaries
+
+Doing everything is a pretty hard gig.
+Luckily `yubaba` works great with other libraries!
+
+### [React Transition Group](https://reactcommunity.org/react-transition-group)
+
+Useful when you have an animation you want to happen when an element is entering or leaving,
+for example here in our _tripe.com_ menu we use it for just that!
+
+<Playground>
+  <TripeHoverMenu />
+</Playground>
+
+```js
+({ isMenuShown, shownMenuId }) => (
+  <CSSTransition in={isMenuShown} unmountOnExit mountOnEnter timeout={{ enter: 0, exit: 100 }}>
+    <div class="menu-container">
+      <ReshapingContainer id="reshape-with-transition" triggerKey={shownMenuId}>
+        hello world
+      </ReshapingContainer>
+    </div>
+  </CSSTransition>
+);
+```
+
+> **Tip -** This example is using the [ReshapingContainer](/reshaping-container) component.
+> It will reshape the background around the children when its prop `triggerKey` changes!
+
+### [Popmotion](https://popmotion.io/pure/)
+
+Creating [custom animations](/custom-animations) with third party libraries works a treat,
+remember that although `yubaba` comes with beautiful animations out of the box -
+at its core is a powerful orchestration layer you can use to write your own!
+
+Here we use Popmotion to do the animating.
+
+<Playground>
+  <Common.Toggler interval>
+    {toggler => (
+      <Baba name="popmotion-right" key={toggler.shown}>
+        <PopmotionMoveRight>{anim => <Styled.Root {...anim} />}</PopmotionMoveRight>
+      </Baba>
+    )}
+  </Common.Toggler>
+</Playground>
+
+> **Tip -** [React Spring](https://www.react-spring.io/) can also be used for similar results using its imperative [Manual API](https://www.react-spring.io/docs/props/gotchas#manual-api).
+
+```js
+import { Collector } from 'yubaba';
+import React, { useRef } from 'react';
+import { styler, tween } from 'popmotion';
+
+const PopmotionMoveRight = props => {
+  const elementStyler = useRef();
+
+  return (
+    <Collector
+      data={{
+        action: 'animation',
+        payload: {
+          beforeAnimate: (elements, onFinish, setChildProps) => {
+            elementStyler.current = styler(elements.destination.element);
+            onFinish();
+          },
+          animate: (elements, onFinish, setChildProps) => {
+            tween({ from: 0, to: { x: 300 } }).start({
+              complete: onFinish,
+              update: elementStyler.current,
+            });
+          },
+        },
+      }}
+    >
+      {props.children}
+    </Collector>
+  );
+};
+```
 
 ## Controlling in what order animations should execute
 
