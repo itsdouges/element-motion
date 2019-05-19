@@ -14,15 +14,18 @@ import * as Styled from './styled';
 
 # Custom animations
 
-Everything is a custom animation in `yubaba` -
-all animations that come with `yubaba` are built in exactly the same way you will build yours.
+At its core `yubaba` is a powerful orchestration layer which provides a way to collect and trigger animations,
+as well as providing snapshots of the DOM to the animations,
+this can be helpful for example when figuring out where you'd like to move an element.
+
+> **Tip -** `yubaba` works great with [other animation libraries](/advanced-usage#use-with-other-libaries) just incase you're wondering.
 
 ## Lifecyle of an animation
 
 There are three phases of an animation:
 
-1. `beforeAnimate()` used for any initial work needed for an animation, e.g. moving the destination ontop of the origin
-2. `animate()` used for the primary animation, e.g. moving from origin to destination
+1. `beforeAnimate()` used for any initial work needed for an animation, e.g. moving the `destination` ontop of the `origin`
+2. `animate()` used for the primary animation, e.g. moving from `origin` to `destination`
 3. `afterAnimate()` used for any supplementary post-animation animation, e.g. fading out
 
 <br />
@@ -37,12 +40,13 @@ Each phase method has the same type signature:
 > If you do it will be created for that phase - and reconciled from the result of the following phases.
 > This means if you return JSX elements in `beforeAnimate()` but not in `animate()` or `afterAnimate()` it will be removed!
 
-### What is `elements`
+### What is `elements{}`
 
-This contains snapshot data for the origin and destination elements.
-Use this for doing any dynamic calculation for your animation.
+This contains snapshot data for the `origin` and `destination` elements,
+use this for doing any dynamic calculation for your animation.
+Remember that an animation will always have an `origin` and `destination`.
 
-> **Tip -** Notice there is a `render` property in origin and destination -
+> **Tip -** Notice there is a `render` property in `origin` and `destination` -
 > this is the render prop that consumers pass through which you can use to create the same element if needed!
 
 ```js

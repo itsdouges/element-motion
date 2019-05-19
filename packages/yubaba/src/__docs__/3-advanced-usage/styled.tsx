@@ -16,6 +16,7 @@ export const Root = styled.div`
   justify-content: center;
   flex-shrink: 0;
   cursor: pointer;
+  border-radius: 4px;
 `;
 
 export const Container = styled.div`

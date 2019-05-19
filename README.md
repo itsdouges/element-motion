@@ -12,9 +12,9 @@
 
 It's all about ✨**animation over state transitions** ✨it can help with:
 
+- 📴 Enabling animations to be possible between disconnected leaf nodes in the React tree
 - 🚚 [Moving an element](https://yubabajs.com/move) from one location to another
 - 💨 [Revealing elements](https://yubabajs.com/focal-reveal-move) inside another element
-- 📴 Enabling animations to be possible between disconnected leaf nodes in the React tree
 - 👓 [Supporting animations](https://yubabajs.com/supporting-animations) by obstructing elements in view
 - 🤫 [Hiding children elements](https://yubabajs.com/advanced-usage#delay-showing-content-until-all-animations-have-finished) until animations have completed to trick users
 - 🔢 [Orchestrating](https://yubabajs.com/advanced-usage#wait-for-the-previous-animation-to-finish-before-starting-the-next) when animations should start and [in what order](https://yubabajs.com/advanced-usage#controlling-in-what-order-animations-should-execute)
@@ -35,8 +35,10 @@ or
 yarn add yubaba react@^16.4.x react-dom@^16.4.x emotion@^10.x.x
 ```
 
-[Function as children](https://reactpatterns.com/#function-as-children) is a common pattern here.
-The most basic usage could animate an element between `small` and `large` states.
+> **Tip -** Both es and commonjs modules are provided in the package.
+> Make sure to consume the es modules for their tree shaking ability!
+
+## Usage
 
 ```js
 import Baba, { Move } from 'yubaba';

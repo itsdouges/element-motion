@@ -3,16 +3,16 @@ import * as React from 'react';
 interface Props {
   interval: boolean;
   intervalMs: number;
-  onIntervalSet: (value: string | boolean) => string | boolean;
+  onIntervalSet: (value: any) => any;
   children: (props: {
-    toggle: (value?: string) => void;
-    set: (value: string) => void;
-    shown: boolean | string;
+    toggle: (value?: any) => void;
+    set: (value: any) => void;
+    shown: any;
   }) => React.ReactNode;
 }
 
 interface State {
-  shown: boolean | string;
+  shown: any;
 }
 
 export default class Toggler extends React.Component<Props, State> {
@@ -45,7 +45,7 @@ export default class Toggler extends React.Component<Props, State> {
     this.cleanup();
   }
 
-  toggle = (value?: string) => {
+  toggle = (value?: any) => {
     this.cleanup();
 
     this.setState(prevState => ({
@@ -53,7 +53,7 @@ export default class Toggler extends React.Component<Props, State> {
     }));
   };
 
-  set = (value: string) => {
+  set = (value: any) => {
     this.cleanup();
 
     this.setState({
