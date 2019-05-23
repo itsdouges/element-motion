@@ -1,6 +1,6 @@
 {
   "name": "yubaba",
-  "version": "2.3.2",
+  "version": "2.4.0",
   "repository": "madou/yubaba",
   "author": "Michael Dougall",
   "license": "MIT",
@@ -45,6 +45,6 @@
     "react-select": "^2.4.2",
     "size-limit": "^1.3.2",
     "styled-components": "^4.2.0",
-    "yubaba-common": "^2.3.1"
+    "yubaba-common": "^2.4.0"
   }
 }

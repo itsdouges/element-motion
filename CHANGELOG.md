@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/madou/yubaba/compare/v2.3.2...v2.4.0) (2019-05-23)
+
+
+### Features
+
+* **animator:** adds first class self targeted animations api ([6ad648e](https://github.com/madou/yubaba/commit/6ad648e))
+
+
+
+
+
 ## [2.3.2](https://github.com/madou/yubaba/compare/v2.3.1...v2.3.2) (2019-05-14)
 
 
