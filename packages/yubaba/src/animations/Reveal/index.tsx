@@ -7,6 +7,7 @@ import Collector, {
 import { standard } from '../../lib/curves';
 import { combine } from '../../lib/style';
 import { dynamic } from '../../lib/duration';
+import noop from '../../lib/noop';
 import { Duration } from '../types';
 
 export interface RevealProps extends CollectorChildrenProps {
@@ -36,6 +37,8 @@ export default class Reveal extends React.Component<RevealProps> {
     timingFunction: standard(),
     offset: [0, 0, 0, 0],
   };
+
+  abort = noop;
 
   beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
     const [topOffset, rightOffset, bottomOffset, leftOffset] = this.props.offset;
@@ -82,7 +85,10 @@ export default class Reveal extends React.Component<RevealProps> {
       }),
     });
 
-    setTimeout(() => onFinish(), calculatedDuration);
+    const id = window.setTimeout(() => onFinish(), calculatedDuration);
+    this.abort = () => {
+      window.clearTimeout(id);
+    };
   };
 
   render() {
@@ -95,6 +101,7 @@ export default class Reveal extends React.Component<RevealProps> {
           payload: {
             beforeAnimate: this.beforeAnimate,
             animate: this.animate,
+            abort: this.abort,
           },
         }}
       >

@@ -1,5 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<Animator /> persisted animations should throw when changing into "in" after initial mount 1`] = `
+"yubaba v0.0.0
+
+You're switching between persisted and unpersisted, don't do this. Either always set the \\"in\\" prop as true or false, or keep as undefined."
+`;
+
+exports[`<Animator /> self targetted animations should throw when changing into "triggerSelfKey" after initial mount 1`] = `
+"yubaba v0.0.0
+
+You're switching between self triggering modes, don't do this. Either always set the \\"triggerSelfKey\\" prop, or keep as undefined."
+`;
+
+exports[`<Animator /> self targetted animations should throw when using both "in" and "triggerSelfKey" props after initial mount 1`] = `
+"yubaba v0.0.0
+
+Don't use \\"in\\" and \\"triggerSelfKey\\" together. If your element is persisted use \\"in\\". If your element is targeting itself for animations use \\"triggerSelfKey\\"."
+`;
+
 exports[`<Animator /> should pass dom data to child animation 1`] = `
 Array [
   Object {

@@ -5,8 +5,10 @@ import { WrappedAnimator as Animator } from '../Animator';
 import Target from '../FocalTarget';
 import { getElementBoundingBox } from '../lib/dom';
 import defer from '../lib/defer';
+import * as store from '../lib/animatorStore';
 import * as utils from '../__tests__/utils';
 
+jest.mock('../../package.json', () => ({ default: { version: '0.0.0' } }));
 jest.mock('../lib/dom');
 window.requestAnimationFrame = (cb: Function) => cb();
 
@@ -109,6 +111,7 @@ describe('<Animator />', () => {
     startAnimation(wrapper);
     await deferred.promise;
 
+    // element and render will be undefined.
     expect(callback.mock.calls[0]).toMatchSnapshot();
   });
 
@@ -223,6 +226,7 @@ describe('<Animator />', () => {
     await enterNextPhase(wrapper);
 
     expect(wrapper.find('Portal')).toMatchSnapshot();
+    jest.useRealTimers();
   });
 
   it('should update markup created in an animation in animate phase', async () => {
@@ -248,6 +252,7 @@ describe('<Animator />', () => {
     await enterNextPhase(wrapper);
 
     expect(wrapper.find('Portal')).toMatchSnapshot();
+    jest.useRealTimers();
   });
 
   it('should update markup created in an animation in after animate phase', async () => {
@@ -274,6 +279,7 @@ describe('<Animator />', () => {
     await enterNextPhase(wrapper);
 
     expect(wrapper.find('Portal')).toMatchSnapshot();
+    jest.useRealTimers();
   });
 
   it('should pass through context to animations created react elements', () => {
@@ -303,5 +309,148 @@ describe('<Animator />', () => {
         start: true,
       })
     ).not.toThrow();
+  });
+
+  describe('persisted animations', () => {
+    it('should animate from persisted', done => {
+      const Animation = utils.createTestAnimation();
+      const wrapper = mount(
+        <utils.AnimatorUnderTest
+          from={start => (
+            <Animator name="anim-over-persisted" in={!start}>
+              <Animation>{props => <div {...props} />}</Animation>
+            </Animator>
+          )}
+          to={
+            <Animator onFinish={done} name="anim-over-persisted">
+              {props => <main {...props} />}
+            </Animator>
+          }
+          start={false}
+        />
+      );
+
+      wrapper.setProps({ start: true });
+    });
+
+    it('should throw when changing into "in" after initial mount', () => {
+      process.env.NODE_ENV = 'development';
+      const Animation = utils.createTestAnimation();
+      const wrapper = mount(
+        <Animator name="dont-use-in">
+          <Animation>{props => <div {...props} />}</Animation>
+        </Animator>
+      );
+
+      expect(() =>
+        wrapper.setProps({
+          in: true,
+        })
+      ).toThrowErrorMatchingSnapshot();
+    });
+  });
+
+  describe('self targetted animations', () => {
+    it('should animate over self', done => {
+      const Animation = utils.createTestAnimation();
+      const wrapper = mount(
+        <Animator name="anim-over-self" onFinish={done} triggerSelfKey="hello">
+          <Animation>{anim => <div {...anim} />}</Animation>
+        </Animator>
+      );
+
+      wrapper.setProps({ triggerSelfKey: 'update-pls' });
+    });
+
+    it('should throw when changing into "triggerSelfKey" after initial mount', () => {
+      process.env.NODE_ENV = 'development';
+      const Animation = utils.createTestAnimation();
+      const wrapper = mount(
+        <Animator name="dont-use-trigger-self">
+          <Animation>{props => <div {...props} />}</Animation>
+        </Animator>
+      );
+
+      expect(() =>
+        wrapper.setProps({
+          triggerSelfKey: 'id-123',
+        })
+      ).toThrowErrorMatchingSnapshot();
+    });
+
+    it('should throw when using both "in" and "triggerSelfKey" props after initial mount', () => {
+      process.env.NODE_ENV = 'development';
+      const Animation = utils.createTestAnimation();
+      const wrapper = mount(
+        <Animator name="dont-use-in-and-trigger-self">
+          <Animation>{props => <div {...props} />}</Animation>
+        </Animator>
+      );
+
+      expect(() =>
+        wrapper.setProps({
+          triggerSelfKey: 'id-123',
+          in: true,
+        })
+      ).toThrowErrorMatchingSnapshot();
+    });
+
+    it('should abort when unmounting after beginning animation', () => {
+      const onCleanup = jest.fn();
+      const Animation = utils.createTestAnimation({ onCleanup });
+      const wrapper = mount(
+        <Animator name="self-cleanup" triggerSelfKey="hello-world">
+          <Animation>{props => <div {...props} />}</Animation>
+        </Animator>
+      );
+      wrapper.setProps({
+        triggerSelfKey: '1',
+      });
+
+      wrapper.unmount();
+
+      expect(onCleanup).toHaveBeenCalled();
+    });
+
+    it('should not store dom data when unmounting when trigger self key is set', () => {
+      const onCleanup = jest.fn();
+      const Animation = utils.createTestAnimation({ onCleanup });
+      const wrapper = mount(
+        <Animator name="self-cleanup" triggerSelfKey="hello-world">
+          <Animation>{props => <div {...props} />}</Animation>
+        </Animator>
+      );
+
+      wrapper.unmount();
+
+      expect(store.has('hello-world')).toEqual(false);
+    });
+
+    describe('aborting animations', () => {
+      it('should block cleanup if animations have aborted previously', async () => {
+        // This stops the double cleanup apparent in self targetted animations.
+        jest.useFakeTimers();
+        const onCleanup = jest.fn();
+        const Animation = utils.createTestAnimation({ onCleanup });
+        const wrapper = mount(
+          <Animator name="self-cleanup" triggerSelfKey="hello-world">
+            <Animation>{props => <div {...props} />}</Animation>
+          </Animator>
+        );
+
+        wrapper.setProps({
+          triggerSelfKey: '1',
+        });
+        await enterNextPhase(wrapper);
+        wrapper.setProps({
+          triggerSelfKey: '2',
+        });
+        await enterNextPhase(wrapper);
+        await enterNextPhase(wrapper);
+
+        expect(onCleanup).toHaveBeenCalledTimes(1);
+        jest.useRealTimers();
+      });
+    });
   });
 });

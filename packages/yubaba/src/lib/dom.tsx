@@ -1,4 +1,3 @@
-
 export function getDocumentScroll() {
   const scrollTop =
     document.documentElement && document.documentElement.scrollTop
@@ -16,11 +15,9 @@ export function getDocumentScroll() {
   };
 }
 
-
 export interface ElementBoundingBoxOpts {
   useOffsetSize?: boolean;
 }
-
 
 export interface ElementBoundingBox {
   size: {
@@ -38,15 +35,12 @@ export interface ElementBoundingBox {
   };
 }
 
-
 export function getElementBoundingBox(
   element: HTMLElement,
   options: ElementBoundingBoxOpts = {}
 ): ElementBoundingBox {
   const rect = element.getBoundingClientRect();
   const { scrollLeft, scrollTop } = getDocumentScroll();
-  const topOffset = (rect.height - element.offsetHeight) / 2;
-  const leftOffset = (rect.width - element.offsetWidth) / 2;
 
   return {
     size: {
@@ -54,8 +48,8 @@ export function getElementBoundingBox(
       height: options.useOffsetSize ? element.offsetHeight : rect.height,
     },
     location: {
-      left: rect.left + scrollLeft + leftOffset,
-      top: rect.top + scrollTop + topOffset,
+      left: rect.left + scrollLeft,
+      top: rect.top + scrollTop,
     },
     raw: {
       rect,
@@ -65,14 +59,12 @@ export function getElementBoundingBox(
   };
 }
 
-
 export function calculateElementCenterInViewport(elementBoundingBox: ElementBoundingBox) {
   return {
     top: elementBoundingBox.location.top + Math.ceil(elementBoundingBox.size.width / 2),
     left: elementBoundingBox.location.left - Math.ceil(elementBoundingBox.size.height / 2),
   };
 }
-
 
 export function getWindowDimensions() {
   return {
@@ -81,14 +73,12 @@ export function getWindowDimensions() {
   };
 }
 
-
 export function calculateWindowCentre() {
   return {
     left: Math.ceil(window.innerWidth / 2),
     top: Math.ceil(window.innerHeight / 2),
   };
 }
-
 
 export function recalculateElementBoundingBoxFromScroll(
   elementBoundingBox: ElementBoundingBox

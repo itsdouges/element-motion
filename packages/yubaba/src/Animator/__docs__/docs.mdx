@@ -8,23 +8,82 @@ import Animator from '../index';
 
 # Animator
 
-This is the brains component.
-When unmounting or flipping the `in` prop from `true` to `false`,
-it will execute all the animations **top to bottom** if a matching Animator pair (either itself or another Animator element) is found within `50ms`.
+You will use this component with most animations.
+It does a few things:
 
-> **Tip -** See [Getting started](/getting-started) for more information on how to use this component.
+- take snapshots of the DOM
+- pass data to the animations
+- execute and orchestrate the animations
 
-## Usage
+You'll really only need to be concerned with _execute and orchestrate the animations_.
+There are three ways you can execute animations,
+listed below.
+
+> **Tip -** Missing some context? Have a look at [Getting started](/getting-started) first.
+
+## Animate unmounted to mounted
+
+You'll find this is the goto way for triggering animations.
+It will animate between an element that unmounts and an element that mounts over a state change.
+[Moving to another element](/getting-started#moving-to-another-element) is a good example of this.
 
 ```js
-import Animator from 'yubaba';
+import Animator, { Move } from 'yubaba';
 
-const ListItem = ({ index }) => (
-  <Animator name={`item-${index}`}>
-    {({ ref, style, className }) => <div ref={ref} style={style} className={className} />}
+({ isShown }) => [
+  !isShown && (
+    <Animator name="default">
+      <Move>{children}</Move>
+    </Animator>
+  ),
+  isShown && (
+    <Animator name="default">
+      <Move>{children}</Move>
+    </Animator>
+  ),
+];
+```
+
+## Animate self
+
+Using the `triggerSelfKey` prop to force an animation on itself over a state change.
+[Moving to the same element](/getting-started#moving-to-the-same-element) is a good example of this.
+
+```js
+import Animator, { Move } from 'yubaba';
+
+({ children, itemId }) => (
+  <Animator triggerSelfKey={itemId} name="self-target">
+    <Move>{children}</Move>
   </Animator>
 );
 ```
+
+> **Tip -** You can't use this with the `in` prop,
+> if you try you'll get a dev error.
+
+## Animate persisted to mounted
+
+Animate between a react element that never unmounts and one that mounts/unmounts over a state change.
+Using the `in` prop to mark a persisted component if it is considered in or not.
+[Moving from a persisted element](/getting-started#moving-from-a-persisted-element) is a good example of this.
+
+```js
+import Animator, { Move } from 'yubaba';
+
+({ isShown }) => [
+  <Animator name="default" in={!isShown}>
+    <Move>{children}</Move>
+  </Animator>,
+  isShown && (
+    <Animator name="default">
+      <Move>{children}</Move>
+    </Animator>
+  ),
+];
+```
+
+> **Tip -** You can also use the same method to animate over unmounted to persisted.
 
 ## Props
 

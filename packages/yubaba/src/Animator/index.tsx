@@ -36,7 +36,7 @@ export interface ChildProps {
   className?: string;
 }
 
-export interface State {
+export interface AnimatorState {
   childProps: ChildProps;
   animationsMarkup: React.ReactPortal[];
 }
@@ -48,11 +48,18 @@ export interface AnimatorProps extends CollectorChildrenProps, InjectedProps {
   name: string;
 
   /**
-   * Used alternatively to the implicit animation triggering via unmounting or mounting of Animator components.
-   * Only use `in` if your component is expected to persist through the entire lifecyle of the app.
-   * When you transition to the "next page" make sure to set your "in" to false. When you transition
-   * back to the original page set the "in" prop back to true. This lets the Animator components know when to
-   * execute the animations.
+   * Will trigger animations over itself when this prop changes.
+   *
+   * You can't use the with the "in" prop.
+   */
+  triggerSelfKey?: string;
+
+  /**
+   * Use if your element is expected to persist through an animation.
+   * When you transition to the next state set your "in" to false and vice versa.
+   * This lets the Animator components know when to execute the animations.
+   *
+   * You can't use this with the "triggerSelfKey".
    */
   in?: boolean;
 
@@ -75,7 +82,7 @@ export interface AnimatorProps extends CollectorChildrenProps, InjectedProps {
   container: HTMLElement | (() => HTMLElement);
 }
 
-export default class Animator extends React.PureComponent<AnimatorProps, State> {
+export default class Animator extends React.PureComponent<AnimatorProps, AnimatorState> {
   static displayName = 'Animator';
 
   static defaultProps = {
@@ -84,7 +91,7 @@ export default class Animator extends React.PureComponent<AnimatorProps, State> 
     container: document.body,
   };
 
-  state: State = {
+  state: AnimatorState = {
     animationsMarkup: [],
     childProps: {},
   };
@@ -115,55 +122,95 @@ export default class Animator extends React.PureComponent<AnimatorProps, State> 
     if (componentIn === undefined || componentIn) {
       // Ok nothing is there yet, show ourself and store DOM data for later.
       // We'll be waiting for another Animator to mount.
-      this.showSelfAndNotifyManager();
+      this.notifyVisibilityManagerAnimationsAreFinished();
     }
   }
 
-  componentWillUpdate(prevProps: AnimatorProps) {
-    const { in: isIn } = this.props;
-    if (prevProps.in === false && isIn === true) {
-      // We're being removed from "in". Let's recalculate our DOM position.
+  getSnapshotBeforeUpdate(prevProps: AnimatorProps) {
+    if (prevProps.in === true && this.props.in === false) {
       this.storeDOMData();
       this.delayedClearStore();
       this.abortAnimations();
     }
+
+    if (prevProps.triggerSelfKey !== this.props.triggerSelfKey) {
+      this.storeDOMData();
+      this.delayedClearStore();
+    }
+
+    // we can return snapshot here to circumvent the entire storing of dom data.
+    // would remove the need for setting a name!
+    return null;
   }
 
-  componentDidUpdate(prevProps: AnimatorProps) {
-    const { in: isIn, name } = this.props;
+  componentDidUpdate(prevProps: AnimatorProps, _: AnimatorState) {
+    const inPropSame = this.props.in === prevProps.in;
+    const triggerSelfKeyPropSame = this.props.triggerSelfKey === prevProps.triggerSelfKey;
 
-    if (isIn === prevProps.in) {
+    if (inPropSame && triggerSelfKeyPropSame) {
       // Nothing has changed, return early.
       return;
     }
 
-    if (
-      process.env.NODE_ENV === 'development' &&
-      (isIn === undefined || prevProps.in === undefined)
-    ) {
-      warn(
-        `You're switching between controlled and uncontrolled, don't do this. Either always set the "in" prop as true or false, or keep as undefined.`
+    if (process.env.NODE_ENV === 'development') {
+      precondition(
+        !(this.props.in !== undefined && this.props.triggerSelfKey !== undefined),
+        `Don't use "in" and "triggerSelfKey" together. If your element is persisted use "in". If your element is targeting itself for animations use "triggerSelfKey".`
       );
     }
 
-    if (isIn) {
-      if (store.has(name)) {
+    if (process.env.NODE_ENV === 'development') {
+      precondition(
+        !((this.props.in === undefined || prevProps.in === undefined) && !inPropSame),
+        `You're switching between persisted and unpersisted, don't do this. Either always set the "in" prop as true or false, or keep as undefined.`
+      );
+    }
+
+    if (process.env.NODE_ENV === 'development') {
+      precondition(
+        !(
+          (this.props.triggerSelfKey === undefined || prevProps.triggerSelfKey === undefined) &&
+          !triggerSelfKeyPropSame
+        ),
+        `You're switching between self triggering modes, don't do this. Either always set the "triggerSelfKey" prop, or keep as undefined.`
+      );
+    }
+
+    if (this.props.in) {
+      if (store.has(this.props.name)) {
         this.executeAnimations();
+        // return early dont tell manager yet dawg
         return;
       }
+      // No animation to trigger, tell manager we're all good regardless.
+      this.notifyVisibilityManagerAnimationsAreFinished();
+      return;
+    }
 
-      this.showSelfAndNotifyManager();
+    if (!triggerSelfKeyPropSame) {
+      // Defer execution to the next frame to capture correctly.
+      // Make sure to keep react state the same for any inflight animations to be captured correctly.
+      requestAnimationFrame(() => {
+        this.abortAnimations();
+        this.executeAnimations();
+      });
     }
   }
 
   componentWillUnmount() {
+    if (this.props.triggerSelfKey) {
+      this.abortAnimations();
+      this.unmounting = true;
+      return;
+    }
+
     this.storeDOMData();
     this.delayedClearStore();
     this.abortAnimations();
     this.unmounting = true;
   }
 
-  showSelfAndNotifyManager() {
+  notifyVisibilityManagerAnimationsAreFinished() {
     const { context, name } = this.props;
 
     // If a VisibilityManager is a parent up the tree context will be available.
@@ -233,6 +280,7 @@ If it's an image, try and have the image loaded before mounting, or set a static
     const { name, container: getContainer, context } = this.props;
     const container = typeof getContainer === 'function' ? getContainer() : getContainer;
     const fromTarget = store.get(name);
+    let aborted = false;
 
     if (fromTarget) {
       const { collectorData, elementData } = fromTarget;
@@ -332,6 +380,10 @@ If it's an image, try and have the image loaded before mounting, or set a static
                 container.removeChild(elementToMountChildren);
               }
 
+              if (targetData.payload.abort) {
+                targetData.payload.abort();
+              }
+
               if (this.unmounting) {
                 return;
               }
@@ -370,6 +422,8 @@ If it's an image, try and have the image loaded before mounting, or set a static
       );
 
       this.abortAnimations = () => {
+        aborted = true;
+
         if (this.animating) {
           this.animating = false;
           blocks.forEach(block => block.forEach(anim => anim.cleanup()));
@@ -423,6 +477,10 @@ If it's an image, try and have the image loaded before mounting, or set a static
                 );
               })
               .then(() => {
+                if (aborted) {
+                  return;
+                }
+
                 blocks.forEach(block => block.forEach(anim => anim.cleanup()));
               })
               .then(() => {
