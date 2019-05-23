@@ -6,9 +6,7 @@ import Collector, {
   SupplyRefHandler,
   CollectorChildrenAsFunction,
   CollectorData,
-  CollectorChildrenProps,
   CollectorActions,
-  InlineStyles,
   TargetPropsFunc,
   AnimationData,
   AnimationCallback,
@@ -18,69 +16,8 @@ import defer from '../lib/defer';
 import noop from '../lib/noop';
 import { precondition, warn } from '../lib/log';
 import * as store from '../lib/animatorStore';
-import { InjectedProps, withVisibilityManagerContext } from '../VisibilityManager';
-
-export type AnimationFunc = () => Promise<void>;
-
-export interface MappedAnimation {
-  animate: AnimationFunc;
-  beforeAnimate: AnimationFunc;
-  afterAnimate: AnimationFunc;
-  cleanup: () => void;
-}
-
-export type AnimationBlock = MappedAnimation[];
-
-export interface ChildProps {
-  style?: InlineStyles;
-  className?: string;
-}
-
-export interface AnimatorState {
-  childProps: ChildProps;
-  animationsMarkup: React.ReactPortal[];
-}
-
-export interface AnimatorProps extends CollectorChildrenProps, InjectedProps {
-  /**
-   * Name of the animator, this should match the target animator.
-   */
-  name: string;
-
-  /**
-   * Will trigger animations over itself when this prop changes.
-   *
-   * You can't use the with the "in" prop.
-   */
-  triggerSelfKey?: string;
-
-  /**
-   * Use if your element is expected to persist through an animation.
-   * When you transition to the next state set your "in" to false and vice versa.
-   * This lets the Animator components know when to execute the animations.
-   *
-   * You can't use this with the "triggerSelfKey".
-   */
-  in?: boolean;
-
-  /**
-   * Callback called when all animations have finished and been cleaned up. Fired from the triggering Animator
-   * component.
-   */
-  onFinish: () => void;
-
-  /**
-   * Time this component will wait until it throws away the animation.
-   * Defaults to 50ms, might want to bump it up if loading something that was code split.
-   */
-  timeToWaitForNextAnimator: number;
-
-  /**
-   * HTMLElement container used when creating elements for animations,
-   * generally only supporting animations will need this.
-   */
-  container: HTMLElement | (() => HTMLElement);
-}
+import { withVisibilityManagerContext } from '../VisibilityManager';
+import { AnimatorProps, AnimatorState, AnimationBlock } from './types';
 
 export default class Animator extends React.PureComponent<AnimatorProps, AnimatorState> {
   static displayName = 'Animator';
@@ -89,6 +26,7 @@ export default class Animator extends React.PureComponent<AnimatorProps, Animato
     onFinish: noop,
     timeToWaitForNextAnimator: 50,
     container: document.body,
+    name: '',
   };
 
   state: AnimatorState = {
@@ -111,7 +49,13 @@ export default class Animator extends React.PureComponent<AnimatorProps, Animato
   abortAnimations: () => void = () => undefined;
 
   componentDidMount() {
-    const { in: componentIn, name } = this.props;
+    const { in: componentIn, name, triggerSelfKey } = this.props;
+
+    if (process.env.NODE_ENV === 'development' && (!triggerSelfKey && !name)) {
+      warn(
+        '"name" prop needs to be defined. Without it you may have problems matching up animator targets. You will not get this error when using "triggerSelfKey" prop.'
+      );
+    }
 
     if (componentIn === undefined && store.has(name)) {
       // A child has already been stored, so this is probably the matching pair.
@@ -128,22 +72,23 @@ export default class Animator extends React.PureComponent<AnimatorProps, Animato
 
   getSnapshotBeforeUpdate(prevProps: AnimatorProps) {
     if (prevProps.in === true && this.props.in === false) {
-      this.storeDOMData();
+      this.snapshotDOMData();
       this.delayedClearStore();
       this.abortAnimations();
     }
 
     if (prevProps.triggerSelfKey !== this.props.triggerSelfKey) {
-      this.storeDOMData();
-      this.delayedClearStore();
+      return this.snapshotDOMData('return');
     }
 
-    // we can return snapshot here to circumvent the entire storing of dom data.
-    // would remove the need for setting a name!
     return null;
   }
 
-  componentDidUpdate(prevProps: AnimatorProps, _: AnimatorState) {
+  componentDidUpdate(
+    prevProps: AnimatorProps,
+    _: AnimatorState,
+    DOMSnapshot: store.AnimatorData | null
+  ) {
     const inPropSame = this.props.in === prevProps.in;
     const triggerSelfKeyPropSame = this.props.triggerSelfKey === prevProps.triggerSelfKey;
 
@@ -192,7 +137,7 @@ export default class Animator extends React.PureComponent<AnimatorProps, Animato
       // Make sure to keep react state the same for any inflight animations to be captured correctly.
       requestAnimationFrame(() => {
         this.abortAnimations();
-        this.executeAnimations();
+        this.executeAnimations(DOMSnapshot);
       });
     }
   }
@@ -204,7 +149,7 @@ export default class Animator extends React.PureComponent<AnimatorProps, Animato
       return;
     }
 
-    this.storeDOMData();
+    this.snapshotDOMData();
     this.delayedClearStore();
     this.abortAnimations();
     this.unmounting = true;
@@ -226,64 +171,69 @@ export default class Animator extends React.PureComponent<AnimatorProps, Animato
     setTimeout(() => store.remove(name), timeToWaitForNextAnimator);
   }
 
-  storeDOMData() {
-    if (this.unmounting) {
-      return;
-    }
-
+  snapshotDOMData(action: 'store' | 'return' = 'store'): store.AnimatorData | null {
     // If there is only a Animator target and no child animations
     // data will be undefined, which means there are no animations to store.
-    if (this.data) {
-      if (process.env.NODE_ENV === 'development') {
-        precondition(
-          this.element,
-          `The ref was not set when trying to store data, check that a child element has a ref passed. This needs to be set so we can take a snapshot of the origin DOM element.
+    if (this.unmounting || !this.data) {
+      return null;
+    }
+
+    if (process.env.NODE_ENV === 'development') {
+      precondition(
+        this.element,
+        `The ref was not set when trying to store data, check that a child element has a ref passed. This needs to be set so we can take a snapshot of the origin DOM element.
 
 <${Animator.displayName} name="${this.props.name}">
   {props => <div ref={props.ref} />}
 </${Animator.displayName}>
 `
-        );
-      }
+      );
+    }
 
-      const elementBoundingBox = getElementBoundingBox(this.element as HTMLElement);
-      const focalTargetElementBoundingBox = this.focalTargetElement
-        ? getElementBoundingBox(this.focalTargetElement)
-        : undefined;
+    const elementBoundingBox = getElementBoundingBox(this.element as HTMLElement);
+    const focalTargetElementBoundingBox = this.focalTargetElement
+      ? getElementBoundingBox(this.focalTargetElement)
+      : undefined;
 
-      if (process.env.NODE_ENV === 'development' && elementBoundingBox.size.height === 0) {
-        warn(`Your target child had a height of zero when capturing it's DOM data. This may affect the animation.
+    if (process.env.NODE_ENV === 'development' && elementBoundingBox.size.height === 0) {
+      warn(`Your target child had a height of zero when capturing it's DOM data. This may affect the animation.
 If it's an image, try and have the image loaded before mounting, or set a static height.`);
-      }
+    }
 
-      const { name } = this.props;
+    const { name } = this.props;
 
-      // NOTE: Currently in react 16.3 if the parent being unmounted is a Fragment
-      // there is a chance for sibling elements to be removed from the DOM first
-      // resulting in inaccurate calculations of location. Watch out!
-      const data: store.AnimatorData = {
-        elementData: {
-          element: this.element as HTMLElement,
-          elementBoundingBox,
-          focalTargetElement: this.focalTargetElement,
-          focalTargetElementBoundingBox,
-          render: this.renderChildren,
-        },
-        collectorData: this.data,
-      };
+    // NOTE: Currently in react 16.3 if the parent being unmounted is a Fragment
+    // there is a chance for sibling elements to be removed from the DOM first
+    // resulting in inaccurate calculations of location. Watch out!
+    const data: store.AnimatorData = {
+      elementData: {
+        element: this.element as HTMLElement,
+        elementBoundingBox,
+        focalTargetElement: this.focalTargetElement,
+        focalTargetElementBoundingBox,
+        render: this.renderChildren,
+      },
+      collectorData: this.data,
+    };
 
+    if (action === 'return') {
+      return data;
+    }
+
+    if (action === 'store') {
       store.set(name, data);
     }
+
+    return null;
   }
 
-  executeAnimations = () => {
+  executeAnimations = (DOMSnapshot: store.AnimatorData | null = store.get(this.props.name)) => {
     const { name, container: getContainer, context } = this.props;
     const container = typeof getContainer === 'function' ? getContainer() : getContainer;
-    const fromTarget = store.get(name);
     let aborted = false;
 
-    if (fromTarget) {
-      const { collectorData, elementData } = fromTarget;
+    if (DOMSnapshot) {
+      const { collectorData, elementData } = DOMSnapshot;
       this.animating = true;
 
       // Calculate DOM data for the executing element to then be passed to the animation/s.

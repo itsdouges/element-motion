@@ -24,7 +24,6 @@ storiesOf('yubaba/ReshapingContainer', module)
       <Toggler>
         {toggler => (
           <ReshapingContainer
-            id="dialog-move"
             triggerKey={`${toggler.shown}`}
             boxShadow="0 1px 50px rgba(32, 33, 36, 0.1)"
             padding="16px"
@@ -61,7 +60,6 @@ storiesOf('yubaba/ReshapingContainer', module)
       <Toggler>
         {toggler => (
           <ReshapingContainer
-            id="dialog-width"
             triggerKey={`${toggler.shown}`}
             boxShadow="0 1px 50px rgba(32, 33, 36, 0.1)"
             padding="16px"

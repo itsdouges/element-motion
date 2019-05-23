@@ -53,7 +53,7 @@ Using the `triggerSelfKey` prop to force an animation on itself over a state cha
 import Animator, { Move } from 'yubaba';
 
 ({ children, itemId }) => (
-  <Animator triggerSelfKey={itemId} name="self-target">
+  <Animator triggerSelfKey={itemId}>
     <Move>{children}</Move>
   </Animator>
 );

@@ -51,7 +51,7 @@ yarn add yubaba react@^16.4.x react-dom@^16.4.x emotion@^10.x.x
 import Animator, { Move } from 'yubaba';
 
 ({ isLarge }) => (
-  <Animator name="my-first-baba" triggerSelfKey={isLarge}>
+  <Animator triggerSelfKey={isLarge}>
     <Move>{anim => <div {...anim} className={isLarge ? 'large' : 'small'} />}</Move>
   </Animator>
 );
