@@ -7,7 +7,7 @@ const primaryText = 'rgba(255, 255, 255, 0.95)';
 const background = `linear-gradient(135deg, ${altPrimary} 25%, ${primary} 100%)`;
 
 module.exports = {
-  title: 'yubaba 🧙✨',
+  title: `yubaba ${pkg.description}`,
   description: `yubaba ${pkg.description}`,
   typescript: true,
   dest: '/docs',
@@ -44,6 +44,7 @@ module.exports = {
           display: none;
         }
 
+        a[class^='MenuLink__LinkAnchor-'],
         a[class^='MenuLink__createLink-'] {
           font-weight: 400;
 
@@ -55,6 +56,11 @@ module.exports = {
 
         a[class^='SmallLink__Link'] {
           opacity: 0.65;
+
+          :hover,
+          :focus {
+            opacity: 0.9;
+          }
         }
       `,
       h1: css`

@@ -17,7 +17,6 @@ const pos = {
 };
 
 export const InnerMenu = styled.div<{ state: string }>`
-  transition: transform 0.2, opacity 0.2;
   opacity: ${props => opac[props.state]};
   position: ${props => pos[props.state]};
   top: 0;

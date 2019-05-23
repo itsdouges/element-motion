@@ -81,7 +81,7 @@ Here we use Popmotion to do the animating.
 <Playground>
   <Common.Toggler interval>
     {toggler => (
-      <Animator name="popmotion-right" key={toggler.shown}>
+      <Animator name="popmotion-right" triggerSelfKey={toggler.shown}>
         <PopmotionMoveRight>{anim => <Styled.Root {...anim} />}</PopmotionMoveRight>
       </Animator>
     )}

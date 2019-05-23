@@ -154,7 +154,7 @@ To do that we can abuse how `key`'s work in react - we just update the key at th
   <Styled.Container>
     <Toggler>
       {({ shown, toggle }) => (
-        <Animator name="same-move" key={shown}>
+        <Animator name="same-move" triggerSelfKey={shown}>
           <Move>
             {({ ref, style }) => (
               <>

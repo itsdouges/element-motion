@@ -1,6 +1,6 @@
 # yubaba 🧙✨
 
-/juːba:ba/ out of the box animated experiences for [React.js](https://reactjs.org/) 🧙✨
+/juːbaːba/ out of the box animated experiences for [React.js](https://reactjs.org/) 🧙✨
 
 [![npm](https://img.shields.io/npm/v/yubaba.svg)](https://www.npmjs.com/package/yubaba) [![npm bundle size (minified + gzip)](https://badgen.net/bundlephobia/minzip/yubaba)](https://bundlephobia.com/result?p=yubaba)
 
@@ -44,7 +44,7 @@ yarn add yubaba react@^16.4.x react-dom@^16.4.x emotion@^10.x.x
 import Animator, { Move } from 'yubaba';
 
 ({ isLarge }) => (
-  <Animator name="my-first-baba" key={isLarge}>
+  <Animator name="my-first-baba" triggerSelfKey={isLarge}>
     <Move>{anim => <div {...anim} className={isLarge ? 'large' : 'small'} />}</Move>
   </Animator>
 );

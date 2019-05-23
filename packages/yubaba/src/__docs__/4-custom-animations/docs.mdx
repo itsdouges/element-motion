@@ -161,7 +161,7 @@ export default class OneFullRotation extends Component {
 <Styled.Container>
   <Toggler interval>
     {toggler => (
-      <Animator key={toggler.shown} name="element-animation-1">
+      <Animator triggerSelfKey={toggler.shown} name="element-animation-1">
         <OneFullRotation>
           {({ ref, ...props }) => (
             <Styled.InlineBlock
@@ -207,7 +207,7 @@ beforeAnimate = (elements, onFinish, setChildProps) => {
 <Styled.Container>
   <Toggler interval>
     {toggler => (
-      <Animator key={toggler.shown} name="element-animation-2">
+      <Animator triggerSelfKey={toggler.shown} name="element-animation-2">
         <Move>
           <OneFullRotation>
             {({ ref, ...props }) => (
@@ -336,7 +336,7 @@ export default class SupportingAnimation extends React.Component {
 <Styled.Container>
   <Toggler>
     {toggler => (
-      <Animator key={toggler.shown} name="supporting-animation-1">
+      <Animator triggerSelfKey={toggler.shown} name="supporting-animation-1">
         <SupportingAnimation>
           {({ ref, ...props }) => (
             <Styled.InlineBlock

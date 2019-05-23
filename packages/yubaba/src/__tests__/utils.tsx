@@ -32,6 +32,7 @@ export const createTestAnimation = ({
   onBeforeAnimate = noop,
   onAnimate = noop,
   onAfterAnimate = noop,
+  onCleanup = noop,
   beforeAnimateJsx,
   animateJsx,
   afterAnimateJsx,
@@ -43,6 +44,7 @@ export const createTestAnimation = ({
     data={{
       action: CollectorActions.animation,
       payload: {
+        abort: onCleanup,
         beforeAnimate: (data, onFinish, setChildProps) => {
           onBeforeAnimate(data);
           setTimeout(onFinish, 0);

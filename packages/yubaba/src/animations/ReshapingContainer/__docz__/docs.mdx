@@ -20,13 +20,27 @@ for example a hover menu!
 
 ## Usage
 
-```js
-import { ReshapingContainer } from 'yubaba';
-```
-
 <Playground>
   <TripeHoverMenu />
 </Playground>
+
+```js
+import { ReshapingContainer } from 'yubaba';
+
+({ children }) => (
+  <ReshapingContainer
+    triggerKey={children}
+    id="reshaping-example"
+    boxShadow="0 50px 100px -20px rgba(50,50,93,.25), 0 30px 60px -30px rgba(0,0,0,.3), 0 -18px 60px -10px rgba(0,0,0,.025)"
+    background="#fff"
+    maxWidth="500px"
+    borderRadius="3px"
+    padding="16px"
+  >
+    {anim => <Styled.Menu {...anim}>{children}</Styled.Menu>}
+  </ReshapingContainer>
+);
+```
 
 ## Props
 

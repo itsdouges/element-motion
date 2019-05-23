@@ -10,6 +10,7 @@ import { standard } from '../../lib/curves';
 import { combine, zIndexStack } from '../../lib/style';
 import { Duration } from '../types';
 import { dynamic } from '../../lib/duration';
+import noop from '../../lib/noop';
 
 export interface MoveProps extends CollectorChildrenProps {
   /**
@@ -55,6 +56,8 @@ export default class Move extends React.Component<MoveProps> {
     transformX: true,
     transformY: true,
   };
+
+  abort = noop;
 
   beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
     const { zIndex, useFocalTarget, transformX, transformY } = this.props;
@@ -119,7 +122,10 @@ export default class Move extends React.Component<MoveProps> {
       }),
     });
 
-    setTimeout(() => onFinish(), calculatedDuration);
+    const id = window.setTimeout(() => onFinish(), calculatedDuration);
+    this.abort = () => {
+      window.clearTimeout(id);
+    };
   };
 
   render() {
@@ -132,6 +138,7 @@ export default class Move extends React.Component<MoveProps> {
           payload: {
             beforeAnimate: this.beforeAnimate,
             animate: this.animate,
+            abort: this.abort,
           },
         }}
       >

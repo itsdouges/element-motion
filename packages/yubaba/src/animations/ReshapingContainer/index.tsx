@@ -136,11 +136,10 @@ export default class ReshapingContainer extends React.PureComponent<ReshapingCon
     const ComponentAs = rest.as as any;
 
     return (
-      <Animator name={`${id}-container`} key={triggerKey}>
+      <Animator name={`${id}-container`} triggerSelfKey={triggerKey}>
         <Move duration={duration} timingFunction={timingFunction}>
           {anim => (
             <ComponentAs
-              ref={anim.ref}
               style={{
                 position: 'relative',
                 minWidth,
@@ -156,6 +155,7 @@ export default class ReshapingContainer extends React.PureComponent<ReshapingCon
               <div
                 aria-hidden="true"
                 className={anim.className}
+                ref={anim.ref}
                 style={{
                   ...anim.style,
                   background,

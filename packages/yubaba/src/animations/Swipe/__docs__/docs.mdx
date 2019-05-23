@@ -24,7 +24,7 @@ import { Swipe } from 'yubaba';
   <Common.Toggler>
     {({ shown, toggle }) => (
       <Styled.Container onClick={() => toggle()} interactive>
-        <Animator name="swipe" key={shown}>
+        <Animator name="swipe" triggerSelfKey={shown}>
           <Swipe background="#ff5e6d" direction={shown ? 'left' : 'right'}>
             {({ ref, style }) => <div style={style} ref={ref} />}
           </Swipe>

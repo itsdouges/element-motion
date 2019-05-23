@@ -50,7 +50,7 @@ import { RevealReshapingContainer } from 'yubaba';
               <Styled.Header>tripe facts 🥩</Styled.Header>
 
               <Styled.Button
-                onClick={() => toggler.toggle([0, 1, 2][Math.ceil((Math.random() * 100) % 3)])}
+                onClick={() => toggler.set((toggler.shown + 1) % 3)}
               >
                 👉 thank u, next
               </Styled.Button>

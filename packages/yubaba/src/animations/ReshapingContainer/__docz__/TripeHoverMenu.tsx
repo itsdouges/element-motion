@@ -5,7 +5,7 @@ import ReshapingContainer from '../index';
 import * as Styled from './styled';
 
 const menuPosition = [200, 100, 20];
-const innerTimeout = { enter: 0, exit: 200 };
+const innerTimeout = { enter: 200, exit: 300 };
 
 const TripeHoverMenu = () => (
   <Common.Toggler

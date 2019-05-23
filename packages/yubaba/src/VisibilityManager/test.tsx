@@ -5,6 +5,8 @@ import { WrappedVisibilityManager as VisibilityManager } from '../VisibilityMana
 import * as utils from '../__tests__/utils';
 import defer from '../lib/defer';
 
+window.requestAnimationFrame = (cb: Function) => cb();
+
 describe('<VisibilityManager />', () => {
   it('should be visible after start animation has been mounted', () => {
     const Animation = utils.createTestAnimation();
@@ -39,6 +41,34 @@ describe('<VisibilityManager />', () => {
     wrapper.update();
 
     expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'visible' });
+  });
+
+  it('should be hidden during animation via self animation', () => {
+    const Animation = utils.createTestAnimation();
+    const wrapper = mount(
+      <utils.AnimatorUnderTest
+        from={shown => (
+          <VisibilityManager isInitiallyVisible>
+            {props => (
+              <span {...props}>
+                <Animator name="aaa" triggerSelfKey={`${shown}`}>
+                  <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
+                </Animator>
+              </span>
+            )}
+          </VisibilityManager>
+        )}
+        to={null}
+        start={false}
+      />
+    );
+
+    wrapper.setProps({
+      start: true,
+    });
+    wrapper.update();
+
+    expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'hidden' });
   });
 
   it('should be hidden during animation', () => {
