@@ -59,9 +59,7 @@ for example here in our _tripe.com_ menu we use it for just that!
 ({ isMenuShown, shownMenuId }) => (
   <CSSTransition in={isMenuShown} unmountOnExit mountOnEnter timeout={{ enter: 0, exit: 100 }}>
     <div class="menu-container">
-      <ReshapingContainer id="reshape-with-transition" triggerKey={shownMenuId}>
-        hello world
-      </ReshapingContainer>
+      <ReshapingContainer triggerKey={shownMenuId}>hello world</ReshapingContainer>
     </div>
   </CSSTransition>
 );
@@ -81,7 +79,7 @@ Here we use Popmotion to do the animating.
 <Playground>
   <Common.Toggler interval>
     {toggler => (
-      <Animator name="popmotion-right" triggerSelfKey={toggler.shown}>
+      <Animator triggerSelfKey={toggler.shown}>
         <PopmotionMoveRight>{anim => <Styled.Root {...anim} />}</PopmotionMoveRight>
       </Animator>
     )}

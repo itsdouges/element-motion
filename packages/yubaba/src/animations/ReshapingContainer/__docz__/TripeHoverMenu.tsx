@@ -70,7 +70,6 @@ const TripeHoverMenu = () => (
             >
               <ReshapingContainer
                 triggerKey={toggler.shown.shown}
-                id="reshaping-example"
                 boxShadow="0 50px 100px -20px rgba(50,50,93,.25), 0 30px 60px -30px rgba(0,0,0,.3), 0 -18px 60px -10px rgba(0,0,0,.025)"
                 background="#fff"
                 maxWidth="500px"

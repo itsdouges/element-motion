@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { mount, ReactWrapper } from 'enzyme'; // eslint-disable-line import/no-extraneous-dependencies
+import { mount, ReactWrapper, shallow } from 'enzyme'; // eslint-disable-line import/no-extraneous-dependencies
 import { MemoryRouter, Link } from 'react-router-dom';
 import { WrappedAnimator as Animator } from '../Animator';
 import Target from '../FocalTarget';
@@ -33,7 +33,41 @@ const startAnimation = (wrapper: ReactWrapper) => {
 };
 
 describe('<Animator />', () => {
+  it('should warn if name isnt defined', () => {
+    console.warn = jest.fn();
+    process.env.NODE_ENV = 'development';
+
+    mount(<Animator>{props => <div {...props} />}</Animator>);
+
+    expect(console.warn).toHaveBeenCalledWith(`yubaba v0.0.0
+
+"name" prop needs to be defined. Without it you may have problems matching up animator targets. You will not get this error when using "triggerSelfKey" prop.`);
+  });
+
+  it('should not warn if not using name when doing self targetted animator', () => {
+    console.warn = jest.fn();
+    process.env.NODE_ENV = 'development';
+
+    shallow(<Animator triggerSelfKey="hi">{props => <div {...props} />}</Animator>);
+
+    expect(console.warn).not.toHaveBeenCalled();
+  });
+
+  it('should not warn when using name', () => {
+    console.warn = jest.fn();
+    process.env.NODE_ENV = 'development';
+
+    shallow(
+      <Animator name="hello" triggerSelfKey="hi">
+        {props => <div {...props} />}
+      </Animator>
+    );
+
+    expect(console.warn).not.toHaveBeenCalled();
+  });
+
   it('should callback when animation has finished', done => {
+    (getElementBoundingBox as jest.Mock).mockReturnValue(utils.domData());
     const Animation = utils.createTestAnimation();
     const wrapper = mount(
       <utils.AnimatorUnderTest

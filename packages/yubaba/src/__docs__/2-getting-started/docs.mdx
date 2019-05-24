@@ -113,7 +113,6 @@ here is their message notification pill made using [ReshapingContainer](/reshapi
         <VisibilityManager isInitiallyVisible>
           {visibility => (
             <ReshapingContainer
-              id="messenger-pill"
               triggerKey={toggler.shown}
               display="inline-block"
               boxShadow="rgba(32, 33, 36, 0.25) 0px 3px 6px"
@@ -148,13 +147,14 @@ here is their message notification pill made using [ReshapingContainer](/reshapi
 
 Sometimes we want to animate over the same element after a state change,
 for example expanding a thumbnail to a large image.
-To do that we can abuse how `key`'s work in react - we just update the key at the same time as the state change.
+To do that we can use the `triggerSelfKey` prop available in the `Animator` component -
+we just update the key at the same time as the state change.
 
 <Playground>
   <Styled.Container>
     <Toggler>
       {({ shown, toggle }) => (
-        <Animator name="same-move" triggerSelfKey={shown}>
+        <Animator triggerSelfKey={shown}>
           <Move>
             {({ ref, style }) => (
               <>

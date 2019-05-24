@@ -6,11 +6,6 @@ import { Duration } from '../types';
 
 export interface ReshapingContainerProps {
   /**
-   * This should be a unique identifier across your whole app.
-   */
-  id: string;
-
-  /**
    * Will trigger the animation when this key changes.
    * Change this when you want the animations to trigger,
    * ideally when the children JSX has changed.
@@ -126,7 +121,6 @@ export default class ReshapingContainer extends React.PureComponent<ReshapingCon
       margin,
       padding,
       duration,
-      id,
       display,
       timingFunction,
       borderRadius,
@@ -136,7 +130,7 @@ export default class ReshapingContainer extends React.PureComponent<ReshapingCon
     const ComponentAs = rest.as as any;
 
     return (
-      <Animator name={`${id}-container`} triggerSelfKey={triggerKey}>
+      <Animator triggerSelfKey={triggerKey}>
         <Move duration={duration} timingFunction={timingFunction}>
           {anim => (
             <ComponentAs

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { mount } from 'enzyme';
+import { mount } from 'enzyme'; // eslint-disable-line
 import { WrappedAnimator as Animator } from '../Animator';
 import { WrappedVisibilityManager as VisibilityManager } from '../VisibilityManager';
 import * as utils from '../__tests__/utils';
@@ -51,7 +51,7 @@ describe('<VisibilityManager />', () => {
           <VisibilityManager isInitiallyVisible>
             {props => (
               <span {...props}>
-                <Animator name="aaa" triggerSelfKey={`${shown}`}>
+                <Animator triggerSelfKey={`${shown}`}>
                   <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
                 </Animator>
               </span>
@@ -79,7 +79,7 @@ describe('<VisibilityManager />', () => {
           <VisibilityManager isInitiallyVisible>
             {props => (
               <span {...props}>
-                <Animator name="aaa" key={`${shown}`}>
+                <Animator triggerSelfKey={`${shown}`}>
                   <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
                 </Animator>
               </span>

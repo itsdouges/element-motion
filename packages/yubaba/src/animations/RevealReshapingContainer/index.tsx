@@ -63,12 +63,12 @@ export default class RevealReshapingContainer extends React.PureComponent<
   }
 
   render() {
-    const { children, duration, id, timingFunction, triggerKey } = this.props;
+    const { children, duration, timingFunction, triggerKey } = this.props;
 
     return (
       <ReshapingContainer {...this.props}>
         {reshaping => (
-          <Animator name={`${id}-children`} triggerSelfKey={triggerKey}>
+          <Animator triggerSelfKey={triggerKey}>
             <Reveal
               duration={duration}
               offset={this.getInversePaddingParts()}
