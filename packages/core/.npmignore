@@ -3,3 +3,7 @@ test
 tsconfig*
 *test*
 *stories*
+__docz__
+__docs__
+src
+dist/**/package.json
