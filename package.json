@@ -15,7 +15,7 @@
     "cut-version": "yarn pre-cut-version && lerna publish --conventional-commits --skip-npm && yarn post-cut-version",
     "cut-version-beta": "yarn pre-cut-version && lerna publish --skip-npm --npm-tag beta && yarn post-cut-version",
     "post-cut-version": "git push && git push --tags",
-    "push-to-npm": "lerna exec --ignore @element-motion/dev -- npm publish",
+    "push-to-npm": "lerna exec --ignore @element-motion/dev -- npm publish --access public",
     "codecov": "echo \"not implemented\"",
     "storybook": "start-storybook -p 6006",
     "fix-duplicates": "yarn-tools fix-duplicates yarn.lock > fixed-yarn.lock && rm yarn.lock && mv fixed-yarn.lock yarn.lock && yarn install",
