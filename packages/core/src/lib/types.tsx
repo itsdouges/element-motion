@@ -7,3 +7,8 @@ export type ExtractProps<TComponentOrTProps> = TComponentOrTProps extends React.
 >
   ? P
   : never;
+
+export interface Point {
+  x: number;
+  y: number;
+}
