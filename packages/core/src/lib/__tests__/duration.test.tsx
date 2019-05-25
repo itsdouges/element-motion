@@ -1,4 +1,4 @@
-import { dynamic, getScreenSizeWeight } from './index';
+import { dynamic, getScreenSizeWeight } from '../duration';
 import { ElementBoundingBox, getWindowDimensions } from '../dom';
 
 jest.mock('../dom');

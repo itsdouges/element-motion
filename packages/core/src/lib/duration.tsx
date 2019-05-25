@@ -1,5 +1,5 @@
-import { ElementBoundingBox, getWindowDimensions } from '../dom';
-import { calculateHypotenuse, clamp } from '../math';
+import { ElementBoundingBox, getWindowDimensions } from './dom';
+import { calculateHypotenuse, clamp } from './math';
 
 /**
  * Element [0] is the expanding time.
@@ -11,7 +11,6 @@ const distanceTiming = {
 };
 
 const MEDIUM_TRAVEL_PERCENT = 39;
-
 
 export function getScreenSizeWeight(width: number) {
   const weightedWidth = Number((width / 900).toFixed(2));
