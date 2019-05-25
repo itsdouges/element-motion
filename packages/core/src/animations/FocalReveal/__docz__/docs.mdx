@@ -1,0 +1,27 @@
+---
+name: FocalReveal
+route: /focal-reveal
+menu: Focal animations
+---
+
+import { Playground, Props } from 'docz';
+import * as Common from '@element-motion/dev';
+import FocalReveal from '../index';
+
+# FocalReveal
+
+Will reveal a container around a marked focal element using `width` and `height`,
+or alternatively `clip-path`.
+See [FocalRevealMove](/focal-reveal-move) for what this looks like.
+
+This component requires the use of a [FocalTarget](/focal-target) to mark the focal element.
+
+## Usage
+
+```js
+import { FocalReveal } from '@element-motion/core';
+```
+
+## Props
+
+<Props of={FocalReveal} />

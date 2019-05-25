@@ -1,0 +1,47 @@
+---
+name: FocalTarget
+route: /focal-target
+menu: Utility helpers
+---
+
+import { Playground, Props } from 'docz';
+import FocalTarget from '../index';
+
+# FocalTarget
+
+Used to explicitly mark the focal element,
+only a handful of animations require this component to be used,
+for example [FocalConcealMove](/focal-conceal-move).
+
+> **Tip -** See [Moving using a focal target](/advanced-usage#moving-using-a-focal-target) for more information on how to use this component.
+
+## Usage
+
+```js
+import { FocalTarget, FocalConcealMove } from '@element-motion/core';
+
+const ItemDetails = ({ title, recipients, body, index }) => (
+  <Animator name={`item-${index}`}>
+    <FocalConcealMove>
+      {anim => (
+        <div {...anim}>
+          <FocalTarget>
+            {({ ref }) => (
+              <div ref={ref}>
+                {title}
+                {recipients}
+              </div>
+            )}
+          </FocalTarget>
+
+          {body}
+        </div>
+      )}
+    </FocalConcealMove>
+  </Animator>
+);
+```
+
+## Props
+
+<Props of={FocalTarget} />

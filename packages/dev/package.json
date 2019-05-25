@@ -1,0 +1,22 @@
+{
+  "name": "@element-motion/dev",
+  "private": true,
+  "version": "2.4.0",
+  "repository": "madou/element-motion",
+  "author": "Michael Dougall",
+  "license": "MIT",
+  "main": "dist/packages/dev/src/index.js",
+  "module": "dist/packages/dev/src/index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsc -p ./tsconfig.json"
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2"
+  },
+  "peerDependencies": {
+    "react": "^16.4.x",
+    "react-dom": "^16.4.x",
+    "styled-components": "^4.2.0"
+  }
+}

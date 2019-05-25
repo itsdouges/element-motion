@@ -1,4 +1,3 @@
-const pkg = require('./packages/yubaba/package.json');
 const { css } = require('styled-components'); // eslint-disable-line
 
 const primary = 'rgb(133, 47, 255)';
@@ -7,8 +6,8 @@ const primaryText = 'rgba(255, 255, 255, 0.95)';
 const background = `linear-gradient(135deg, ${altPrimary} 25%, ${primary} 100%)`;
 
 module.exports = {
-  title: `yubaba ${pkg.description}`,
-  description: `yubaba ${pkg.description}`,
+  title: 'element motion for React.js 💨✨',
+  description: 'element motion for React.js 💨✨',
   typescript: true,
   dest: '/docs',
   codeSandbox: false,
