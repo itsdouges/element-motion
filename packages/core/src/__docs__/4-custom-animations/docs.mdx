@@ -1,0 +1,358 @@
+---
+name: 4. Custom animations 🎬
+route: /custom-animations
+order: 2
+---
+
+import { Playground } from 'docz';
+import { Toggler } from '@element-motion/dev';
+import { WrappedAnimator as Animator } from '../../Animator';
+import Move from '../../animations/Move';
+import OneFullRotation from './OneFullRotation';
+import SupportingAnimation from './SupportingAnimation';
+import * as Styled from './styled';
+
+# Custom animations
+
+At its core `element motion` is a powerful orchestration layer which provides a way to collect and trigger animations,
+as well as providing snapshots of the DOM to the animations,
+this can be helpful for example when figuring out where you'd like to move an element.
+
+> **Tip -** `element motion` works great with [other animation libraries](/advanced-usage#use-with-other-libaries) just incase you're wondering.
+
+## Lifecyle of an animation
+
+There are three phases of an animation:
+
+1. `beforeAnimate()` used for any initial work needed for an animation, e.g. moving the `destination` ontop of the `origin`
+2. `animate()` used for the primary animation, e.g. moving from `origin` to `destination`
+3. `afterAnimate()` used for any supplementary post-animation animation, e.g. fading out
+
+<br />
+
+Each phase method has the same type signature:
+
+```js
+(elements, onFinish, setChildProps) => JSX.Element | void;
+```
+
+> **Tip -** Notice you can return JSX elements.
+> If you do it will be created for that phase - and reconciled from the result of the following phases.
+> This means if you return JSX elements in `beforeAnimate()` but not in `animate()` or `afterAnimate()` it will be removed!
+
+### What is `elements{}`
+
+This contains snapshot data for the `origin` and `destination` elements,
+use this for doing any dynamic calculation for your animation.
+Remember that an animation will always have an `origin` and `destination`.
+
+> **Tip -** Notice there is a `render` property in `origin` and `destination` -
+> this is the render prop that consumers pass through which you can use to create the same element if needed!
+
+```js
+{
+  origin: {
+    element: HTMLElement;
+    elementBoundingBox: ElementBoundingBox;
+    focalTargetElement: HTMLElement | null | undefined;
+    focalTargetElementBoundingBox: ElementBoundingBox | undefined;
+    render: CollectorChildrenAsFunction;
+  },
+  destination: {
+    element: HTMLElement;
+    elementBoundingBox: ElementBoundingBox;
+    focalTargetElement: HTMLElement | null | undefined;
+    focalTargetElementBoundingBox: ElementBoundingBox | undefined;
+    render: CollectorChildrenAsFunction;
+  }
+}
+```
+
+> **Tip -** You can use the destination `element` to set style/classNames directly for better performance -
+> but remember you'll be doing it outside of the React lifecycle.
+
+### What is `onFinish()`
+
+Call this method when you've completed the phase.
+Animations will not continue to the next stage until all animations finish the current phase.
+
+### What is `setChildProps()`
+
+This will set the wrapped child props.
+
+```
+setChildProps({
+  style?: (prevStyles: InlineStyles) => InlineStyles | undefined;
+  className?: (prevClass: string | undefined) => string | undefined;
+});
+```
+
+## Focal animations
+
+The first is a [focal animation](/focal-animations).
+We are going to make a custom animation that makes the target element _do one full 360deg rotation_.
+
+```js
+import React, { Component } from 'react';
+import { Collector } from '@element-motion/core';
+
+export default class OneFullRotation extends Component {
+  // Before animate is used to set up the animation.
+  // Think of it as prepping the environment to efficiently start the animations
+  // during the animate phase.
+  beforeAnimate = (elements, onFinish, setChildProps) => {
+    setChildProps({
+      style: prevStyle => ({
+        ...prevStyle,
+        opacity: 1,
+        transformOrigin: 'center',
+        // We set up the initial state of the animation.
+        // Here we are using the FLIP technique of priming the animation
+        // first and then removing it so the animates into its destination position.
+        transform: 'rotate(360deg)',
+      }),
+      // className is also available for more advanced styles.
+      // className: (prevClassName) => 'new-class-name',
+      // Interally we use emotion for this for a few animations.
+    });
+
+    onFinish();
+  };
+
+  // This is the primary phase of an animation.
+  // Call onFinish() when the animation has completed.
+  animate = (elements, onFinish, setChildProps) => {
+    setTimeout(onFinish, 400);
+
+    setChildProps({
+      style: prevStyle => ({
+        ...prevStyle,
+        transition: 'transform 400ms',
+        transform: 'none',
+      }),
+    });
+  };
+
+  render() {
+    const { children } = this.props;
+
+    return (
+      // The collector component passes all data up to the
+      // nearest Animator parent.
+      <Collector
+        data={{
+          // Animation is the only allowed action.
+          action: 'animation',
+          payload: {
+            beforeAnimate: this.beforeAnimate,
+            animate: this.animate,
+            // afterAnimate() is also available for any cleanup or extra animations
+            // post the primary animation.
+          },
+        }}
+      >
+        {children}
+      </Collector>
+    );
+  }
+}
+```
+
+<Styled.Container>
+  <Toggler interval>
+    {toggler => (
+      <Animator triggerSelfKey={toggler.shown}>
+        <OneFullRotation>
+          {({ ref, ...props }) => (
+            <Styled.InlineBlock
+              alignSelf="flex-start"
+              {...props}
+              ref={ref}
+              onClick={() => toggler.toggle()}
+            >
+              click me
+            </Styled.InlineBlock>
+          )}
+        </OneFullRotation>
+      </Animator>
+    )}
+  </Toggler>
+</Styled.Container>
+
+> **Tip -** Animations are fired from the destination `Animator` element using the origin animations,
+> this allows us to have fine control over what animation should happen for the particular destination.
+> Depending where we are in our application we can have different animations occur to the same destination.
+
+### Composing animations
+
+Composability is a primary feature of `element motion` - with a small change we can compose the two animations together.
+If we introduce [Move](/move) we can make the element rotate and move to the new destination.
+
+```diff
+beforeAnimate = (elements, onFinish, setChildProps) => {
+  setChildProps({
+    style: prevStyle => ({
+      ...prevStyle,
+      opacity: 1,
+      transformOrigin: 'center',
+-      transform: 'rotate(360deg)',
++      transform: `${prevStyle.transform} rotate(360deg)`,
+    }),
+  });
+
+  onFinish();
+};
+```
+
+<Styled.Container>
+  <Toggler interval>
+    {toggler => (
+      <Animator triggerSelfKey={toggler.shown}>
+        <Move>
+          <OneFullRotation>
+            {({ ref, ...props }) => (
+              <Styled.InlineBlock
+                alignSelf={toggler.shown ? 'flex-end' : 'flex-start'}
+                {...props}
+                ref={ref}
+                onClick={() => toggler.toggle()}
+              >
+                click me
+              </Styled.InlineBlock>
+            )}
+          </OneFullRotation>
+        </Move>
+      </Animator>
+    )}
+  </Toggler>
+</Styled.Container>
+
+## Supporting animations
+
+Sometimes we want to [support the primary focal animation](/supporting-animation),
+for example the [Swipe](/swipe) animation creates a new element that swipes over the screen.
+
+This is different to a regular focal animation because it _creates_ new elements through the animation lifecycle.
+We can do this by _returning elements_ from an animation phase.
+
+For this example let's make something similar to swipe except it starts from the middle of the screen.
+
+```js
+import React from 'react';
+import { Collector } from '@element-motion/core';
+
+export default class SupportingAnimation extends React.Component {
+  beforeAnimate = (elements, onFinish, setChildProps) => {
+    onFinish();
+
+    // Again emphasizing the FLIP technique, we prep the "final" position
+    // of this supporting element first and prep the animation, in the case
+    // the scaleX(0) transform.
+    return (
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#468cee',
+          zIndex: 9999999,
+          transform: 'scaleX(0)',
+        }}
+      />
+    );
+  };
+
+  animate = (elements, onFinish, setChildProps) => {
+    setTimeout(onFinish, 400);
+
+    // We then set the transition style and remove the transform, starting the animation.
+    // We call onFinish() after 400ms.
+    return (
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#468cee',
+          zIndex: 9999999,
+          transform: 'none',
+          transition: 'transform 400ms',
+        }}
+      />
+    );
+  };
+
+  afterAnimate = (elements, onFinish, setChildProps) => {
+    setTimeout(onFinish, 200);
+
+    // After animations have finished we "fade out" the supplementary animation.
+    // It will be cleaned up (removed) after this phase.
+    return (
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#468cee',
+          zIndex: 9999999,
+          transform: 'none',
+          transition: 'opacity 200ms',
+          opacity: 0,
+        }}
+      />
+    );
+  };
+
+  render() {
+    const { children } = this.props;
+
+    return (
+      <Collector
+        data={{
+          action: 'animation',
+          payload: {
+            beforeAnimate: this.beforeAnimate,
+            animate: this.animate,
+            afterAnimate: this.afterAnimate,
+          },
+        }}
+      >
+        {children}
+      </Collector>
+    );
+  }
+}
+```
+
+<Styled.Container>
+  <Toggler>
+    {toggler => (
+      <Animator triggerSelfKey={toggler.shown}>
+        <SupportingAnimation>
+          {({ ref, ...props }) => (
+            <Styled.InlineBlock
+              alignSelf="flex-start"
+              {...props}
+              ref={ref}
+              onClick={() => toggler.toggle()}
+            >
+              click me
+            </Styled.InlineBlock>
+          )}
+        </SupportingAnimation>
+      </Animator>
+    )}
+  </Toggler>
+</Styled.Container>
+
+> **Tip -** Having some trouble using `element motion`?
+> Check out [Troubleshooting](/troubleshooting) - there may some help for you there.

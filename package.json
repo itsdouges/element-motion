@@ -1,24 +1,21 @@
 {
-  "name": "yubaba-repo",
+  "name": "element-motion",
   "private": true,
-  "repository": "madou/yubaba",
+  "repository": "madou/element-motion",
   "author": "Michael Dougall",
   "license": "MIT",
-  "files": [
-    "dist/"
-  ],
   "scripts": {
     "tdd": "jest --watch",
     "build": "lerna run build",
     "lint": "eslint --ext .tsx .",
     "test": "jest",
-    "size": "lerna exec --ignore yubaba-common -- yarn size",
+    "size": "lerna exec --ignore @element-motion/dev -- yarn size",
     "pre-cut-version": "yarn test",
     "postinstall": "yarn build && lerna link",
     "cut-version": "yarn pre-cut-version && lerna publish --conventional-commits --skip-npm && yarn post-cut-version",
     "cut-version-beta": "yarn pre-cut-version && lerna publish --skip-npm --npm-tag beta && yarn post-cut-version",
     "post-cut-version": "git push && git push --tags",
-    "push-to-npm": "lerna exec --ignore yubaba-common -- npm publish",
+    "push-to-npm": "lerna exec --ignore @element-motion/dev -- npm publish",
     "codecov": "echo \"not implemented\"",
     "storybook": "start-storybook -p 6006",
     "fix-duplicates": "yarn-tools fix-duplicates yarn.lock > fixed-yarn.lock && rm yarn.lock && mv fixed-yarn.lock yarn.lock && yarn install",

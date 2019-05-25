@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Animator /> persisted animations should throw when changing into "in" after initial mount 1`] = `
+"@element-motion/core v0.0.0
+
+You're switching between persisted and unpersisted, don't do this. Either always set the \\"in\\" prop as true or false, or keep as undefined."
+`;
+
+exports[`<Animator /> self targetted animations should throw when changing into "triggerSelfKey" after initial mount 1`] = `
+"@element-motion/core v0.0.0
+
+You're switching between self triggering modes, don't do this. Either always set the \\"triggerSelfKey\\" prop, or keep as undefined."
+`;
+
+exports[`<Animator /> self targetted animations should throw when using both "in" and "triggerSelfKey" props after initial mount 1`] = `
+"@element-motion/core v0.0.0
+
+Don't use \\"in\\" and \\"triggerSelfKey\\" together. If your element is persisted use \\"in\\". If your element is targeting itself for animations use \\"triggerSelfKey\\"."
+`;
+
+exports[`<Animator /> should pass dom data to child animation 1`] = `
+Array [
+  Object {
+    "destination": Object {
+      "element": undefined,
+      "elementBoundingBox": Object {
+        "location": Object {
+          "left": 0,
+          "top": 0,
+        },
+        "raw": Object {
+          "rect": Object {},
+          "scrollLeft": 0,
+          "scrollTop": 0,
+        },
+        "size": Object {
+          "height": 200,
+          "width": 100,
+        },
+      },
+      "focalTargetElement": undefined,
+      "focalTargetElementBoundingBox": undefined,
+      "render": undefined,
+    },
+    "origin": Object {
+      "element": <div />,
+      "elementBoundingBox": Object {
+        "location": Object {
+          "left": 0,
+          "top": 0,
+        },
+        "raw": Object {
+          "rect": Object {},
+          "scrollLeft": 0,
+          "scrollTop": 0,
+        },
+        "size": Object {
+          "height": 200,
+          "width": 100,
+        },
+      },
+      "focalTargetElement": undefined,
+      "focalTargetElementBoundingBox": undefined,
+      "render": [Function],
+    },
+  },
+]
+`;
+
+exports[`<Animator /> should pass dom data to child animation when using in prop 1`] = `
+Array [
+  Object {
+    "destination": Object {
+      "element": undefined,
+      "elementBoundingBox": Object {
+        "location": Object {
+          "left": 0,
+          "top": 0,
+        },
+        "raw": Object {
+          "rect": Object {},
+          "scrollLeft": 0,
+          "scrollTop": 0,
+        },
+        "size": Object {
+          "height": 200,
+          "width": 100,
+        },
+      },
+      "focalTargetElement": undefined,
+      "focalTargetElementBoundingBox": undefined,
+      "render": undefined,
+    },
+    "origin": Object {
+      "element": <div />,
+      "elementBoundingBox": Object {
+        "location": Object {
+          "left": 0,
+          "top": 0,
+        },
+        "raw": Object {
+          "rect": Object {},
+          "scrollLeft": 0,
+          "scrollTop": 0,
+        },
+        "size": Object {
+          "height": 200,
+          "width": 100,
+        },
+      },
+      "focalTargetElement": undefined,
+      "focalTargetElementBoundingBox": undefined,
+      "render": [Function],
+    },
+  },
+]
+`;
+
+exports[`<Animator /> should pass target dom data to child animation 1`] = `
+Object {
+  "location": Object {
+    "left": 0,
+    "top": 0,
+  },
+  "raw": Object {
+    "rect": Object {},
+    "scrollLeft": 0,
+    "scrollTop": 0,
+  },
+  "size": Object {
+    "height": 200,
+    "width": 100,
+  },
+}
+`;
+
+exports[`<Animator /> should render markup in a portal created by multiple animations 1`] = `
+Array [
+  <Portal
+    containerInfo={
+      <div>
+        <div>
+          hello world
+        </div>
+      </div>
+    }
+  >
+    <div>
+      hello world
+    </div>
+  </Portal>,
+  <Portal
+    containerInfo={
+      <div>
+        <span>
+          number two
+        </span>
+      </div>
+    }
+  >
+    <span>
+      number two
+    </span>
+  </Portal>,
+]
+`;
+
+exports[`<Animator /> should render markup in a portal created in an animation 1`] = `
+<Portal
+  containerInfo={
+    <div>
+      <div>
+        hello world
+      </div>
+    </div>
+  }
+>
+  <div>
+    hello world
+  </div>
+</Portal>
+`;
+
+exports[`<Animator /> should update markup created in an animation in after animate phase 1`] = `
+<Portal
+  containerInfo={
+    <div>
+      <div>
+        after animate phase
+      </div>
+    </div>
+  }
+>
+  <div>
+    after animate phase
+  </div>
+</Portal>
+`;
+
+exports[`<Animator /> should update markup created in an animation in animate phase 1`] = `
+<Portal
+  containerInfo={
+    <div>
+      <div>
+        animate phase
+      </div>
+    </div>
+  }
+>
+  <div>
+    animate phase
+  </div>
+</Portal>
+`;
+
+exports[`<Animator /> should update markup in a portal created by multiple animations in animate phase 1`] = `
+Array [
+  <Portal
+    containerInfo={
+      <div>
+        <div>
+          updated
+        </div>
+      </div>
+    }
+  >
+    <div>
+      updated
+    </div>
+  </Portal>,
+  <Portal
+    containerInfo={
+      <div>
+        <span>
+          number two
+        </span>
+      </div>
+    }
+  >
+    <span>
+      number two
+    </span>
+  </Portal>,
+]
+`;
