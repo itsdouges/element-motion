@@ -51,15 +51,23 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
       originTarget.location.left - data.destination.elementBoundingBox.location.left;
     const toStartYOffset =
       originTarget.location.top - data.destination.elementBoundingBox.location.top;
+    const movingRight =
+      originTarget.location.left < data.destination.elementBoundingBox.location.left;
 
     const points = arcMove(data.origin.elementBoundingBox, data.destination.elementBoundingBox);
     const hey = points.reduce((kfs, point, index) => {
       // eslint-disable-next-line no-param-reassign
-      kfs[`${index + 1}%`] = { transform: `translate3d(${point.x}px, ${point.y}px, 0)` };
+      kfs[`${index}%`] = {
+        transform: `translate3d(${point.x}px, ${point.y}px, 0)${
+          movingRight ? ` translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0)` : ''
+        }`,
+      };
       return kfs;
     }, {});
 
     this.keyframes = keyframes(hey);
+
+    const calculatedDuration = 1000;
 
     console.log(hey);
 
@@ -67,15 +75,16 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
       style: prevStyles => ({
         ...prevStyles,
         zIndex,
-        // transformOrigin: '0 0',
+        transformOrigin: '0 0',
         visibility: 'visible',
         willChange: combine('transform')(prevStyles.willChange),
-        transform: combine(prevStyles.transform, '')(
-          `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${originTarget.size
-            .width / destinationTarget.size.width},
-            ${originTarget.size.height / destinationTarget.size.height}
-          , 1)`
-        ),
+        animation: `${this.keyframes} ${calculatedDuration}ms ${this.props.timingFunction}`,
+        // transform: combine(prevStyles.transform, '')(
+        //   `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${originTarget.size
+        //     .width / destinationTarget.size.width},
+        //     ${originTarget.size.height / destinationTarget.size.height}
+        //   , 1)`
+        // ),
       }),
     });
 
@@ -85,7 +94,7 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
   animate: AnimationCallback = (_, onFinish, setChildProps) => {
     const { timingFunction } = this.props;
 
-    const calculatedDuration = 100000;
+    const calculatedDuration = 1000;
     // duration === 'dynamic'
     //   ? dynamic(data.origin.elementBoundingBox, data.destination.elementBoundingBox)
     //   : duration;
@@ -93,7 +102,7 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
     setChildProps({
       style: prevStyles => ({
         ...prevStyles,
-        animation: `${this.keyframes} ${calculatedDuration}ms ${timingFunction}`,
+        // animation: `${this.keyframes} ${calculatedDuration}ms linear`,
       }),
     });
 

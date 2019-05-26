@@ -73,9 +73,9 @@ export function getControlPoints(from: Point, to: Point): ControlPoints {
   // Angle alpha
   let alpha: number;
   if (Math.abs(deltaX) > Math.abs(deltaY)) {
-    alpha = Math.cos(lenAC / lenAB);
+    alpha = Math.acos(lenAC / lenAB);
   } else {
-    alpha = Math.cos(lenBC / lenAB);
+    alpha = Math.acos(lenBC / lenAB);
   }
 
   // Alpha in degrees
