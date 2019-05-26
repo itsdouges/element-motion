@@ -46,21 +46,23 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
 
     // Scroll could have changed between unmount and this prepare step.
     const originTarget = recalculateElementBoundingBoxFromScroll(data.origin.elementBoundingBox);
-    const destinationTarget = data.destination.elementBoundingBox;
+    // const destinationTarget = data.destination.elementBoundingBox;
     const toStartXOffset =
       originTarget.location.left - data.destination.elementBoundingBox.location.left;
     const toStartYOffset =
       originTarget.location.top - data.destination.elementBoundingBox.location.top;
-    const movingRight =
-      originTarget.location.left < data.destination.elementBoundingBox.location.left;
+    // const movingRight =
+    // originTarget.location.left < data.destination.elementBoundingBox.location.left;
 
-    const points = arcMove(data.origin.elementBoundingBox, data.destination.elementBoundingBox);
+    const moveRight =
+      originTarget.location.left < data.destination.elementBoundingBox.location.left;
+    const points = arcMove(originTarget, data.destination.elementBoundingBox);
     const hey = points.reduce((kfs, point, index) => {
       // eslint-disable-next-line no-param-reassign
       kfs[`${index}%`] = {
-        transform: `translate3d(${point.x}px, ${point.y}px, 0)${
-          movingRight ? ` translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0)` : ''
-        }`,
+        transform: `${
+          moveRight ? `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) ` : ''
+        }translate3d(${point.x}px, ${point.y}px, 0)`,
       };
       return kfs;
     }, {});
@@ -79,6 +81,8 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
         visibility: 'visible',
         willChange: combine('transform')(prevStyles.willChange),
         animation: `${this.keyframes} ${calculatedDuration}ms ${this.props.timingFunction}`,
+        animationFillMode: 'forwards',
+        animationPlayState: 'paused',
         // transform: combine(prevStyles.transform, '')(
         //   `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${originTarget.size
         //     .width / destinationTarget.size.width},
@@ -102,7 +106,7 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
     setChildProps({
       style: prevStyles => ({
         ...prevStyles,
-        // animation: `${this.keyframes} ${calculatedDuration}ms linear`,
+        animationPlayState: 'running',
       }),
     });
 
