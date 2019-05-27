@@ -41,8 +41,10 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
 
   keyframes: string;
 
+  calculatedDuration: number;
+
   beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
-    const { zIndex } = this.props;
+    const { zIndex, duration } = this.props;
 
     // Scroll could have changed between unmount and this prepare step.
     const originTarget = recalculateElementBoundingBoxFromScroll(data.origin.elementBoundingBox);
@@ -69,9 +71,10 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
 
     this.keyframes = keyframes(hey);
 
-    const calculatedDuration = 1000;
-
-    console.log(hey);
+    this.calculatedDuration =
+      duration === 'dynamic'
+        ? dynamic(data.origin.elementBoundingBox, data.destination.elementBoundingBox)
+        : duration;
 
     setChildProps({
       style: prevStyles => ({
@@ -80,15 +83,9 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
         transformOrigin: '0 0',
         visibility: 'visible',
         willChange: combine('transform')(prevStyles.willChange),
-        animation: `${this.keyframes} ${calculatedDuration}ms ${this.props.timingFunction}`,
+        animation: `${this.keyframes} ${this.calculatedDuration}ms linear`,
         animationFillMode: 'forwards',
         animationPlayState: 'paused',
-        // transform: combine(prevStyles.transform, '')(
-        //   `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${originTarget.size
-        //     .width / destinationTarget.size.width},
-        //     ${originTarget.size.height / destinationTarget.size.height}
-        //   , 1)`
-        // ),
       }),
     });
 
@@ -96,13 +93,6 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
   };
 
   animate: AnimationCallback = (_, onFinish, setChildProps) => {
-    const { timingFunction } = this.props;
-
-    const calculatedDuration = 1000;
-    // duration === 'dynamic'
-    //   ? dynamic(data.origin.elementBoundingBox, data.destination.elementBoundingBox)
-    //   : duration;
-
     setChildProps({
       style: prevStyles => ({
         ...prevStyles,
@@ -110,7 +100,7 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
       }),
     });
 
-    const id = window.setTimeout(() => onFinish(), calculatedDuration);
+    const id = window.setTimeout(() => onFinish(), this.calculatedDuration);
     this.abort = () => {
       window.clearTimeout(id);
     };
