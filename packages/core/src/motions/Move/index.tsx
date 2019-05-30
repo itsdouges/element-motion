@@ -4,11 +4,11 @@ import Collector, {
   MotionCallback,
   CollectorActions,
 } from '../../Collector';
-import * as math from '../../lib/math';
 import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
 import { standard } from '../../lib/curves';
 import { combine, zIndexStack } from '../../lib/style';
 import { Duration } from '../types';
+import { throwIf } from '../../lib/log';
 import { dynamic } from '../../lib/duration';
 import noop from '../../lib/noop';
 
@@ -42,9 +42,21 @@ export interface MoveProps extends CollectorChildrenProps {
 
   /**
    * Set to false to disable transforming the origin to the Y position of the destination element.
-   * Defaults to `true`.
+   * Defaults to true.
    */
   transformY?: boolean;
+
+  /**
+   * Enables scaling of the x-axis.
+   * Defaults to true.
+   */
+  scaleX?: boolean;
+
+  /**
+   * Enables scaling of the y-axis.
+   * Defaults to true.
+   */
+  scaleY?: boolean;
 }
 
 export default class Move extends React.Component<MoveProps> {
@@ -55,16 +67,20 @@ export default class Move extends React.Component<MoveProps> {
     useFocalTarget: false,
     transformX: true,
     transformY: true,
+    scaleX: true,
+    scaleY: true,
   };
 
   abort = noop;
 
   beforeAnimate: MotionCallback = (data, onFinish, setChildProps) => {
-    const { zIndex, useFocalTarget, transformX, transformY } = this.props;
+    const { zIndex, useFocalTarget, transformX, transformY, scaleX, scaleY } = this.props;
 
-    if (useFocalTarget && !data.destination.focalTargetElementBoundingBox) {
-      throw new Error(`@element-motion/core
-<FocalTarget /> was not found, if you haven't defined one make sure to add one as a descendant of your target Motion.`);
+    if (process.env.NODE_ENV === 'development') {
+      throwIf(
+        useFocalTarget && !data.destination.focalTargetElementBoundingBox,
+        `<FocalTarget /> was not found, if you haven't defined one make sure to add one as a descendant of your target Motion.`
+      );
     }
 
     // Scroll could have changed between unmount and this prepare step.
@@ -73,12 +89,14 @@ export default class Move extends React.Component<MoveProps> {
       useFocalTarget && data.destination.focalTargetElementBoundingBox
         ? data.destination.focalTargetElementBoundingBox
         : data.destination.elementBoundingBox;
-    const toStartXOffset = transformX
+    const translateToX = transformX
       ? originTarget.location.left - data.destination.elementBoundingBox.location.left
       : 0;
-    const toStartYOffset = transformY
+    const translateToY = transformY
       ? originTarget.location.top - data.destination.elementBoundingBox.location.top
       : 0;
+    const scaleToX = scaleX ? originTarget.size.width / destinationTarget.size.width : 1;
+    const scaleToY = scaleY ? originTarget.size.height / destinationTarget.size.height : 1;
 
     setChildProps({
       style: prevStyles => ({
@@ -89,13 +107,7 @@ export default class Move extends React.Component<MoveProps> {
         visibility: 'visible',
         willChange: combine('transform')(prevStyles.willChange),
         transform: combine(prevStyles.transform, '')(
-          `translate3d(${toStartXOffset}px, ${toStartYOffset}px, 0) scale3d(${math.percentageDifference(
-            originTarget.size.width,
-            destinationTarget.size.width
-          )}, ${math.percentageDifference(
-            originTarget.size.height,
-            destinationTarget.size.height
-          )}, 1)`
+          `translate3d(${translateToX}px, ${translateToY}px, 0) scale3d(${scaleToX}, ${scaleToY}, 1)`
         ),
       }),
     });
