@@ -1,25 +1,15 @@
 {
-  "name": "@element-motion/core",
+  "name": "@element-motion/motions",
   "version": "2.5.0",
   "repository": "madou/element-motion",
   "author": "Michael Dougall",
   "license": "MIT",
-  "main": "dist/cjs/packages/core/src/index.js",
-  "module": "dist/esm/packages/core/src/index.js",
+  "main": "dist/cjs/packages/motions/src/index.js",
+  "module": "dist/esm/packages/motions/src/index.js",
   "sideEffects": false,
   "description": "element motion for React.js 🧙✨",
-  "keywords": [
-    "react",
-    "flip",
-    "animation",
-    "transition",
-    "element",
-    "element-motion",
-    "material-motion",
-    "motion"
-  ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.cjs.json && tsc -p ./tsconfig.esm.json && cp ../../README.md README.md",
+    "build": "rm -rf dist && tsc -p ./tsconfig.cjs.json && tsc -p ./tsconfig.esm.json",
     "size": "size-limit"
   },
   "size-limit": [
@@ -28,9 +18,12 @@
       "path": "dist/esm/packages/core/src/index.js"
     }
   ],
+  "dependencies": {
+    "@element-motion/core": "^2.5.0"
+  },
   "peerDependencies": {
-    "react": ">=16.4",
-    "react-dom": ">=16.4"
+    "emotion": ">=9",
+    "react": ">=16.4"
   },
   "devDependencies": {
     "@element-motion/dev": "^2.4.4",
