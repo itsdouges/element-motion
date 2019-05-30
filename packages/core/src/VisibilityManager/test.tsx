@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { mount } from 'enzyme'; // eslint-disable-line
-import { WrappedAnimator as Animator } from '../Animator';
+import { WrappedMotion as Motion } from '../Motion';
 import { WrappedVisibilityManager as VisibilityManager } from '../VisibilityManager';
 import * as utils from '../__tests__/utils';
 import defer from '../lib/defer';
@@ -8,16 +8,16 @@ import defer from '../lib/defer';
 window.requestAnimationFrame = (cb: Function) => cb();
 
 describe('<VisibilityManager />', () => {
-  it('should be visible after start animation has been mounted', () => {
-    const Animation = utils.createTestAnimation();
+  it('should be visible after start motion has been mounted', () => {
+    const TestMotion = utils.createTestMotion();
 
     const wrapper = mount(
       <VisibilityManager>
         {props => (
           <span {...props}>
-            <Animator name="fff">
-              <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-            </Animator>
+            <Motion name="fff">
+              <TestMotion>{({ ref, style }) => <div ref={ref} style={style} />}</TestMotion>
+            </Motion>
           </span>
         )}
       </VisibilityManager>
@@ -43,17 +43,17 @@ describe('<VisibilityManager />', () => {
     expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'visible' });
   });
 
-  it('should be hidden during animation via self animation', () => {
-    const Animation = utils.createTestAnimation();
+  it('should be hidden during motion via self motion', () => {
+    const TestMotion = utils.createTestMotion();
     const wrapper = mount(
-      <utils.AnimatorUnderTest
+      <utils.MotionUnderTest
         from={shown => (
           <VisibilityManager isInitiallyVisible>
             {props => (
               <span {...props}>
-                <Animator triggerSelfKey={`${shown}`}>
-                  <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-                </Animator>
+                <Motion triggerSelfKey={`${shown}`}>
+                  <TestMotion>{({ ref, style }) => <div ref={ref} style={style} />}</TestMotion>
+                </Motion>
               </span>
             )}
           </VisibilityManager>
@@ -71,17 +71,17 @@ describe('<VisibilityManager />', () => {
     expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'hidden' });
   });
 
-  it('should be hidden during animation', () => {
-    const Animation = utils.createTestAnimation();
+  it('should be hidden during motion', () => {
+    const TestMotion = utils.createTestMotion();
     const wrapper = mount(
-      <utils.AnimatorUnderTest
+      <utils.MotionUnderTest
         from={shown => (
           <VisibilityManager isInitiallyVisible>
             {props => (
               <span {...props}>
-                <Animator triggerSelfKey={`${shown}`}>
-                  <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-                </Animator>
+                <Motion triggerSelfKey={`${shown}`}>
+                  <TestMotion>{({ ref, style }) => <div ref={ref} style={style} />}</TestMotion>
+                </Motion>
               </span>
             )}
           </VisibilityManager>
@@ -99,22 +99,20 @@ describe('<VisibilityManager />', () => {
     expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'hidden' });
   });
 
-  it('should hide manager children if animation is already in flight', () => {
-    const Animation = utils.createTestAnimation();
+  it('should hide manager children if motion is already in flight', () => {
+    const TestMotion = utils.createTestMotion();
     const wrapper = mount(
-      <utils.AnimatorUnderTest
+      <utils.MotionUnderTest
         from={
-          <Animator name="aaa">
-            <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-          </Animator>
+          <Motion name="aaa">
+            <TestMotion>{({ ref, style }) => <div ref={ref} style={style} />}</TestMotion>
+          </Motion>
         }
         to={
           <VisibilityManager>
             {props => (
               <span {...props}>
-                <Animator name="aaa">
-                  {({ ref, style }) => <div ref={ref} style={style} />}
-                </Animator>
+                <Motion name="aaa">{({ ref, style }) => <div ref={ref} style={style} />}</Motion>
               </span>
             )}
           </VisibilityManager>
@@ -131,23 +129,23 @@ describe('<VisibilityManager />', () => {
     expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'hidden' });
   });
 
-  it('should show manager children when animation is finished', async () => {
+  it('should show manager children when motion is finished', async () => {
     const deferred = defer();
-    const Animation = utils.createTestAnimation();
+    const TestMotion = utils.createTestMotion();
     const wrapper = mount(
-      <utils.AnimatorUnderTest
+      <utils.MotionUnderTest
         from={
-          <Animator name="eee">
-            <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-          </Animator>
+          <Motion name="eee">
+            <TestMotion>{({ ref, style }) => <div ref={ref} style={style} />}</TestMotion>
+          </Motion>
         }
         to={
           <VisibilityManager>
             {props => (
               <span {...props}>
-                <Animator name="eee" onFinish={deferred.resolve}>
+                <Motion name="eee" onFinish={deferred.resolve}>
                   {({ ref, style }) => <div ref={ref} style={style} />}
-                </Animator>
+                </Motion>
               </span>
             )}
           </VisibilityManager>
@@ -165,14 +163,14 @@ describe('<VisibilityManager />', () => {
     expect(wrapper.find('span').prop('style')).toEqual({ visibility: 'visible' });
   });
 
-  it('should hide all nested manager children if animation is already in flight', async () => {
-    const Animation = utils.createTestAnimation();
+  it('should hide all nested manager children if motion is already in flight', async () => {
+    const TestMotion = utils.createTestMotion();
     const wrapper = mount(
-      <utils.AnimatorUnderTest
+      <utils.MotionUnderTest
         from={
-          <Animator name="eee">
-            <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-          </Animator>
+          <Motion name="eee">
+            <TestMotion>{({ ref, style }) => <div ref={ref} style={style} />}</TestMotion>
+          </Motion>
         }
         to={
           <VisibilityManager>
@@ -183,9 +181,9 @@ describe('<VisibilityManager />', () => {
                 <VisibilityManager>
                   {innerProps => (
                     <div id="parent2" {...innerProps}>
-                      <Animator name="eee">
+                      <Motion name="eee">
                         {({ ref, style }) => <div ref={ref} style={style} />}
-                      </Animator>
+                      </Motion>
                     </div>
                   )}
                 </VisibilityManager>
@@ -206,15 +204,15 @@ describe('<VisibilityManager />', () => {
     expect(wrapper.find('#parent2').prop('style')).toEqual({ visibility: 'hidden' });
   });
 
-  it('should show all nested manager children when animation is finished', async () => {
+  it('should show all nested manager children when motion is finished', async () => {
     const deferred = defer();
-    const Animation = utils.createTestAnimation();
+    const TestMotion = utils.createTestMotion();
     const wrapper = mount(
-      <utils.AnimatorUnderTest
+      <utils.MotionUnderTest
         from={
-          <Animator name="eee">
-            <Animation>{({ ref, style }) => <div ref={ref} style={style} />}</Animation>
-          </Animator>
+          <Motion name="eee">
+            <TestMotion>{({ ref, style }) => <div ref={ref} style={style} />}</TestMotion>
+          </Motion>
         }
         to={
           <VisibilityManager>
@@ -225,9 +223,9 @@ describe('<VisibilityManager />', () => {
                 <VisibilityManager>
                   {innerProps => (
                     <div id="parent2" {...innerProps}>
-                      <Animator name="eee" onFinish={deferred.resolve}>
+                      <Motion name="eee" onFinish={deferred.resolve}>
                         {({ ref, style }) => <div ref={ref} style={style} />}
-                      </Animator>
+                      </Motion>
                     </div>
                   )}
                 </VisibilityManager>

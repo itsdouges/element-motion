@@ -1,7 +1,7 @@
 ---
 name: Wait
 route: /wait
-menu: Utility helpers
+menu: Utilities
 ---
 
 import { Playground, Props } from 'docz';
@@ -9,21 +9,24 @@ import Wait from '../index';
 
 # Wait
 
-Is used to pause the execution of all child animations until all parent children animations have completed.
-Add it between two animations for the deeper descendant animation to start only after the previous one has finished.
+Is used to pause the execution of all child motions until all parent motions have completed.
+Add it between two motions for the deeper descendant motion to start only after the previous one has finished.
+
+> **Tip -** Not making complete sense?
+> Have a look at [Wait for the previous motion to finish before starting the next](/advanced-usage#wait-for-the-previous-motion-to-finish-before-starting-the-next).
 
 ## Usage
 
 ```js
-import Animator, { Wait, Move, CircleExpand } from '@element-motion/core';
+import Motion, { Wait, Move, CircleExpand } from '@element-motion/core';
 
 export const AnimatedListItem = ({ id, children }) => (
-  <Animator name={`list-item-${id}`}>
+  <Motion name={`list-item-${id}`}>
     <CircleExpand background="red">
       <Wait>
-        <Move>{anim => <li {...anim}>{children}</li>}</Move>
+        <Move>{motion => <li {...motion}>{children}</li>}</Move>
       </Wait>
     </CircleExpand>
-  </Animator>
+  </Motion>
 );
 ```

@@ -5,7 +5,7 @@ import Collector, { CollectorActions, CollectorData, CollectorContext } from '..
 describe('<Collector />', () => {
   const element = document.createElement('div');
   const createData = (): CollectorData => ({
-    action: CollectorActions.animation,
+    action: CollectorActions.motion,
     payload: {
       animate: () => Promise.resolve(),
       beforeAnimate: () => Promise.resolve(),
@@ -117,7 +117,7 @@ describe('<Collector />', () => {
     expect(callback).toBeCalledWith(child);
   });
 
-  it('should collect animation from direct child', () => {
+  it('should collect motion from direct child', () => {
     const data: CollectorData = createData();
     const callback = jest.fn();
 
@@ -135,7 +135,7 @@ describe('<Collector />', () => {
     expect(callback).toBeCalledWith([data]);
   });
 
-  it('should collect animation from deeply nested child', () => {
+  it('should collect motion from deeply nested child', () => {
     const data: CollectorData = createData();
     const callback = jest.fn();
 
@@ -161,7 +161,7 @@ describe('<Collector />', () => {
     expect(callback).toBeCalledWith([data]);
   });
 
-  it('should incrementally collect animations from children', () => {
+  it('should incrementally collect motions from children', () => {
     const data1: CollectorData = createData();
     const data2: CollectorData = createData();
     const data3: CollectorData = createData();
@@ -189,7 +189,7 @@ describe('<Collector />', () => {
     expect(callback3).toBeCalledWith([data1, data2, data3]);
   });
 
-  it('should collect all animations from each collector at the top', () => {
+  it('should collect all motions from each collector at the top', () => {
     const data1 = createData();
     const wait: CollectorData = { action: CollectorActions.wait };
     const data2 = createData();

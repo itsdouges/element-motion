@@ -1,0 +1,91 @@
+---
+name: Motion
+route: /motion
+menu: Utilities
+---
+
+import { Playground, Props } from 'docz';
+import Motion from '../index';
+
+# Motion
+
+You will use this component for all motions except composite experiences.
+It does a few things:
+
+- take snapshots of the DOM
+- pass data to the motions
+- execute and orchestrate motions
+
+Unless you're creating custom motions you'll only need to be concerned with _execute and orchestrate motions_.
+There are three ways you can execute motions,
+listed below.
+
+> **Tip -** Missing some context? Have a look at [Getting started](/getting-started) first.
+
+## Motion from unmounted to mounted
+
+You'll find this is the goto way for triggering motions.
+It will animate between an element that unmounts and an element that mounts over a state change.
+[Moving to another element](/getting-started#moving-to-another-element) is a good example of this.
+
+```js
+import Motion, { Move } from '@element-motion/core';
+
+({ isShown }) => [
+  !isShown && (
+    <Motion name="unmounted-to-mounted">
+      <Move>{children}</Move>
+    </Motion>
+  ),
+  isShown && (
+    <Motion name="unmounted-to-mounted">
+      <Move>{children}</Move>
+    </Motion>
+  ),
+];
+```
+
+## Motion to self
+
+Using the `triggerSelfKey` prop to force a motion on itself over a state change.
+[Moving to the same element](/getting-started#moving-to-the-same-element) is a good example of this.
+
+```js
+import Motion, { Move } from '@element-motion/core';
+
+({ children, itemId }) => (
+  <Motion triggerSelfKey={itemId}>
+    <Move>{children}</Move>
+  </Motion>
+);
+```
+
+> **Tip -** You can't use this with the `in` prop,
+> if you try you'll get a dev error.
+
+## Motion from persisted to mounted
+
+Animate between a react element that never unmounts and one that mounts/unmounts over a state change.
+Using the `in` prop to mark a persisted component if it is considered in or not.
+[Moving from a persisted element](/getting-started#moving-from-a-persisted-element) is a good example of this.
+
+```js
+import Motion, { Move } from '@element-motion/core';
+
+({ isShown }) => [
+  <Motion name="persisted-to-mounted" in={!isShown}>
+    <Move>{children}</Move>
+  </Motion>,
+  isShown && (
+    <Motion name="persisted-to-mounted">
+      <Move>{children}</Move>
+    </Motion>
+  ),
+];
+```
+
+> **Tip -** You can also use the same method to animate over unmounted to persisted.
+
+## Props
+
+<Props of={Motion} />

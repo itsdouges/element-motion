@@ -14,11 +14,11 @@ import MicIcon from '@material-ui/icons/Mic';
 import { IconButton } from '@material-ui/core';
 import Select from 'react-select';
 import { MemoryRouter, Link, Switch, Route } from 'react-router-dom';
-import { WrappedAnimator as Animator } from '../../Animator';
-import ReshapingContainer from '../../animations/ReshapingContainer';
+import { WrappedMotion as Motion } from '../../Motion';
+import ReshapingContainer from '../../motions/ReshapingContainer';
 import { WrappedVisibilityManager as VisibilityManager } from '../../VisibilityManager';
-import Move from '../../animations/Move';
-import CrossFadeMove from '../../animations/CrossFadeMove';
+import Move from '../../motions/Move';
+import CrossFadeMove from '../../motions/CrossFadeMove';
 import * as Styled from './styled';
 import img1 from './images/1.png';
 import img2 from './images/2.jpeg';
@@ -31,8 +31,8 @@ import johnny from './images/jg.jpg';
 
 # Getting started
 
-The bread and butter animation with `element motion` is moving an element.
-Simple enough - after a state change we can automatically have the element animate into the its new position.
+The bread and butter motion is moving an element.
+Simple enough - after a state change we can automatically have the element move into the its new position.
 
 > **Tip -** You can interact with any examples!
 > When you do they will stop auto playing.
@@ -40,19 +40,19 @@ Simple enough - after a state change we can automatically have the element anima
 
 ## Moving to another element
 
-For a simple move we can use the [Animator](/animator) and [Move](/move) components.
+For a simple move we can use the [Motion](/motion) and [Move](/move) components.
 [Move](/move) is good when the elements are visually very similar.
-For this example we are animating from one element to another over a state change.
+For this example we are moving from one element to another over a state change.
 
 <Playground>
   <Styled.SelectContainer>
     <Toggler interval onIntervalSet={curVal => (curVal ? undefined : 1)}>
       {({ shown, toggle }) =>
         shown ? (
-          <Animator name={`item-${shown}`}>
+          <Motion name={`item-${shown}`}>
             <Move>
-              {anim => (
-                <div {...anim}>
+              {motion => (
+                <div {...motion}>
                   <Select
                     isSearchable={false}
                     value={{}}
@@ -71,24 +71,20 @@ For this example we are animating from one element to another over a state chang
                 </div>
               )}
             </Move>
-          </Animator>
+          </Motion>
         ) : (
           <Styled.List>
             {Styled.data.map((item, index) => (
-              <Animator key={index} name={`item-${index}`}>
+              <Motion key={index} name={`item-${index}`}>
                 <Move>
-                  {anim => (
-                    <Styled.Value
-                      onClick={() => toggle(`${index}`)}
-                      style={anim.style}
-                      ref={anim.ref}
-                    >
+                  {motion => (
+                    <Styled.Value onClick={() => toggle(`${index}`)} {...motion}>
                       {item.title}
                       <Styled.Description>{item.description}</Styled.Description>
                     </Styled.Value>
                   )}
                 </Move>
-              </Animator>
+              </Motion>
             ))}
           </Styled.List>
         )
@@ -97,12 +93,12 @@ For this example we are animating from one element to another over a state chang
   </Styled.SelectContainer>
 </Playground>
 
-> **Tip -** In `element motion` animations are triggered by state changes.
-> This can occur either by mounting/unmounting or changing the `in` prop of [Animator](/animator) elements.
+> **Tip -** Motions are triggered by state changes.
+> For more information check out the [Motion](/motion) component docs.
 
 ## Reshaping containers
 
-One powerful aspect of `element motion` is being able to compose different animations and behaviours together.
+One powerful aspect is being able to compose different motions and behaviors together.
 Taking some inspiration from [Facebook Messenger](http://messenger.com) -
 here is their message notification pill made using [ReshapingContainer](/reshaping-container) and [VisibilityManager](/visibility-manager).
 
@@ -140,21 +136,21 @@ here is their message notification pill made using [ReshapingContainer](/reshapi
   </Styled.AlignCenter>
 </Playground>
 
-> **Tip -** `element motion` strives to have the best out of the box animated experience for developers.
-> Some components combine multiple animations and behavior - we call them [Composite Components](/composite-components).
+> **Tip -** We strive to have the best out of the box animated experience for developers.
+> Some components combine multiple motions and behavior - we call them [Composite experiences](/composite-experiences).
 
 ## Moving to the same element
 
 Sometimes we want to animate over the same element after a state change,
 for example expanding a thumbnail to a large image.
-To do that we can use the `triggerSelfKey` prop available in the `Animator` component -
+To do that we can use the `triggerSelfKey` prop available in the `Motion` component -
 we just update the key at the same time as the state change.
 
 <Playground>
   <Styled.Container>
     <Toggler>
       {({ shown, toggle }) => (
-        <Animator triggerSelfKey={shown}>
+        <Motion triggerSelfKey={shown}>
           <Move>
             {({ ref, style }) => (
               <>
@@ -169,20 +165,20 @@ we just update the key at the same time as the state change.
               </>
             )}
           </Move>
-        </Animator>
+        </Motion>
       )}
     </Toggler>
   </Styled.Container>
 </Playground>
 
-> **Tip -** The beauty of using `element motion` is that all the animations are dynamic.
+> **Tip -** The beauty of this is that all the motions are dynamic.
 > Elements can be positioned in an infinite amount of states and we can animate between them all -
 > no hard coding.
 
 ## Moving to another distinct element
 
 Sometimes we can't have the affordances of two elements visually looking the same,
-for that we can use the [CrossFadeMove](/cross-fade-move) animation to transition between them.
+for that we can use the [CrossFadeMove](/cross-fade-move) motion to transition between them.
 
 <Playground>
   <Styled.Center>
@@ -190,7 +186,7 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
     {({ shown, toggle }) => (
       <Common.SmallViewport>
         {shown || (
-          <Animator name="google-searchbar">
+          <Motion name="google-searchbar">
             <CrossFadeMove>
               {({ ref, style }) => (
                 <Styled.FloatingSearchBar onClick={() => toggle()} ref={ref} style={style}>
@@ -200,11 +196,11 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
                 </Styled.FloatingSearchBar>
               )}
             </CrossFadeMove>
-          </Animator>
+          </Motion>
         )}
 
         {shown && (
-          <Animator name="google-searchbar">
+          <Motion name="google-searchbar">
             <CrossFadeMove>
               {({ ref, style }) => (
                 <Styled.FixedSearchBar ref={ref} style={style}>
@@ -220,7 +216,7 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
                 </Styled.FixedSearchBar>
               )}
             </CrossFadeMove>
-          </Animator>
+          </Motion>
         )}
       </Common.SmallViewport>
     )}
@@ -229,12 +225,12 @@ for that we can use the [CrossFadeMove](/cross-fade-move) animation to transitio
   </Styled.Center>
 </Playground>
 
-> **Tip -** Only use this animation when your elements are very different from each other,
-> it is more expensive than a regular [Move](/move) animation.
+> **Tip -** Only use this motion when your elements are very different from each other,
+> it is more expensive than a regular [Move](/move) motion.
 
 ## Animating route transitions
 
-Remember that `element motion` animations are triggered after a state change,
+Remember that motions are triggered after a state change,
 and if you're using a router the state is just kept at a higher level.
 Here we have the above example re-written with [React Router](https://reacttraining.com/react-router/).
 
@@ -247,7 +243,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
             path="/search"
             render={() => (
               <div>
-                <Animator name="searchbar">
+                <Motion name="searchbar">
                   <CrossFadeMove>
                     {({ ref, style }) => (
                       <Styled.FixedSearchBar ref={ref} style={style}>
@@ -265,7 +261,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
                       </Styled.FixedSearchBar>
                     )}
                   </CrossFadeMove>
-                </Animator>
+                </Motion>
               </div>
             )}
           />
@@ -273,7 +269,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
           <Route
             path="/"
             render={() => (
-              <Animator name="searchbar">
+              <Motion name="searchbar">
                 <CrossFadeMove>
                   {({ ref, style }) => (
                     <Link to="/search">
@@ -289,7 +285,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
                     </Link>
                   )}
                 </CrossFadeMove>
-              </Animator>
+              </Motion>
             )}
           />
         </Switch>
@@ -303,7 +299,7 @@ Here we have the above example re-written with [React Router](https://reacttrain
 
 Sometimes it's useful to animate between two elements where one is never removed,
 for example if we show a modal over the top of screen content.
-To make this possible the [Animator](/animator) component can be controlled via the `in` prop.
+To make this possible the [Motion](/motion) component can be controlled via the `in` prop.
 Set it to `true` when you consider it to be shown,
 and `false` when you consider it to be hidden.
 
@@ -316,7 +312,7 @@ and `false` when you consider it to be hidden.
       const image = ({ src, title, from, onClick, in: inn }) => (
         <Styled.Root>
           <Styled.ImageContainer>
-            <Animator name={src} in={inn}>
+            <Motion name={src} in={inn}>
               <Move>
                 {({ ref, style }) => (
                   <Styled.Img
@@ -327,7 +323,7 @@ and `false` when you consider it to be hidden.
                   />
                 )}
               </Move>
-            </Animator>
+            </Motion>
 
             <Styled.ImageBack />
           </Styled.ImageContainer>
@@ -352,11 +348,11 @@ and `false` when you consider it to be hidden.
                 </IconButton>
               </div>
 
-              <Animator name={src}>
+              <Motion name={src}>
                 <Move>
                   {({ ref, style }) => <Styled.PageImage src={src} ref={ref} style={style} />}
                 </Move>
-              </Animator>
+              </Motion>
 
               <Styled.ContentContainer>
                 <Styled.FadeIn in={props.style.visibility !== 'hidden'}>
@@ -487,5 +483,5 @@ and `false` when you consider it to be hidden.
   </Styled.Center>
 </Playground>
 
-> **Tip -** After clicking on an image you'll notice the content is shown after the animation has completed,
+> **Tip -** After clicking on an image you'll notice the content is shown after the motion has completed,
 > check out [Advanced usage](/advanced-usage) for more info!

@@ -1,0 +1,46 @@
+---
+name: ReshapingContainer
+route: /reshaping-container
+menu: Composite experiences
+---
+
+import { Playground, Props } from 'docz';
+import ReshapingContainer from '../index';
+import TripeHoverMenu from './TripeHoverMenu';
+
+# ReshapingContainer
+
+A composite experience that is made up of the [Move](/move) motion and some extra markup for the floating background.
+It has been made to be able to efficiently have the parent container resize around its children after state changes.
+
+This is useful for anything where you want the background to nicely reshape itself around its children,
+for example a hover menu!
+
+> **Tip -** When we say _efficiently_ we mean it 🙌! _Only_ `transform` is utilised.
+
+## Usage
+
+<Playground>
+  <TripeHoverMenu />
+</Playground>
+
+```js
+import { ReshapingContainer } from '@element-motion/core';
+
+({ children }) => (
+  <ReshapingContainer
+    triggerKey={children}
+    boxShadow="0 50px 100px -20px rgba(50,50,93,.25), 0 30px 60px -30px rgba(0,0,0,.3), 0 -18px 60px -10px rgba(0,0,0,.025)"
+    background="#fff"
+    maxWidth="500px"
+    borderRadius="3px"
+    padding="16px"
+  >
+    {motion => <Styled.Menu {...motion}>{children}</Styled.Menu>}
+  </ReshapingContainer>
+);
+```
+
+## Props
+
+<Props of={ReshapingContainer} />

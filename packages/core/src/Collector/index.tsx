@@ -16,20 +16,20 @@ export interface TargetPropsFunc {
 export type setChildProps = (props: TargetPropsFunc) => void;
 
 /**
- * AnimationCallback
+ * MotionCallback
  *
  * Return JSX if you want to add a new element to the DOM,
- * call onFinish() when you've finished the animation,
+ * call onFinish() when you've finished the motion,
  * call setChildProps() if you want to update the target props.
  */
-export type AnimationCallback = (
-  elements: AnimationData,
+export type MotionCallback = (
+  elements: MotionData,
   onFinish: () => void,
   setChildProps: setChildProps
 ) => React.ReactNode | undefined | void;
 
 export enum CollectorActions {
-  animation = 'animation',
+  motion = 'motion',
   wait = 'wait',
 }
 
@@ -37,17 +37,17 @@ export interface WaitAction {
   action: CollectorActions.wait;
 }
 
-export interface AnimationAction {
-  action: CollectorActions.animation;
+export interface MotionAction {
+  action: CollectorActions.motion;
   payload: {
-    animate: AnimationCallback;
-    beforeAnimate?: AnimationCallback;
-    afterAnimate?: AnimationCallback;
+    animate: MotionCallback;
+    beforeAnimate?: MotionCallback;
+    afterAnimate?: MotionCallback;
     abort?: () => void;
   };
 }
 
-export type CollectorData = AnimationAction | WaitAction;
+export type CollectorData = MotionAction | WaitAction;
 
 export type SupplyRefHandler = (ref: HTMLElement | null) => void;
 
@@ -61,7 +61,7 @@ export type CollectorChildrenAsFunction = (props: {
   className?: string;
 }) => React.ReactNode;
 
-export interface AnimationData {
+export interface MotionData {
   origin: ElementData;
   destination: ElementData;
 }
@@ -92,8 +92,8 @@ export interface CollectorProps extends CollectorChildrenProps {
 export interface Collect {
   ref: SupplyRefHandler;
   /**
-   * Used for more complex animations when there is a child in the container
-   * that is needed for the animation calculation.
+   * Used for more motions where a focal element is needed.
+   * This will be provided by <FocalTarget />
    */
   focalTargetRef: SupplyRefHandler;
   data: SupplyDataHandler;

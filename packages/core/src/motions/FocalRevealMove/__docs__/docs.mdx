@@ -1,0 +1,210 @@
+---
+name: FocalRevealMove
+route: /focal-reveal-move
+menu: Focal motions
+---
+
+import { Playground, Props } from 'docz';
+import StarIcon from '@material-ui/icons/StarBorder';
+import { MemoryRouter, Link, Route, Switch } from 'react-router-dom';
+import {
+  Card,
+  IconButton,
+  Table,
+  TableCell,
+  TableRow,
+  TableHead,
+  TableBody,
+} from '@material-ui/core';
+import PlayButton from '@material-ui/icons/PlayArrow';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import MoreVert from '@material-ui/icons/MoreVert';
+import { lighten } from 'polished';
+import FocalRevealMove from '../index';
+import Noop from '../../Noop';
+import Motion from '../../../Motion';
+import FocalTarget from '../../../FocalTarget';
+import * as Styled from './styled';
+import albumArt from './images/halcyda.png';
+
+# FocalRevealMove
+
+Is a composite motion of Reveal and [Move](/move).
+Useful for transitioning from a parent to a child,
+will expand from the focal element and move to the container.
+Requires the use of the [FocalTarget](/focal-target) component to specify the focal element.
+
+## Usage
+
+```js
+import Motion, { FocalRevealMove, FocalTarget } from '@element-motion/core';
+```
+
+<Playground>
+  {() => {
+    const revealingImage = ({ albumArt }) => (
+      <Motion name="reveal-move">
+        <FocalRevealMove useClipPath>
+          {({ ref, style }) => (
+            <Link to="/details">
+              <Styled.BackgroundImage src={albumArt} style={style} ref={ref} />
+            </Link>
+          )}
+        </FocalRevealMove>
+      </Motion>
+    );
+
+    const album = ({ albumArt, color, artist, onClick, name, expand }) => (
+      <Styled.Root color={color}>
+        {revealingImage({ albumArt })}
+
+        <Styled.Text>
+          <Styled.Title>
+            {name}
+            <Styled.Subtitle>{artist}</Styled.Subtitle>
+          </Styled.Title>
+
+          <Styled.StarContainer>
+            <IconButton color="inherit" aria-label="Menu">
+              <StarIcon />
+            </IconButton>
+          </Styled.StarContainer>
+        </Styled.Text>
+      </Styled.Root>
+    );
+
+    const albumDetails = ({ color, albumArt, name, artist, songs }) => (
+      <Motion name="reveal-move">
+        <Noop>
+          {({ ref, style, className }) => (
+            <Styled.DetailsRoot color={color} ref={ref} style={style} className={className}>
+              <Styled.Page raised elevation={20} style={{ minHeight: '730px', overflow: 'visible' }}>
+                <Styled.Data color={color}>
+                  <Styled.BackLink to="/">
+                    <IconButton color="inherit" style={{ background: 'rgba(0,0,0,0.3)', color: 'white', opacity: 0.8 }}>
+                      <BackIcon />
+                    </IconButton>
+                  </Styled.BackLink>
+
+                  <FocalTarget>
+                    {({ ref }) => <Styled.Image src={albumArt} ref={ref} />}
+                  </FocalTarget>
+
+                  <Styled.AlbumInfo>
+                    <Styled.Actions>
+                      <IconButton color="inherit" aria-label="Menu">
+                        <StarIcon />
+                      </IconButton>
+
+                      <IconButton color="inherit" aria-label="Menu">
+                        <MoreVert />
+                      </IconButton>
+                    </Styled.Actions>
+
+                    <div>
+                      <Styled.Name>{name}</Styled.Name>
+                      <Styled.Artist>{artist}</Styled.Artist>
+                    </div>
+                  </Styled.AlbumInfo>
+
+                  <Styled.ReleasedBar color={lighten(0.1)(color)}>
+                    Released March, 2013
+                    <Styled.PlayContainer>
+                      <IconButton>
+                        <PlayButton />
+                      </IconButton>
+                    </Styled.PlayContainer>
+                  </Styled.ReleasedBar>
+                </Styled.Data>
+
+                <Table style={{ marginLeft: '5%', width: '92%' }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        <strong>Track</strong>
+                      </TableCell>
+                      <TableCell>
+                        <strong>Artist</strong>
+                      </TableCell>
+                      <TableCell numeric>
+                        <strong>Time</strong>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {songs.map((song, index) => (
+                      <TableRow>
+                        <TableCell>
+                          <Styled.SongNumber>{index + 1}</Styled.SongNumber> {song.name}
+                        </TableCell>
+                        <TableCell>{artist}</TableCell>
+                        <TableCell numeric>{song.time}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Styled.Page>
+            </Styled.DetailsRoot>
+          )}
+        </Noop>
+      </Motion>
+    );
+
+    return (
+      <Styled.ContainerHeight>
+        <MemoryRouter>
+          <Switch>
+            <Route
+              path="/details"
+              render={() =>
+                albumDetails({
+                  albumArt,
+                  name: 'Halcyon Days',
+                  artist: 'Ellie Goulding',
+                  color: '#78014f',
+                  songs: [
+                    { name: "Don't Say a Word", time: '4:07' },
+                    { name: 'My Blood', time: '3:54' },
+                    { name: 'Anything Could Happen', time: '4:47' },
+                    { name: 'Only You', time: '3:51' },
+                    { name: 'Halcyon', time: '3:25' },
+                  ],
+                })
+              }
+            />
+            <Route
+              path="/"
+              render={() =>
+                album({
+                  albumArt,
+                  name: 'Halcyon Days',
+                  artist: 'Ellie Goulding',
+                  color: '#78014f',
+                })
+              }
+            />
+          </Switch>
+        </MemoryRouter>
+      </Styled.ContainerHeight>
+    );
+
+}}
+
+</Playground>
+
+## Props
+
+<Props of={FocalRevealMove} />
+
+## Caveats
+
+Reveal works by default modifying the width and height of the element,
+starting from the [FocalTarget](/focal-target) element.
+Because of this is trashes layout as well as affects other elements on the screen,
+if the element you're revealing doesn't have a fixed width it will look _bad_.
+
+It will also mean that if the target elements are vertically or horizontally centered -
+they will affect the flow of the page and elements will start moving around.
+Not great!
+
+One way of getting around both of these is by using the `useClipPath` prop - however it is not supported in IE11.

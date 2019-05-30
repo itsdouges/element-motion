@@ -1,7 +1,7 @@
 ---
 name: Collector
 route: /collector
-menu: Utility helpers
+menu: Utilities
 ---
 
 import { Playground, Props } from 'docz';
@@ -9,26 +9,26 @@ import Collector from '../index';
 
 # Collector
 
-Used as the glue for all animation components,
-every animation component will use this internally to pass the data to the parent [Animator](/animator).
-See [Custom animations](/custom-animations) for help.
+Used as the glue for all motion components,
+every motion component will use this internally to pass the data to the parent [Motion](/motion).
+See [Custom motions](/custom-motions) for help.
 
-> **Tip -** See [Custom animations](/custom-animations) for more information on how to use this component.
+> **Tip -** See [Custom motions](/custom-motions) for more information on how to use this component.
 
 ## Usage
 
 ```js
-import Animator, { Collector } from '@element-motion/core';
+import Motion, { Collector } from '@element-motion/core';
 
-const CustomAnimation = ({ children }) => {
-  const beforeAnimation = () => {};
+const CustomMotion = ({ children }) => {
+  const beforeMotion = () => {};
   const animate = () => {};
   const afterAnimate = () => {};
 
   return (
     <Collector
       data={{
-        action: 'animation',
+        action: 'motion',
         payload: {
           beforeAnimate,
           animate,
@@ -42,11 +42,11 @@ const CustomAnimation = ({ children }) => {
 };
 
 const ListItem = ({ index }) => (
-  <Animator name={`item-${index}`}>
-    <CustomAnimation>
+  <Motion name={`item-${index}`}>
+    <CustomMotion>
       {({ ref, style, className }) => <div ref={ref} style={style} className={className} />}
-    </CustomAnimation>
-  </Animator>
+    </CustomMotion>
+  </Motion>
 );
 ```
 

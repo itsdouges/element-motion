@@ -6,7 +6,7 @@ import { ElementBoundingBox } from '../lib/dom';
 /**
  * Pass function in for `from` or `start` and it will always be rendered.
  */
-export const AnimatorUnderTest = ({
+export const MotionUnderTest = ({
   from,
   to,
   start,
@@ -28,7 +28,7 @@ export const AnimatorUnderTest = ({
   );
 };
 
-export const createTestAnimation = ({
+export const createTestMotion = ({
   onBeforeAnimate = noop,
   onAnimate = noop,
   onAfterAnimate = noop,
@@ -42,7 +42,7 @@ export const createTestAnimation = ({
 }: any = {}): React.StatelessComponent<CollectorChildrenProps> => ({ children }) => (
   <Collector
     data={{
-      action: CollectorActions.animation,
+      action: CollectorActions.motion,
       payload: {
         abort: onCleanup,
         beforeAnimate: (data, onFinish, setChildProps) => {
