@@ -3,6 +3,7 @@ import { WrappedMotion as Motion } from '../../Motion';
 import { CollectorChildrenAsFunction } from '../../Collector';
 import ReshapingContainer, { ReshapingContainerProps } from '../ReshapingContainer';
 import Reveal from '../Reveal';
+import Move from '../Move';
 
 interface RevealReshapingContainerProps extends ReshapingContainerProps {
   /**
@@ -69,21 +70,23 @@ export default class RevealReshapingContainer extends React.PureComponent<
       <ReshapingContainer {...this.props}>
         {reshaping => (
           <Motion triggerSelfKey={triggerKey}>
-            <Reveal
-              duration={duration}
-              offset={this.getInversePaddingParts()}
-              timingFunction={timingFunction}
-            >
-              {motion =>
-                children({
-                  ...motion,
-                  style: {
-                    ...motion.style,
-                    ...reshaping.style,
-                  },
-                })
-              }
-            </Reveal>
+            <Move scaleX={false} scaleY={false}>
+              <Reveal
+                duration={duration}
+                offset={this.getInversePaddingParts()}
+                timingFunction={timingFunction}
+              >
+                {motion =>
+                  children({
+                    ...motion,
+                    style: {
+                      ...motion.style,
+                      ...reshaping.style,
+                    },
+                  })
+                }
+              </Reveal>
+            </Move>
           </Motion>
         )}
       </ReshapingContainer>

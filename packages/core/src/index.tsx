@@ -11,7 +11,7 @@ export { default as FocalReveal } from './motions/FocalReveal';
 export { default as RevealMove, default as FocalRevealMove } from './motions/FocalRevealMove';
 export { default as FocalConcealMove, default as ConcealMove } from './motions/FocalConcealMove';
 export { default as FocalFocalConcealMove } from './motions/FocalConcealMove';
-export { default as ReshapingContainer } from './motions/ReshapingContainer';
+export { default as ReshapingContainer } from './motions/RevealReshapingContainer';
 export { default as RevealReshapingContainer } from './motions/RevealReshapingContainer';
 export { default as Reveal } from './motions/Reveal';
 export { WrappedVisibilityManager as VisibilityManager } from './VisibilityManager';

@@ -8,7 +8,10 @@ import defer from '../lib/defer';
 import * as store from '../lib/store';
 import * as utils from '../__tests__/utils';
 
-jest.mock('../../package.json', () => ({ default: { version: '0.0.0' } }));
+jest.mock('../../package.json', () => ({
+  version: '0.0.0',
+  name: '@element-motion/core',
+}));
 jest.mock('../lib/dom');
 window.requestAnimationFrame = (cb: Function) => cb();
 

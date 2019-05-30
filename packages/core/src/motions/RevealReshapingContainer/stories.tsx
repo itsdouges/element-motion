@@ -24,7 +24,6 @@ storiesOf('@element-motion/core/RevealReshapingContainer', module)
       <Toggler>
         {toggler => (
           <RevealReshapingContainer
-            id="dialog-move"
             triggerKey={`${toggler.shown}`}
             boxShadow="0 1px 50px rgba(32, 33, 36, 0.1)"
             padding="16px"

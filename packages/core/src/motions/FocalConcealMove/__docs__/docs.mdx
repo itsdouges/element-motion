@@ -45,9 +45,9 @@ import Motion, { FocalConcealMove, FocalTarget } from '@element-motion/core';
   {() => {
     const revealingImage = ({ albumArt }) => (
       <Motion name="focal-conceal-move">
-        {({ ref, style }) => (
+        {motion => (
           <Link to="/details">
-            <Styled.BackgroundImage src={albumArt} style={style} ref={ref} />
+            <Styled.BackgroundImage src={albumArt} {...motion} />
           </Link>
         )}
       </Motion>
@@ -75,7 +75,7 @@ import Motion, { FocalConcealMove, FocalTarget } from '@element-motion/core';
     const albumDetails = ({ color, albumArt, name, artist, songs }) => (
       <Motion name="focal-conceal-move">
         <FocalConcealMove>
-          {(anim) => (
+          {motion => (
             <div {...motion}>
               <Styled.DetailsRoot color={color}>
                 <Styled.Page raised elevation={20} style={{ minHeight: '90vh', overflow: 'visible' }}>

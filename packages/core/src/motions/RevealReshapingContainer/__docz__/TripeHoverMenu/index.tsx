@@ -1,11 +1,10 @@
 import * as React from 'react';
 import * as Common from '@element-motion/dev'; // eslint-disable-line import/no-extraneous-dependencies
 import { Transition } from 'react-transition-group'; // eslint-disable-line import/no-extraneous-dependencies
-import ReshapingContainer from '../index';
+import RevealReshapingContainer from '../../index';
 import * as Styled from './styled';
 
 const menuPosition = [200, 100, 20];
-const innerTimeout = { enter: 200, exit: 300 };
 
 const TripeHoverMenu = () => (
   <Common.Toggler
@@ -68,7 +67,7 @@ const TripeHoverMenu = () => (
                 right: menuPosition[toggler.shown.shown],
               }}
             >
-              <ReshapingContainer
+              <RevealReshapingContainer
                 triggerKey={toggler.shown.shown}
                 boxShadow="0 50px 100px -20px rgba(50,50,93,.25), 0 30px 60px -30px rgba(0,0,0,.3), 0 -18px 60px -10px rgba(0,0,0,.025)"
                 background="#fff"
@@ -78,63 +77,42 @@ const TripeHoverMenu = () => (
               >
                 {motion => (
                   <Styled.Menu {...motion}>
-                    <Transition
-                      in={toggler.shown.shown === '0'}
-                      timeout={innerTimeout}
-                      unmountOnExit
-                      mountOnEnter
-                    >
-                      {tstate => (
-                        <Styled.InnerMenu state={tstate}>
-                          <Styled.MenuItem>
-                            Pricing
-                            <small>Find out how much tripe you can buy for $100</small>
-                          </Styled.MenuItem>
-                          <Styled.MenuItem>
-                            Billing
-                            <small>Need an invoice? Look in here</small>
-                          </Styled.MenuItem>
-                          <Styled.MenuItem>
-                            Connect
-                            <small>Find other tripe enthusiasts? Check here first</small>
-                          </Styled.MenuItem>
-                        </Styled.InnerMenu>
-                      )}
-                    </Transition>
+                    {toggler.shown.shown === '0' && (
+                      <Styled.InnerMenu>
+                        <Styled.MenuItem>
+                          Pricing
+                          <small>Find out how much tripe you can buy for $100</small>
+                        </Styled.MenuItem>
+                        <Styled.MenuItem>
+                          Billing
+                          <small>Need an invoice? Look in here</small>
+                        </Styled.MenuItem>
+                        <Styled.MenuItem>
+                          Connect
+                          <small>Find other tripe enthusiasts? Check here first</small>
+                        </Styled.MenuItem>
+                      </Styled.InnerMenu>
+                    )}
 
-                    <Transition
-                      in={toggler.shown.shown === '1'}
-                      timeout={innerTimeout}
-                      unmountOnExit
-                      mountOnEnter
-                    >
-                      {tstate => (
-                        <Styled.InnerMenu state={tstate}>
-                          <Styled.MenuItem>
-                            Recipes
-                            <small>Find the best way to cook it</small>
-                          </Styled.MenuItem>
-                        </Styled.InnerMenu>
-                      )}
-                    </Transition>
+                    {toggler.shown.shown === '1' && (
+                      <Styled.InnerMenu>
+                        <Styled.MenuItem>
+                          Recipes
+                          <small>Find the best way to cook it</small>
+                        </Styled.MenuItem>
+                      </Styled.InnerMenu>
+                    )}
 
-                    <Transition
-                      in={toggler.shown.shown === '2'}
-                      timeout={innerTimeout}
-                      unmountOnExit
-                      mountOnEnter
-                    >
-                      {tstate => (
-                        <Styled.InnerMenu state={tstate}>
-                          <Styled.MenuItem>About Tripe</Styled.MenuItem>
-                          <Styled.MenuItem>Customers</Styled.MenuItem>
-                          <Styled.MenuItem>Jobs</Styled.MenuItem>
-                        </Styled.InnerMenu>
-                      )}
-                    </Transition>
+                    {toggler.shown.shown === '2' && (
+                      <Styled.InnerMenu>
+                        <Styled.MenuItem>About Tripe</Styled.MenuItem>
+                        <Styled.MenuItem>Customers</Styled.MenuItem>
+                        <Styled.MenuItem>Jobs</Styled.MenuItem>
+                      </Styled.InnerMenu>
+                    )}
                   </Styled.Menu>
                 )}
-              </ReshapingContainer>
+              </RevealReshapingContainer>
             </Styled.ContainerPositioning>
           )}
         </Transition>
