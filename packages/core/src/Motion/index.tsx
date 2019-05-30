@@ -14,7 +14,7 @@ import Collector, {
 import { getElementBoundingBox } from '../lib/dom';
 import defer from '../lib/defer';
 import noop from '../lib/noop';
-import { precondition, warn } from '../lib/log';
+import { throwIf, warn } from '../lib/log';
 import * as store from '../lib/store';
 import { withVisibilityManagerContext } from '../VisibilityManager';
 import { MotionProps, MotionState, MotionBlock } from './types';
@@ -94,25 +94,23 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
     }
 
     if (process.env.NODE_ENV === 'development') {
-      precondition(
-        !(this.props.in !== undefined && this.props.triggerSelfKey !== undefined),
+      throwIf(
+        this.props.in !== undefined && this.props.triggerSelfKey !== undefined,
         `Don't use "in" and "triggerSelfKey" together. If your element is persisted use "in". If your element is targeting itself for motions use "triggerSelfKey".`
       );
     }
 
     if (process.env.NODE_ENV === 'development') {
-      precondition(
-        !((this.props.in === undefined || prevProps.in === undefined) && !inPropSame),
+      throwIf(
+        (this.props.in === undefined || prevProps.in === undefined) && !inPropSame,
         `You're switching between persisted and unpersisted, don't do this. Either always set the "in" prop as true or false, or keep as undefined.`
       );
     }
 
     if (process.env.NODE_ENV === 'development') {
-      precondition(
-        !(
-          (this.props.triggerSelfKey === undefined || prevProps.triggerSelfKey === undefined) &&
-          !triggerSelfKeyPropSame
-        ),
+      throwIf(
+        (this.props.triggerSelfKey === undefined || prevProps.triggerSelfKey === undefined) &&
+          !triggerSelfKeyPropSame,
         `You're switching between self triggering modes, don't do this. Either always set the "triggerSelfKey" prop, or keep as undefined.`
       );
     }
@@ -175,8 +173,8 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
     }
 
     if (process.env.NODE_ENV === 'development') {
-      precondition(
-        this.element,
+      throwIf(
+        !this.element,
         `The ref was not set when trying to store data, check that a child element has a ref passed. This needs to be set so we can take a snapshot of the origin DOM element.
 
 <${Motion.displayName} name="${this.props.name}">
