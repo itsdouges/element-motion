@@ -5,18 +5,18 @@ import { ExtractProps, Omit } from '../lib/types';
 export interface VisibilityManagerProps extends InjectedProps {
   /**
    * Children as function which passes down style,
-   * add this to the elements you want to hide until all child animations have finished.
+   * add this to the elements you want to hide until all child motions have finished.
    */
   children: (props: { style: InlineStyles }) => React.ReactNode;
 
   /**
-   * Optional name to target a specific child Animator.
+   * Optional name to target a specific child Motion.
    */
   name?: string;
 
   /**
    * Set to "true" if should be shown immediately on mount.
-   * "false" if should wait for an animation first.
+   * "false" if should wait for a motion first.
    * Defaults to false.
    */
   isInitiallyVisible?: boolean;
@@ -40,7 +40,7 @@ export interface VisibilityManagerContext {
   onStart: Handler;
 }
 
-export const AnimatorContext = React.createContext<VisibilityManagerContext | undefined>(undefined);
+export const MotionContext = React.createContext<VisibilityManagerContext | undefined>(undefined);
 
 export default class VisibilityManager extends React.Component<VisibilityManagerProps, State> {
   state: State = {
@@ -92,9 +92,9 @@ export default class VisibilityManager extends React.Component<VisibilityManager
     const { style } = this.state;
 
     return (
-      <AnimatorContext.Provider value={{ onFinish: this.onFinish, onStart: this.onStart }}>
+      <MotionContext.Provider value={{ onFinish: this.onFinish, onStart: this.onStart }}>
         {children({ style })}
-      </AnimatorContext.Provider>
+      </MotionContext.Provider>
     );
   }
 }
@@ -123,12 +123,12 @@ export const withVisibilityManagerContext = <
       >;
 
       return (
-        <AnimatorContext.Consumer>
+        <MotionContext.Consumer>
           {context => (
             // @ts-ignore
             <CoercedWrappedComponent context={context} {...this.props} />
           )}
-        </AnimatorContext.Consumer>
+        </MotionContext.Consumer>
       );
     }
   };

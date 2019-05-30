@@ -1,0 +1,30 @@
+---
+name: Reveal
+route: /reveal
+menu: Focal motions
+---
+
+import { Playground, Props } from 'docz';
+import * as Common from '@element-motion/dev';
+import Reveal from '../index';
+
+# Reveal
+
+Will reveal the destination element from the origin size to the destination size using `clip-path` only which will not work for IE11.
+
+## Usage
+
+```js
+import { Reveal } from '@element-motion/core';
+```
+
+## Props
+
+<Props of={Reveal} />
+
+## Caveats
+
+Be careful of collapsing margins when utilising this motion,
+they will make the destination element jump around,
+probably.
+If you're seeing some odd behavior - maybe try a flex container instead.

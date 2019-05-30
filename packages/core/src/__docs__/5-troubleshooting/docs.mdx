@@ -6,28 +6,28 @@ order: 1
 
 # Troubleshooting
 
-## Animations aren't starting
+## Motions aren't starting
 
-Sometimes a [Animator](/animator) element is reused by React if the markup where the [Animator](/animator) element was rendered didn't change.
-If you're rendering two different trees get around this by using [React `key` prop](https://reactjs.org/docs/lists-and-keys.html#keys) to force each [Animator](/animator) to re-mount.
+Sometimes an [Motion](/motion) element is reused by React if the markup where the [Motion](/motion) element was rendered didn't change.
+If you're rendering two different trees get around this by using [React `key` prop](https://reactjs.org/docs/lists-and-keys.html#keys) to force each [Motion](/motion) to re-mount.
 Else think about using the `triggerSelfKey` prop for self targetting.
 
 ## TypeError: Cannot read property 'getBoundingClientRect' of undefined
 
 Your target `ref` is probably not being set correctly.
-Double check your [Animator](/animator) elements.
+Double check your [Motion](/motion) elements.
 
 > ** Tip -** If you're having trouble getting ahold of a `ref` think about adding some extra wrapper markup.
 
 ```diff
-<Animator>
-  {anim => (
-+    <div {...anim}>
+<Motion>
+  {motion => (
++    <div {...motion}>
 +      <MyComponent />
--      <MyComponent {...anim} />
+-      <MyComponent {...motion} />
 +    </div>
   )}
-</Animator>
+</Motion>
 ```
 
 > ** Tip -** Can't find what you're looking for? [Raise an issue on Github](https://github.com/madou/element-motion/issues/new).

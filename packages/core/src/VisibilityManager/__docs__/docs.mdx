@@ -1,7 +1,7 @@
 ---
 name: VisibilityManager
 route: /visibility-manager
-menu: Utility helpers
+menu: Utilities
 ---
 
 import { Playground, Props } from 'docz';
@@ -9,23 +9,23 @@ import VisibilityManager from '../index';
 
 # VisibilityManager
 
-Used to hide contents before an animation is complete after being triggered from a child [Animator](/animator) component.
-If there is more than one child [Animator](/animator) you can use an optional name prop which should match the appropriate [Animator](/animator) component.
+Used to hide contents before a motion is complete after being triggered from a child [Motion](/motion) component.
+If there is more than one child [Motion](/motion) you can use an optional name prop which should match the appropriate [Motion](/motion) component.
 
-If it is the initial mount it will be shown **after** its child animation has finished unless you set `isInitiallyVisible`.
+If it is the initial mount it will be shown **after** its child motion has finished unless you set `isInitiallyVisible`.
 
-> **Tip -** See [Delay showing content until all animations have finished](/advanced-usage#delay-showing-content-until-all-animations-have-finished) for more information on how to use this component.
+> **Tip -** See [Delay showing content until all motions have finished](/advanced-usage#delay-showing-content-until-all-motions-have-finished) for more information on how to use this component.
 
 ## Usage
 
 ```js
-import Animator, { VisibilityManager } from '@element-motion/core';
+import Motion, { VisibilityManager } from '@element-motion/core';
 
 const ItemDetails = ({ description }) => (
   <VisibilityManager>
     {({ style }) => (
       <React.Fragment>
-        <Animator name={`item-${index}`}>{anim => <div {...anim} />}</Animator>
+        <Motion name={`item-${index}`}>{motion => <div {...motion} />}</Motion>
 
         <div style={style}>{description}</div>
       </React.Fragment>

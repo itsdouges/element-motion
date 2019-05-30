@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
-import Animator, { VisibilityManager, Noop } from '../../src';
+import Motion, { VisibilityManager, Noop } from '../../src';
 import { Toggler } from '@element-motion/dev';
 
 const StyledBody = styled(BodyClassName)`
@@ -51,15 +51,15 @@ storiesOf('@element-motion/core/VisibilityManager', module)
           <StyledBody className="" />
           {!shown ? (
             <Container color="#f8b88b">
-              <Animator name="manager-example-1" key="1">
+              <Motion name="manager-example-1" key="1">
                 <Noop duration={500}>
                   {({ ref, style }) => (
                     <Button style={style} ref={ref} onClick={() => toggle()}>
-                      Click me and I'll render the next page and start the animation
+                      Click me and I'll render the next page and start the motion
                     </Button>
                   )}
                 </Noop>
-              </Animator>
+              </Motion>
             </Container>
           ) : (
             <Container color="#b2cefe">
@@ -67,18 +67,18 @@ storiesOf('@element-motion/core/VisibilityManager', module)
                 This text was displayed immediately, which might not be what we want!
                 <br />
                 <br />
-                Thanks to VisibilityManager we can hide elements until all animations have finished.
+                Thanks to VisibilityManager we can hide elements until all motions have finished.
               </TextContainer>
 
-              <Animator name="manager-example-1" key="2">
+              <Motion name="manager-example-1" key="2">
                 {({ ref, style }) => (
                   <Button style={style} ref={ref} onClick={() => toggle()}>
-                    This button was shown after the animation completed.
+                    This button was shown after the motion completed.
                     <br />
                     Click me and I'll render the previous page!
                   </Button>
                 )}
-              </Animator>
+              </Motion>
             </Container>
           )}
         </React.Fragment>
@@ -92,34 +92,34 @@ storiesOf('@element-motion/core/VisibilityManager', module)
           <StyledBody className="" />
           {!shown ? (
             <Container color="#f8b88b">
-              <Animator name="manager-example-2" key="1">
+              <Motion name="manager-example-2" key="1">
                 <Noop duration={500}>
                   {({ ref, style }) => (
                     <Button style={style} ref={ref} onClick={() => toggle()}>
-                      Click me and I'll render the next page and start the animation
+                      Click me and I'll render the next page and start the motion
                     </Button>
                   )}
                 </Noop>
-              </Animator>
+              </Motion>
             </Container>
           ) : (
             <VisibilityManager>
               {props => (
                 <Container {...props} color="#b2cefe">
                   <TextContainer>
-                    This text and container were hidden until the animation completed thanks to
+                    This text and container were hidden until the motion completed thanks to
                     VisibilityManager.
                   </TextContainer>
 
-                  <Animator name="manager-example-2" key="2">
+                  <Motion name="manager-example-2" key="2">
                     {({ ref, style }) => (
                       <Button style={style} ref={ref} onClick={() => toggle()}>
-                        This button was shown after the animation completed.
+                        This button was shown after the motion completed.
                         <br />
                         Click me and I'll render the previous page!
                       </Button>
                     )}
-                  </Animator>
+                  </Motion>
                 </Container>
               )}
             </VisibilityManager>

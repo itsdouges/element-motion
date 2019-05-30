@@ -20,9 +20,9 @@ import {
   Divider,
 } from '@material-ui/core';
 import * as Styled from './styled';
-import { WrappedAnimator as Animator } from '../../Animator';
-import FocalRevealMove from '../../animations/FocalRevealMove';
-import FocalConcealMove from '../../animations/FocalConcealMove';
+import { WrappedMotion as Motion } from '../../Motion';
+import FocalRevealMove from '../../motions/FocalRevealMove';
+import FocalConcealMove from '../../motions/FocalConcealMove';
 import FocalTarget from '../../FocalTarget';
 
 const EmailChain = () => {
@@ -40,10 +40,10 @@ const EmailChain = () => {
       <List>
         {Styled.data.map((email, index) => (
           <React.Fragment key={index}>
-            <Animator name={`card-${index}`} in={props.in}>
+            <Motion name={`card-${index}`} in={props.in}>
               <FocalRevealMove duration={600}>
-                {anim => (
-                  <div {...anim}>
+                {motion => (
+                  <div {...motion}>
                     <ListItem button>
                       <Avatar>
                         <ImageIcon />
@@ -58,7 +58,7 @@ const EmailChain = () => {
                   </div>
                 )}
               </FocalRevealMove>
-            </Animator>
+            </Motion>
             <Divider variant="inset" />
           </React.Fragment>
         ))}
@@ -67,10 +67,10 @@ const EmailChain = () => {
   );
 
   const screen = (props: any) => (
-    <Animator name={`card-${props.index}`}>
+    <Motion name={`card-${props.index}`}>
       <FocalConcealMove>
-        {anim => (
-          <Styled.Screen ref={anim.ref} style={anim.style} className={anim.className} {...props}>
+        {motion => (
+          <Styled.Screen {...motion} {...props}>
             <ListItem>
               <Typography variant="h6">{Styled.data[props.index].title}</Typography>
               <IconButton
@@ -106,7 +106,7 @@ const EmailChain = () => {
           </Styled.Screen>
         )}
       </FocalConcealMove>
-    </Animator>
+    </Motion>
   );
 
   const appBarActions = () => (

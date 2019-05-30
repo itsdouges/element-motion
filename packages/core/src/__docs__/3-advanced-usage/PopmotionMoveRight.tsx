@@ -8,7 +8,7 @@ const MoveRight = (props: any) => {
   return (
     <Collector
       data={{
-        action: CollectorActions.animation,
+        action: CollectorActions.motion,
         payload: {
           beforeAnimate: (elements, onFinish) => {
             elementStyler.current = styler(elements.destination.element);

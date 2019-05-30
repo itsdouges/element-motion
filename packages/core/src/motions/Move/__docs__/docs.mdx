@@ -1,0 +1,49 @@
+---
+name: Move
+route: /move
+menu: Focal motions
+---
+
+import { Playground, Props } from 'docz';
+import * as Common from '@element-motion/dev';
+import Motion from '../../../Motion';
+import Move from '../index';
+import * as Styled from './styled';
+
+# Move
+
+Useful for moving an element that changes from one position to another over a state transition,
+works best when the element has **very little visual difference**.
+This motion uses the [FLIP technique](https://css-tricks.com/animating-layouts-with-the-flip-technique/) so it is quite performant.
+
+## Usage
+
+```js
+import { Move } from '@element-motion/core';
+```
+
+<Playground>
+  <Common.Toggler interval>
+    {({ shown, toggle }) =>
+      shown ? (
+        <Motion name="move" key="1">
+          <Move>
+            {({ ref, style }) => <Styled.Box onClick={() => toggle()} style={style} ref={ref} />}
+          </Move>
+        </Motion>
+      ) : (
+        <Motion name="move" key="2">
+          <Move>
+            {({ ref, style }) => (
+              <Styled.Box style={style} ref={ref} onClick={() => toggle()} alignRight />
+            )}
+          </Move>
+        </Motion>
+      )
+    }
+  </Common.Toggler>
+</Playground>
+
+## Props
+
+<Props of={Move} />
