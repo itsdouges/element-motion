@@ -1,27 +1,67 @@
 ---
-name: RevealReshapingContainer
-route: /reveal-reshaping-container
+name: ReshapingContainer
+route: /reshaping-container
 menu: Composite experiences
 ---
 
 import { Playground, Props } from 'docz';
 import * as Common from '@element-motion/dev';
-import RevealReshapingContainer from '../index';
+import TripeMenu from './TripeHoverMenu';
+import NotificationPill from './NotificationPill';
+import ReshapingContainer from '../index';
 import * as Styled from './styled';
 
-# RevealReshapingContainer
+# ReshapingContainer
 
-A composite experience that is made up of [Reveal](/reveal) and [ReshapingContainer](/reshaping-container).
-It will do everything the reshaping container does plus keeping the children within the container when resizing.
-
-This is useful for any experience that does not change its position,
-only dimensions.
-For example a modal dialog!
+A composite experience that is made up of [Move](/move) and [Reveal](/reveal).
 
 ## Usage
 
+<Playground>
+  <NotificationPill />
+</Playground>
+
 ```js
-import { RevealReshapingContainer } from '@element-motion/core';
+import { ReshapingContainer } from '@element-motion/core';
+
+({ message, avatar }) => (
+  <ReshapingContainer
+    triggerKey={message}
+    display="inline-block"
+    boxShadow="rgba(32, 33, 36, 0.25) 0px 3px 6px"
+    padding="4px 6px"
+    borderRadius="20px"
+    maxWidth="250px"
+  >
+    {motion => (
+      <Styled.MessageNotification {...motion}>
+        <Styled.Avatar src={avatar} />
+        <Styled.NotificationText>{message}</Styled.NotificationText>
+      </Styled.MessageNotification>
+    )}
+  </ReshapingContainer>
+);
+```
+
+<Playground>
+  <TripeMenu />
+</Playground>
+
+```js
+import { ReshapingContainer } from '@element-motion/core';
+
+({ children }) => (
+  <ReshapingContainer
+    triggerKey={children}
+    boxShadow="0 50px 100px -20px rgba(50,50,93,.25), 0 30px 60px -30px rgba(0,0,0,.3), 0 -18px 60px -10px rgba(0,0,0,.025)"
+    background="#fff"
+    maxWidth="500px"
+    borderRadius="3px"
+    padding="16px"
+  >
+    {motion => <Styled.Menu {...motion}>{children}</Styled.Menu>}
+  </ReshapingContainer>
+);
 ```
 
 <Playground>
@@ -30,7 +70,7 @@ import { RevealReshapingContainer } from '@element-motion/core';
       <Styled.Container>
         <Styled.Background />
 
-        <RevealReshapingContainer
+        <ReshapingContainer
           triggerKey={toggler.shown}
           id="reveal-reshaping-example"
           boxShadow="0 50px 100px -20px rgba(50,50,93,.25), 0 30px 60px -30px rgba(0,0,0,.3), 0 -18px 60px -10px rgba(0,0,0,.025)"
@@ -67,7 +107,7 @@ import { RevealReshapingContainer } from '@element-motion/core';
               </p>
             </Styled.ModalDialog>
           )}
-        </RevealReshapingContainer>
+        </ReshapingContainer>
       </Styled.Container>
     )}
 
@@ -76,7 +116,7 @@ import { RevealReshapingContainer } from '@element-motion/core';
 
 ## Props
 
-<Props of={RevealReshapingContainer} />
+<Props of={ReshapingContainer} />
 
 ## Caveats
 

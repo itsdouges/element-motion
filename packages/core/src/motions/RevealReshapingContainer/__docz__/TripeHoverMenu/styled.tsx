@@ -12,13 +12,7 @@ const opac = {
   exiting: 0,
 };
 
-const pos = {
-  exiting: 'absolute',
-};
-
-export const InnerMenu = styled.div<{ state: string }>`
-  opacity: ${props => opac[props.state]};
-  position: ${props => pos[props.state]};
+export const InnerMenu = styled.div`
   top: 0;
 `;
 
