@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/madou/element-motion/compare/v2.4.4...v2.5.0) (2019-05-30)
+
+
+### Bug Fixes
+
+* **reshaping-container:** fixes children to move with container ([0d3b762](https://github.com/madou/element-motion/commit/0d3b762))
+
+
+### Features
+
+* **fade-move:** adds props to disable scaling ([a3dbf96](https://github.com/madou/element-motion/commit/a3dbf96))
+* **move:** adds props to disable scaling ([56141f1](https://github.com/madou/element-motion/commit/56141f1))
+
+
+
+
+
 ## [2.4.4](https://github.com/madou/element-motion/compare/v2.4.3...v2.4.4) (2019-05-30)
 
 **Note:** Version bump only for package @element-motion/core
