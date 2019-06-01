@@ -45,52 +45,58 @@ For a simple move we can use the [Motion](/motion) and [Move](/move) components.
 For this example we are moving from one element to another over a state change.
 
 <Playground>
-  <Styled.SelectContainer>
-    <Toggler interval onIntervalSet={curVal => (curVal ? undefined : 1)}>
-      {({ shown, toggle }) =>
-        shown ? (
-          <Motion name={`item-${shown}`}>
-            <Move>
-              {motion => (
-                <div {...motion}>
-                  <Select
-                    isSearchable={false}
-                    value={{}}
-                    styles={{
-                      singleValue: () => ({}),
-                    }}
-                    isClearable
-                    onChange={() => toggle()}
-                    formatOptionLabel={() => (
-                      <Styled.Value>
-                        {Styled.data[shown].title}
-                        <Styled.Description>{Styled.data[shown].description}</Styled.Description>
-                      </Styled.Value>
-                    )}
-                  />
-                </div>
-              )}
-            </Move>
-          </Motion>
-        ) : (
-          <Styled.List>
-            {Styled.data.map((item, index) => (
-              <Motion key={index} name={`item-${index}`}>
-                <Move>
+  <Styled.Center>
+    <Common.SmallViewport>
+      <Styled.SelectContainer>
+        <Toggler interval onIntervalSet={curVal => (curVal ? undefined : 1)}>
+          {({ shown, toggle }) =>
+            shown ? (
+              <Motion name={`item-${shown}`}>
+                <Move scaleY={false}>
                   {motion => (
-                    <Styled.Value onClick={() => toggle(`${index}`)} {...motion}>
-                      {item.title}
-                      <Styled.Description>{item.description}</Styled.Description>
-                    </Styled.Value>
+                    <div {...motion}>
+                      <Select
+                        isSearchable={false}
+                        value={{}}
+                        styles={{
+                          singleValue: () => ({}),
+                        }}
+                        isClearable
+                        onChange={() => toggle()}
+                        formatOptionLabel={() => (
+                          <Styled.Value>
+                            {Styled.data[shown].title}
+                            <Styled.Description>
+                              {Styled.data[shown].description}
+                            </Styled.Description>
+                          </Styled.Value>
+                        )}
+                      />
+                    </div>
                   )}
                 </Move>
               </Motion>
-            ))}
-          </Styled.List>
-        )
-      }
-    </Toggler>
-  </Styled.SelectContainer>
+            ) : (
+              <Styled.List>
+                {Styled.data.map((item, index) => (
+                  <Motion key={index} name={`item-${index}`}>
+                    <Move scaleY={false}>
+                      {motion => (
+                        <Styled.Value onClick={() => toggle(`${index}`)} {...motion}>
+                          {item.title}
+                          <Styled.Description>{item.description}</Styled.Description>
+                        </Styled.Value>
+                      )}
+                    </Move>
+                  </Motion>
+                ))}
+              </Styled.List>
+            )
+          }
+        </Toggler>
+      </Styled.SelectContainer>
+    </Common.SmallViewport>
+  </Styled.Center>
 </Playground>
 
 > **Tip -** Motions are triggered by state changes.

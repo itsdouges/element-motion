@@ -6,7 +6,7 @@ const PixelContainer = styled.div<{ display: string }>`
   height: 100vh;
   max-width: 411px;
   max-height: 731px;
-  border-radius: 3px;
+  border-radius: 8px;
   box-shadow: 0 1px 50px rgba(32, 33, 36, 0.1);
   border: 1px solid rgba(32, 33, 36, 0.1);
   box-sizing: border-box;

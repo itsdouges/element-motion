@@ -1,12 +1,11 @@
 const { css } = require('styled-components'); // eslint-disable-line
 
-const primary = 'rgb(133, 47, 255)';
-const altPrimary = 'rgba(200, 57, 236, 1)';
-const primaryText = 'rgba(255, 255, 255, 0.95)';
-const background = `linear-gradient(135deg, ${altPrimary} 25%, ${primary} 100%)`;
+const primary = 'rgba(157, 0, 255, 0.8)';
+const darkText = 'rgba(41, 52, 98, 0.85)';
+const lightText = 'rgba(255, 255, 255, 0.9)';
 
 module.exports = {
-  title: 'element motion for React.js 💨✨',
+  title: 'element motion',
   description: 'element motion for React.js 💨✨',
   typescript: true,
   dest: '/docs',
@@ -16,9 +15,9 @@ module.exports = {
   themeConfig: {
     colors: {
       primary,
-      sidebarBg: background,
-      sidebarText: primaryText,
-      sidebarPrimary: primaryText,
+      sidebarBg: '#fff',
+      sidebarText: darkText,
+      sidebarPrimary: primary,
       sidebarBorder: 'transparent',
       link: primary,
     },
@@ -28,9 +27,10 @@ module.exports = {
           'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
         font-size: 16px;
         line-height: 1.6;
+        color: ${darkText} !important;
 
-        input::placeholder {
-          color: rgba(255, 255, 255, 0.7);
+        input[class^='Search__Input-']::placeholder {
+          color: rgba(41, 52, 98, 0.64);
         }
 
         div[class^='Logo__Wrapper-'] {
@@ -46,6 +46,7 @@ module.exports = {
         a[class^='MenuLink__LinkAnchor-'],
         a[class^='MenuLink__createLink-'] {
           font-weight: 400;
+          color: ${darkText} !important;
 
           :hover,
           :focus {
@@ -61,6 +62,14 @@ module.exports = {
             opacity: 0.9;
           }
         }
+
+        [class^='Logo__LogoText-'] {
+          font-size: 2em;
+        }
+
+        p {
+          color: ${darkText};
+        }
       `,
       h1: css`
         display: inline-block;
@@ -68,7 +77,7 @@ module.exports = {
         font-size: 48px;
         font-weight: 600;
         letter-spacing: -0.06em;
-        color: ${primaryText};
+        color: ${lightText};
         position: relative;
         z-index: 1;
 
@@ -79,7 +88,7 @@ module.exports = {
           right: 1px;
           left: 6px;
           bottom: 0;
-          background: ${background};
+          background: ${primary};
           transform: skew(-1deg, 1deg);
           z-index: -1;
         }
@@ -90,6 +99,7 @@ module.exports = {
         font-weight: 500;
         font-size: 28px;
         letter-spacing: -0.02em;
+        color: ${darkText};
       `,
     },
   },

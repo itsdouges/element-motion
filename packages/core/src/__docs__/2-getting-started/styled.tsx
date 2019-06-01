@@ -285,7 +285,10 @@ export const List = styled.div`
 `;
 
 export const SelectContainer = styled.div`
-  height: 398px;
+  padding: 16px;
+  padding-top: 100px;
+  height: 100%;
+  min-height: 600px;
 `;
 
 export const data = [
