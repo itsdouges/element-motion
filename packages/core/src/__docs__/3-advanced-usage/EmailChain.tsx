@@ -41,7 +41,7 @@ const EmailChain = () => {
         {Styled.data.map((email, index) => (
           <React.Fragment key={index}>
             <Motion name={`card-${index}`} in={props.in}>
-              <FocalRevealMove duration={600}>
+              <FocalRevealMove>
                 {motion => (
                   <div {...motion}>
                     <ListItem button>
