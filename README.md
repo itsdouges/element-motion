@@ -23,6 +23,11 @@ It's all about ✨**motion over state transitions** ✨ - it can help with:
 - 📝 Composing motions together to create composites, for example [CrossFadeMove](https://elementmotion.com/cross-fade-move)
 - 🤯 [Anything you can imagine](https://elementmotion.com/custom-motions), seriously
 
+### Talks
+
+<a href="https://www.icloud.com/keynote/0ryFt4ce-WLXBwwOttgI9SbMA#element-motion-react-sydney"><img width="250" height="140" alt="Element Motion @ React Sydney 3rd June 2019 Slides" src="https://user-images.githubusercontent.com/6801309/58944241-bade9580-87c4-11e9-99f1-435943e7fa14.png"></a>
+<br /><a href="https://www.meetup.com/React-Sydney/events/261817672/"><strong>React Sydney</strong> - 3rd June 2019</a>
+
 ## Installation
 
 ```bash
