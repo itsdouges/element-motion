@@ -66,6 +66,7 @@ export default class RevealReshapingContainer extends React.PureComponent<
   render() {
     const { children, duration, timingFunction, triggerKey } = this.props;
 
+    // The Move transition using transform fucks out in Safari with clip-path resulting in clip-path not transitioning
     return (
       <ReshapingContainer {...this.props}>
         {reshaping => (

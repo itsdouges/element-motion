@@ -57,10 +57,9 @@ export default class Reveal extends React.Component<RevealProps> {
         data.origin.elementBoundingBox
           ? {
               ...prevStyles,
+              WebkitClipPath: `inset(${topOffset}px ${right}px ${bottom}px ${leftOffset}px)`,
               clipPath: `inset(${topOffset}px ${right}px ${bottom}px ${leftOffset}px)`,
-              opacity: 1,
-              visibility: 'visible',
-              willChange: combine('clip-path')(prevStyles.willChange),
+              willChange: combine('clip-path, -webkit-clip-path')(prevStyles.willChange),
             }
           : undefined,
     });
@@ -78,10 +77,11 @@ export default class Reveal extends React.Component<RevealProps> {
     setChildProps({
       style: prevStyles => ({
         ...prevStyles,
+        WebkitClipPath: 'inset(0px)',
         clipPath: 'inset(0px)',
-        transition: combine(`clip-path ${calculatedDuration}ms ${timingFunction}`)(
-          prevStyles.transition
-        ),
+        transition: combine(
+          `-webkit-clip-path ${calculatedDuration}ms ${timingFunction}, clip-path ${calculatedDuration}ms ${timingFunction}`
+        )(prevStyles.transition),
       }),
     });
 

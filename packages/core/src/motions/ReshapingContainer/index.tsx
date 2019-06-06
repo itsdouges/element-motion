@@ -165,7 +165,14 @@ export default class ReshapingContainer extends React.PureComponent<ReshapingCon
               />
 
               {/* Position relative/zIndex needed to position this above the floating background. */}
-              {children({ style: { position: 'relative', zIndex: 2, maxHeight } })}
+              {children({
+                style: {
+                  maxHeight,
+                  zIndex: 2,
+                  // Using position: relative fucks out in Safari with clip-path resulting in clip-path not transitioning
+                  position: 'relative',
+                },
+              })}
             </ComponentAs>
           )}
         </Move>
