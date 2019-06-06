@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/madou/element-motion/compare/v2.5.0...v2.6.0) (2019-06-06)
+
+
+### Bug Fixes
+
+* **motion:** fixes motions flickering when animating and images having dimensions of zero ([143a40a](https://github.com/madou/element-motion/commit/143a40a))
+* **reveal:** fixes reveal in safari ([ec29c7c](https://github.com/madou/element-motion/commit/ec29c7c))
+
+
+### Features
+
+* **move:** adds new prop to set stacking context on move motion ([68d5b60](https://github.com/madou/element-motion/commit/68d5b60))
+
+
+
+
+
 # [2.5.0](https://github.com/madou/element-motion/compare/v2.4.4...v2.5.0) (2019-05-30)
 
 
