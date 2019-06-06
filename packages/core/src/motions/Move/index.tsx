@@ -57,6 +57,13 @@ export interface MoveProps extends CollectorChildrenProps {
    * Defaults to true.
    */
   scaleY?: boolean;
+
+  /**
+   * Will set "position: relative" on the element during a transition.
+   * Useful for creating a stacking context to position the element where you want in the stack.
+   * Use "zIndex" prop to set the appropriate position in the stack.
+   */
+  createStackingContext?: boolean;
 }
 
 export default class Move extends React.Component<MoveProps> {
@@ -74,7 +81,15 @@ export default class Move extends React.Component<MoveProps> {
   abort = noop;
 
   beforeAnimate: MotionCallback = (data, onFinish, setChildProps) => {
-    const { zIndex, useFocalTarget, transformX, transformY, scaleX, scaleY } = this.props;
+    const {
+      zIndex,
+      useFocalTarget,
+      transformX,
+      transformY,
+      scaleX,
+      scaleY,
+      createStackingContext,
+    } = this.props;
 
     if (process.env.NODE_ENV === 'development') {
       throwIf(
@@ -102,7 +117,7 @@ export default class Move extends React.Component<MoveProps> {
       style: prevStyles => ({
         ...prevStyles,
         zIndex,
-        opacity: 1,
+        position: createStackingContext ? 'relative' : undefined,
         transformOrigin: '0 0',
         visibility: 'visible',
         willChange: combine('transform')(prevStyles.willChange),
