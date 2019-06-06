@@ -11,7 +11,7 @@ import Collector, {
   MotionData,
   MotionCallback,
 } from '../Collector';
-import { getElementBoundingBox } from '../lib/dom';
+import { getElementBoundingBox, eventListener } from '../lib/dom';
 import defer from '../lib/defer';
 import noop from '../lib/noop';
 import { throwIf, warn } from '../lib/log';
@@ -57,9 +57,17 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
       );
     }
 
-    if (componentIn === undefined && store.has(name)) {
+    if (this.element && componentIn === undefined && store.has(name)) {
       // A child has already been stored, so this is probably the matching pair.
-      this.execute();
+      if (this.element.tagName === 'IMG' && !(this.element as HTMLImageElement).complete) {
+        const remove = eventListener(this.element, 'load', () => {
+          remove();
+          this.execute();
+        });
+      } else {
+        this.execute();
+      }
+
       return;
     }
 
@@ -111,7 +119,7 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
       throwIf(
         (this.props.triggerSelfKey === undefined || prevProps.triggerSelfKey === undefined) &&
           !triggerSelfKeyPropSame,
-        `You're switching between self triggering modes, don't do this. Either always set the "triggerSelfKey" prop, or keep as undefined.`
+        `You're switching between self triggering modes, don't do this. Either always set the "triggerSelfKey" prop or keep as undefined.`
       );
     }
 
@@ -127,12 +135,8 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
     }
 
     if (!triggerSelfKeyPropSame) {
-      // Defer execution to the next frame to capture correctly.
-      // Make sure to keep react state the same for any inflight motions to be captured correctly.
-      requestAnimationFrame(() => {
-        this.cancel();
-        this.execute(DOMSnapshot);
-      });
+      this.cancel();
+      this.execute(DOMSnapshot);
     }
   }
 
@@ -190,8 +194,8 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
       : undefined;
 
     if (process.env.NODE_ENV === 'development' && elementBoundingBox.size.height === 0) {
-      warn(`Your target child had a height of zero when capturing it's DOM data. This may affect the motion.
-If it's an image, try and have the image loaded before mounting, or set a static height.`);
+      warn(`Your origin element had a height of zero when capturing it's DOM data. This may affect the motion.
+If it's an image, try and have the image loaded before mounting or set a static height.`);
     }
 
     const { name } = this.props;
@@ -244,6 +248,14 @@ If it's an image, try and have the image loaded before mounting, or set a static
         },
       };
 
+      if (
+        process.env.NODE_ENV === 'development' &&
+        motionData.destination.elementBoundingBox.size.height === 0
+      ) {
+        warn(`Your destination element had a height of zero when capturing it's DOM data. This may affect the motion.
+If it's an image, try and have the image loaded before mounting or set a static height.`);
+      }
+
       // Loads each action up in an easy-to-execute format.
       const actions = collectorData.map((targetData, index) => {
         if (targetData.action !== CollectorActions.motion) {
@@ -260,19 +272,15 @@ If it's an image, try and have the image loaded before mounting, or set a static
             container.insertBefore(elementToMountChildren, container.firstChild);
           }
 
-          // This ensures that if there was an update to the jsx that is animating it changes next frame.
-          // Resulting in the transition _actually_ happening.
-          requestAnimationFrame(() => {
-            if (elementToMountChildren) {
-              this.setState(prevState => {
-                const markup = prevState.motionsMarkup.concat();
-                markup[index] = createPortal(jsx, elementToMountChildren!);
-                return {
-                  motionsMarkup: markup,
-                };
-              });
-            }
-          });
+          if (elementToMountChildren) {
+            this.setState(prevState => {
+              const markup = prevState.motionsMarkup.concat();
+              markup[index] = createPortal(jsx, elementToMountChildren!);
+              return {
+                motionsMarkup: markup,
+              };
+            });
+          }
         };
 
         const setChildProps = (props: TargetPropsFunc | null) => {

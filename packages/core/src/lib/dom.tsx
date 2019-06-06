@@ -1,3 +1,13 @@
+export function eventListener<K extends keyof HTMLElementEventMap>(
+  element: HTMLElement,
+  event: K,
+  cb: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+  options?: boolean | AddEventListenerOptions | undefined
+) {
+  element.addEventListener<K>(event, cb, options);
+  return () => element.removeEventListener(event, cb, options);
+}
+
 export function getDocumentScroll() {
   const scrollTop =
     document.documentElement && document.documentElement.scrollTop

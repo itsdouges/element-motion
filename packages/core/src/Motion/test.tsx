@@ -81,7 +81,7 @@ describe('<Motion />', () => {
         }
         to={
           <Motion name="anim-0" onFinish={done}>
-            <div />
+            {motion => <div {...motion} />}
           </Motion>
         }
         start={false}
@@ -108,7 +108,7 @@ describe('<Motion />', () => {
         }
         to={
           <Motion name="anim-1" onFinish={deferred.resolve}>
-            <div />
+            {motion => <div {...motion} />}
           </Motion>
         }
         start={false}
@@ -138,7 +138,7 @@ describe('<Motion />', () => {
         )}
         to={
           <Motion name="anim-aa" onFinish={deferred.resolve}>
-            <div />
+            {motion => <div {...motion} />}
           </Motion>
         }
         start={false}

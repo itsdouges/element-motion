@@ -73,7 +73,7 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
         transformOrigin: '0 0',
         transform: 'translate3d(0, 0, 0) scale3d(1, 1, 1)',
         opacity: 1,
-        // Elminate any margins so they don't affect the transition.
+        // Eliminate any margins so they don't affect the transition.
         margin: 0,
         height: `${originTarget.size.height}px`,
         width: `${originTarget.size.width}px`,
@@ -87,14 +87,7 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
     });
   };
 
-  beforeAnimate: MotionCallback = (data, onFinish, setChildProps) => {
-    setChildProps({
-      style: prevStyle => ({
-        ...prevStyle,
-        opacity: 0,
-      }),
-    });
-
+  beforeAnimate: MotionCallback = (data, onFinish) => {
     onFinish();
 
     return this.renderMotion(data);
@@ -103,17 +96,6 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
   animate: MotionCallback = (data, onFinish) => {
     setTimeout(onFinish, this.calculatedDuration);
     return this.renderMotion(data, { moveToTarget: true });
-  };
-
-  afterAnimate: MotionCallback = (_, onFinish, setChildProps) => {
-    setChildProps({
-      style: prevStyle => ({
-        ...prevStyle,
-        opacity: 1,
-      }),
-    });
-
-    onFinish();
   };
 
   render() {
@@ -126,7 +108,6 @@ export default class FadeMove extends React.Component<FadeMoveProps> {
           payload: {
             beforeAnimate: this.beforeAnimate,
             animate: this.animate,
-            afterAnimate: this.afterAnimate,
           },
         }}
       >

@@ -319,7 +319,7 @@ and `false` when you consider it to be hidden.
         <Styled.Root>
           <Styled.ImageContainer>
             <Motion name={src} in={inn}>
-              <Move>
+              <Move zIndex={89}>
                 {({ ref, style }) => (
                   <Styled.Img
                     src={src}
@@ -355,7 +355,7 @@ and `false` when you consider it to be hidden.
               </div>
 
               <Motion name={src}>
-                <Move>
+                <Move zIndex={89} createStackingContext>
                   {({ ref, style }) => <Styled.PageImage src={src} ref={ref} style={style} />}
                 </Move>
               </Motion>

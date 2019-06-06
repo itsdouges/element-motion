@@ -9,7 +9,7 @@ You're switching between persisted and unpersisted, don't do this. Either always
 exports[`<Motion /> self targetted motions should throw when changing into "triggerSelfKey" after initial mount 1`] = `
 "@element-motion/core v0.0.0
 
-You're switching between self triggering modes, don't do this. Either always set the \\"triggerSelfKey\\" prop, or keep as undefined."
+You're switching between self triggering modes, don't do this. Either always set the \\"triggerSelfKey\\" prop or keep as undefined."
 `;
 
 exports[`<Motion /> self targetted motions should throw when using both "in" and "triggerSelfKey" props after initial mount 1`] = `
@@ -22,7 +22,7 @@ exports[`<Motion /> should pass dom data to child motion 1`] = `
 Array [
   Object {
     "destination": Object {
-      "element": undefined,
+      "element": <div />,
       "elementBoundingBox": Object {
         "location": Object {
           "left": 0,
@@ -40,7 +40,7 @@ Array [
       },
       "focalTargetElement": undefined,
       "focalTargetElementBoundingBox": undefined,
-      "render": undefined,
+      "render": [Function],
     },
     "origin": Object {
       "element": <div />,
@@ -71,7 +71,7 @@ exports[`<Motion /> should pass dom data to child motion when using in prop 1`] 
 Array [
   Object {
     "destination": Object {
-      "element": undefined,
+      "element": <div />,
       "elementBoundingBox": Object {
         "location": Object {
           "left": 0,
@@ -89,7 +89,7 @@ Array [
       },
       "focalTargetElement": undefined,
       "focalTargetElementBoundingBox": undefined,
-      "render": undefined,
+      "render": [Function],
     },
     "origin": Object {
       "element": <div />,
