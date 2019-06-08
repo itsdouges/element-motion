@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/madou/element-motion/compare/v2.6.0...v2.7.0) (2019-06-08)
+
+
+### Features
+
+* **reveal:** adds ability to resize via width and height ([84b2818](https://github.com/madou/element-motion/commit/84b2818))
+
+
+
+
+
 # [2.6.0](https://github.com/madou/element-motion/compare/v2.5.0...v2.6.0) (2019-06-06)
 
 
