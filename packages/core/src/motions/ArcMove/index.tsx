@@ -2,7 +2,7 @@ import * as React from 'react';
 import { keyframes } from 'emotion';
 import Collector, {
   CollectorChildrenProps,
-  AnimationCallback,
+  MotionCallback,
   CollectorActions,
 } from '../../Collector';
 import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
@@ -43,7 +43,7 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
 
   calculatedDuration: number;
 
-  beforeAnimate: AnimationCallback = (data, onFinish, setChildProps) => {
+  beforeAnimate: MotionCallback = (data, onFinish, setChildProps) => {
     const { zIndex, duration } = this.props;
 
     // Scroll could have changed between unmount and this prepare step.
@@ -92,7 +92,7 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
     onFinish();
   };
 
-  animate: AnimationCallback = (_, onFinish, setChildProps) => {
+  animate: MotionCallback = (_, onFinish, setChildProps) => {
     setChildProps({
       style: prevStyles => ({
         ...prevStyles,
@@ -112,7 +112,7 @@ export default class ArcMove extends React.Component<ArcMoveProps> {
     return (
       <Collector
         data={{
-          action: CollectorActions.animation,
+          action: CollectorActions.motion,
           payload: {
             beforeAnimate: this.beforeAnimate,
             animate: this.animate,

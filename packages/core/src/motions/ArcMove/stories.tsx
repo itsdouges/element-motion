@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import * as Common from '@element-motion/dev';
 import styled from 'styled-components';
-import Animator from '../../Animator';
+import Motion from '../../Motion';
 import ArcMove from './index';
 
 const Container = styled.div<any>`
@@ -31,22 +31,22 @@ storiesOf('@element-motion/core/ArcMove', module)
   .add('Default', () => (
     <Common.Toggler>
       {toggler => (
-        <Animator triggerSelfKey={`${toggler.shown}`}>
+        <Motion triggerSelfKey={`${toggler.shown}`}>
           <ArcMove>
             {anim => <Container onClick={toggler.toggle} sticky={toggler.shown} {...anim} />}
           </ArcMove>
-        </Animator>
+        </Motion>
       )}
     </Common.Toggler>
   ))
   .add('Left', () => (
     <Common.Toggler>
       {toggler => (
-        <Animator triggerSelfKey={`${toggler.shown}`}>
+        <Motion triggerSelfKey={`${toggler.shown}`}>
           <ArcMove>
             {anim => <Container onClick={toggler.toggle} sticky={toggler.shown} left {...anim} />}
           </ArcMove>
-        </Animator>
+        </Motion>
       )}
     </Common.Toggler>
   ));
