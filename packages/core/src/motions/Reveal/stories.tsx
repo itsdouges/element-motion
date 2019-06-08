@@ -15,32 +15,62 @@ const Header = styled.h1`
   margin: 0.67rem 0;
 `;
 
-storiesOf('@element-motion/core/Reveal', module).add('ChildrenHeightChanging', () => (
-  <Container>
-    <Toggler>
-      {toggler => (
-        <Motion triggerSelfKey={`${toggler.shown}`}>
-          <Reveal>
-            {motion => (
-              <div {...motion}>
-                {toggler.shown ? (
-                  <>
-                    <Header>Details</Header>
-                    <p>Many details are revealed here.</p>
+storiesOf('@element-motion/core/Reveal', module)
+  .add('ClipPath', () => (
+    <Container>
+      <Toggler>
+        {toggler => (
+          <Motion triggerSelfKey={`${toggler.shown}`}>
+            <Reveal>
+              {motion => (
+                <div {...motion}>
+                  {toggler.shown ? (
+                    <>
+                      <Header>Details</Header>
+                      <p>Many details are revealed here.</p>
+                      <button type="button" onClick={() => toggler.toggle()}>
+                        Hide contents
+                      </button>
+                    </>
+                  ) : (
                     <button type="button" onClick={() => toggler.toggle()}>
-                      Hide contents
+                      View contents
                     </button>
-                  </>
-                ) : (
-                  <button type="button" onClick={() => toggler.toggle()}>
-                    View contents
-                  </button>
-                )}
-              </div>
-            )}
-          </Reveal>
-        </Motion>
-      )}
-    </Toggler>
-  </Container>
-));
+                  )}
+                </div>
+              )}
+            </Reveal>
+          </Motion>
+        )}
+      </Toggler>
+    </Container>
+  ))
+  .add('WidthHeight', () => (
+    <Container>
+      <Toggler>
+        {toggler => (
+          <Motion triggerSelfKey={`${toggler.shown}`}>
+            <Reveal useClipPath={false}>
+              {motion => (
+                <div {...motion}>
+                  {toggler.shown ? (
+                    <>
+                      <Header>Details</Header>
+                      <p>Many details are revealed here.</p>
+                      <button type="button" onClick={() => toggler.toggle()}>
+                        Hide contents
+                      </button>
+                    </>
+                  ) : (
+                    <button type="button" onClick={() => toggler.toggle()}>
+                      View contents
+                    </button>
+                  )}
+                </div>
+              )}
+            </Reveal>
+          </Motion>
+        )}
+      </Toggler>
+    </Container>
+  ));
