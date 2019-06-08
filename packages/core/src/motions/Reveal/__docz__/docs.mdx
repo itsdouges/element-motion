@@ -6,17 +6,79 @@ menu: Focal motions
 
 import { Playground, Props } from 'docz';
 import * as Common from '@element-motion/dev';
+import Motion from '../../../Motion';
 import Reveal from '../index';
+import * as Styled from './styled';
 
 # Reveal
 
-Will reveal the destination element from the origin size to the destination size using `clip-path` only which will not work for IE11.
+Will reveal the destination element from the origin size to the destination size. Defaults to using clip path.
 
 ## Usage
 
 ```js
-import { Reveal } from '@element-motion/core';
+import Motion, { Reveal } from '@element-motion/core';
 ```
+
+> **Tip -** Notice that there is no hardcoded `height` or `width` in these examples!
+> Instead we abuse how `position: absolute` can take elements out of the page flow and collapse it down to just the title.
+
+### With clip path
+
+- ✅ Performant
+- ✅ Doesn't affect page flow (elements don't move during motion)
+- ❌ Clips everything outside of the element (read: box shadow disappears during the motion)
+- ❌ Doesn't work in IE11
+
+<Playground>
+  <Common.Toggler>
+    {toggler => (
+      <Styled.Container onClick={toggler.toggle} aria-role="button">
+        <Motion triggerSelfKey={toggler.shown}>
+          <Reveal useClipPath>
+            {motion => (
+              <div {...motion}>
+                <Styled.Title>
+                  {!toggler.shown ? '⬆' : '⬇'} {Styled.shortText}
+                </Styled.Title>
+                <Styled.Description aria-hidden={!toggler.shown} floating={!toggler.shown}>
+                  {Styled.longText}
+                </Styled.Description>
+              </div>
+            )}
+          </Reveal>
+        </Motion>
+      </Styled.Container>
+    )}
+  </Common.Toggler>
+</Playground>
+
+### With width and height
+
+- ✅ Looks good when used with box shadow
+- ❌ Affects page flow (elements move during motion)
+- ❌ Not performant
+
+<Playground>
+  <Common.Toggler>
+    {toggler => (
+      <Motion triggerSelfKey={toggler.shown}>
+        <Reveal useClipPath={false}>
+          {motion => (
+            <Styled.Container onClick={toggler.toggle} aria-role="button" {...motion}>
+              <Styled.Title>
+                {!toggler.shown ? '⬆' : '⬇'} {Styled.shortText}
+              </Styled.Title>
+              <Styled.Description aria-hidden={!toggler.shown} floating={!toggler.shown}>
+                {Styled.longText}
+              </Styled.Description>
+            </Styled.Container>
+          )}
+        </Reveal>
+      </Motion>
+    )}
+  </Common.Toggler>
+</Playground>
 
 ## Props
 
@@ -33,5 +95,5 @@ If you're seeing some odd behavior - maybe try a flex container instead.
 
 ### Composing with move
 
-When composing with any motion that uses `transform` or `position: relative`,
-Reveal will not work in Safari - follow the bug here: https://bugs.webkit.org/show_bug.cgi?id=196731.
+When composing with any motion that uses `transform` or `position: relative` with `clip-path` will not work in Safari -
+follow the bug here: https://bugs.webkit.org/show_bug.cgi?id=196731.
