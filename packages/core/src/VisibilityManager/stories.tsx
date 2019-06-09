@@ -2,8 +2,8 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
-import Motion, { VisibilityManager, Noop } from '../../src';
 import { Toggler } from '@element-motion/dev';
+import Motion, { VisibilityManager, Noop } from '../../src';
 
 const StyledBody = styled(BodyClassName)`
   background-color: #f2a2e8;

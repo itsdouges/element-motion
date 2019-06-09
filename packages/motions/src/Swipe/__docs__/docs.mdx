@@ -1,0 +1,39 @@
+---
+name: Swipe
+route: /swipe
+menu: Supporting motions
+---
+
+import { Playground, Props } from 'docz';
+import * as Common from '@element-motion/dev';
+import Motion from '../../../../core/src/Motion';
+import Swipe from '../index';
+import * as Styled from './styled';
+
+# Swipe
+
+Will animate a square swiping over the viewport.
+
+## Usage
+
+```js
+import Motion, { Swipe } from '@element-motion/core';
+```
+
+<Playground>
+  <Common.Toggler>
+    {({ shown, toggle }) => (
+      <Styled.Container onClick={() => toggle()} interactive>
+        <Motion triggerSelfKey={shown}>
+          <Swipe background="#ff5e6d" direction={shown ? 'left' : 'right'}>
+            {({ ref, style }) => <div style={style} ref={ref} />}
+          </Swipe>
+        </Motion>
+      </Styled.Container>
+    )}
+  </Common.Toggler>
+</Playground>
+
+## Props
+
+<Props of={Swipe} />

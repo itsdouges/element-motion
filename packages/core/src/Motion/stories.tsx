@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Motion from './index';
-import Noop from '../motions/Noop';
+import Noop from '../../../motions/src/Noop';
 
 interface MotionProfilerProps {
   iterations: number;
