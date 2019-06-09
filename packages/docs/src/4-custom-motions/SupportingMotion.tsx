@@ -3,7 +3,7 @@ import Collector, {
   CollectorChildrenProps,
   MotionCallback,
   CollectorActions,
-} from '../../Collector';
+} from '../../../core/src/Collector';
 
 export default class SupportingMotion extends React.Component<CollectorChildrenProps> {
   beforeAnimate: MotionCallback = (_, onFinish) => {

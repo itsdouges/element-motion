@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies, react/no-array-index-key */
 import * as React from 'react';
 import * as Common from '@element-motion/dev';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -20,10 +19,10 @@ import {
   Divider,
 } from '@material-ui/core';
 import * as Styled from './styled';
-import { WrappedMotion as Motion } from '../../Motion';
-import FocalRevealMove from '../../motions/FocalRevealMove';
-import FocalConcealMove from '../../motions/FocalConcealMove';
-import FocalTarget from '../../FocalTarget';
+import { WrappedMotion as Motion } from '../../../core/src/Motion';
+import FocalRevealMove from '../../../motions/src/FocalRevealMove';
+import FocalConcealMove from '../../../motions/src/FocalConcealMove';
+import FocalTarget from '../../../core/src/FocalTarget';
 
 const EmailChain = () => {
   const home = (props: any) => (

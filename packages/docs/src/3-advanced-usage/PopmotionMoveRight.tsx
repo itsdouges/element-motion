@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { styler, tween, easing } from 'popmotion'; // eslint-disable-line import/no-extraneous-dependencies
-import Collector, { CollectorActions } from '../../Collector';
+import { styler, tween, easing } from 'popmotion';
+import Collector, { CollectorActions } from '../../../core/src/Collector';
 
 const MoveRight = (props: any) => {
   const elementStyler = useRef<any>();

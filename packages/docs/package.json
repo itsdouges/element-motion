@@ -1,20 +1,22 @@
 {
-  "name": "@element-motion/dev",
+  "name": "@element-motion/docs",
   "private": true,
-  "version": "2.6.0",
+  "version": "2.7.0",
   "repository": "element-motion/element-motion",
   "author": "Michael Dougall",
   "license": "MIT",
-  "main": "dist/packages/dev/src/index.js",
-  "module": "dist/packages/dev/src/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc -p ./tsconfig.json"
   },
   "dependencies": {
+    "@element-motion/dev": "^2.6.0",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "styled-components": "^4.2.0"
+    "react": "^16.4.x",
+    "styled-components": "^4.2.0",
+    "docz": "^1.2.0",
+    "react-select": "^2.4.2",
+    "react-router-dom": "^5.0.0",
+    "popmotion": "^8.6.10"
   }
 }
