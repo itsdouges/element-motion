@@ -4,14 +4,14 @@ import Collector, {
   CollectorChildrenProps,
   MotionCallback,
   CollectorActions,
-} from '../../Collector';
-import { recalculateElementBoundingBoxFromScroll } from '../../lib/dom';
-import { standard } from '../../lib/curves';
-import { combine, zIndexStack } from '../../lib/style';
+} from '../../../core/src/Collector';
+import { recalculateElementBoundingBoxFromScroll } from '../../../core/src/lib/dom';
+import { standard } from '../../../core/src/lib/curves';
+import { combine, zIndexStack } from '../../../core/src/lib/style';
 import { Duration } from '../types';
-import { dynamic } from '../../lib/duration';
-import noop from '../../lib/noop';
-import { arcMove } from '../../lib/arcMove';
+import { dynamic } from '../../../core/src/lib/duration';
+import noop from '../../../core/src/lib/noop';
+import { arcMove } from '../../../core/src/lib/arcMove';
 
 export interface ArcMoveProps extends CollectorChildrenProps {
   /**

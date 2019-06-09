@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import * as Common from '@element-motion/dev';
 import styled from 'styled-components';
-import Motion from '../../Motion';
+import Motion from '../../../core/src/Motion';
 import ArcMove from './index';
 
 const Container = styled.div<any>`
