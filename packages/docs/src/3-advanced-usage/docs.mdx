@@ -1,0 +1,302 @@
+---
+name: 3. Advanced usage 🏃
+route: /advanced-usage
+order: 3
+---
+
+import { Playground } from 'docz';
+import * as Common from '@element-motion/dev';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import MoreVert from '@material-ui/icons/MoreVert';
+import ImageIcon from '@material-ui/icons/Image';
+import StarIcon from '@material-ui/icons/StarBorder';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import { findDOMNode } from 'react-dom';
+import { MemoryRouter, Switch, Route } from 'react-router-dom';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  List,
+  Avatar,
+  ListItem,
+  ListItemText,
+  Divider,
+} from '@material-ui/core';
+import * as Styled from './styled';
+import { WrappedMotion as Motion } from '../../../core/src/Motion';
+import { WrappedVisibilityManager as VisibilityManager } from '../../../core/src/VisibilityManager';
+import CircleExpand from '../../../motions/src/CircleExpand';
+import TripeHoverMenu from '../../../motions/src/RevealReshapingContainer/__docz__/TripeHoverMenu';
+import FocalRevealMove from '../../../motions/src/FocalRevealMove';
+import FocalConcealMove from '../../../motions/src/FocalConcealMove';
+import FocalTarget from '../../../core/src/FocalTarget';
+import Move from '../../../motions/src/Move';
+import CircleShrink from '../../../motions/src/CircleShrink';
+import ovi from './images/ovechkin.jpg';
+import EmailChain from './EmailChain';
+import PopmotionMoveRight from './PopmotionMoveRight';
+
+# Advanced usage
+
+## Use with other libaries
+
+Doing everything is a pretty hard gig.
+Luckily this works great with other libraries!
+
+### [React Transition Group](https://reactcommunity.org/react-transition-group)
+
+Useful when you have a CSS transition you want to happen when an element is entering or leaving,
+for example here in our _tripe.com_ menu we use it for just that!
+
+<Playground>
+  <TripeHoverMenu />
+</Playground>
+
+```js
+({ isMenuShown, shownMenuId }) => (
+  <CSSTransition in={isMenuShown} unmountOnExit mountOnEnter timeout={{ enter: 0, exit: 100 }}>
+    <div class="menu-container">
+      <ReshapingContainer triggerKey={shownMenuId}>hello world</ReshapingContainer>
+    </div>
+  </CSSTransition>
+);
+```
+
+> **Tip -** This example is using the [ReshapingContainer](/reshaping-container) component.
+> It will reshape the background around the children when its prop `triggerKey` changes!
+
+### [Popmotion](https://popmotion.io/pure/)
+
+Creating [custom motions](/custom-motions) with third party libraries works a treat,
+remember that although this comes with beautiful motions out of the box -
+at its core is a powerful orchestration layer you can use to write your own!
+
+Here we use Popmotion to do the animating.
+
+<Playground>
+  <Common.Toggler interval>
+    {toggler => (
+      <Motion triggerSelfKey={toggler.shown}>
+        <PopmotionMoveRight>{motion => <Styled.Root {...motion} />}</PopmotionMoveRight>
+      </Motion>
+    )}
+  </Common.Toggler>
+</Playground>
+
+> **Tip -** [React Spring](https://www.react-spring.io/) can also be used for similar results using its imperative [Manual API](https://www.react-spring.io/docs/props/gotchas#manual-api).
+
+```js
+import { Collector } from '@element-motion/core';
+import React, { useRef } from 'react';
+import { styler, tween } from 'popmotion';
+
+const PopmotionMoveRight = props => {
+  const elementStyler = useRef();
+
+  return (
+    <Collector
+      data={{
+        action: 'motion',
+        payload: {
+          beforeAnimate: (elements, onFinish, setChildProps) => {
+            elementStyler.current = styler(elements.destination.element);
+            onFinish();
+          },
+          animate: (elements, onFinish, setChildProps) => {
+            tween({ from: 0, to: { x: 300 } }).start({
+              complete: onFinish,
+              update: elementStyler.current,
+            });
+          },
+        },
+      }}
+    >
+      {props.children}
+    </Collector>
+  );
+};
+```
+
+## Controlling in what order motions should execute
+
+> **Tip -** motions have three phases,
+> `beforeAnimate()`,
+> `animate()` and `afterAnimate()`.
+> Don't worry if you're confused we will go over them in detail in [Custom motions](/custom-motions).
+
+Motions are executed from top to bottom.
+The parent-most motion will be executed first and then continue execution inwards.
+
+So if we had two motions, Move and CrossFade:
+
+```js
+() => (
+  <Motion name="move-first">
+    <Move>
+      <CrossFade>{motion => <div {...motion} />}</CrossFade>
+    </Move>
+  </Motion>
+);
+```
+
+When executed the order would look like:
+
+1. Move `beforeAnimate()` fired
+1. CrossFade `beforeAnimate()` fired
+1. Move `animate()` fired
+1. CrossFade `animate()` fired
+1. Move `afterAnimate()` fired
+1. CrossFade `afterAnimate()` fired
+
+<br />
+
+If we placed CrossFade first:
+
+```js
+() => (
+  <Motion name="cross-fade-first">
+    <CrossFade>
+      <Move>{motion => <div {...motion} />}</Move>
+    </CrossFade>
+  </Motion>
+);
+```
+
+Then their order would be inversed:
+
+1. CrossFade `beforeAnimate()` fired
+1. Move `beforeAnimate()` fired
+1. CrossFade `animate()` fired
+1. Move `animate()` fired
+1. CrossFade `afterAnimate()` fired
+1. Move `afterAnimate()` fired
+
+## Wait for the previous motion to finish before starting the next
+
+Depending on the motions chosen you'll want to defer starting one until the previous has finished.
+Luckily the [Wait](/wait) component has been made for that!
+
+Continuing the example above,
+if we introduce the Wait component:
+
+```js
+import { Wait } from '@element-motion/core';
+
+() => (
+  <Motion name="wait">
+    <CrossFade>
+      <Wait>
+        <Move>{motion => <div {...motion} />}</Move>
+      </Wait>
+    </CrossFade>
+  </Motion>
+);
+```
+
+Then the Move motion will wait for the CrossFade motion to complete finish before starting,
+the order then becoming:
+
+1. CrossFade `beforeAnimate()` fired
+1. CrossFade `animate()` fired
+1. Move `beforeAnimate()` fired
+1. Move `animate()` fired
+1. CrossFade `afterAnimate()` fired
+1. Move `afterAnimate()` fired
+
+> **Tip -** Notice that afterAnimate's are always called the the same regardless of Wait usage.
+
+## Delay showing content until all motions have finished
+
+Occasionally when initiating a motion we can have some secondary content we want to keep hidden until the motion has finished.
+Luckily [VisibilityManager](/visibility-manager) exists to do just that!
+Make it a parent of any [Motion](/motion) and it will show its content only when the motion has finished.
+
+```js
+import { VisibilityManager } from '@element-motion/core';
+
+() => (
+  <VisibilityManager>
+    {manager => (
+      <div>
+        <Motion name="hide-children-until-motions-have-finished">
+          <CrossFade>
+            <Move>{motion => <div {...motion} />}</Move>
+          </CrossFade>
+        </Motion>
+
+        <span {...manager}>Children content</span>
+      </div>
+    )}
+  </VisibilityManager>
+);
+```
+
+Children content will be shown after **all** motions have completed.
+
+> **Tip -** If you have multiple child [Motion](/motion) you can pass [VisibilityManager](/visibility-manager) a `name` prop to target a specific [Motion](/motion).
+
+## Using supporting motions
+
+While movement is a large part - we can do so much more!
+When building a great user experience its also useful to have supporting motion to help seamlessly transition from one state to another.
+
+Two extra tools we have to do this is [CircleExpand](/circle-expand) and [CircleShrink](/circle-shrink) motions,
+used together can produce a really cool transition between states.
+
+<Playground>
+  <Styled.Center>
+    <Common.SmallViewport>
+      <Common.Toggler>
+        {({ shown, toggle }) => (
+          <div id="yo">
+            {!shown ? (
+              <Styled.Container>
+                <Motion name="circle-expand-square" key="1">
+                  <CircleExpand background="#fea3aa">
+                    {motion => <Styled.Root onClick={() => toggle()} {...motion} />}
+                  </CircleExpand>
+                </Motion>
+              </Styled.Container>
+            ) : (
+              <VisibilityManager>
+                {props => (
+                  <Styled.Container
+                    onClick={() => toggle()}
+                    style={{ cursor: 'pointer', background: '#005aff', ...props.style }}
+                  >
+                    <Motion name="circle-expand-square" key="2">
+                      <CircleShrink background="#005aff">
+                        {motion => <div {...motion} />}
+                      </CircleShrink>
+                    </Motion>
+                  </Styled.Container>
+                )}
+              </VisibilityManager>
+            )}
+          </div>
+        )}
+      </Common.Toggler>
+    </Common.SmallViewport>
+  </Styled.Center>
+</Playground>
+
+> **Tip -** [VisibilityManager](/visibility-manager) has been used as well to hide the next contents until the motion has finished,
+> resulting in that crisp transition.
+
+## Moving using a focal target
+
+At times we want to move all content at once but have it originate from a focal point.
+The [FocalTarget](/focal-target) component exists to mark the focal element so motions who care can use it.
+Two examples of motions who can use it are [Move](/move), [FocalConcealMove](/focal-conceal-move).
+
+<Playground>
+  <Styled.Center>
+    <EmailChain />
+  </Styled.Center>
+</Playground>
+
+> **Tip -** Have a cool idea for a motion but you haven't seen any available yet?
+> Check out [Custom motions](/custom-motions) to see how you can build your own!

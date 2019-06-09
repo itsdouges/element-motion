@@ -1,0 +1,56 @@
+---
+name: FadeMove
+route: /fade-move
+menu: Focal motions
+---
+
+import { Playground, Props } from 'docz';
+import * as Common from '@element-motion/dev';
+import Motion from '../../../../core/src/Motion';
+import FadeMove from '../index';
+import * as Styled from './styled';
+
+# FadeMove
+
+Will clone the origin element and position it absolutely then animate it ontop of the destination element,
+while fading out.
+
+Generally you'd want to use [Move](/move) or [CrossFadeMove](/cross-fade-move) over this.
+
+## Usage
+
+```js
+import Motion, { FadeMove } from '@element-motion/core';
+```
+
+<Playground>
+  <Common.Toggler interval>
+    {({ shown, toggle }) =>
+      shown ? (
+        <Motion name="fade-move" key="1">
+          <FadeMove>
+            {({ ref, style }) => (
+              <Styled.Box onClick={() => toggle()} style={style} ref={ref}>
+                Hello, world!
+              </Styled.Box>
+            )}
+          </FadeMove>
+        </Motion>
+      ) : (
+        <Motion name="fade-move" key="2">
+          <FadeMove>
+            {({ ref, style }) => (
+              <Styled.Box style={style} ref={ref} onClick={() => toggle()} alignRight>
+                Hello, world!
+              </Styled.Box>
+            )}
+          </FadeMove>
+        </Motion>
+      )
+    }
+  </Common.Toggler>
+</Playground>
+
+## Props
+
+<Props of={FadeMove} />

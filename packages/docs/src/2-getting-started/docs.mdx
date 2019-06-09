@@ -1,0 +1,493 @@
+---
+name: 2. Getting started 🚶
+route: /getting-started
+order: 4
+---
+
+import { Playground } from 'docz';
+import { Toggler } from '@element-motion/dev';
+import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
+import * as Common from '@element-motion/dev';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import MicIcon from '@material-ui/icons/Mic';
+import { IconButton } from '@material-ui/core';
+import Select from 'react-select';
+import { MemoryRouter, Link, Switch, Route } from 'react-router-dom';
+import { WrappedMotion as Motion } from '../../../core/src/Motion';
+import ReshapingContainer from '../../../motions/src/ReshapingContainer';
+import { WrappedVisibilityManager as VisibilityManager } from '../../../core/src/VisibilityManager';
+import Move from '../../../motions/src/Move';
+import CrossFadeMove from '../../../motions/src/CrossFadeMove';
+import * as Styled from './styled';
+import img1 from './images/1.png';
+import img2 from './images/2.jpeg';
+import img3 from './images/3.jpeg';
+import img4 from './images/4.png';
+import img5 from './images/5.png';
+import img6 from './images/6.jpeg';
+import avatar from './images/avatar.jpg';
+import johnny from './images/jg.jpg';
+
+# Getting started
+
+The bread and butter motion is moving an element.
+Simple enough - after a state change we can automatically have the element move into the its new position.
+
+> **Tip -** You can interact with any examples!
+> When you do they will stop auto playing.
+> Make sure to look at the code after playing with the examples 😋
+
+## Moving to another element
+
+For a simple move we can use the [Motion](/motion) and [Move](/move) components.
+[Move](/move) is good when the elements are visually very similar.
+For this example we are moving from one element to another over a state change.
+
+<Playground>
+  <Styled.Center>
+    <Common.SmallViewport>
+      <Styled.SelectContainer>
+        <Toggler interval onIntervalSet={curVal => (curVal ? undefined : 1)}>
+          {({ shown, toggle }) =>
+            shown ? (
+              <Motion name={`item-${shown}`}>
+                <Move scaleY={false}>
+                  {motion => (
+                    <div {...motion}>
+                      <Select
+                        isSearchable={false}
+                        value={{}}
+                        styles={{
+                          singleValue: () => ({}),
+                        }}
+                        isClearable
+                        onChange={() => toggle()}
+                        formatOptionLabel={() => (
+                          <Styled.Value>
+                            {Styled.data[shown].title}
+                            <Styled.Description>
+                              {Styled.data[shown].description}
+                            </Styled.Description>
+                          </Styled.Value>
+                        )}
+                      />
+                    </div>
+                  )}
+                </Move>
+              </Motion>
+            ) : (
+              <Styled.List>
+                {Styled.data.map((item, index) => (
+                  <Motion key={index} name={`item-${index}`}>
+                    <Move scaleY={false}>
+                      {motion => (
+                        <Styled.Value onClick={() => toggle(`${index}`)} {...motion}>
+                          {item.title}
+                          <Styled.Description>{item.description}</Styled.Description>
+                        </Styled.Value>
+                      )}
+                    </Move>
+                  </Motion>
+                ))}
+              </Styled.List>
+            )
+          }
+        </Toggler>
+      </Styled.SelectContainer>
+    </Common.SmallViewport>
+  </Styled.Center>
+</Playground>
+
+> **Tip -** Motions are triggered by state changes.
+> For more information check out the [Motion](/motion) component docs.
+
+## Reshaping containers
+
+One powerful aspect is being able to compose different motions and behaviors together.
+Taking some inspiration from [Facebook Messenger](http://messenger.com) -
+here is their message notification pill made using [ReshapingContainer](/reshaping-container) and [VisibilityManager](/visibility-manager).
+
+<Playground>
+  <Styled.AlignCenter>
+    <Common.Toggler interval onIntervalSet={val => val + 1}>
+      {toggler => (
+        <VisibilityManager isInitiallyVisible>
+          {visibility => (
+            <ReshapingContainer
+              triggerKey={toggler.shown}
+              display="inline-block"
+              boxShadow="rgba(32, 33, 36, 0.25) 0px 3px 6px"
+              padding="4px 6px"
+              borderRadius="20px"
+              maxWidth="250px"
+            >
+              {({ style, ref }) => (
+                <Styled.MessageNotification
+                  ref={ref}
+                  style={{ ...style, ...visibility.style }}
+                  onClick={() => toggler.set(toggler.shown + 1)}
+                >
+                  <Styled.Avatar src={avatar} />
+                  <Styled.NotificationText>
+                    {Styled.messages(toggler.shown)}
+                  </Styled.NotificationText>
+                </Styled.MessageNotification>
+              )}
+            </ReshapingContainer>
+          )}
+        </VisibilityManager>
+      )}
+    </Common.Toggler>
+  </Styled.AlignCenter>
+</Playground>
+
+> **Tip -** We strive to have the best out of the box animated experience for developers.
+> Some components combine multiple motions and behavior - we call them [Composite experiences](/composite-experiences).
+
+## Moving to the same element
+
+Sometimes we want to animate over the same element after a state change,
+for example expanding a thumbnail to a large image.
+To do that we can use the `triggerSelfKey` prop available in the `Motion` component -
+we just update the key at the same time as the state change.
+
+<Playground>
+  <Styled.Container>
+    <Toggler>
+      {({ shown, toggle }) => (
+        <Motion triggerSelfKey={shown}>
+          <Move>
+            {({ ref, style }) => (
+              <>
+                {shown && <Styled.Blanket onClick={() => toggle()} />}
+                <Styled.ImageModal
+                  style={style}
+                  onClick={() => toggle()}
+                  ref={ref}
+                  appearance={shown ? 'big' : 'small'}
+                  src={johnny}
+                />
+              </>
+            )}
+          </Move>
+        </Motion>
+      )}
+    </Toggler>
+  </Styled.Container>
+</Playground>
+
+> **Tip -** The beauty of this is that all the motions are dynamic.
+> Elements can be positioned in an infinite amount of states and we can animate between them all -
+> no hard coding.
+
+## Moving to another distinct element
+
+Sometimes we can't have the affordances of two elements visually looking the same,
+for that we can use the [CrossFadeMove](/cross-fade-move) motion to transition between them.
+
+<Playground>
+  <Styled.Center>
+  <Common.Toggler interval>
+    {({ shown, toggle }) => (
+      <Common.SmallViewport>
+        {shown || (
+          <Motion name="google-searchbar">
+            <CrossFadeMove>
+              {({ ref, style }) => (
+                <Styled.FloatingSearchBar onClick={() => toggle()} ref={ref} style={style}>
+                  <IconButton color="default" aria-label="Menu" style={{ marginLeft: 'auto ' }}>
+                    <MicIcon colorRendering="blue" />
+                  </IconButton>
+                </Styled.FloatingSearchBar>
+              )}
+            </CrossFadeMove>
+          </Motion>
+        )}
+
+        {shown && (
+          <Motion name="google-searchbar">
+            <CrossFadeMove>
+              {({ ref, style }) => (
+                <Styled.FixedSearchBar ref={ref} style={style}>
+                  <IconButton color="default" aria-label="Menu" onClick={() => toggle()}>
+                    <BackIcon color="inherit" />
+                  </IconButton>
+
+                  <Styled.Input placeholder="Search or type URL" />
+
+                  <IconButton color="default" aria-label="Menu">
+                    <MicIcon colorRendering="blue" />
+                  </IconButton>
+                </Styled.FixedSearchBar>
+              )}
+            </CrossFadeMove>
+          </Motion>
+        )}
+      </Common.SmallViewport>
+    )}
+
+  </Common.Toggler>
+  </Styled.Center>
+</Playground>
+
+> **Tip -** Only use this motion when your elements are very different from each other,
+> it is more expensive than a regular [Move](/move) motion.
+
+## Animating route transitions
+
+Remember that motions are triggered after a state change,
+and if you're using a router the state is just kept at a higher level.
+Here we have the above example re-written with [React Router](https://reacttraining.com/react-router/).
+
+<Playground>
+  <Styled.Center>
+    <Common.SmallViewport>
+      <MemoryRouter>
+        <Switch>
+          <Route
+            path="/search"
+            render={() => (
+              <div>
+                <Motion name="searchbar">
+                  <CrossFadeMove>
+                    {({ ref, style }) => (
+                      <Styled.FixedSearchBar ref={ref} style={style}>
+                        <Link to="/">
+                          <IconButton color="default" aria-label="Menu">
+                            <BackIcon color="inherit" />
+                          </IconButton>
+                        </Link>
+
+                        <Styled.Input placeholder="Search or type URL" />
+
+                        <IconButton color="default" aria-label="Menu">
+                          <MicIcon colorRendering="blue" />
+                        </IconButton>
+                      </Styled.FixedSearchBar>
+                    )}
+                  </CrossFadeMove>
+                </Motion>
+              </div>
+            )}
+          />
+
+          <Route
+            path="/"
+            render={() => (
+              <Motion name="searchbar">
+                <CrossFadeMove>
+                  {({ ref, style }) => (
+                    <Link to="/search">
+                      <Styled.FloatingSearchBar ref={ref} style={style}>
+                        <IconButton
+                          color="default"
+                          aria-label="Menu"
+                          style={{ marginLeft: 'auto ' }}
+                        >
+                          <MicIcon colorRendering="blue" />
+                        </IconButton>
+                      </Styled.FloatingSearchBar>
+                    </Link>
+                  )}
+                </CrossFadeMove>
+              </Motion>
+            )}
+          />
+        </Switch>
+      </MemoryRouter>
+    </Common.SmallViewport>
+
+  </Styled.Center>
+</Playground>
+
+## Moving from a persisted element
+
+Sometimes it's useful to animate between two elements where one is never removed,
+for example if we show a modal over the top of screen content.
+To make this possible the [Motion](/motion) component can be controlled via the `in` prop.
+Set it to `true` when you consider it to be shown,
+and `false` when you consider it to be hidden.
+
+> **Tip -** After opening an image press on the top left button to close.
+
+<Playground>
+  <Styled.Center>
+  <Common.Toggler interval onIntervalSet={curVal => curVal ? undefined : img4}>
+    {({ toggle, shown }) => {
+      const image = ({ src, title, from, onClick, in: inn }) => (
+        <Styled.Root>
+          <Styled.ImageContainer>
+            <Motion name={src} in={inn}>
+              <Move zIndex={89}>
+                {({ ref, style }) => (
+                  <Styled.Img
+                    src={src}
+                    onClick={onClick}
+                    ref={ref}
+                    style={{ ...style, opacity: !inn ? 0 : style.opacity }}
+                  />
+                )}
+              </Move>
+            </Motion>
+
+            <Styled.ImageBack />
+          </Styled.ImageContainer>
+
+          <Styled.ImageTitle>{title}</Styled.ImageTitle>
+          <Styled.ImageFrom>{from}</Styled.ImageFrom>
+        </Styled.Root>
+      );
+
+      const details = ({ src, title, onClick }) => (
+        <VisibilityManager name={src}>
+          {props => (
+            <Styled.ImagePageRoot {...props}>
+              <div>
+                <IconButton
+                  color="default"
+                  aria-label="Menu"
+                  style={{ top: 26, left: 0, position: 'absolute', background: 'rgba(0,0,0,0.3)', color: 'white', opacity: 0.8 }}
+                  onClick={onClick}
+                >
+                  <CloseIcon color="inherit" />
+                </IconButton>
+              </div>
+
+              <Motion name={src}>
+                <Move zIndex={89} createStackingContext>
+                  {({ ref, style }) => <Styled.PageImage src={src} ref={ref} style={style} />}
+                </Move>
+              </Motion>
+
+              <Styled.ContentContainer>
+                <Styled.FadeIn in={props.style.visibility !== 'hidden'}>
+                  <Styled.MetaRoot>
+                    <Styled.PageTitle>{title}</Styled.PageTitle>
+                    <Styled.Copyright>Images may be subject to copyright.</Styled.Copyright>
+                  </Styled.MetaRoot>
+
+                  <Styled.Images>
+                    <Styled.Related>Related images</Styled.Related>
+                    <Styled.Related>See more</Styled.Related>
+                  </Styled.Images>
+
+                  <Styled.Images>
+                    <Styled.Column>
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                    </Styled.Column>
+                    <Styled.Column>
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                      {image({
+                        src: `${img4}/`,
+                        title: 'Washington Capitals - Wikipedia 1',
+                        from: 'en.wikipedia.org',
+                      })}
+                    </Styled.Column>
+                  </Styled.Images>
+                </Styled.FadeIn>
+              </Styled.ContentContainer>
+            </Styled.ImagePageRoot>
+          )}
+        </VisibilityManager>
+      );
+
+      return (
+        <Common.SmallViewport>
+          <Styled.Header>
+            <IconButton color="default" aria-label="Menu" style={{ marginRight: '10px' }}>
+              <MenuIcon />
+            </IconButton>
+
+            <Styled.Logo />
+          </Styled.Header>
+
+          <Styled.Images>
+            <Styled.Column>
+              {image({
+                src: img1,
+                title: 'Official Washington Capitals Website | NHL.com',
+                from: 'nhl.com',
+                onClick: () => toggle(img1),
+                in: shown !== img1,
+              })}
+              {image({
+                src: img3,
+                title: 'Washington Capitals: 2017 Season Preview, Predictions',
+                from: 'puckprose.com',
+                onClick: () => toggle(img3),
+                in: shown !== img3,
+              })}
+              {image({
+                src: img6,
+                title: 'The Washington Capitals are up to their old tricks again ...',
+                from: 'nhl.nbcsports.com',
+                onClick: () => toggle(img6),
+                in: shown !== img6,
+              })}
+            </Styled.Column>
+            <Styled.Column>
+              {image({
+                src: img4,
+                title: 'Washington Capitals - Wikipedia',
+                from: 'en.wikipedia.org',
+                onClick: () => toggle(img4),
+                in: shown !== img4,
+              })}
+              {image({
+                src: img5,
+                title: 'Washington Capitals - Home | Facebook',
+                from: 'facebook.com',
+                onClick: () => toggle(img5),
+                in: shown !== img5,
+              })}
+              {image({
+                src: img2,
+                title: 'Capitals Announce 2017-18 Preseason Schedule',
+                from: 'nhl.com',
+                onClick: () => toggle(img2),
+                in: shown !== img2,
+              })}
+            </Styled.Column>
+          </Styled.Images>
+
+          {shown &&
+            details({
+              src: shown,
+              title: 'Washington Capitals - Wikipedia',
+              from: 'en.wikipedia.org',
+              onClick: () => toggle(),
+            })}
+        </Common.SmallViewport>
+      );
+    }}
+
+  </Common.Toggler>
+  </Styled.Center>
+</Playground>
+
+> **Tip -** After clicking on an image you'll notice the content is shown after the motion has completed,
+> check out [Advanced usage](/advanced-usage) for more info!
