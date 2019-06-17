@@ -2,7 +2,7 @@
   <img aria-label="element motion" src="https://user-images.githubusercontent.com/6801309/58364853-bf21cd80-7efd-11e9-8300-df952b3a03c8.png" height="100" />
 </h1>
 
-formerly yubaba, element motion for [React.js](https://reactjs.org/) 💨✨
+Element motion for [React.js](https://reactjs.org/) 💨✨
 
 [![npm](https://img.shields.io/npm/v/@element-motion/core.svg)](https://www.npmjs.com/package/@element-motion/core) [![npm bundle size (minified + gzip)](https://badgen.net/bundlephobia/minzip/@element-motion/core)](https://bundlephobia.com/result?p=@element-motion/core)
 
@@ -22,6 +22,11 @@ It's all about ✨**motion over state transitions** ✨ - it can help with:
 - 🔢 [Orchestrating](https://elementmotion.com/advanced-usage#wait-for-the-previous-motion-to-finish-before-starting-the-next) when motions should start and [in what order](https://elementmotion.com/advanced-usage#controlling-in-what-order-motions-should-execute)
 - 📝 Composing motions together to create composites, for example [CrossFadeMove](https://elementmotion.com/cross-fade-move)
 - 🤯 [Anything you can imagine](https://elementmotion.com/custom-motions), seriously
+
+> **Tip -** Element motion is split into two logical areas.
+>
+> 1. [**Orchestration**](https://elementmotion.com/motion) (collecting DOM data, enabling motion between disconnected React elements, executing motions)
+> 2. [**Motions**](https://elementmotion.com/focal-motions) (animation concerns, CSS transitions/animations, JS animations, whatever you can imagine)
 
 ### Talks
 
