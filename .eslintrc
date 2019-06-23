@@ -20,9 +20,10 @@
     "react/sort-comp": "off",
     "react/destructuring-assignment": "never",
     "import/prefer-default-export": "off",
+    "no-restricted-properties": "off",
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": ["**/*test.tsx", "**/*stories.tsx"] }
+      { "devDependencies": ["**/*test.tsx", "**/*stories.tsx", "**/__docs__/**"] }
     ]
   }
 }

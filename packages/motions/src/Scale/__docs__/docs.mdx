@@ -1,0 +1,118 @@
+---
+name: Scale
+route: /scale
+menu: Focal motions
+---
+
+import { Playground, Props } from 'docz';
+import * as Common from '@element-motion/dev';
+import Motion from '../../../../core/src/Motion';
+import Scale from '../index';
+import InverseScale from '../InverseScale';
+import Move from '../../Move';
+import * as Styled from './styled';
+
+# Scale
+
+Will scale an element from the `origin` to `destination` size.
+Can also use `InverseScale` component to counteract the transform which enables really powerful motions.
+
+## Usage
+
+```js
+import Motion, { Scale, InverseScale } from '@element-motion/core';
+```
+
+**Try the interactive demos** 👇
+
+### Without inverse scale
+
+In this example the children isn't using the `InverseScale` component - note that it looks stank.
+
+<Playground>
+  <Styled.Container>
+    <Common.Toggler>
+      {toggler => (
+        <Motion triggerSelfKey={toggler.shown}>
+          <Scale>
+            {motion => (
+              <Styled.Root {...motion} big={toggler.shown} onClick={toggler.toggle}>
+                <Styled.Text>hello, world</Styled.Text>
+              </Styled.Root>
+            )}
+          </Scale>
+        </Motion>
+      )}
+    </Common.Toggler>
+  </Styled.Container>
+</Playground>
+
+### With inverse scale
+
+Utilising the `InverseScale` component we now get a scale transform that looks _good_.
+
+<Playground>
+  <Styled.Container>
+    <Common.Toggler>
+      {toggler => (
+        <Motion triggerSelfKey={toggler.shown}>
+          <Scale>
+            {motion => (
+              <Styled.Root {...motion} big={toggler.shown} onClick={toggler.toggle}>
+                <InverseScale>
+                  {inverse => <Styled.Text {...inverse}>hello, world</Styled.Text>}
+                </InverseScale>
+              </Styled.Root>
+            )}
+          </Scale>
+        </Motion>
+      )}
+    </Common.Toggler>
+  </Styled.Container>
+</Playground>
+
+### Actual example
+
+Abusing this behaviour we can make pretty cool stuff!
+Like for example a expand/collapse component.
+
+<Playground>
+  <Styled.Container>
+    <Common.Toggler>
+      {toggler => (
+        <Motion triggerSelfKey={toggler.shown}>
+          <Scale duration={200}>
+            {motion => (
+              <Styled.Menu {...motion} isExpanded={toggler.shown} overflow="hidden">
+                <InverseScale>
+                  {inverse => (
+                    <div {...inverse}>
+                      <Styled.MenuButton onClick={toggler.toggle}>Menu</Styled.MenuButton>
+                      <Styled.MenuItems style={{ position: toggler.shown ? 'static' : 'absolute' }}>
+                        <Styled.MenuItem>Menu item 1</Styled.MenuItem>
+                        <Styled.MenuItem>Menu item 2</Styled.MenuItem>
+                        <Styled.MenuItem>Menu item 3</Styled.MenuItem>
+                        <Styled.MenuItem>Menu item 4</Styled.MenuItem>
+                      </Styled.MenuItems>
+                    </div>
+                  )}
+                </InverseScale>
+              </Styled.Menu>
+            )}
+          </Scale>
+        </Motion>
+      )}
+    </Common.Toggler>
+  </Styled.Container>
+</Playground>
+
+## Props
+
+<Props of={Scale} />
+
+## Gotchas
+
+### Inverse scale
+
+Make sure to utilise an element that is a block - either `block`, `inline-block`, `flex`, `inline-flex`.
+Else the transforms will not be applied.

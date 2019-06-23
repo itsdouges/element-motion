@@ -36,7 +36,7 @@ module.exports = [
     path: '../core/dist/esm/packages/motions/src/Noop/index.js',
   },
   {
-    limit: '4 KB',
+    limit: '4.1 KB',
     path: '../core/dist/esm/packages/motions/src/ReshapingContainer/index.js',
     ignore: ['react', 'react-dom'],
   },
@@ -45,12 +45,20 @@ module.exports = [
     path: '../core/dist/esm/packages/motions/src/Reveal/index.js',
   },
   {
-    limit: '4.58 KB',
+    limit: '4.60 KB',
     path: '../core/dist/esm/packages/motions/src/RevealReshapingContainer/index.js',
     ignore: ['react', 'react-dom'],
   },
   {
     limit: '1.24 KB',
     path: '../core/dist/esm/packages/motions/src/Swipe/index.js',
+  },
+  {
+    limit: '1.75 KB',
+    path: '../core/dist/esm/packages/motions/src/Scale/index.js',
+  },
+  {
+    limit: '145 B',
+    path: '../core/dist/esm/packages/motions/src/Scale/InverseScale.js',
   },
 ];

@@ -25,6 +25,8 @@ export { WrappedVisibilityManager as MotionManager } from './VisibilityManager';
 export * from './Collector';
 export { default as Collector } from './Collector';
 export { default as FocalTarget } from './FocalTarget';
+export { default as Scale } from '../../motions/src/Scale';
+export { default as InverseScale } from '../../motions/src/Scale/InverseScale';
 export * from './lib/curves';
 export * from './lib/dom';
 export * from './lib/math';

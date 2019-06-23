@@ -1,9 +1,10 @@
-export const combine = (t1: string = '', delimeter = ',') => (t2?: string | number) => {
-  if (t2) {
-    return `${t1}${delimeter} ${t2}`;
+export const combine = (newValue: string = '', delimeter = ',') => (
+  prevValue?: string | number
+) => {
+  if (prevValue) {
+    return `${newValue}${delimeter} ${prevValue}`;
   }
-
-  return t1;
+  return newValue;
 };
 
 export const zIndexStack = {

@@ -234,6 +234,21 @@ If it's an image, try and have the image loaded before mounting or set a static 
       const { collectorData, elementData } = DOMSnapshot;
       this.executing = true;
 
+      /**
+       * !! START SAFARI BULLSHIT HACK ALERT !!
+       * Safari has a problem correctly updating a parent element if a child element changes its position.
+       * Because of this it will read the wrong dimensions in this frame and then in the next frame have them
+       * as we expected.
+       *
+       * This essentially forces the browser to repaint everything in the current frame.
+       */
+      this.element!.style.display = 'none';
+      this.element!.offsetHeight; // eslint-disable-line no-unused-expressions
+      this.element!.style.display = '';
+      /**
+       * !! END SAFARI BULLSHIT HACK ALERT !!
+       */
+
       // Calculate DOM data for the executing element to then be passed to the motion/s.
       const motionData: MotionData = {
         origin: elementData,

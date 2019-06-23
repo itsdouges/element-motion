@@ -118,7 +118,7 @@ export default class Move extends React.Component<MoveProps> {
         ...prevStyles,
         zIndex,
         position: createStackingContext ? 'relative' : undefined,
-        transformOrigin: '0 0',
+        transformOrigin: 'top left',
         visibility: 'visible',
         willChange: combine('transform')(prevStyles.willChange),
         transform: combine(prevStyles.transform, '')(
