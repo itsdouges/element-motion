@@ -1,15 +1,13 @@
-import { name, version } from '../../package.json';
-
 export const throwIf = (check: any, message: string) => {
   if (check) {
-    throw new Error(`${name} v${version}
+    throw new Error(`@element-motion
 
 ${message}`);
   }
 };
 
 export const warn = (message: string) => {
-  console.warn(`${name} v${version}
+  console.warn(`@element-motion
 
 ${message}`);
 };

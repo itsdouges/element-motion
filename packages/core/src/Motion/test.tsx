@@ -8,10 +8,6 @@ import defer from '../lib/defer';
 import * as store from '../lib/store';
 import * as utils from '../__tests__/utils';
 
-jest.mock('../../package.json', () => ({
-  version: '0.0.0',
-  name: '@element-motion/core',
-}));
 jest.mock('../lib/dom');
 window.requestAnimationFrame = (cb: Function) => cb();
 
@@ -42,7 +38,7 @@ describe('<Motion />', () => {
 
     mount(<Motion>{props => <div {...props} />}</Motion>);
 
-    expect(console.warn).toHaveBeenCalledWith(`@element-motion/core v0.0.0
+    expect(console.warn).toHaveBeenCalledWith(`@element-motion
 
 "name" prop needs to be defined. Without it you may have problems matching up motion targets. You will not get this error when using "triggerSelfKey" prop.`);
   });
