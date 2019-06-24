@@ -7,6 +7,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import StarIcon from '@material-ui/icons/StarBorder';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
+import Motion, { FocalRevealMove, FocalConcealMove, FocalTarget } from '@element-motion/core';
 import {
   AppBar,
   Toolbar,
@@ -19,10 +20,6 @@ import {
   Divider,
 } from '@material-ui/core';
 import * as Styled from './styled';
-import { WrappedMotion as Motion } from '../../../core/src/Motion';
-import FocalRevealMove from '../../../motions/src/FocalRevealMove';
-import FocalConcealMove from '../../../motions/src/FocalConcealMove';
-import FocalTarget from '../../../core/src/FocalTarget';
 
 const EmailChain = () => {
   const home = (props: any) => (

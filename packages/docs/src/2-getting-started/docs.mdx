@@ -14,11 +14,12 @@ import MicIcon from '@material-ui/icons/Mic';
 import { IconButton } from '@material-ui/core';
 import Select from 'react-select';
 import { MemoryRouter, Link, Switch, Route } from 'react-router-dom';
-import { WrappedMotion as Motion } from '../../../core/src/Motion';
-import ReshapingContainer from '../../../motions/src/ReshapingContainer';
-import { WrappedVisibilityManager as VisibilityManager } from '../../../core/src/VisibilityManager';
-import Move from '../../../motions/src/Move';
-import CrossFadeMove from '../../../motions/src/CrossFadeMove';
+import Motion, {
+  VisibilityManager,
+  Move,
+  CrossFadeMove,
+  ReshapingContainer,
+} from '@element-motion/core';
 import * as Styled from './styled';
 import img1 from './images/1.png';
 import img2 from './images/2.jpeg';

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import Collector, {
+import {
+  Collector,
   CollectorChildrenProps,
   MotionCallback,
   CollectorActions,
-} from '../../../core/src/Collector';
+} from '@element-motion/core';
 
 export default class SupportingMotion extends React.Component<CollectorChildrenProps> {
   beforeAnimate: MotionCallback = (_, onFinish) => {

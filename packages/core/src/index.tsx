@@ -30,4 +30,6 @@ export { default as InverseScale } from '../../motions/src/Scale/InverseScale';
 export * from './lib/curves';
 export * from './lib/dom';
 export * from './lib/math';
+export * from './lib/duration';
+export * from './lib/style';
 export { default as noop } from './lib/noop';
