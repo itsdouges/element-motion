@@ -7,10 +7,7 @@
   "main": "dist/cjs/packages/utils/src/index.js",
   "module": "dist/esm/packages/utils/src/index.js",
   "sideEffects": false,
-  "scripts": {
-    "size": "size-limit",
-    "build": "rm -rf dist && tsc -p ./tsconfig.cjs.json && tsc -p ./tsconfig.esm.json"
-  },
+  "scripts": {},
   "peerDependencies": {
     "react": ">=16.4",
     "react-dom": ">=16.4"

@@ -18,10 +18,7 @@
     "material-motion",
     "motion"
   ],
-  "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.cjs.json && tsc -p ./tsconfig.esm.json && cp ../../README.md README.md",
-    "size": "size-limit"
-  },
+  "scripts": {},
   "dependencies": {
     "@element-motion/utils": "^2.8.0",
     "@element-motion/motions": "^2.8.0"

@@ -5,9 +5,7 @@
   "repository": "element-motion/element-motion",
   "author": "Michael Dougall",
   "license": "MIT",
-  "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.json"
-  },
+  "scripts": {},
   "dependencies": {
     "@element-motion/core": "^2.8.0",
     "@element-motion/dev": "^2.8.0",
