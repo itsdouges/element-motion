@@ -9,7 +9,7 @@
     "build": "lerna exec -- rm -rf dist && lerna exec -- tsc --outDir ./dist/esm --module esnext && lerna exec -- tsc --outDir ./dist/cjs --module commonjs",
     "lint": "eslint --ext .tsx .",
     "test": "jest",
-    "size": "lerna exec --ignore @element-motion/dev --ignore @element-motion/docs -- yarn size",
+    "size": "lerna exec --ignore @element-motion/dev --ignore @element-motion/docs -- npx size-limit",
     "pre-cut-version": "yarn test",
     "postinstall": "lerna link && yarn build",
     "cut-version": "yarn pre-cut-version && lerna publish --conventional-commits --skip-npm && yarn post-cut-version",
