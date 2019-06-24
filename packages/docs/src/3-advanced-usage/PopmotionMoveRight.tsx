@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { styler, tween, easing } from 'popmotion';
-import { Collector, CollectorActions } from '@element-motion/core';
+import { Collector, CollectorActions } from '@element-motion/utils';
 
 const MoveRight = (props: any) => {
   const elementStyler = useRef<any>();

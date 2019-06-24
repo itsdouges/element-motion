@@ -8,7 +8,7 @@ module.exports = [
     path: '../core/dist/esm/packages/motions/src/CircleShrink/index.js',
   },
   {
-    limit: '2.13 KB',
+    limit: '2.15 KB',
     path: '../core/dist/esm/packages/motions/src/CrossFadeMove/index.js',
   },
   {
@@ -20,7 +20,7 @@ module.exports = [
     path: '../core/dist/esm/packages/motions/src/FocalConcealMove/index.js',
   },
   {
-    limit: '1.58 KB',
+    limit: '1.60 KB',
     path: '../core/dist/esm/packages/motions/src/FocalReveal/index.js',
   },
   {

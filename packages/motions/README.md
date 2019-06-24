@@ -1,3 +1,3 @@
 # @element-motion/motions
 
-Not currently a real package.
+Contains all custom motions.

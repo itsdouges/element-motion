@@ -3,7 +3,44 @@ import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
 import { Toggler } from '@element-motion/dev';
-import Motion, { VisibilityManager, Noop } from '../../src';
+import { WrappedVisibilityManager as VisibilityManager } from './index';
+import { WrappedMotion as Motion } from '../Motion';
+import Collector, { CollectorChildrenProps, CollectorActions } from '../Collector';
+
+interface NoopProps extends CollectorChildrenProps {
+  duration: number;
+}
+
+export default class Noop extends React.Component<NoopProps> {
+  static defaultProps = {
+    duration: 0,
+  };
+
+  render() {
+    const { children, duration } = this.props;
+
+    return (
+      <Collector
+        data={{
+          action: CollectorActions.motion,
+          payload: {
+            beforeAnimate: (_, onFinish) => {
+              onFinish();
+            },
+            animate: (_, onFinish) => {
+              setTimeout(onFinish, duration);
+            },
+            afterAnimate: (_, onFinish) => {
+              onFinish();
+            },
+          },
+        }}
+      >
+        {children}
+      </Collector>
+    );
+  }
+}
 
 const StyledBody = styled(BodyClassName)`
   background-color: #f2a2e8;

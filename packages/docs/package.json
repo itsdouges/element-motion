@@ -9,6 +9,7 @@
     "build": "rm -rf dist && tsc -p ./tsconfig.json"
   },
   "dependencies": {
+    "@element-motion/core": "^2.8.0",
     "@element-motion/dev": "^2.8.0",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",

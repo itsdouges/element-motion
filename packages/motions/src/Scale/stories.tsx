@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from '@element-motion/dev';
-import Motion from '../../../core/src/Motion';
+import { Motion } from '@element-motion/utils';
 import Scale from './index';
 import InverseScale from './InverseScale';
 
@@ -44,7 +44,7 @@ const MenuItem = styled.li`
   white-space: nowrap;
 `;
 
-storiesOf('@element-motion/core/Scale', module).add('Default', () => (
+storiesOf('@element-motion/motions/Scale', module).add('Default', () => (
   <Toggler>
     {toggler => (
       <Motion triggerSelfKey={toggler.shown}>

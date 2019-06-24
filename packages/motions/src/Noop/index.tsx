@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Collector, { CollectorChildrenProps, CollectorActions } from '../../../core/src/Collector';
+import { Collector, CollectorChildrenProps, CollectorActions } from '@element-motion/utils';
 
 interface NoopProps extends CollectorChildrenProps {
   duration: number;

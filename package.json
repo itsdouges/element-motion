@@ -11,7 +11,7 @@
     "test": "jest",
     "size": "lerna exec --ignore @element-motion/dev --ignore @element-motion/docs -- yarn size",
     "pre-cut-version": "yarn test",
-    "postinstall": "yarn build && lerna link",
+    "postinstall": "lerna link && yarn build",
     "cut-version": "yarn pre-cut-version && lerna publish --conventional-commits --skip-npm && yarn post-cut-version",
     "cut-version-beta": "yarn pre-cut-version && lerna publish --skip-npm --npm-tag beta && yarn post-cut-version",
     "post-cut-version": "git push && git push --tags",

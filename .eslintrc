@@ -23,7 +23,15 @@
     "no-restricted-properties": "off",
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": ["**/*test.tsx", "**/*stories.tsx", "**/__docs__/**"] }
+      {
+        "devDependencies": [
+          "**/*test.tsx",
+          "**/*stories.tsx",
+          "**/__docs__/**",
+          "**/__docz__/**",
+          "test.tsx"
+        ]
+      }
     ]
   }
 }

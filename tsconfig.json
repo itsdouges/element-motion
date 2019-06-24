@@ -20,7 +20,10 @@
     "experimentalDecorators": true,
     "noUnusedParameters": true,
     "types": ["react", "jest", "node"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@element-motion/*": ["./packages/*/src"]
+    }
   },
   "exclude": [
     "node_modules",

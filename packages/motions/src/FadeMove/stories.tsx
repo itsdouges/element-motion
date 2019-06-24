@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import { createMoveExamples } from '@element-motion/dev';
-import Motion from '../../../core/src/Motion';
+import { Motion } from '@element-motion/utils';
 import FadeMove from './index';
 
 const Examples = createMoveExamples({ namePrefix: 'FadeMove', useDistinctEnd: true })(
@@ -8,5 +8,5 @@ const Examples = createMoveExamples({ namePrefix: 'FadeMove', useDistinctEnd: tr
   FadeMove as any
 );
 
-const stories = storiesOf('@element-motion/core/FadeMove', module);
+const stories = storiesOf('@element-motion/motions/FadeMove', module);
 Object.keys(Examples).forEach(key => stories.add(key, Examples[key]));
