@@ -1,6 +1,6 @@
 {
   "name": "@element-motion/utils",
-  "version": "2.8.1-alpha.0",
+  "version": "2.8.1-alpha.1",
   "repository": "element-motion/element-motion",
   "author": "Michael Dougall",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "react-dom": ">=16.4"
   },
   "devDependencies": {
-    "@element-motion/dev": "^2.8.1-alpha.0",
+    "@element-motion/dev": "^2.8.1-alpha.1",
     "@storybook/react": "5.0.11",
     "docz": "^1.2.0",
     "react": "^16.8.6",
