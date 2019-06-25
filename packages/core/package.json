@@ -1,6 +1,6 @@
 {
   "name": "@element-motion/core",
-  "version": "2.8.0",
+  "version": "2.8.1-alpha.0",
   "repository": "element-motion/element-motion",
   "author": "Michael Dougall",
   "license": "MIT",
@@ -20,8 +20,8 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@element-motion/utils": "^2.8.0",
-    "@element-motion/motions": "^2.8.0"
+    "@element-motion/motions": "^2.8.1-alpha.0",
+    "@element-motion/utils": "^2.8.1-alpha.0"
   },
   "peerDependencies": {
     "emotion": ">=9",
@@ -29,7 +29,7 @@
     "react-dom": ">=16.4"
   },
   "devDependencies": {
-    "@element-motion/dev": "^2.8.0",
+    "@element-motion/dev": "^2.8.1-alpha.0",
     "@storybook/react": "5.0.11",
     "react": "^16.8.6",
     "react-body-classname": "^1.2.0",

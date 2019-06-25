@@ -1,7 +1,7 @@
 {
   "name": "@element-motion/dev",
   "private": true,
-  "version": "2.8.0",
+  "version": "2.8.1-alpha.0",
   "repository": "element-motion/element-motion",
   "author": "Michael Dougall",
   "license": "MIT",

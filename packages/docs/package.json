@@ -1,14 +1,14 @@
 {
   "name": "@element-motion/docs",
   "private": true,
-  "version": "2.8.0",
+  "version": "2.8.1-alpha.0",
   "repository": "element-motion/element-motion",
   "author": "Michael Dougall",
   "license": "MIT",
   "scripts": {},
   "dependencies": {
-    "@element-motion/core": "^2.8.0",
-    "@element-motion/dev": "^2.8.0",
+    "@element-motion/core": "^2.8.1-alpha.0",
+    "@element-motion/dev": "^2.8.1-alpha.0",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "docz": "^1.2.0",
