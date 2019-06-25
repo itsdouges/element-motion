@@ -5,8 +5,8 @@
   "repository": "element-motion/element-motion",
   "author": "Michael Dougall",
   "license": "MIT",
-  "main": "dist/packages/dev/src/index.js",
-  "module": "dist/packages/dev/src/index.js",
+  "main": "dist/cjs/packages/dev/src/index.js",
+  "module": "dist/esm/packages/dev/src/index.js",
   "scripts": {},
   "dependencies": {
     "@material-ui/core": "^3.9.3",
