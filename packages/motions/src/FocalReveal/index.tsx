@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { css } from 'emotion';
-import Collector, {
+import {
+  Collector,
   CollectorChildrenProps,
   MotionCallback,
   CollectorActions,
-} from '../../../core/src/Collector';
-import { standard } from '../../../core/src/lib/curves';
-import { combine } from '../../../core/src/lib/style';
-import { dynamic } from '../../../core/src/lib/duration';
+  combine,
+  standard,
+  dynamic,
+} from '@element-motion/utils';
 import { Duration } from '../types';
 
 export interface FocalRevealProps extends CollectorChildrenProps {

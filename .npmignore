@@ -1,6 +1,0 @@
-src/
-test/
-.babelrc
-.eslintrc
-.npmignore
-webpack.config.js

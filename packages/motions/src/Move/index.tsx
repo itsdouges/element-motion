@@ -1,16 +1,18 @@
 import * as React from 'react';
-import Collector, {
+import {
+  Collector,
   CollectorChildrenProps,
   MotionCallback,
   CollectorActions,
-} from '../../../core/src/Collector';
-import { recalculateElementBoundingBoxFromScroll } from '../../../core/src/lib/dom';
-import { standard } from '../../../core/src/lib/curves';
-import { combine, zIndexStack } from '../../../core/src/lib/style';
+  recalculateElementBoundingBoxFromScroll,
+  noop,
+  combine,
+  standard,
+  zIndexStack,
+  dynamic,
+  throwIf,
+} from '@element-motion/utils';
 import { Duration } from '../types';
-import { throwIf } from '../../../core/src/lib/log';
-import { dynamic } from '../../../core/src/lib/duration';
-import noop from '../../../core/src/lib/noop';
 
 export interface MoveProps extends CollectorChildrenProps {
   /**

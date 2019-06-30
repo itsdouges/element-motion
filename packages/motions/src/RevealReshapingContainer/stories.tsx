@@ -17,7 +17,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-storiesOf('@element-motion/core/RevealReshapingContainer', module)
+storiesOf('@element-motion/motions/RevealReshapingContainer', module)
   .add('HeightOnly', () => (
     <FixedContainer>
       <Toggler>

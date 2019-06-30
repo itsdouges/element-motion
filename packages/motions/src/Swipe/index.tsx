@@ -1,12 +1,14 @@
 import * as React from 'react';
-import Collector, {
+import {
+  Collector,
   CollectorChildrenProps,
   MotionCallback,
   CollectorActions,
-} from '../../../core/src/Collector';
+  standard,
+  zIndexStack,
+  decelerate,
+} from '@element-motion/utils';
 import SimpleKeyframe from '../SimpleKeyframe';
-import { standard, decelerate } from '../../../core/src/lib/curves';
-import { zIndexStack } from '../../../core/src/lib/style';
 
 export interface SwipeProps extends CollectorChildrenProps {
   /**

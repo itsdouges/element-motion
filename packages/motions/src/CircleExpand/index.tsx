@@ -1,21 +1,21 @@
 import * as React from 'react';
-import Collector, {
+import {
+  Collector,
   CollectorChildrenProps,
   MotionCallback,
   CollectorActions,
   MotionData,
-} from '../../../core/src/Collector';
-import { calculateHypotenuse } from '../../../core/src/lib/math';
-import {
+  calculateHypotenuse,
   calculateWindowCentre,
   calculateElementCenterInViewport,
   recalculateElementBoundingBoxFromScroll,
   getWindowDimensions,
-} from '../../../core/src/lib/dom';
+  standard,
+  accelerate,
+  zIndexStack,
+  dynamic,
+} from '@element-motion/utils';
 import SimpleKeyframe from '../SimpleKeyframe';
-import { standard, accelerate } from '../../../core/src/lib/curves';
-import { zIndexStack } from '../../../core/src/lib/style';
-import { dynamic } from '../../../core/src/lib/duration';
 import { Duration } from '../types';
 
 export interface CircleExpandProps extends CollectorChildrenProps {
