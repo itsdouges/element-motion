@@ -1,7 +1,7 @@
 {
   "name": "@element-motion/docs",
   "private": true,
-  "version": "2.8.1-alpha.2",
+  "version": "2.8.1-alpha.3",
   "repository": "element-motion/element-motion",
   "directory": "packages/docs",
   "main": "dist/cjs/index.js",
@@ -10,8 +10,8 @@
   "license": "MIT",
   "scripts": {},
   "dependencies": {
-    "@element-motion/core": "^2.8.1-alpha.2",
-    "@element-motion/dev": "^2.8.1-alpha.2",
+    "@element-motion/core": "^2.8.1-alpha.3",
+    "@element-motion/dev": "^2.8.1-alpha.3",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "docz": "^1.2.0",
