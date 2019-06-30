@@ -2,9 +2,8 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from '@element-motion/dev';
-import Motion from '../../../core/src/Motion';
+import { Motion, FocalTarget as Target } from '@element-motion/utils';
 import Noop from '../Noop';
-import Target from '../../../core/src/FocalTarget';
 import FocalRevealMove from './index';
 
 type Appearance = 'left' | 'center' | 'right';
@@ -15,7 +14,7 @@ const justifyContentMap = {
   right: 'flex-end',
 };
 
-const List = styled.div<{ appearance?: Appearance }>`
+const List = styled.div<{ appearance: Appearance }>`
   margin: 100px ${props => (props.appearance === 'center' ? 'auto' : '100px')};
   display: flex;
   justify-content: ${props => justifyContentMap[props.appearance]};
@@ -132,7 +131,7 @@ const build = (
   </Toggler>
 );
 
-storiesOf('@element-motion/core/FocalRevealMove', module)
+storiesOf('@element-motion/motions/FocalRevealMove', module)
   .add('RevealHeight/Left', () => build(200, 200, 'vertical', 'left'))
   .add('RevealWidth/Left', () => build(200, 200, 'horizontal', 'left'))
   .add('RevealBoth/Left', () => build(200, 200, 'both', 'left'))

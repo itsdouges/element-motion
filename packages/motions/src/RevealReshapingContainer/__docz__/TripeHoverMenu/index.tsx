@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as Common from '@element-motion/dev'; // eslint-disable-line import/no-extraneous-dependencies
+import * as Common from '@element-motion/dev';
 import { Transition } from 'react-transition-group'; // eslint-disable-line import/no-extraneous-dependencies
 import RevealReshapingContainer from '../../index';
 import * as Styled from './styled';

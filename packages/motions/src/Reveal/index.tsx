@@ -1,13 +1,14 @@
 import * as React from 'react';
-import Collector, {
+import {
+  Collector,
   CollectorChildrenProps,
   MotionCallback,
   CollectorActions,
-} from '../../../core/src/Collector';
-import { standard } from '../../../core/src/lib/curves';
-import { combine } from '../../../core/src/lib/style';
-import { dynamic } from '../../../core/src/lib/duration';
-import noop from '../../../core/src/lib/noop';
+  noop,
+  combine,
+  standard,
+  dynamic,
+} from '@element-motion/utils';
 import { Duration } from '../types';
 
 export interface RevealProps extends CollectorChildrenProps {

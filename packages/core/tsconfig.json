@@ -4,5 +4,5 @@
     "rootDir": "src",
     "outDir": "dist/cjs"
   },
-  "references": []
+  "references": [{ "path": "../utils" }, { "path": "../motions" }]
 }

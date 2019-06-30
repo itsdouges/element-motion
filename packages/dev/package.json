@@ -1,15 +1,14 @@
 {
   "name": "@element-motion/dev",
   "private": true,
-  "version": "2.8.0",
+  "version": "2.8.1-alpha.3",
   "repository": "element-motion/element-motion",
+  "directory": "packages/dev",
   "author": "Michael Dougall",
   "license": "MIT",
-  "main": "dist/packages/dev/src/index.js",
-  "module": "dist/packages/dev/src/index.js",
-  "scripts": {
-    "build": "rm -rf dist && tsc -p ./tsconfig.json"
-  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "scripts": {},
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",

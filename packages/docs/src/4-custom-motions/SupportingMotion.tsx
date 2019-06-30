@@ -4,7 +4,7 @@ import {
   CollectorChildrenProps,
   MotionCallback,
   CollectorActions,
-} from '@element-motion/core';
+} from '@element-motion/utils';
 
 export default class SupportingMotion extends React.Component<CollectorChildrenProps> {
   beforeAnimate: MotionCallback = (_, onFinish) => {

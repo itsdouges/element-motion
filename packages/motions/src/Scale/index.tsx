@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { css, keyframes, cx } from 'emotion';
-import { dynamic } from '../../../core/src/lib/duration';
-import { bezierToFunc, standard } from '../../../core/src/lib/curves';
-import { combine } from '../../../core/src/lib/style';
-import { Duration } from '../types';
-import Collector, {
+import {
+  Collector,
   CollectorChildrenProps,
   CollectorActions,
   MotionData,
-} from '../../../core/src/Collector';
+  bezierToFunc,
+  combine,
+  standard,
+  dynamic,
+} from '@element-motion/utils';
+import { Duration } from '../types';
 
 export interface ScaleProps extends CollectorChildrenProps {
   timingFunction?: string;

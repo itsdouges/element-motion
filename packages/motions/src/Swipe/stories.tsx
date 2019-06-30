@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import * as Common from '@element-motion/dev';
-import Motion, { Swipe } from '../../../core/src';
+import { Motion } from '@element-motion/utils';
+import Swipe from './index';
 
 const Root = styled.button`
   width: 100px;
@@ -49,7 +50,7 @@ const makeStory = (direction: string) => (
   </Common.Toggler>
 );
 
-storiesOf('@element-motion/core/Swipe', module)
+storiesOf('@element-motion/motions/Swipe', module)
   .add('Up', () => makeStory('up'))
   .add('Down', () => makeStory('down'))
   .add('Left', () => makeStory('left'))

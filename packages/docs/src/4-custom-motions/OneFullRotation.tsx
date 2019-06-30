@@ -5,7 +5,7 @@ import {
   MotionCallback,
   CollectorActions,
   combine,
-} from '@element-motion/core';
+} from '@element-motion/utils';
 
 export default class OneFullRotation extends React.Component<CollectorChildrenProps> {
   beforeAnimate: MotionCallback = (_, onFinish, setChildProps) => {

@@ -1,7 +1,7 @@
 {
   "lerna": "2.0.0",
   "npmClient": "yarn",
-  "version": "2.8.0",
+  "version": "2.8.1-alpha.3",
   "useWorkspaces": true,
   "packages": [
     "packages/*"
@@ -9,7 +9,10 @@
   "command": {
     "publish": {
       "message": "chore(release): publish %s",
-      "allowBranch": "master"
+      "allowBranch": [
+        "master",
+        "fix-*"
+      ]
     }
   }
 }

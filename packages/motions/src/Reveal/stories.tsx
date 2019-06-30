@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from '@element-motion/dev';
-import { WrappedMotion as Motion } from '../../../core/src/Motion';
+import { Motion } from '@element-motion/utils';
 import Reveal from './index';
 
 const Container = styled.div`
@@ -14,7 +14,7 @@ const Header = styled.h1`
   margin: 0.67rem 0;
 `;
 
-storiesOf('@element-motion/core/Reveal', module)
+storiesOf('@element-motion/motions/Reveal', module)
   .add('ClipPath', () => (
     <Container>
       <Toggler>
