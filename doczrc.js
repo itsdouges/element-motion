@@ -6,7 +6,7 @@ const lightText = 'rgba(255, 255, 255, 0.9)';
 
 module.exports = {
   title: 'element motion',
-  description: 'element motion for React.js 💨✨',
+  description: 'Declarative element motions for React.js 💨✨',
   typescript: true,
   dest: '/docs',
   codeSandbox: false,

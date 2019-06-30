@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Toggler } from '@element-motion/dev';
+import { Toggler, colors } from '@element-motion/dev';
 import { Motion } from '@element-motion/utils';
 import CircleExpand from './index';
 
 const Root = styled.div`
   width: 100px;
   height: 100px;
-  background: #fea3aa;
+  background: ${colors.red};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,7 +38,7 @@ storiesOf('@element-motion/motions/CircleExpand', module)
           {!shown ? (
             <Container>
               <Motion name="circle-expand-square" key="1">
-                <CircleExpand background="#fea3aa">
+                <CircleExpand background={colors.red}>
                   {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
                 </CircleExpand>
               </Motion>
@@ -64,7 +64,7 @@ storiesOf('@element-motion/motions/CircleExpand', module)
               <Padding />
 
               <Motion name="page-with-different-scroll" key="1">
-                <CircleExpand background="#fea3aa">
+                <CircleExpand background={colors.red}>
                   {({ ref, style }) => <Root onClick={() => toggle()} style={style} ref={ref} />}
                 </CircleExpand>
               </Motion>

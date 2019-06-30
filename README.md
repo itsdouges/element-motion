@@ -2,7 +2,7 @@
   <img aria-label="element motion" src="https://user-images.githubusercontent.com/6801309/58364853-bf21cd80-7efd-11e9-8300-df952b3a03c8.png" height="100" />
 </h1>
 
-Element motion for [React.js](https://reactjs.org/) 💨✨
+Declarative element motions for [React](https://reactjs.org/)
 
 [![npm](https://img.shields.io/npm/v/@element-motion/core.svg)](https://www.npmjs.com/package/@element-motion/core) [![npm bundle size (minified + gzip)](https://badgen.net/bundlephobia/minzip/@element-motion/core)](https://bundlephobia.com/result?p=@element-motion/core)
 
@@ -23,10 +23,10 @@ It's all about ✨**motion over state transitions** ✨ - it can help with:
 - 📝 Composing motions together to create composites, for example [CrossFadeMove](https://elementmotion.com/cross-fade-move)
 - 🤯 [Anything you can imagine](https://elementmotion.com/custom-motions), seriously
 
-> **Tip -** Element motion is split into two logical areas.
->
-> 1. [**Orchestration**](https://elementmotion.com/motion) (collecting DOM data, enabling motion between disconnected React elements, executing motions)
-> 2. [**Motions**](https://elementmotion.com/focal-motions) (animation concerns, CSS transitions/animations, JS animations, whatever you can imagine)
+Which all boil down to two areas:
+
+- [**Orchestration**](https://elementmotion.com/motion) (collecting DOM data, enabling motion between disconnected React elements, executing motions)
+- [**Motions**](https://elementmotion.com/custom-motions) (animation concerns, CSS transitions/animations, JS animations, whatever you can imagine)
 
 ### Talks
 
@@ -36,19 +36,16 @@ It's all about ✨**motion over state transitions** ✨ - it can help with:
 ## Installation
 
 ```bash
-npm install @element-motion/core react react-dom emotion --save
+npm install @element-motion/core react react-dom --save
 ```
 
 or
 
 ```bash
-yarn add @element-motion/core react react-dom emotion
+yarn add @element-motion/core react react-dom
 ```
 
-React should be greater or equal to `v16.4`, emotion should be greater or equal to `v9`.
-
-> **Tip -** Both es and commonjs modules are provided in the package.
-> Make sure to consume the es modules in production for their tree shaking ability!
+React should be at least `v16.4`.
 
 ## Usage
 

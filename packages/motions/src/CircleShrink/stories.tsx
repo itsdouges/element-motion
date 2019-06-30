@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
-import { Toggler } from '@element-motion/dev';
+import { Toggler, colors } from '@element-motion/dev';
 import { Motion } from '@element-motion/utils';
 import CircleShrink from './index';
 
 const Root = styled.div`
   width: 100px;
   height: 100px;
-  background: #faf884;
+  background: ${colors.red};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,9 +46,13 @@ storiesOf('@element-motion/motions/CircleShrink', module)
           <NoMarginBody className="" />
 
           {!shown ? (
-            <Container background="#faf884" onClick={() => toggle()} style={{ cursor: 'pointer' }}>
+            <Container
+              background={colors.red}
+              onClick={() => toggle()}
+              style={{ cursor: 'pointer' }}
+            >
               <Motion name="circle-shrink-square" key="1">
-                <CircleShrink background="#faf884">
+                <CircleShrink background={colors.red}>
                   {({ ref, style }) => <div style={style} ref={ref} />}
                 </CircleShrink>
               </Motion>
@@ -71,10 +75,14 @@ storiesOf('@element-motion/motions/CircleShrink', module)
           <NoMarginBody className="" />
 
           {!shown ? (
-            <Container background="#faf884" onClick={() => toggle()} style={{ cursor: 'pointer' }}>
+            <Container
+              background={colors.red}
+              onClick={() => toggle()}
+              style={{ cursor: 'pointer' }}
+            >
               <Padding />
               <Motion name="page-with-different-scroll-shrink" key="1">
-                <CircleShrink background="#faf884">
+                <CircleShrink background={colors.red}>
                   {({ ref, style }) => <Root style={style} ref={ref} />}
                 </CircleShrink>
               </Motion>

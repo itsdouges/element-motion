@@ -1,14 +1,17 @@
 import styled from 'styled-components';
+import { colors } from '@element-motion/dev';
 
 export const Button = styled.button`
   width: 100px;
   height: 100px;
-  background: #ff5e6d;
+  background: ${colors.red};
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   cursor: pointer;
+  border: none;
+  border-radius: 3px;
 `;
 
 export const Container = styled.div<{ interactive: boolean }>`

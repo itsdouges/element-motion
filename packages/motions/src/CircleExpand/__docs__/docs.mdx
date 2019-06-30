@@ -29,7 +29,7 @@ import Motion, { CircleExpand } from '@element-motion/core';
       !shown ? (
         <Styled.Container>
           <Motion name="circle-expand" key="1">
-            <CircleExpand background="#ff5e6d">
+            <CircleExpand background={Common.colors.red}>
               {({ ref, style }) => (
                 <Styled.Button onClick={() => toggle()} style={style} ref={ref} />
               )}

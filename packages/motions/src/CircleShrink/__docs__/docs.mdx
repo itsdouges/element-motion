@@ -35,7 +35,7 @@ import Motion, { CircleShrink } from '@element-motion/core';
       ) : (
         <Styled.Container onClick={() => toggle()} interactive>
           <Motion name="circle-shrink" key="2">
-            <CircleShrink background="#ff5e6d">
+            <CircleShrink background={Common.colors.red}>
               {({ ref, style }) => <div style={style} ref={ref} />}
             </CircleShrink>
           </Motion>
