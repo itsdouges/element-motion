@@ -1,6 +1,6 @@
 {
   "name": "@element-motion/motions",
-  "version": "2.8.1-alpha.1",
+  "version": "2.8.1-alpha.2",
   "repository": "element-motion/element-motion",
   "directory": "packages/motions",
   "homepage": "https://elementmotion.com",
@@ -11,14 +11,14 @@
   "sideEffects": false,
   "scripts": {},
   "dependencies": {
-    "@element-motion/utils": "^2.8.1-alpha.1",
+    "@element-motion/utils": "^2.8.1-alpha.2",
     "emotion": ">=9"
   },
   "peerDependencies": {
     "react": ">=16.4"
   },
   "devDependencies": {
-    "@element-motion/dev": "^2.8.1-alpha.1",
+    "@element-motion/dev": "^2.8.1-alpha.2",
     "@storybook/react": "5.0.11",
     "docz": "^1.2.0",
     "polished": "^3.3.0",
