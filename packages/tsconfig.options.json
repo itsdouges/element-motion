@@ -14,7 +14,7 @@
     // Module configuration
     "jsx": "react",
     "resolveJsonModule": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "composite": true,
 

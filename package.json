@@ -1,14 +1,12 @@
 {
-  "name": "element-motion",
   "private": true,
-  "repository": "element-motion/element-motion",
-  "author": "Michael Dougall",
-  "license": "MIT",
   "scripts": {
     "postinstall": "lerna link && yarn build",
     "tdd": "jest --watch",
-    "clean": "tsc --build packages --clean",
-    "build": "yarn clean && tsc --build packages",
+    "clean": "lerna exec --parallel -- rm -rf dist && lerna exec --parallel -- rm -f tsconfig.tsbuildinfo",
+    "build": "yarn clean && yarn build:cjs && yarn build:esm",
+    "build:esm": "lerna exec --stream --parallel -- tsc --outDir dist/esm --module esnext",
+    "build:cjs": "tsc --build packages",
     "lint": "eslint --ext .tsx .",
     "test": "jest",
     "size": "lerna exec --ignore @element-motion/dev --ignore @element-motion/docs -- npx size-limit",
