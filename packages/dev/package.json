@@ -7,6 +7,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {},
   "dependencies": {
     "@material-ui/core": "^3.9.3",
