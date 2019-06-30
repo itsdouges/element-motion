@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Toggler } from '@element-motion/dev';
-import Motion, { CircleExpand } from '../../../core/src';
+import { Motion } from '@element-motion/utils';
+import CircleExpand from './index';
 
 const Root = styled.div`
   width: 100px;
@@ -29,7 +30,7 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
-storiesOf('@element-motion/core/CircleExpand', module)
+storiesOf('@element-motion/motions/CircleExpand', module)
   .add('FromStaticPosition', () => (
     <Toggler>
       {({ shown, toggle }) => (

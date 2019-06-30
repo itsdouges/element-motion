@@ -5,20 +5,19 @@
   "author": "Michael Dougall",
   "license": "MIT",
   "scripts": {
+    "postinstall": "lerna link && yarn build",
     "tdd": "jest --watch",
-    "build": "lerna run build",
+    "clean": "tsc --build packages --clean",
+    "build": "yarn clean && tsc --build packages",
     "lint": "eslint --ext .tsx .",
     "test": "jest",
-    "size": "lerna exec --ignore @element-motion/dev --ignore @element-motion/docs -- yarn size",
+    "size": "lerna exec --ignore @element-motion/dev --ignore @element-motion/docs -- npx size-limit",
     "pre-cut-version": "yarn test",
-    "postinstall": "yarn build && lerna link",
     "cut-version": "yarn pre-cut-version && lerna publish --conventional-commits --skip-npm && yarn post-cut-version",
     "cut-version-beta": "yarn pre-cut-version && lerna publish --skip-npm --npm-tag beta && yarn post-cut-version",
     "post-cut-version": "git push && git push --tags",
-    "push-to-npm": "lerna exec --ignore @element-motion/dev --ignore @element-motion/docs --ignore @element-motion/motions -- npm publish --access public",
-    "codecov": "echo \"not implemented\"",
+    "push-to-npm": "lerna exec --ignore @element-motion/dev --ignore @element-motion/docs -- npm publish --access public",
     "storybook": "start-storybook -p 6006",
-    "fix-duplicates": "yarn-tools fix-duplicates yarn.lock > fixed-yarn.lock && rm yarn.lock && mv fixed-yarn.lock yarn.lock && yarn install",
     "docz": "docz dev",
     "build-docs": "docz build"
   },
@@ -69,7 +68,7 @@
     "setupFilesAfterEnv": [
       "<rootDir>test/setup.js"
     ],
-    "testRegex": "(/__tests__/.*.test*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "(/__tests__/.*.test*|(\\.|/)(test|spec))\\.tsx?$",
     "moduleFileExtensions": [
       "ts",
       "tsx",

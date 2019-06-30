@@ -3,7 +3,8 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import BodyClassName from 'react-body-classname';
 import { Toggler } from '@element-motion/dev';
-import Motion, { CircleShrink } from '../../../core/src';
+import { Motion } from '@element-motion/utils';
+import CircleShrink from './index';
 
 const Root = styled.div`
   width: 100px;
@@ -37,7 +38,7 @@ const Padding = styled.div`
   flex-shrink: 0;
 `;
 
-storiesOf('@element-motion/core/CircleShrink', module)
+storiesOf('@element-motion/motions/CircleShrink', module)
   .add('Default', () => (
     <Toggler>
       {({ shown, toggle }) => (

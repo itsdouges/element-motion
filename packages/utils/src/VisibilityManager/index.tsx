@@ -109,29 +109,23 @@ export const withVisibilityManagerContext = <
     ExtractProps<TComponent>
   >;
 
-  // eslint-disable-next-line react/no-multi-comp
-  return class extends React.Component<
+  const ReturnComponent: React.FC<
     Omit<WithVisibilityManagerContextProps, keyof InjectedProps>
-  > {
-    static displayName = `VisibilityManagerContext(${WrappedComponent.displayName})`;
-
-    render() {
-      // WrappedComponent isn't considered to be a proper element for JSX, need to understand why.
-      // See: https://github.com/Microsoft/TypeScript/issues/23812
-      const CoercedWrappedComponent = WrappedComponent as React.ComponentType<
-        InjectedProps & ExtractProps<TComponent>
-      >;
-
-      return (
-        <MotionContext.Consumer>
-          {context => (
-            // @ts-ignore
-            <CoercedWrappedComponent context={context} {...this.props} />
-          )}
-        </MotionContext.Consumer>
-      );
-    }
+  > = props => {
+    return (
+      <MotionContext.Consumer>
+        {context => (
+          // @ts-ignore
+          <WrappedComponent context={context} {...props} />
+        )}
+      </MotionContext.Consumer>
+    );
   };
+
+  ReturnComponent.displayName = `VisibilityManagerContext(${WrappedComponent.displayName ||
+    WrappedComponent.name})`;
+
+  return ReturnComponent;
 };
 
 export const WrappedVisibilityManager = withVisibilityManagerContext(VisibilityManager);

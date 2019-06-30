@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, mount } from 'enzyme';
+import { render, mount } from 'enzyme'; // eslint-disable-line
 import Collector, { CollectorActions, CollectorData, CollectorContext } from '../Collector';
 
 describe('<Collector />', () => {

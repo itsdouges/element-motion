@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components'; // eslint-disable-line
 import { Toggler } from '@element-motion/dev'; // eslint-disable-line
-import Motion from '../../../../core/src/Motion';
+import { Motion } from '@element-motion/utils';
+import { FocalTarget as Target } from '@element-motion/utils';
 import Noop from '../../Noop';
-import Target from '../../../../core/src/FocalTarget';
 import FocalReveal from '../index';
 
 type Appearance = 'left' | 'center' | 'right';

@@ -1,0 +1,10 @@
+{
+  "files": [],
+  "references": [
+    { "path": "core" },
+    { "path": "dev" },
+    { "path": "docs" },
+    { "path": "motions" },
+    { "path": "utils" }
+  ]
+}

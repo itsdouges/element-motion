@@ -1,5 +1,5 @@
 {
-  "name": "@element-motion/core",
+  "name": "@element-motion/utils",
   "version": "2.8.1-alpha.1",
   "repository": "element-motion/element-motion",
   "author": "Michael Dougall",
@@ -7,33 +7,17 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "sideEffects": false,
-  "description": "Declarative element motions for React.js 🧙✨",
-  "keywords": [
-    "react",
-    "flip",
-    "animation",
-    "transition",
-    "element",
-    "element-motion",
-    "material-motion",
-    "motion"
-  ],
   "scripts": {},
-  "dependencies": {
-    "@element-motion/motions": "^2.8.1-alpha.1",
-    "@element-motion/utils": "^2.8.1-alpha.1"
-  },
   "peerDependencies": {
-    "emotion": ">=9",
     "react": ">=16.4",
     "react-dom": ">=16.4"
   },
   "devDependencies": {
     "@element-motion/dev": "^2.8.1-alpha.1",
     "@storybook/react": "5.0.11",
+    "docz": "^1.2.0",
     "react": "^16.8.6",
     "react-body-classname": "^1.2.0",
-    "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "size-limit": "^1.3.2",
     "styled-components": "^4.2.0"

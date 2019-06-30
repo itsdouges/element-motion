@@ -2,8 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { Toggler } from '@element-motion/dev';
-import Motion from '../../../core/src/Motion';
-import Target from '../../../core/src/FocalTarget';
+import { Motion, FocalTarget as Target } from '@element-motion/utils';
 import FocalConcealMove from './index';
 
 const Container = styled.div`
@@ -113,7 +112,7 @@ const build = (width: number, height: number, orientation: Orientation) => (
   </Toggler>
 );
 
-storiesOf('@element-motion/core/FocalConcealMove', module)
+storiesOf('@element-motion/motions/FocalConcealMove', module)
   .addDecorator(story => <Container>{story()}</Container>)
   .add('TargetHeight', () => build(200, 200, 'vertical'))
   .add('TargetWidth', () => build(200, 200, 'horizontal'))

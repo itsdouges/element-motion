@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { css } from 'emotion';
-import Collector, {
+import {
+  Collector,
   CollectorChildrenProps,
   MotionCallback,
   CollectorActions,
   MotionData,
-} from '../../../core/src/Collector';
-import { recalculateElementBoundingBoxFromScroll } from '../../../core/src/lib/dom';
-import noop from '../../../core/src/lib/noop';
-import { standard } from '../../../core/src/lib/curves';
-import { zIndexStack } from '../../../core/src/lib/style';
-import { dynamic } from '../../../core/src/lib/duration';
+  recalculateElementBoundingBoxFromScroll,
+  noop,
+  standard,
+  zIndexStack,
+  dynamic,
+} from '@element-motion/utils';
 import { Duration } from '../types';
 
 export interface FocalConcealMoveProps extends CollectorChildrenProps {

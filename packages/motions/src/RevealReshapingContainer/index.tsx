@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { WrappedMotion as Motion } from '../../../core/src/Motion';
-import { CollectorChildrenAsFunction } from '../../../core/src/Collector';
+import { Motion, CollectorChildrenAsFunction } from '@element-motion/utils';
 import ReshapingContainer, { ReshapingContainerProps } from '../ReshapingContainer';
 import Reveal from '../Reveal';
 import Move from '../Move';

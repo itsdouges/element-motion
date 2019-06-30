@@ -1,21 +1,22 @@
 {
   "name": "@element-motion/motions",
-  "private": true,
-  "version": "2.8.0",
+  "version": "2.8.1-alpha.1",
   "repository": "element-motion/element-motion",
   "author": "Michael Dougall",
   "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "sideEffects": false,
-  "scripts": {
-    "size": "size-limit",
-    "build": "echo \"not implemented\""
+  "scripts": {},
+  "dependencies": {
+    "@element-motion/utils": "^2.8.1-alpha.1"
   },
   "peerDependencies": {
     "emotion": ">=9",
     "react": ">=16.4"
   },
   "devDependencies": {
-    "@element-motion/dev": "^2.8.0",
+    "@element-motion/dev": "^2.8.1-alpha.1",
     "@storybook/react": "5.0.11",
     "docz": "^1.2.0",
     "emotion": "^10.0.9",
