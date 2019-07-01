@@ -185,6 +185,56 @@ exports[`<Motion /> should render markup in a portal created in a motion 1`] = `
 </Portal>
 `;
 
+exports[`<Motion /> should throw destination ref is not found 1`] = `
+"@element-motion
+
+The destination ref was not set when trying to store data, check that a child element has a ref passed.
+This needs to be set so we can take a snapshot of the origin DOM element!
+Try setting \\"innerRef\\" or \\"ref\\" depending if the component is using React.forwardRef().
+
+<Motion name=\\"throw-no-ref-dest\\">
+  {props => <div ref={props.ref} />}
+</Motion>
+"
+`;
+
+exports[`<Motion /> should throw if destination ref is not a DOM element 1`] = `
+"@element-motion
+
+The destination ref was not a DOM element - double check your ref to make sure it's being passed to a real DOM element!
+You might need to use \\"innerRef\\" if the component isn't using React.forwardRef().
+
+<Motion name=\\"throw-non-ref-dest\\">
+  {props => <div ref={props.ref} />}
+</Motion>
+"
+`;
+
+exports[`<Motion /> should throw if origin ref is not a DOM element 1`] = `
+"@element-motion
+
+The origin ref was not a DOM element - double check your ref to make sure it's being passed to a real DOM element!
+You might need to use \\"innerRef\\" if the component isn't using React.forwardRef().
+
+<Motion name=\\"throw-non-ref-origin\\">
+  {props => <div ref={props.ref} />}
+</Motion>
+"
+`;
+
+exports[`<Motion /> should throw origin ref is not found 1`] = `
+"@element-motion
+
+The origin ref was not set when trying to store data, check that a child element has a ref passed.
+This needs to be set so we can take a snapshot of the origin DOM element!
+Try setting \\"innerRef\\" or \\"ref\\" depending if the component is using React.forwardRef().
+
+<Motion name=\\"throw-no-ref-origin\\">
+  {props => <div ref={props.ref} />}
+</Motion>
+"
+`;
+
 exports[`<Motion /> should update markup created in a motion in after animate phase 1`] = `
 <Portal
   containerInfo={
