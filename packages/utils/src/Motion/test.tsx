@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 import * as React from 'react';
 import { mount, ReactWrapper, shallow } from 'enzyme'; // eslint-disable-line import/no-extraneous-dependencies
 import { MemoryRouter, Link } from 'react-router-dom';
@@ -485,5 +486,91 @@ describe('<Motion />', () => {
         jest.useRealTimers();
       });
     });
+  });
+
+  it('should throw if origin ref is not a DOM element', () => {
+    process.env.NODE_ENV = 'development';
+    class ReactComponent extends React.Component {
+      render() {
+        return <div />;
+      }
+    }
+    const TestMotion = utils.createTestMotion();
+    const wrapper = mount(
+      <utils.MotionUnderTest
+        from={start => (
+          <Motion name="throw-non-ref-origin" in={!start}>
+            <TestMotion>{(props: {}) => <ReactComponent {...props} />}</TestMotion>
+          </Motion>
+        )}
+        to={<Motion name="throw-non-ref-origin">{(props: {}) => <div {...props} />}</Motion>}
+        start={false}
+      />
+    );
+
+    expect(() => wrapper.setProps({ start: true })).toThrowErrorMatchingSnapshot();
+  });
+
+  it('should throw if destination ref is not a DOM element', () => {
+    process.env.NODE_ENV = 'development';
+    (getElementBoundingBox as jest.Mock).mockReturnValue(utils.domData());
+    class ReactComponent extends React.Component {
+      render() {
+        return <div />;
+      }
+    }
+    const TestMotion = utils.createTestMotion();
+    const wrapper = mount(
+      <utils.MotionUnderTest
+        from={start => (
+          <Motion name="throw-non-ref-dest" in={!start}>
+            <TestMotion>{(props: {}) => <div {...props} />}</TestMotion>
+          </Motion>
+        )}
+        to={
+          <Motion name="throw-non-ref-dest">{(props: {}) => <ReactComponent {...props} />}</Motion>
+        }
+        start={false}
+      />
+    );
+
+    expect(() => wrapper.setProps({ start: true })).toThrowErrorMatchingSnapshot();
+  });
+
+  it('should throw origin ref is not found', () => {
+    process.env.NODE_ENV = 'development';
+    const TestMotion = utils.createTestMotion();
+    const wrapper = mount(
+      <utils.MotionUnderTest
+        from={start => (
+          <Motion name="throw-no-ref-origin" in={!start}>
+            <TestMotion>{() => <div />}</TestMotion>
+          </Motion>
+        )}
+        to={<Motion name="throw-no-ref-origin">{props => <div {...props} />}</Motion>}
+        start={false}
+      />
+    );
+
+    expect(() => wrapper.setProps({ start: true })).toThrowErrorMatchingSnapshot();
+  });
+
+  it('should throw destination ref is not found', () => {
+    process.env.NODE_ENV = 'development';
+    (getElementBoundingBox as jest.Mock).mockReturnValue(utils.domData());
+    const TestMotion = utils.createTestMotion();
+    const wrapper = mount(
+      <utils.MotionUnderTest
+        from={start => (
+          <Motion name="throw-no-ref-dest" in={!start}>
+            <TestMotion>{props => <div {...props} />}</TestMotion>
+          </Motion>
+        )}
+        to={<Motion name="throw-no-ref-dest">{() => <div />}</Motion>}
+        start={false}
+      />
+    );
+
+    expect(() => wrapper.setProps({ start: true })).toThrowErrorMatchingSnapshot();
   });
 });

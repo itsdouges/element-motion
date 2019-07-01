@@ -31,3 +31,26 @@ Double check your [Motion](/motion) elements.
 ```
 
 > ** Tip -** Can't find what you're looking for? [Raise an issue on Github](https://github.com/madou/element-motion/issues/new).
+
+## Styled Components
+
+Using v3? Make sure to use `innerRef`,
+like so:
+
+```js
+import styled from 'styled-components';
+
+const StyledDiv = styled.div``;
+
+<Motion>{({ ref, ...motion }) => <StyledDiv innerRef={ref} {...motion} />}</Motion>;
+```
+
+Using v4? Just use `ref` thanks to `forwardRef()`!
+
+```js
+import styled from 'styled-components';
+
+const StyledDiv = styled.div``;
+
+<Motion>{motion => <StyledDiv {...motion} />}</Motion>;
+```

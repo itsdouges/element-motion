@@ -57,9 +57,17 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
       );
     }
 
-    if (this.element && componentIn === undefined && store.has(name)) {
+    if (store.has(name) && componentIn === undefined) {
+      if (process.env.NODE_ENV === 'development') {
+        this.throwIfElementUndefinedOrNotDOMElement(this.element, 'destination');
+      }
+
       // A child has already been stored, so this is probably the matching pair.
-      if (this.element.tagName === 'IMG' && !(this.element as HTMLImageElement).complete) {
+      if (
+        this.element &&
+        this.element.tagName === 'IMG' &&
+        !(this.element as HTMLImageElement).complete
+      ) {
         const remove = eventListener(this.element, 'load', () => {
           remove();
           this.execute();
@@ -169,6 +177,34 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
     setTimeout(() => store.remove(name), timeToWaitForNext);
   }
 
+  throwIfElementUndefinedOrNotDOMElement(element: HTMLElement | null, location: string) {
+    if (process.env.NODE_ENV === 'development') {
+      const buildMessage = (msg: string) => `${msg}
+
+<${Motion.displayName} name="${this.props.name}">
+  {props => <div ref={props.ref} />}
+</${Motion.displayName}>
+`;
+
+      throwIf(
+        !element,
+        buildMessage(
+          `The ${location} ref was not set when trying to store data, check that a child element has a ref passed.
+This needs to be set so we can take a snapshot of the origin DOM element!
+Try setting "innerRef" or "ref" depending if the component is using React.forwardRef().`
+        )
+      );
+
+      throwIf(
+        !(element instanceof HTMLElement),
+        buildMessage(
+          `The ${location} ref was not a DOM element - double check your ref to make sure it's being passed to a real DOM element!
+You might need to use "innerRef" if the component isn't using React.forwardRef().`
+        )
+      );
+    }
+  }
+
   snapshotDOMData(action: 'store' | 'return' = 'store'): store.MotionData | null {
     // If there is only a Motion target and no child motions
     // data will be undefined, which means there are no motions to store.
@@ -177,15 +213,7 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
     }
 
     if (process.env.NODE_ENV === 'development') {
-      throwIf(
-        !this.element,
-        `The ref was not set when trying to store data, check that a child element has a ref passed. This needs to be set so we can take a snapshot of the origin DOM element.
-
-<${Motion.displayName} name="${this.props.name}">
-  {props => <div ref={props.ref} />}
-</${Motion.displayName}>
-`
-      );
+      this.throwIfElementUndefinedOrNotDOMElement(this.element, 'origin');
     }
 
     const elementBoundingBox = getElementBoundingBox(this.element as HTMLElement);
@@ -229,6 +257,10 @@ If it's an image, try and have the image loaded before mounting or set a static 
     const { name, container: getContainer, context } = this.props;
     const container = typeof getContainer === 'function' ? getContainer() : getContainer;
     let aborted = false;
+
+    if (process.env.NODE_ENV === 'development') {
+      this.throwIfElementUndefinedOrNotDOMElement(this.element, 'destination');
+    }
 
     if (DOMSnapshot) {
       const { collectorData, elementData } = DOMSnapshot;
