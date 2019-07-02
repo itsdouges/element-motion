@@ -51,7 +51,7 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
   componentDidMount() {
     const { in: componentIn, name, triggerSelfKey } = this.props;
 
-    if (process.env.NODE_ENV === 'development' && (!triggerSelfKey && !name)) {
+    if (process.env.NODE_ENV === 'development' && (triggerSelfKey === undefined && !name)) {
       warn(
         '"name" prop needs to be defined. Without it you may have problems matching up motion targets. You will not get this error when using "triggerSelfKey" prop.'
       );
@@ -179,12 +179,18 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
 
   throwIfElementUndefinedOrNotDOMElement(element: HTMLElement | null, location: string) {
     if (process.env.NODE_ENV === 'development') {
-      const buildMessage = (msg: string) => `${msg}
+      const buildMessage = (msg: string) => {
+        const propName = this.props.triggerSelfKey !== undefined ? 'tiggerSelfKey' : 'name';
+        const propValue = this.props[propName];
+        const usingIn = this.props.in !== undefined;
 
-<${Motion.displayName} name="${this.props.name}">
+        return `${msg}
+
+<${Motion.displayName} ${propName}="${propValue}"${usingIn ? ` in={${this.props.in}}` : ''}>
   {props => <div ref={props.ref} />}
 </${Motion.displayName}>
 `;
+      };
 
       throwIf(
         !element,

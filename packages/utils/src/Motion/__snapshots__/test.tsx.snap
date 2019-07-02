@@ -216,7 +216,7 @@ exports[`<Motion /> should throw if origin ref is not a DOM element 1`] = `
 The origin ref was not a DOM element - double check your ref to make sure it's being passed to a real DOM element!
 You might need to use \\"innerRef\\" if the component isn't using React.forwardRef().
 
-<Motion name=\\"throw-non-ref-origin\\">
+<Motion name=\\"throw-non-ref-origin\\" in={false}>
   {props => <div ref={props.ref} />}
 </Motion>
 "
@@ -229,7 +229,7 @@ The origin ref was not set when trying to store data, check that a child element
 This needs to be set so we can take a snapshot of the origin DOM element!
 Try setting \\"innerRef\\" or \\"ref\\" depending if the component is using React.forwardRef().
 
-<Motion name=\\"throw-no-ref-origin\\">
+<Motion name=\\"throw-no-ref-origin\\" in={false}>
   {props => <div ref={props.ref} />}
 </Motion>
 "
