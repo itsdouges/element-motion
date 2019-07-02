@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { css } from 'emotion';
 import {
   Collector,
   CollectorChildrenProps,
@@ -98,11 +97,11 @@ export default class FocalReveal extends React.Component<FocalRevealProps> {
           : undefined,
       className: () =>
         data.destination.focalTargetElementBoundingBox
-          ? css({
+          ? {
               '> *': {
                 transform: `translate3d(-${offsetChildrenX}px, -${offsetChildrenY}px, 0)`,
               },
-            })
+            }
           : undefined,
     });
 

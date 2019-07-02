@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { css } from 'emotion';
 import {
   Collector,
   CollectorChildrenProps,
@@ -87,16 +86,18 @@ export default class FocalConcealMove extends React.Component<FocalConcealMovePr
           : undefined,
       },
       className: options.moveToTarget
-        ? css`
-            > * {
-              transition: transform ${this.calculatedDuration}ms ${timingFunction};
-              transform: translate3d(
-                -${data.origin.focalTargetElementBoundingBox.location.left - data.origin.elementBoundingBox.location.left}px,
-                -${data.origin.focalTargetElementBoundingBox.location.top - data.origin.elementBoundingBox.location.top}px,
-                0
-              );
-            }
-          `
+        ? {
+            '> *': {
+              transition: `transform ${this.calculatedDuration}ms ${timingFunction}`,
+              transform: `translate3d(
+              -${data.origin.focalTargetElementBoundingBox.location.left -
+                data.origin.elementBoundingBox.location.left}px,
+              -${data.origin.focalTargetElementBoundingBox.location.top -
+                data.origin.elementBoundingBox.location.top}px,
+              0
+            )`,
+            },
+          }
         : undefined,
     });
   };

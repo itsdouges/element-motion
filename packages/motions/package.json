@@ -11,8 +11,7 @@
   "sideEffects": false,
   "scripts": {},
   "dependencies": {
-    "@element-motion/utils": "^2.9.0",
-    "emotion": ">=9"
+    "@element-motion/utils": "^2.9.0"
   },
   "peerDependencies": {
     "react": ">=16.4"

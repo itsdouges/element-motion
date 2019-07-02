@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { css, keyframes, cx } from 'emotion';
 import {
   Collector,
   CollectorChildrenProps,
@@ -9,12 +8,17 @@ import {
   combine,
   standard,
   dynamic,
+  InlineStyles,
 } from '@element-motion/utils';
 import { Duration } from '../types';
 
 export interface ScaleProps extends CollectorChildrenProps {
   timingFunction?: string;
   duration?: Duration;
+}
+
+interface Keyframes {
+  [percentage: string]: InlineStyles;
 }
 
 const buildKeyframes = (elements: MotionData, duration: number, bezierCurve: string) => {
@@ -26,8 +30,8 @@ const buildKeyframes = (elements: MotionData, duration: number, bezierCurve: str
   const startX = originBoundingBox.size.width / destinationBoundingBox.size.width;
   const startY = originBoundingBox.size.height / destinationBoundingBox.size.height;
   const timingFunction = bezierToFunc(bezierCurve, duration);
-  const outerAnimation: string[] = [];
-  const innerAnimation: string[] = [];
+  const outerAnimation: Keyframes = {};
+  const innerAnimation: Keyframes = {};
 
   for (let i = 0; i <= nFrames; i += 1) {
     const step = Number(timingFunction(i / nFrames).toFixed(5));
@@ -39,20 +43,18 @@ const buildKeyframes = (elements: MotionData, duration: number, bezierCurve: str
     const invScaleX = (1 / xScale).toFixed(5);
     const invScaleY = (1 / yScale).toFixed(5);
 
-    outerAnimation.push(`
-      ${percentage}% {
-        transform: scale(${xScale}, ${yScale});
-      }`);
+    outerAnimation[`${percentage}%`] = {
+      transform: `scale(${xScale}, ${yScale})`,
+    };
 
-    innerAnimation.push(`
-      ${percentage}% {
-        transform: scale(${invScaleX}, ${invScaleY});
-      }`);
+    innerAnimation[`${percentage}%`] = {
+      transform: `scale(${invScaleX}, ${invScaleY})`,
+    };
   }
 
   return {
-    outer: keyframes(outerAnimation),
-    inner: keyframes(innerAnimation),
+    outer: outerAnimation,
+    inner: innerAnimation,
   };
 };
 
@@ -64,8 +66,8 @@ const Scale: React.FC<ScaleProps> = ({
   timingFunction = standard(),
 }: ScaleProps) => {
   let calculatedDuration: number;
-  let outerKeyframes: string;
-  let innerKeyframes: string;
+  let outerKeyframes: Keyframes;
+  let innerKeyframes: Keyframes;
 
   return (
     <Collector
@@ -109,15 +111,14 @@ const Scale: React.FC<ScaleProps> = ({
                 animationDuration: `${calculatedDuration}ms`,
                 animationName: combine(outerKeyframes)(prevStyle.animationName),
               }),
-              className: () =>
-                css({
-                  [`.${INVERSE_SCALE_CLASS_NAME}`]: {
-                    ...common,
-                    transform: `scale3d(${inverseScaleToX}, ${inverseScaleToY}, 1)`,
-                    animationDuration: `${calculatedDuration}ms`,
-                    animationName: `${innerKeyframes}`,
-                  },
-                }),
+              className: () => ({
+                [`.${INVERSE_SCALE_CLASS_NAME}`]: {
+                  ...common,
+                  transform: `scale3d(${inverseScaleToX}, ${inverseScaleToY}, 1)`,
+                  animationDuration: `${calculatedDuration}ms`,
+                  animationName: `${innerKeyframes}`,
+                },
+              }),
             });
 
             onFinish();
@@ -129,14 +130,11 @@ const Scale: React.FC<ScaleProps> = ({
                 animationPlayState: 'running',
               }),
               className: prevClassName =>
-                cx(
-                  prevClassName,
-                  css({
-                    [`.${INVERSE_SCALE_CLASS_NAME}`]: {
-                      animationPlayState: 'running',
-                    },
-                  })
-                ),
+                cx(prevClassName, {
+                  [`.${INVERSE_SCALE_CLASS_NAME}`]: {
+                    animationPlayState: 'running',
+                  },
+                }),
             });
 
             setTimeout(onFinish, calculatedDuration);

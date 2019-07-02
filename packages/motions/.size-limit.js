@@ -18,17 +18,14 @@ module.exports = [
   {
     limit: '1.78 KB',
     path: 'dist/esm/FocalConcealMove/index.js',
-    ignore: ['emotion'],
   },
   {
     limit: '1.60 KB',
     path: 'dist/esm/FocalReveal/index.js',
-    ignore: ['emotion'],
   },
   {
     limit: '2.29 KB',
     path: 'dist/esm/FocalRevealMove/index.js',
-    ignore: ['emotion'],
   },
   {
     limit: '1.62 KB',
@@ -59,11 +56,9 @@ module.exports = [
   {
     limit: '1.75 KB',
     path: 'dist/esm/Scale/index.js',
-    ignore: ['emotion'],
   },
   {
     limit: '145 B',
     path: 'dist/esm/Scale/InverseScale.js',
-    ignore: ['emotion'],
   },
 ];
