@@ -1,6 +1,6 @@
 {
   "name": "@element-motion/core",
-  "version": "2.9.0",
+  "version": "2.9.1",
   "repository": "element-motion/element-motion",
   "directory": "packages/core",
   "homepage": "https://elementmotion.com",
@@ -22,8 +22,8 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@element-motion/motions": "^2.9.0",
-    "@element-motion/utils": "^2.9.0"
+    "@element-motion/motions": "^2.9.1",
+    "@element-motion/utils": "^2.9.1"
   },
   "devDependencies": {
     "@element-motion/dev": "^2.8.1",

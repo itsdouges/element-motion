@@ -1,7 +1,7 @@
 {
   "name": "@element-motion/docs",
   "private": true,
-  "version": "2.9.0",
+  "version": "2.9.1",
   "repository": "element-motion/element-motion",
   "directory": "packages/docs",
   "main": "dist/cjs/index.js",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {},
   "dependencies": {
-    "@element-motion/core": "^2.9.0",
+    "@element-motion/core": "^2.9.1",
     "@element-motion/dev": "^2.8.1",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
