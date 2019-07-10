@@ -12,6 +12,8 @@ export { default as Reveal } from './Reveal';
 export { default as RevealReshapingContainer } from './RevealReshapingContainer';
 export { default as Scale } from './Scale';
 export { default as InverseScale } from './Scale/InverseScale';
+export { default as Translate } from './Translate';
+export { default as InverseTranslate } from './Translate/InverseTranslate';
 export { default as Swipe } from './Swipe';
 export { default as SimpleKeyframe } from './SimpleKeyframe';
 export { default as SimpleTween } from './SimpleTween';

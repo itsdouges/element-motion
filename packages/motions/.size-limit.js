@@ -66,4 +66,14 @@ module.exports = [
     path: 'dist/esm/Scale/InverseScale.js',
     ignore: ['emotion'],
   },
+  {
+    limit: '1.86 KB',
+    path: 'dist/esm/Translate/index.js',
+    ignore: ['emotion'],
+  },
+  {
+    limit: '118 B',
+    path: 'dist/esm/Translate/InverseTranslate.js',
+    ignore: ['emotion'],
+  },
 ];

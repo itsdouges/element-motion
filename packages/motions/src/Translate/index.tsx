@@ -9,42 +9,45 @@ import {
   combine,
   standard,
   dynamic,
+  recalculateElementBoundingBoxFromScroll,
 } from '@element-motion/utils';
 import { MotionProps } from '../types';
 
-export interface ScaleProps extends CollectorChildrenProps, MotionProps {}
+export interface TranslateProps extends CollectorChildrenProps, MotionProps {}
 
 const buildKeyframes = (elements: MotionData, duration: number, bezierCurve: string) => {
   const frameTime = 1000 / 60;
   const nFrames = Math.round(duration / frameTime);
   const percentIncrement = 100 / nFrames;
-  const originBoundingBox = elements.origin.elementBoundingBox;
+  const originBoundingBox = recalculateElementBoundingBoxFromScroll(
+    elements.origin.elementBoundingBox
+  );
   const destinationBoundingBox = elements.destination.elementBoundingBox;
   const timingFunction = bezierToFunc(bezierCurve, duration);
 
-  const startX = originBoundingBox.size.width / destinationBoundingBox.size.width;
-  const startY = originBoundingBox.size.height / destinationBoundingBox.size.height;
-  const endX = 1;
-  const endY = 1;
+  const startX = originBoundingBox.location.left - destinationBoundingBox.location.left;
+  const startY = originBoundingBox.location.top - destinationBoundingBox.location.top;
+  const endX = 0;
+  const endY = 0;
   const animation: string[] = [];
   const inverseAnimation: string[] = [];
 
   for (let i = 0; i <= nFrames; i += 1) {
     const step = Number(timingFunction(i / nFrames).toFixed(5));
     const percentage = Number((i * percentIncrement).toFixed(5));
-    const xScale = Number((startX + (endX - startX) * step).toFixed(5));
-    const yScale = Number((startY + (endY - startY) * step).toFixed(5));
-    const invScaleX = (1 / xScale).toFixed(5);
-    const invScaleY = (1 / yScale).toFixed(5);
+    const translateToX = Number((startX + (endX - startX) * step).toFixed(5));
+    const translateToY = Number((startY + (endY - startY) * step).toFixed(5));
+    const inverseTranslateToX = -translateToX;
+    const inverseTranslateToY = -translateToY;
 
     animation.push(`
       ${percentage}% {
-        transform: scale3d(${xScale}, ${yScale}, 1);
+        transform: translate3d(${translateToX}px, ${translateToY}px, 0);
       }`);
 
     inverseAnimation.push(`
       ${percentage}% {
-        transform: scale3d(${invScaleX}, ${invScaleY}, 1);
+        transform: translate3d(${inverseTranslateToX}px, ${inverseTranslateToY}px, 0);
       }`);
   }
 
@@ -54,13 +57,13 @@ const buildKeyframes = (elements: MotionData, duration: number, bezierCurve: str
   };
 };
 
-export const INVERSE_SCALE_CLASS_NAME = 'inVRsE-sCle';
+export const INVERSE_TRANSLATE_CLASS_NAME = 'inVRsE-tRnsFrm';
 
-const Scale: React.FC<ScaleProps> = ({
+const Translate: React.FC<TranslateProps> = ({
   children,
   duration = 'dynamic',
   timingFunction = standard(),
-}: ScaleProps) => {
+}: TranslateProps) => {
   let calculatedDuration: number;
   let animation: string;
   let inverseAnimation: string;
@@ -71,12 +74,16 @@ const Scale: React.FC<ScaleProps> = ({
         action: CollectorActions.motion,
         payload: {
           beforeAnimate: (elements, onFinish, setChildProps) => {
-            const originBoundingBox = elements.origin.elementBoundingBox;
+            const originBoundingBox = recalculateElementBoundingBoxFromScroll(
+              elements.origin.elementBoundingBox
+            );
             const destinationBoundingBox = elements.destination.elementBoundingBox;
-            const scaleToX = originBoundingBox.size.width / destinationBoundingBox.size.width;
-            const scaleToY = originBoundingBox.size.height / destinationBoundingBox.size.height;
-            const inverseScaleToX = 1 / scaleToX;
-            const inverseScaleToY = 1 / scaleToY;
+            const translateToX =
+              originBoundingBox.location.left - destinationBoundingBox.location.left;
+            const translateToY =
+              originBoundingBox.location.top - destinationBoundingBox.location.top;
+            const inverseTranslateToX = -translateToX;
+            const inverseTranslateToY = -translateToY;
 
             calculatedDuration =
               duration === 'dynamic'
@@ -104,15 +111,17 @@ const Scale: React.FC<ScaleProps> = ({
               style: prevStyle => ({
                 ...prevStyle,
                 ...common,
-                transform: combine(`scale3d(${scaleToX}, ${scaleToY}, 1)`, '')(prevStyle.transform),
+                transform: combine(`translate3d(${translateToX}px, ${translateToY}px, 0)`, '')(
+                  prevStyle.transform
+                ),
                 animationDuration: `${calculatedDuration}ms`,
                 animationName: combine(animation)(prevStyle.animationName),
               }),
               className: () =>
                 css({
-                  [`.${INVERSE_SCALE_CLASS_NAME}`]: {
+                  [`.${INVERSE_TRANSLATE_CLASS_NAME}`]: {
                     ...common,
-                    transform: `scale3d(${inverseScaleToX}, ${inverseScaleToY}, 1)`,
+                    transform: `translate3d(${inverseTranslateToX}px, ${inverseTranslateToY}px, 0)`,
                     animationDuration: `${calculatedDuration}ms`,
                     animationName: inverseAnimation,
                   },
@@ -131,7 +140,7 @@ const Scale: React.FC<ScaleProps> = ({
                 cx(
                   prevClassName,
                   css({
-                    [`.${INVERSE_SCALE_CLASS_NAME}`]: {
+                    [`.${INVERSE_TRANSLATE_CLASS_NAME}`]: {
                       animationPlayState: 'running',
                     },
                   })
@@ -148,4 +157,4 @@ const Scale: React.FC<ScaleProps> = ({
   );
 };
 
-export default Scale;
+export default Translate;

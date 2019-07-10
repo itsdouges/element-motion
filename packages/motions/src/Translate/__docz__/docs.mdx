@@ -1,0 +1,72 @@
+---
+name: Translate
+route: /translate
+menu: Focal motions
+---
+
+import { Playground, Props } from 'docz';
+import { Toggler } from '@element-motion/dev';
+import { Motion } from '@element-motion/utils';
+import Translate from '../index';
+import InverseTranslate from '../InverseTranslate';
+import { Menu } from './styled';
+
+# Translate
+
+Will translate an element from the `origin` to `destination` location.
+Can also use `InverseTranslate` component to counteract the transform.
+
+## Usage
+
+```js
+import Motion, { Translate, InverseTranslate } from '@element-motion/core';
+```
+
+**Try the interactive demos** 👇
+
+### Without inverse translate
+
+<Playground>
+  <Toggler>
+    {toggler => (
+      <Motion triggerSelfKey={toggler.shown}>
+        <Translate>
+          {motion => (
+            <Menu {...motion} right={toggler.shown} onClick={toggler.toggle}>
+              <div>hello, world</div>
+            </Menu>
+          )}
+        </Translate>
+      </Motion>
+    )}
+  </Toggler>
+</Playground>
+
+### With inverse translate
+
+<Playground>
+  <Toggler>
+    {toggler => (
+      <Motion triggerSelfKey={toggler.shown}>
+        <Translate>
+          {motion => (
+            <Menu {...motion} right={toggler.shown} onClick={toggler.toggle}>
+              <InverseTranslate>{inverse => <div {...inverse}>hello, world</div>}</InverseTranslate>
+            </Menu>
+          )}
+        </Translate>
+      </Motion>
+    )}
+  </Toggler>
+</Playground>
+
+## Props
+
+<Props of={Translate} />
+
+## Gotchas
+
+### Inverse translate
+
+Make sure to utilise an element that is a block - either `block`, `inline-block`, `flex`, `inline-flex`.
+Else the transforms will not be applied.
