@@ -1,10 +1,10 @@
 module.exports = [
   {
-    limit: '3.86 KB',
+    limit: '3.95 KB',
     path: 'dist/esm/index.js',
   },
   {
-    limit: '2.73 KB',
+    limit: '2.82 KB',
     path: 'dist/esm/Motion/index.js',
   },
   {

@@ -4,7 +4,7 @@ import { mount, ReactWrapper, shallow } from 'enzyme'; // eslint-disable-line im
 import { MemoryRouter, Link } from 'react-router-dom';
 import { WrappedMotion as Motion } from '../Motion';
 import Target from '../FocalTarget';
-import { getElementBoundingBox } from '../lib/dom';
+import { getElementBoundingBox, isPartiallyInViewport } from '../lib/dom';
 import defer from '../lib/defer';
 import * as store from '../lib/store';
 import * as utils from '../__tests__/utils';
@@ -33,6 +33,31 @@ const startMotion = (wrapper: ReactWrapper) => {
 };
 
 describe('<Motion />', () => {
+  beforeEach(() => {
+    (isPartiallyInViewport as jest.Mock).mockReturnValue(true);
+  });
+
+  it('should not execute motion if both elements are outside of the viewport', () => {
+    (isPartiallyInViewport as jest.Mock).mockReturnValue(false);
+    const onBeforeAnimate = jest.fn();
+    const TestMotion = utils.createTestMotion({ onBeforeAnimate });
+    const wrapper = mount(
+      <utils.MotionUnderTest
+        from={
+          <Motion name="no-ex">
+            <TestMotion>{props => <div {...props} />}</TestMotion>
+          </Motion>
+        }
+        to={<Motion name="no-ex">{motion => <div {...motion} />}</Motion>}
+        start={false}
+      />
+    );
+
+    startMotion(wrapper);
+
+    expect(onBeforeAnimate).not.toHaveBeenCalled();
+  });
+
   it('should warn if name isnt defined', () => {
     console.warn = jest.fn();
     process.env.NODE_ENV = 'development';
