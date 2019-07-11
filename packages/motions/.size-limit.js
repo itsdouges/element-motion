@@ -12,7 +12,7 @@ module.exports = [
     path: 'dist/esm/CrossFadeMove/index.js',
   },
   {
-    limit: '1.51 KB',
+    limit: '1.52 KB',
     path: 'dist/esm/FadeMove/index.js',
   },
   {
@@ -26,12 +26,12 @@ module.exports = [
     ignore: ['emotion'],
   },
   {
-    limit: '2.29 KB',
+    limit: '2.30 KB',
     path: 'dist/esm/FocalRevealMove/index.js',
     ignore: ['emotion'],
   },
   {
-    limit: '1.62 KB',
+    limit: '1.64 KB',
     path: 'dist/esm/Move/index.js',
   },
   {
@@ -44,11 +44,11 @@ module.exports = [
     ignore: ['react', 'react-dom'],
   },
   {
-    limit: '1.45 KB',
+    limit: '1.46 KB',
     path: 'dist/esm/Reveal/index.js',
   },
   {
-    limit: '4.60 KB',
+    limit: '4.69 KB',
     path: 'dist/esm/RevealReshapingContainer/index.js',
     ignore: ['react', 'react-dom'],
   },
@@ -67,7 +67,7 @@ module.exports = [
     ignore: ['emotion'],
   },
   {
-    limit: '1.86 KB',
+    limit: '1.87 KB',
     path: 'dist/esm/Translate/index.js',
     ignore: ['emotion'],
   },

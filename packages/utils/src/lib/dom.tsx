@@ -105,3 +105,15 @@ export function recalculateElementBoundingBoxFromScroll(
     },
   };
 }
+
+export function isPartiallyInViewport(bounding: ElementBoundingBox) {
+  const windowDimensions = getWindowDimensions();
+  const verticallyInsideViewport =
+    bounding.raw.rect.top <= windowDimensions.height &&
+    bounding.raw.rect.top + bounding.size.height >= 0;
+  const horizontallyInsideViewport =
+    bounding.raw.rect.left <= windowDimensions.width &&
+    bounding.raw.rect.left + bounding.size.width >= 0;
+
+  return verticallyInsideViewport && horizontallyInsideViewport;
+}

@@ -11,7 +11,7 @@ import Collector, {
   MotionData,
   MotionCallback,
 } from '../Collector';
-import { getElementBoundingBox, eventListener } from '../lib/dom';
+import { getElementBoundingBox, eventListener, isPartiallyInViewport } from '../lib/dom';
 import defer from '../lib/defer';
 import noop from '../lib/noop';
 import { throwIf, warn } from '../lib/log';
@@ -300,6 +300,18 @@ If it's an image, try and have the image loaded before mounting or set a static 
             : undefined,
         },
       };
+
+      /**
+       * If either element is partially in the viewport means we're good to go to execute.
+       * Else there's not point to execute - abort!
+       */
+      if (
+        !isPartiallyInViewport(motionData.origin.elementBoundingBox) ||
+        !isPartiallyInViewport(motionData.destination.elementBoundingBox)
+      ) {
+        this.executing = false;
+        return;
+      }
 
       if (
         process.env.NODE_ENV === 'development' &&
