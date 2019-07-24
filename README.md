@@ -1,8 +1,6 @@
-<h1>
-  <img aria-label="element motion" src="https://user-images.githubusercontent.com/6801309/58364853-bf21cd80-7efd-11e9-8300-df952b3a03c8.png" height="100" />
-</h1>
+# Element Motion
 
-Declarative zero configuration element motions for [React](https://reactjs.org/)
+Tween between view states with declarative zero configuration element motions for [React](https://reactjs.org/).
 
 [![npm](https://img.shields.io/npm/v/@element-motion/core.svg)](https://www.npmjs.com/package/@element-motion/core) [![npm bundle size (minified + gzip)](https://badgen.net/bundlephobia/minzip/@element-motion/core)](https://bundlephobia.com/result?p=@element-motion/core)
 
