@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@21kb/react-page-visible-hook@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/@21kb/react-page-visible-hook/-/react-page-visible-hook-1.3.1.tgz#f34c4523fe69cc414c28206303e0bcc0ffd3c900"
+  integrity sha512-nJpURQFS7HLkdkQyMOZx27biXMe0LdcCAQDnhiCY+S9xHQHlmmI/SyPel81BYz5jM1Hh0BrSEljetE2GInrNjQ==
+
 "@babel/cli@^7.4.4":
   version "7.4.4"
   resolved "https://registry.npmjs.org/@babel/cli/-/cli-7.4.4.tgz#5454bb7112f29026a4069d8e6f0e1794e651966c"
@@ -2733,6 +2738,13 @@
     csstype "^2.0.0"
     indefinite-observable "^1.0.1"
 
+"@types/loadable__component@^5.9.0":
+  version "5.9.0"
+  resolved "https://registry.npmjs.org/@types/loadable__component/-/loadable__component-5.9.0.tgz#6c59ccbfa49329d227f74d0c49002888a11a817d"
+  integrity sha512-uTsudqvPxlZumuXQ4YOfD6yoGjPe3RmkL7q5e3HEFERPKv4BCYPTPE2vQ0Klj9KMWFbprEuF1DRjmjlQRunkEA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/minimatch@*":
   version "3.0.3"
   resolved "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
@@ -2756,6 +2768,14 @@
 "@types/q@^1.5.1":
   version "1.5.1"
   resolved "https://registry.npmjs.org/@types/q/-/q-1.5.1.tgz#48fd98c1561fe718b61733daed46ff115b496e18"
+
+"@types/reach__router@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.npmjs.org/@types/reach__router/-/reach__router-1.2.4.tgz#44a701fdf15934880f6dfdef38ca49bc30e2d372"
+  integrity sha512-a+MFhebeSGi0LwHZ0UhH/ke77rWtNQnt8YmaHnquSaY3HmyEi+BPQi3GhPcUPnC9X5BLw/qORw3BPxGb1mCtEw==
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
 
 "@types/react-body-classname@^1.1.5":
   version "1.1.6"
@@ -10879,6 +10899,11 @@ object.values@^1.0.4, object.values@^1.1.0:
     function-bind "^1.1.1"
     has "^1.0.3"
 
+observe-element-in-viewport@0.0.11:
+  version "0.0.11"
+  resolved "https://registry.npmjs.org/observe-element-in-viewport/-/observe-element-in-viewport-0.0.11.tgz#9bdc6a2ef69c470fc95ac80a369257f99cd53f35"
+  integrity sha512-+7CMPCJYXOHzvL2R1E/xZXCF6mWFNmqjlPwbU4QftnCFxsn1AwkcWfwc3+5pvfb+UMDFkCrGBpiW57L8HnIbbA==
+
 obuf@^1.0.0, obuf@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
@@ -15039,6 +15064,18 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-interval@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/use-interval/-/use-interval-1.1.0.tgz#fffb7e10141b8fc36cd5f3055958b960c464092d"
+  integrity sha512-x6U0YaN5IknebySwYnaUy6UCEeG7AfmHkoccGxvI/3WM/8Jo25Pqr+6wr2YL4soMy8i6BSlVE+oVcVTScFBzjA==
+
+use-is-in-viewport@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/use-is-in-viewport/-/use-is-in-viewport-1.0.3.tgz#05b87016d5e341b4dc39d48078198ccfc910351f"
+  integrity sha512-3usqpwQ+EWI8lBp5I/RAh9U7V4zRVBTv8K8JvTeM7du9OXbm18ugGp3pEKbQ0nJZ0qgAnv9nJ2R076mlaxhxWQ==
+  dependencies:
+    observe-element-in-viewport "0.0.11"
 
 use@^3.1.0:
   version "3.1.1"

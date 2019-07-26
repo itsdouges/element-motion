@@ -21,4 +21,6 @@ export {
   Reveal,
   Scale,
   InverseScale,
+  Translate,
+  InverseTranslate,
 } from '@element-motion/motions';

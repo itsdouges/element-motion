@@ -1,4 +1,7 @@
 import * as React from 'react';
+import useInterval from 'use-interval';
+import useIsInViewport from 'use-is-in-viewport';
+import useVisible from '@21kb/react-page-visible-hook';
 
 interface Props {
   interval: boolean;
@@ -69,3 +72,55 @@ export default class Toggler extends React.Component<Props, State> {
     });
   }
 }
+
+interface TogglrProps {
+  interval?: boolean;
+  intervalMs?: number;
+  onIntervalSet?: (value: any) => any;
+  children: (props: {
+    toggle: (value?: any) => void;
+    set: (value: any) => void;
+    shown: any;
+  }) => React.ReactNode;
+}
+
+// @ts-ignore
+export const Togglr: React.FC<TogglrProps> = ({
+  onIntervalSet = () => {},
+  interval = false,
+  intervalMs = 1500,
+  children,
+}: TogglrProps) => {
+  const [shown, setShown] = React.useState<any>(false);
+  const [interacted, setInteracted] = React.useState(false);
+  const [inView, setRef] = useIsInViewport({});
+  const state = useVisible();
+  const set = (value: any) => {
+    setInteracted(true);
+    setShown(value);
+  };
+  const toggle = (value?: any) => {
+    setInteracted(true);
+    setShown((prevVal: any) => (prevVal ? false : value || true));
+  };
+
+  useInterval(() => {
+    if (!interval || interacted || !inView || state.hidden) {
+      return;
+    }
+
+    const result = onIntervalSet(shown);
+    setShown((prevVal: any) => (result !== undefined ? result : !prevVal));
+  }, intervalMs);
+
+  return (
+    <>
+      <div ref={setRef} />
+      {children({
+        toggle,
+        set,
+        shown,
+      })}
+    </>
+  );
+};

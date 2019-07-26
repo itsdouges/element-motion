@@ -12,6 +12,7 @@ export const MessageNotification = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
+  color: #1d2330;
 `;
 
 export const AlignCenter = styled.div`

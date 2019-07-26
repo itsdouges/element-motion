@@ -8,7 +8,7 @@ export const Container = styled.div`
   color: #6772e5;
 
   p {
-    color: black;
+    color: black !important;
     opacity: 0.5;
   }
 `;
