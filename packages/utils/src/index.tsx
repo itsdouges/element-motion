@@ -10,5 +10,6 @@ export * from './lib/math';
 export * from './lib/duration';
 export * from './lib/style';
 export * from './lib/stylesheet';
+export * from './lib/keyframes';
 export * from './lib/log';
 export { default as noop } from './lib/noop';

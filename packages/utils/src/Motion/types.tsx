@@ -1,4 +1,4 @@
-import { CollectorChildrenProps, InlineStyles } from '../Collector';
+import { CollectorChildrenProps, InlineStyles, Keyframes } from '../Collector';
 import { InjectedProps } from '../VisibilityManager';
 
 export type MotionFunc = () => Promise<void>;
@@ -15,6 +15,7 @@ export type MotionBlock = MappedMotion[];
 export interface ChildProps {
   style?: InlineStyles;
   className?: string;
+  keyframes?: Keyframes;
 }
 
 export interface MotionState {

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ElementBoundingBox } from '../lib/dom';
+import { KeyframeDefinition } from '../lib/keyframes';
 
 export type InlineStyles = React.CSSProperties;
 
@@ -8,9 +9,14 @@ export interface TargetProps {
   className?: string;
 }
 
+export interface Keyframes {
+  [name: string]: KeyframeDefinition;
+}
+
 export interface TargetPropsFunc {
   style?: (previous: InlineStyles) => InlineStyles | undefined;
   className?: (previous: string | undefined) => string | undefined;
+  keyframes?: (getPrevKeyframes: (name: string) => KeyframeDefinition) => Keyframes;
 }
 
 export type setChildProps = (props: TargetPropsFunc) => void;
@@ -25,7 +31,8 @@ export type setChildProps = (props: TargetPropsFunc) => void;
 export type MotionCallback = (
   elements: MotionData,
   onFinish: () => void,
-  setChildProps: setChildProps
+  setChildProps: setChildProps,
+  extra: { animationName: (name: string) => string }
 ) => React.ReactNode | undefined | void;
 
 export enum CollectorActions {
