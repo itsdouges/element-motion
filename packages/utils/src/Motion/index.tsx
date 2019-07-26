@@ -149,7 +149,7 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
   }
 
   componentWillUnmount() {
-    if (this.props.triggerSelfKey) {
+    if (this.props.triggerSelfKey !== undefined) {
       this.cancel();
       this.unmounting = true;
       return;

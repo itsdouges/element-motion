@@ -90,6 +90,7 @@ const EmailChain = () => {
                     <ListItemText
                       primary={Styled.data[props.index].title}
                       secondary={Styled.data[props.index].recipients}
+                      color="inherit"
                     />
                   </ListItem>
                 </div>

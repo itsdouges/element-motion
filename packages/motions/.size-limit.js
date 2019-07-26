@@ -16,7 +16,7 @@ module.exports = [
     path: 'dist/esm/FadeMove/index.js',
   },
   {
-    limit: '1.78 KB',
+    limit: '1.8 KB',
     path: 'dist/esm/FocalConcealMove/index.js',
     ignore: ['emotion'],
   },

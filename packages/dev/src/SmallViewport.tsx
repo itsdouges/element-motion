@@ -16,6 +16,8 @@ const PixelContainer = styled.div<{ display: string }>`
   overflow: hidden;
   display: ${props => props.display};
   flex-direction: column;
+  background-color: white;
+  color: #1d2330;
 
   * {
     box-sizing: border-box;

@@ -1,68 +1,357 @@
 ---
-name: 1. Introduction 📖
+name: Introduction
 route: /
-order: 5
+fullpage: true
+edit: false
+github: false
 ---
 
+import * as Common from '@element-motion/dev';
+import { Example } from '../components';
+import {
+  FullPageContainer,
+  Title,
+  Subtitle,
+  Emphasize,
+  StyledLink,
+  LinkGroup,
+  BreakOut,
+  HeroPoint,
+  ExampleTitle,
+  SectionTitle,
+  CtaGroup,
+} from './styled';
 import EmailChain from '../3-advanced-usage/EmailChain';
+import * as examples from '../components/examples';
 
-# element motion
+<FullPageContainer />
 
-Declarative zero configuration element motions for [React](https://reactjs.org/)
+<Title>Element Motion</Title>
 
-[![npm](https://img.shields.io/npm/v/@element-motion/core.svg)](https://www.npmjs.com/package/@element-motion/core) [![npm bundle size (minified + gzip)](https://badgen.net/bundlephobia/minzip/@element-motion/core)](https://bundlephobia.com/result?p=@element-motion/core)
+<Subtitle>
+  Tween between view states with <Emphasize>declarative zero configuration</Emphasize> element
+  motions for React.
+</Subtitle>
 
-**Try the interactive demo** 👇
+<LinkGroup>
+  <StyledLink to="/getting-started">
+    Get started
+  </StyledLink>
 
-<EmailChain />
+  <StyledLink to="/#motions">
+    Explore motions
+  </StyledLink>
+</LinkGroup>
 
-## Why element motion?
+<HeroPoint
+  title="Zero-configuration declarative motions"
+  subtitle="Motion between elements, tween between view states with the dynamic timing."
+  more="/motion"
+>
+  <Example
+    direction="column"
+    code={`
+<Motion triggerSelfKey={shown}>
+  <Move>
+    {motion =>
+      <Block
+        {...motion}
+        alignSelf={shown ? 'flex-end' : 'flex-start'}
+      />}
+  </Move>
+</Motion>
+`}
+  >
+    <examples.MoveExample />
+  </Example>
+</HeroPoint>
 
-It's all about ✨**motion over state transitions** ✨ - it can help with:
+<HeroPoint
+  flip
+  title="Declaratively create intermediate elements"
+  subtitle="Create intermediate elements declaratively to aid motion tweening between view states."
+  more="/supporting-motions"
+>
+  <Example
+    direction="column"
+    code={`
+<Motion triggerSelfKey={shown}>
+  <CircleShrink background="#fff">
+    {motion => (
+      <Block {...motion} onClick={() => toggle()}>
+        press me
+      </Block>
+    )}
+  </CircleShrink>
+</Motion>
+`}
+  >
+    <examples.CircleShrinkExample />
+  </Example>
+</HeroPoint>
 
-- 📴 Enabling motion to be possible between two disconnected elements in the React tree
-- 🚚 [Moving an element](/move) from one location to another
-- 💨 [Revealing elements](/focal-reveal-move) inside another element
-- 👓 [Supporting motions](/supporting-motions) by obstructing elements in view
-- 🤫 [Hiding child elements](/advanced-usage#delay-showing-content-until-all-motions-have-finished) until all motions have completed
-- 🔢 [Orchestrating](/advanced-usage#wait-for-the-previous-motion-to-finish-before-starting-the-next) when motions should start and [in what order](/advanced-usage#controlling-in-what-order-motions-should-execute)
-- 📝 Composing motions together to create composites, for example [CrossFadeMove](/cross-fade-move)
-- 🤯 [Anything you can imagine](/custom-motions), seriously
+<HeroPoint
+  title="Fine-grained control"
+  subtitle="Compose &amp; execute motions in a specific order, control the visibility of elements."
+  more="/advanced-usage#controlling-in-what-order-motions-should-execute"
+>
+  <Example
+    direction="column"
+    code={`
+<VisibilityManager>
+  {visibility => (
+    <>
+      <Fill {...visibility} />
+      <Motion triggerSelfKey={shown}>
+        <Translate>
+          {motion => (
+            <Block
+              {...motion}
+              alignSelf={shown ? 'flex-end' : 'flex-start'}
+            >
+              <InverseTranslate>
+                {inverse => (
+                  <div {...inverse}>
+                    <Motion triggerSelfKey={shown}>
+                      <Noop duration={100}>
+                        <Wait>
+                          <Translate>
+                            {innerMotion => (
+                              <InnerBlock {...innerMotion} />
+                            )}
+                          </Translate>
+                        </Wait>
+                      </Noop>
+                    </Motion>
+                  </div>
+                )}
+              </InverseTranslate>
+            </Block>
+          )}
+        </Translate>
+      </Motion>
+    </>
+  )}
+</VisibilityManager>
+`}
+  >
+    <examples.FineGrainedControlExample />
+  </Example>
+</HeroPoint>
 
-Which all boil down to two areas:
+<SectionTitle>Motions</SectionTitle>
 
-- [**Orchestration**](https://elementmotion.com/motion) (collecting DOM data, enabling motion between disconnected React elements, executing motions)
-- [**Motions**](https://elementmotion.com/custom-motions) (animation concerns, CSS transitions/animations, JS animations, whatever you can imagine)
+This is not an exhaustive list of motions available in Element Motion!
+Check the docs for more.
 
-## Installation
+<LinkGroup>
+  <StyledLink to="/focal-motions">
+    Other motions
+  </StyledLink>
 
-```bash
-npm install @element-motion/core react react-dom --save
-```
+  <StyledLink to="/custom-motions">
+    Create your own
+  </StyledLink>
+</LinkGroup>
 
-or
+<ExampleTitle>Move</ExampleTitle>
 
-```bash
-yarn add @element-motion/core react react-dom
-```
+Moves element(s) between positions over a state change using the `Move` component.
+Will also scale between size differences - disable using the `scaleX` and `scaleY` props.
 
-React should be at least `v16.4`.
+<BreakOut>
+  <Example
+    to="/move"
+    code={`
+<Motion triggerSelfKey={shown}>
+  <Move>
+    {motion =>
+      <Block
+        {...motion}
+        alignSelf={shown ? 'flex-end' : 'flex-start'}
+      />}
+  </Move>
+</Motion>
+`}
+  >
+    <examples.MoveExample />
+  </Example>
+</BreakOut>
 
-## Usage
+<ExampleTitle>Cross fade move</ExampleTitle>
 
-```js
-import Motion, { Move } from '@element-motion/core';
+Seamlessly move and fade between views over a state change using the `CrossFadeMove` component.
+It is a composition of the `Move` and `FadeMove` components.
 
-({ isLarge }) => (
-  <Motion triggerSelfKey={isLarge}>
-    <Move>{motion => <div {...motion} className={isLarge ? 'large' : 'small'} />}</Move>
-  </Motion>
-);
-```
+<BreakOut>
+  <Example
+    to="/cross-fade-move"
+    code={`
+<Motion name="cross-fade-move" key={shown}>
+  <CrossFadeMove>
+    {motion => (
+      <Block
+        {...motion}
+        background={shown && 'checkered'}
+        alignSelf={shown ? 'flex-end' : 'flex-start'}
+      />
+    )}
+  </CrossFadeMove>
+</Motion>
+  `}
+  >
+    <examples.CrossFadeMoveExample />
+  </Example>
+</BreakOut>
 
-## Next steps
+<ExampleTitle>Focal reveal</ExampleTitle>
 
-- **First time** here? After installing head over to [Getting started](/getting-started) to start learning the basics
-- Interested in **elements in motion**? Check out [Focal motions](/focal-motions)
-- For **ready made experiences** check out [Composite experiences](/composite-experiences), just grab them and go!
-- Having **trouble**? Maybe [Troubleshooting](/troubleshooting) has your answers
+Reveal and conceal a container around an element using the `FocalRevealMove`, `FocalConcealMove`, and `FocalTarget` components.
+Think parent to child navigation transitions.
+
+<BreakOut>
+  <Example
+    to="/focal-reveal-move"
+    code={`
+<Motion name="reveal-block">
+  <FocalConcealMove>
+    {motion =>
+      <Block {...motion}>
+        <FocalTarget>
+          {target => <Block {...target} />}
+        </FocalTarget>
+      </Block>}
+  </FocalConcealMove>
+</Motion>
+`}
+  >
+    <examples.FocalRevealExample />
+  </Example>
+</BreakOut>
+
+<ExampleTitle>Scale</ExampleTitle>
+
+Scale between views over a state change using the `Scale` component.
+You'll see that the inner contents are stretching - see the next example where we counteract it.
+
+<BreakOut>
+  <Example
+    to="/scale"
+    code={`
+<Motion triggerSelfKey={shown}>
+  <Scale>
+    {motion =>
+      <Block
+        {...motion}
+        width={shown ? '100%' : ''}
+      >
+        <InnerBlock />
+      </Block>}
+  </Scale>
+</Motion>
+  `}
+  >
+    <examples.ScaleExample />
+  </Example>
+</BreakOut>
+
+<ExampleTitle>Inversed scale</ExampleTitle>
+
+Counteract the parent motion using the `InverseScale` component.
+A very powerful concept for elements that need to change size efficiently,
+think accordians, modals, and more.
+
+<BreakOut>
+  <Example
+    to="/scale#with-inverse-scale"
+    code={`
+<Motion triggerSelfKey={shown}>
+  <Scale>
+    {motion =>
+      <Block
+        {...motion}
+        width={shown ? '100%' : ''}
+      >
+        <InverseScale>
+          {inverse =>
+            <InnerBlock {...inverse} />}
+        </InverseScale>
+      </Block>}
+  </Scale>
+</Motion>
+  `}
+  >
+    <examples.InverseScaleExample />
+  </Example>
+</BreakOut>
+
+<ExampleTitle>Translate</ExampleTitle>
+
+Move between positions over a state change using the `Translate` component.
+Like `Scale` - we can counteract the transform on child elements - see the next example.
+
+<BreakOut>
+  <Example
+    to="/translate"
+    code={`
+<Motion triggerSelfKey={shown}>
+  <Translate>
+    {motion =>
+      <Block
+        {...motion}
+        alignSelf={shown ? 'flex-end' : 'flex-start'}
+      >
+        <InnerBlock />
+      </Block>}
+  </Translate>
+</Motion>
+`}
+  >
+    <examples.TranslateExample />
+  </Example>
+</BreakOut>
+
+<ExampleTitle>Inversed translate</ExampleTitle>
+
+Counteract the parent motion using the `InverseTranslate` component.
+Useful for the child having its own Motion applied to it.
+
+<BreakOut>
+  <Example
+    to="/translate#with-inverse-translate"
+    code={`
+<Motion triggerSelfKey={shown}>
+  <Translate>
+    {motion =>
+      <Block
+        {...motion}
+        alignSelf={shown ? 'flex-end' : 'flex-start'}
+      >
+        <InverseTranslate>
+          {inverse => <InnerBlock {...inverse} />}
+        </InverseTranslate>
+      </Block>}
+  </Translate>
+</Motion>
+`}
+  >
+    <examples.InverseTranslateExample />
+  </Example>
+</BreakOut>
+
+<CtaGroup>
+  <SectionTitle>There's more where that came from</SectionTitle>
+
+<ul>
+  <li>More motions</li>
+  <li>Create your own motions</li>
+  <li>Use with third party libraries</li>
+  <li>...And more!</li>
+</ul>
+
+  <LinkGroup>
+    <StyledLink to="/getting-started">
+      Get started
+    </StyledLink>
+  </LinkGroup>
+</CtaGroup>

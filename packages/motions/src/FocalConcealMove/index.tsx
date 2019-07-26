@@ -29,6 +29,11 @@ export interface FocalConcealMoveProps extends CollectorChildrenProps {
    * Timing function to be used in the transition.
    */
   timingFunction: string;
+
+  /**
+   * Will fadeout after completing the motion.
+   */
+  fadeOut: boolean;
 }
 
 export default class FocalConcealMove extends React.Component<FocalConcealMoveProps> {
@@ -36,6 +41,7 @@ export default class FocalConcealMove extends React.Component<FocalConcealMovePr
     duration: 'dynamic',
     timingFunction: standard(),
     zIndex: zIndexStack.concealMove,
+    fadeOut: true,
   };
 
   calculatedDuration: number = 0;
@@ -125,7 +131,7 @@ export default class FocalConcealMove extends React.Component<FocalConcealMovePr
   };
 
   render() {
-    const { children } = this.props;
+    const { children, fadeOut } = this.props;
 
     return (
       <Collector
@@ -134,7 +140,7 @@ export default class FocalConcealMove extends React.Component<FocalConcealMovePr
           payload: {
             beforeAnimate: this.beforeAnimate,
             animate: this.animate,
-            afterAnimate: this.afterAnimate,
+            afterAnimate: fadeOut ? this.afterAnimate : undefined,
           },
         }}
       >

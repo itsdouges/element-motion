@@ -1,7 +1,6 @@
 ---
-name: 2. Getting started 🚶
+name: Getting started
 route: /getting-started
-order: 4
 ---
 
 import { Playground } from 'docz';
@@ -32,14 +31,32 @@ import johnny from './images/jg.jpg';
 
 # Getting started
 
-The bread and butter motion is moving an element.
-Simple enough - after a state change we can automatically have the element move into the its new position.
+## Installation
+
+Element Motion requires React 16.4 or greater.
+
+```bash
+npm install @element-motion/core --save
+```
+
+or
+
+```bash
+yarn add @element-motion/core
+```
+
+## Whats in a motion?
+
+There are two halves to Element Motion:
+
+1. [**Orchestration**](https://elementmotion.com/motion) (collecting DOM data, enabling motion between disconnected React elements, executing motions)
+1. [**Motions**](https://elementmotion.com/custom-motions) (animation concerns, CSS transitions/animations, JS animations, whatever you can imagine)
+
+## Moving to another element
 
 > **Tip -** You can interact with any examples!
 > When you do they will stop auto playing.
 > Make sure to look at the code after playing with the examples 😋
-
-## Moving to another element
 
 For a simple move we can use the [Motion](/motion) and [Move](/move) components.
 [Move](/move) is good when the elements are visually very similar.
@@ -118,10 +135,11 @@ here is their message notification pill made using [ReshapingContainer](/reshapi
             <ReshapingContainer
               triggerKey={toggler.shown}
               display="inline-block"
-              boxShadow="rgba(32, 33, 36, 0.25) 0px 3px 6px"
+              boxShadow="rgba(255, 255, 255, 0.25) 0px 3px 6px"
               padding="4px 6px"
               borderRadius="20px"
               maxWidth="250px"
+              background="#fff"
             >
               {({ style, ref }) => (
                 <Styled.MessageNotification
