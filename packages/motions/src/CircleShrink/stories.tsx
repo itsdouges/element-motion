@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import BodyClassName from 'react-body-classname';
+// @ts-ignore
+import * as BodyClassName from 'react-body-classname';
 import { Toggler, colors } from '@element-motion/dev';
 import { Motion } from '@element-motion/utils';
 import CircleShrink from './index';
