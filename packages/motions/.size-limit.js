@@ -39,7 +39,8 @@ module.exports = [
     path: 'dist/esm/Noop/index.js',
   },
   {
-    limit: '4.1 KB',
+    // Will increase in size if Motion component increases in size.
+    limit: '4.44 KB',
     path: 'dist/esm/ReshapingContainer/index.js',
     ignore: ['react', 'react-dom'],
   },
@@ -48,7 +49,8 @@ module.exports = [
     path: 'dist/esm/Reveal/index.js',
   },
   {
-    limit: '4.69 KB',
+    // Will increase in size if Motion component increases in size.
+    limit: '5.02 KB',
     path: 'dist/esm/RevealReshapingContainer/index.js',
     ignore: ['react', 'react-dom'],
   },
@@ -57,7 +59,7 @@ module.exports = [
     path: 'dist/esm/Swipe/index.js',
   },
   {
-    limit: '1.75 KB',
+    limit: '1.85 KB',
     path: 'dist/esm/Scale/index.js',
     ignore: ['emotion'],
   },
@@ -67,12 +69,12 @@ module.exports = [
     ignore: ['emotion'],
   },
   {
-    limit: '1.87 KB',
+    limit: '1.96 KB',
     path: 'dist/esm/Translate/index.js',
     ignore: ['emotion'],
   },
   {
-    limit: '118 B',
+    limit: '120 B',
     path: 'dist/esm/Translate/InverseTranslate.js',
     ignore: ['emotion'],
   },
