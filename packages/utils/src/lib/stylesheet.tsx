@@ -1,10 +1,15 @@
+let id = 0;
+
 export const createManager = () => {
+  id += 1;
   const sheets: HTMLStyleElement[] = [];
 
   return {
+    id,
     css: (sheet: string, className?: string) => {
       const element = document.createElement('style');
-      element.innerText = sheet;
+      element.setAttribute('data-element-motion', `css-manager-${id}`);
+      element.innerHTML = sheet;
       sheets.push(element);
       document.head.appendChild(element);
       return className;
@@ -15,3 +20,5 @@ export const createManager = () => {
     },
   };
 };
+
+export type StyleSheetManager = ReturnType<typeof createManager>;

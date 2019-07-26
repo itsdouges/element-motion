@@ -58,6 +58,7 @@ export function getElementBoundingBox(
       height: options.useOffsetSize ? element.offsetHeight : rect.height,
     },
     location: {
+      // Will return the true distance from the top of the page (viewport + scroll)
       left: rect.left + scrollLeft,
       top: rect.top + scrollTop,
     },
@@ -90,6 +91,11 @@ export function calculateWindowCentre() {
   };
 }
 
+/**
+ * Used to pad the location with an updated scroll position.
+ * This is used because the destination and origin elements are calculated in the same frame
+ * but the scroll could have changed just after the origin has changed but before the destintation.
+ */
 export function recalculateElementBoundingBoxFromScroll(
   elementBoundingBox: ElementBoundingBox
 ): ElementBoundingBox {

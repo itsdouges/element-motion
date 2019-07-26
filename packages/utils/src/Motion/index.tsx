@@ -18,6 +18,7 @@ import { throwIf, warn } from '../lib/log';
 import * as store from '../lib/store';
 import { withVisibilityManagerContext } from '../VisibilityManager';
 import { MotionProps, MotionState, MotionBlock } from './types';
+import { createManager, StyleSheetManager } from '../lib/stylesheet';
 
 export default class Motion extends React.PureComponent<MotionProps, MotionState> {
   static displayName = 'Motion';
@@ -39,6 +40,8 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
   unmounting: boolean = false;
 
   element: HTMLElement | null;
+
+  stylesheet: StyleSheetManager;
 
   focalTargetElement: HTMLElement | null;
 
@@ -84,6 +87,14 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
       // We'll be waiting for another Motion to mount.
       this.notifyVisibilityManagerWeFinished();
     }
+  }
+
+  getStyleSheetManager() {
+    if (!this.stylesheet) {
+      this.stylesheet = createManager();
+    }
+
+    return this.stylesheet;
   }
 
   getSnapshotBeforeUpdate(prevProps: MotionProps) {
@@ -150,6 +161,7 @@ export default class Motion extends React.PureComponent<MotionProps, MotionState
 
   componentWillUnmount() {
     if (this.props.triggerSelfKey !== undefined) {
+      this.getStyleSheetManager().removeAll();
       this.cancel();
       this.unmounting = true;
       return;
@@ -272,7 +284,7 @@ If it's an image, try and have the image loaded before mounting or set a static 
       const { collectorData, elementData } = DOMSnapshot;
       this.executing = true;
 
-      /**
+      /*
        * !! START SAFARI BULLSHIT HACK ALERT !!
        * Safari has a problem correctly updating a parent element if a child element changes its position.
        * Because of this it will read the wrong dimensions in this frame and then in the next frame have them
@@ -283,7 +295,7 @@ If it's an image, try and have the image loaded before mounting or set a static 
       this.element!.style.display = 'none';
       this.element!.offsetHeight; // eslint-disable-line no-unused-expressions
       this.element!.style.display = '';
-      /**
+      /*
        * !! END SAFARI BULLSHIT HACK ALERT !!
        */
 
@@ -354,16 +366,44 @@ If it's an image, try and have the image loaded before mounting or set a static 
           }
 
           if (props) {
-            this.setState(prevState => ({
-              childProps: {
-                style: props.style
-                  ? props.style(prevState.childProps.style || {})
-                  : prevState.childProps.style,
-                className: props.className
-                  ? props.className(prevState.childProps.className)
-                  : prevState.childProps.className,
-              },
-            }));
+            this.setState(
+              prevState => ({
+                childProps: {
+                  style: props.style
+                    ? props.style(prevState.childProps.style || {})
+                    : prevState.childProps.style,
+                  className: props.className
+                    ? props.className(prevState.childProps.className)
+                    : prevState.childProps.className,
+                  keyframes: props.keyframes
+                    ? {
+                        ...prevState.childProps.keyframes,
+                        ...props.keyframes(
+                          (keyframesName: string) =>
+                            (prevState.childProps.keyframes || {})[keyframesName]
+                        ),
+                      }
+                    : prevState.childProps.keyframes,
+                },
+              }),
+              () => {
+                // TODO: Move this to after all parts of a phase have executed.
+                const keyframes = this.state.childProps.keyframes || {};
+                Object.keys(keyframes).forEach(key => {
+                  const value = keyframes[key];
+                  const keys = Object.keys(value);
+                  // TODO: We need to scope the keyframes so each motion has a unique one.
+                  // We set ID here - how do we pass it into motions?
+                  this.getStyleSheetManager().css(`
+                    @keyframes em-${key}-${this.getStyleSheetManager().id} {
+                      ${keys
+                        .map(valKey => `${valKey}% { ${value[valKey][0]}: ${value[valKey][1]}; }`)
+                        .join('\n')}
+                    }
+                  `);
+                });
+              }
+            );
           } else {
             this.setState({
               childProps: {},
@@ -374,7 +414,10 @@ If it's an image, try and have the image loaded before mounting or set a static 
         const generatePhase = (cb: MotionCallback | undefined) => () => {
           if (cb) {
             const deferred = defer();
-            const jsx = cb(motionData, deferred.resolve, setChildProps);
+            const jsx = cb(motionData, deferred.resolve, setChildProps, {
+              animationName: (animName: string): string =>
+                `em-${animName}-${this.getStyleSheetManager().id}`,
+            });
 
             if (jsx) {
               mount(jsx);
@@ -504,6 +547,7 @@ If it's an image, try and have the image loaded before mounting or set a static 
                 this.executing = false;
                 const { onFinish } = this.props;
                 onFinish();
+                this.getStyleSheetManager().removeAll();
               })
           );
         });
