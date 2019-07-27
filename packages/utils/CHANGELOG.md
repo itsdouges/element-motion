@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/element-motion/element-motion/compare/v2.10.1...v2.11.0) (2019-07-27)
+
+
+### Features
+
+* **motion:** adds ability to compose keyframe animations in motion components ([e7e971a](https://github.com/element-motion/element-motion/commit/e7e971a))
+
+
+
+
+
 ## [2.10.1](https://github.com/element-motion/element-motion/compare/v2.10.0...v2.10.1) (2019-07-26)
 
 **Note:** Version bump only for package @element-motion/utils
