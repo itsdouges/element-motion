@@ -40,7 +40,7 @@ module.exports = [
   },
   {
     // Will increase in size if Motion component increases in size.
-    limit: '4.44 KB',
+    limit: '4.50 KB',
     path: 'dist/esm/ReshapingContainer/index.js',
     ignore: ['react', 'react-dom'],
   },
@@ -50,7 +50,7 @@ module.exports = [
   },
   {
     // Will increase in size if Motion component increases in size.
-    limit: '5.02 KB',
+    limit: '5.10 KB',
     path: 'dist/esm/RevealReshapingContainer/index.js',
     ignore: ['react', 'react-dom'],
   },

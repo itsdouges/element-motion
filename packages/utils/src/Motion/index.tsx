@@ -16,6 +16,7 @@ import defer from '../lib/defer';
 import noop from '../lib/noop';
 import { throwIf, warn } from '../lib/log';
 import * as store from '../lib/store';
+import { isReducedMotion } from '../lib/accessibility';
 import { withVisibilityManagerContext } from '../VisibilityManager';
 import { MotionProps, MotionState, MotionBlock } from './types';
 import { createManager, StyleSheetManager } from '../lib/stylesheet';
@@ -272,6 +273,12 @@ If it's an image, try and have the image loaded before mounting or set a static 
   }
 
   execute = (DOMSnapshot: store.MotionData | null = store.get(this.props.name)) => {
+    if (isReducedMotion()) {
+      // Abort if the user has set reduced motion on.
+      // See: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
+      return;
+    }
+
     const { name, container: getContainer, context } = this.props;
     const container = typeof getContainer === 'function' ? getContainer() : getContainer;
     let aborted = false;
