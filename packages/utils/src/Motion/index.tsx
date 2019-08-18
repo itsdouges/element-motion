@@ -273,13 +273,15 @@ If it's an image, try and have the image loaded before mounting or set a static 
   }
 
   execute = (DOMSnapshot: store.MotionData | null = store.get(this.props.name)) => {
+    const { name, container: getContainer, context } = this.props;
+
     if (isReducedMotion()) {
       // Abort if the user has set reduced motion on.
       // See: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
+      this.notifyVisibilityManagerWeFinished();
       return;
     }
 
-    const { name, container: getContainer, context } = this.props;
     const container = typeof getContainer === 'function' ? getContainer() : getContainer;
     let aborted = false;
 
@@ -352,7 +354,7 @@ If it's an image, try and have the image loaded before mounting or set a static 
         const mount = (jsx: React.ReactNode) => {
           if (!elementToMountChildren) {
             elementToMountChildren = document.createElement('div');
-            // We insert the new element at the beginning of the body to ensure correct stacking context.
+            // We insert the new element at the beginning of the body to ensure correct stacking context
             container.insertBefore(elementToMountChildren, container.firstChild);
           }
 
@@ -503,8 +505,8 @@ If it's an image, try and have the image loaded before mounting or set a static 
           : Promise.resolve()
       );
 
-      // If a VisibilityManager is a parent somewhere, notify them that we're starting animating.
       if (context) {
+        // If a VisibilityManager is a parent somewhere, notify them that we're starting animating.
         context.onStart({ name });
       }
 
@@ -530,9 +532,7 @@ If it's an image, try and have the image loaded before mounting or set a static 
               )
               .then(() => {
                 // If a VisibilityManager is a parent somewhere, notify them that we're finished animating.
-                if (context) {
-                  context.onFinish({ name });
-                }
+                this.notifyVisibilityManagerWeFinished();
 
                 // Run through all after animates.
                 return blocks.reduce(
