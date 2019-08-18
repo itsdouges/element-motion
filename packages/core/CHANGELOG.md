@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.1](https://github.com/element-motion/element-motion/compare/v2.12.0...v2.12.1) (2019-08-18)
+
+**Note:** Version bump only for package @element-motion/core
+
+
+
+
+
 # [2.12.0](https://github.com/element-motion/element-motion/compare/v2.11.0...v2.12.0) (2019-08-18)
 
 

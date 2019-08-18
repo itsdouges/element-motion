@@ -1,6 +1,6 @@
 {
   "name": "@element-motion/motions",
-  "version": "2.12.0",
+  "version": "2.12.1",
   "repository": "element-motion/element-motion",
   "directory": "packages/motions",
   "homepage": "https://elementmotion.com",
@@ -11,7 +11,7 @@
   "sideEffects": false,
   "scripts": {},
   "dependencies": {
-    "@element-motion/utils": "^2.12.0",
+    "@element-motion/utils": "^2.12.1",
     "emotion": ">=9"
   },
   "peerDependencies": {
