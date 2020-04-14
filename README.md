@@ -1,5 +1,14 @@
 # Element Motion
 
+This has been archived.
+If you're looking for a solid implementation of an animation engine/FLIP style animations that are easy to use I highly recommend checking out Framer Motion.
+
+The latest update with the `animate` prop truly is the nail in the coffin for Element Motion - it does everything this library does and more with a fantastic API.
+
+Check it out here: https://www.framer.com/motion/
+
+---
+
 Tween between view states with declarative zero configuration element motions for [React](https://reactjs.org/).
 
 [![npm](https://img.shields.io/npm/v/@element-motion/core.svg)](https://www.npmjs.com/package/@element-motion/core) [![npm bundle size (minified + gzip)](https://badgen.net/bundlephobia/minzip/@element-motion/core)](https://bundlephobia.com/result?p=@element-motion/core)
